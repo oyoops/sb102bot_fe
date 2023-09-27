@@ -53,7 +53,7 @@ try:
     print(f"Zipped files into {full_zip_path}")
     print(f"Combined files into {full_txt_path}")
 except Exception as e:
-    print(f"Could not create the files. Error: {e}")
+    print(f"  ** Could not create a file **\n    Error: {e}")
 
 
 # SAVE BOTH TO THIS FOLDER
