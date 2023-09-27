@@ -59,6 +59,22 @@
     <button id="tryAgainButton" style="display: none;">
         <b>Search for a new property</b>
     </button>
+
+    <!-- County data table -->
+    <table id="countyDataTable">
+        <thead>
+            <tr>
+                <th>County Name</th>
+                <th>Area Median Income</th>
+                <th>Millage Rate</th>
+                <th>County AMIS Income</th>
+                <th>County Millage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here by JavaScript -->
+        </tbody>
+    </table>    
     
     <!-- Acreage input -->
     <div id="acreageSection" style="display: none;">
@@ -76,8 +92,10 @@
     <div id="unitCountResult" style="display: none;"></div>
 
     <!-- Run scripts -->
-    <script src="script2.js"></script>
+    <script src="main.js"></script>
+    <script src="load_county_table.js"></script>
     <!-- <script src="addressAnalysis.js"></script> -->
     <!-- <script src="additionalContent.js"></script> -->
+
 </body>
 </html>

@@ -1,8 +1,8 @@
-
+#from geocoding import reverseGeocode
 from http.server import BaseHTTPRequestHandler
-import json
-from geocoding import reverseGeocode
 from database import connect_to_database
+import json
+
 
 class handler(BaseHTTPRequestHandler):
     def send_cors_headers(self):

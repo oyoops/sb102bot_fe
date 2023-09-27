@@ -34,6 +34,22 @@ form {
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
 #addressInput {
     padding: 10px;
     border-radius: 4px;
