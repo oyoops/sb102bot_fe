@@ -1,6 +1,6 @@
 // Assuming you have an endpoint like /api/aggregate_county_data?lat=xx&lng=yy
 //const endpoint = '/api/aggregate_county_data?lat=27.9944024&lng=-81.7602544';  // Replace with your actual endpoint
-const endpoint = '/aggregate_county_data?lat=27.9944024&lng=-81.7602544';  // Replace with your actual endpoint
+const endpoint = '/api/aggregate_county_data?lat=27.9944024&lng=-81.7602544';  // Replace with your actual endpoint
 
 fetch(endpoint)
     .then(response => response.json())
