@@ -1,0 +1,260 @@
+html {
+    background: linear-gradient(to bottom, #f4f4f4, #e6e9ec);
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #f4f4f4, #e6e9ec);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    color: #333;
+    margin-top: 50px;
+    font-weight: 700;
+}
+p {
+    color: #666;
+    font-weight: 300;
+    transform: translateY(-20px); /* Move it up by 20px */
+    transition: opacity 1s, transform 1s; /* Transition for the fade-in effect */
+}
+form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+#addressInput {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 1s, transform 1s;
+}
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: #4678dc;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #044b98;
+}
+#menuBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 0;
+    background-color: #afc6ed;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+#menuBar a:first-child {
+    margin-left: 20px;
+    cursor: pointer;
+}
+#menuBar a:last-child {
+    margin-right: 20px;
+    cursor: pointer;
+}
+#sunIcon {
+    display: inline-block;
+    background-color: #2b18b8;
+    border-radius: 50%;
+    width: 50x;
+    height: 50px;
+    position: relative;
+}
+#sunIcon::before {
+    content: "☀️";
+    font-size: 2.0em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+footer {
+    padding: 20px;
+    background-color: #afc6ed;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.0em;
+}
+
+footer a {
+    color: #044b98;
+    text-decoration: none;
+}
+/* Hide the footer if it's empty */
+footer:empty {
+    display: none;
+}
+/*  Make the footer links look like links */
+footer a:hover {
+    text-decoration: underline;
+}
+
+#result {
+    transition: opacity 0.5s;
+    width: 80vw;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 51%;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.loading {
+    display: none;
+    font-weight: 700;
+    color: #007BFF;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading::after {
+    content: ' ...';
+    animation: spin 1s infinite;
+}
+
+.fade-in-line {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.imageContainer {
+    display: flex; 
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    justify-content: space-around; 
+    align-items: center; 
+    margin-top: 20px;
+    width: 100%;
+}
+
+.imageContainer p {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.imageItem {
+    width: calc(50% - 2%); /* 50% width minus a 1% margin on each side */
+    margin: 1% 1%; 
+    text-align: center; 
+    box-sizing: border-box;
+}
+
+.imageItem img {
+    width: 100%; /* Make the image take up the entire width of its container */
+    max-width: 600px; /* Cap to a maximum size */
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+#calculateUnitsButton {
+    width: auto;  /* Adjust width */
+    padding: 5px 10px;
+    background-color: #4c85cf;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+#tryAgainButton {
+    /* Remove the position, bottom, and left properties */
+    font-weight: 500; 
+    background-color: #92b8fa;
+    color: #333;
+    /* Add any other styles you want when the button is not fixed */
+    margin-top: 0px; /* Add some top margin */
+    width: 400px; /* Adjust width */
+    padding: 5px 10px;
+    border-radius: 4px; /* Rounded corners */
+    display: inline-block; /* Make it inline */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 2.0s;
+}
+
+.unitCalculationText {
+    font-weight: 300;
+    color: #666;
+}
+
+.bedroomTypeInputGroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.bedroomTypeInputGroup label {
+    flex-basis: 30%; /* Increased from 20% to 30% */
+    text-align: right;
+    margin-right: 1em;
+}
+
+.bedroomTypeInputGroup input {
+    flex-basis: 8%; /* Reduced from 15% to 8% */
+    margin-right: 1em;
+    text-align: right; /* To align the numbers to the right, closer to the % symbol */
+}
+
+.bedroomTypeInputGroup input::after {
+    content: '%';
+    position: absolute;
+    margin-left: 5px;
+}
+
+.bedroomTypeInputGroup span {
+    flex-basis: 20%;
+}
