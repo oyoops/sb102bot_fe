@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('#addressForm');
+    const form = document.querySelector('#searchForm');
     const tableBody = document.querySelector('#countyDataTable tbody');
 
     form.addEventListener('submit', async (e) => {
