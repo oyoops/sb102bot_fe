@@ -2,6 +2,11 @@
 const { connect_to_database } = require('../database');
 
 module.exports = async (req, res) => {
+    // Setting CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
     const { lat, lng } = req.query;
     const radius = 1000;  // Default radius set to 1000 meters
     const conn = await connect_to_database();

@@ -13,6 +13,11 @@ const pool = new Pool({
 
 
 module.exports = async (req, res) => {
+    // Setting CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
     const lat = req.query.lat;
     const lng = req.query.lng;
     const minAcreage = req.query.min_acreage || 0;
