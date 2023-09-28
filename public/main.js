@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // First, geocode the address
             const geocodeEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
             const geocodeResponse = await fetch(geocodeEndpoint);
+            if (!geocodeResponse.ok) {
+                throw new Error(`Server responded with ${geocodeResponse.status}: ${await geocodeResponse.text()}`);
+            }
             const geocodeData = await geocodeResponse.json();
 
             if (!geocodeData.results || geocodeData.results.length === 0) {
@@ -47,8 +50,16 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             tableBody.innerHTML = row;
         } catch (error) {
-            console.error('Error:', error);
-            alert('Failed to fetch data. Please try again.');
+            if (error.message.startsWith("Server responded with")) {
+                // This is an HTTP error from our server
+                console.error('Server error:', error);
+                alert('There was an error with the server. Please try again later.');
+            } else {
+                // This is some other kind of error (e.g., network issue, JSON parsing issue)
+                console.error('Error:', error);
+                alert('Failed to fetch data. Please try again.');
+            }
         }
+
     });
 });
