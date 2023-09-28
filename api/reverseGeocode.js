@@ -1,9 +1,5 @@
-let fetch;
+const axios = require('axios');
 
-// Dynamically import node-fetch
-import('node-fetch').then(nodeFetch => {
-    fetch = nodeFetch.default;
-});
 
 module.exports = async (req, res) => {
     const lat = req.query.lat;
@@ -12,8 +8,8 @@ module.exports = async (req, res) => {
     const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`;
 
     try {
-        const response = await fetch(endpoint);
-        const data = await response.json();
+        const response = await axios.get(endpoint);
+        const data = response.data;        
         
         if (data.status === "OK") {
             res.status(200).json(data.results[0]);
