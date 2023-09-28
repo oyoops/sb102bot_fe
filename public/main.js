@@ -19,8 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const geocodeResponse = await fetch(geocodeEndpoint);
             const geocodeData = await geocodeResponse.json();
 
-            const lat = geocodeData.latitude;
-            const lng = geocodeData.longitude;
+            const lat = geocodeData.results[0].geometry.location.lat;
+            const lng = geocodeData.results[0].geometry.location.lng;
+
 
             // Fetch county data using the new endpoint
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;

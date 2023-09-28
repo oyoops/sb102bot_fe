@@ -7,14 +7,14 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
     try {
-        const { lat, lng } = req.query;
+        const { address } = req.query;
 
-        if (!lat || !lng) {
-            return res.status(400).send({ error: 'Latitude and longitude are required.' });
+        if (!address) {
+            return res.status(400).send({ error: 'Address is required.' });
         }
 
         const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
-        const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`;
+        const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${API_KEY}`;
 
         https.get(endpoint, (response) => {
             let data = '';
