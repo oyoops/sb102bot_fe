@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('#searchForm');
     const tableBody = document.querySelector('#countyDataTable tbody');
@@ -19,14 +18,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const geocodeResponse = await fetch(geocodeEndpoint);
             const geocodeData = await geocodeResponse.json();
 
+            if (!geocodeData.results || geocodeData.results.length === 0) {
+                throw new Error('No matching location found for the provided address.');
+            }
+
             const lat = geocodeData.results[0].geometry.location.lat;
             const lng = geocodeData.results[0].geometry.location.lng;
-
 
             // Fetch county data using the new endpoint
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
             const countyDataResponse = await fetch(countyDataEndpoint);
             const countyData = await countyDataResponse.json();
+
+            if (!countyData.county_name) {
+                throw new Error('No data available for the selected location.');
+            }
 
             // Populate the table with the fetched data
             const row = `
