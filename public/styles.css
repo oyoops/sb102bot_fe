@@ -1,11 +1,12 @@
 html {
     background: linear-gradient(to bottom, #f4f4f4, #e6e9ec);
 }
+
 body {
     font-family: 'Roboto', sans-serif;
     text-align: center;
     margin: 0;
-    padding: 0;
+    padding: 2% 0; /* Added top and bottom padding */
     background: linear-gradient(to bottom, #f4f4f4, #e6e9ec);
     min-height: 100vh;
     display: flex;
@@ -14,30 +15,35 @@ body {
     justify-content: center;
     overflow-x: hidden;
 }
+
 h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2.5em;
     color: #333;
-    margin-top: 50px;
+    margin-top: 20px; /* Reduced margin-top */
     font-weight: 700;
 }
+
 p {
     color: #666;
     font-weight: 300;
-    transform: translateY(-20px); /* Move it up by 20px */
-    transition: opacity 1s, transform 1s; /* Transition for the fade-in effect */
+    transform: translateY(-10px); /* Reduced the translateY amount */
+    transition: opacity 1s, transform 1s;
 }
+
 form {
     background: #fff;
-    padding: 40px;
+    padding: 20px 40px; /* Adjusted padding */
     border-radius: 8px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+    width: 60%; /* Added width to control form size */
 }
 
 table {
-    width: 100%;
+    width: 80%; /* Adjusted width */
     border-collapse: collapse;
+    margin: 20px 0; /* Added margin */
 }
 
 th, td {
@@ -57,10 +63,10 @@ th {
     width: 100%;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 1s, transform 1s;
+    color: black; /* Force black text color */
+    opacity: 1; /* Made it fully visible */
 }
+
 button {
     width: 100%;
     padding: 12px;
@@ -75,9 +81,11 @@ button {
     text-align: center;
     transition: background-color 0.3s;
 }
+
 button:hover {
     background-color: #044b98;
 }
+
 #menuBar {
     position: fixed;
     top: 0;
@@ -91,14 +99,17 @@ button:hover {
     align-items: center;
     z-index: 1000;
 }
+
 #menuBar a:first-child {
     margin-left: 20px;
     cursor: pointer;
 }
+
 #menuBar a:last-child {
     margin-right: 20px;
     cursor: pointer;
 }
+
 #sunIcon {
     display: inline-block;
     background-color: #2b18b8;
@@ -107,6 +118,7 @@ button:hover {
     height: 50px;
     position: relative;
 }
+
 #sunIcon::before {
     content: "☀️";
     font-size: 2.0em;
@@ -115,6 +127,7 @@ button:hover {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 footer {
     padding: 20px;
     background-color: #afc6ed;
@@ -132,35 +145,9 @@ footer a {
     color: #044b98;
     text-decoration: none;
 }
-/* Hide the footer if it's empty */
-footer:empty {
-    display: none;
-}
-/*  Make the footer links look like links */
+
 footer a:hover {
     text-decoration: underline;
-}
-
-#result {
-    transition: opacity 0.5s;
-    width: 80vw;
-}
-
-a {
-    color: #007BFF;
-    text-decoration: none;
-    font-weight: 400;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-img {
-    max-width: 51%;
-    border-radius: 8px;
-    margin-top: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 }
 
 .loading {
@@ -179,16 +166,11 @@ img {
     animation: spin 1s infinite;
 }
 
-.fade-in-line {
-    opacity: 0;
-    transition: opacity 0.5s;
-}
-
 .imageContainer {
-    display: flex; 
-    flex-wrap: wrap; /* Allow wrapping for smaller screens */
-    justify-content: space-around; 
-    align-items: center; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
     margin-top: 20px;
     width: 100%;
 }
@@ -199,46 +181,42 @@ img {
 }
 
 .imageItem {
-    width: calc(50% - 2%); /* 50% width minus a 1% margin on each side */
-    margin: 1% 1%; 
-    text-align: center; 
+    width: calc(50% - 2%);
+    margin: 1% 1%;
+    text-align: center;
     box-sizing: border-box;
 }
 
 .imageItem img {
-    width: 100%; /* Make the image take up the entire width of its container */
-    max-width: 600px; /* Cap to a maximum size */
+    width: 100%;
+    max-width: 600px;
     border-radius: 8px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 }
 
 #calculateUnitsButton {
-    width: auto;  /* Adjust width */
+    width: auto;
     padding: 5px 10px;
     background-color: #4c85cf;
     justify-content: center;
     align-items: center;
     text-align: center;
-    opacity: 0;
-    transition: opacity 0.5s;
+    opacity: 1; /* Made it fully visible */
 }
 
 #tryAgainButton {
-    /* Remove the position, bottom, and left properties */
-    font-weight: 500; 
+    font-weight: 500;
     background-color: #92b8fa;
     color: #333;
-    /* Add any other styles you want when the button is not fixed */
-    margin-top: 0px; /* Add some top margin */
-    width: 400px; /* Adjust width */
+    margin-top: 20px;
+    width: 400px;
     padding: 5px 10px;
-    border-radius: 4px; /* Rounded corners */
-    display: inline-block; /* Make it inline */
+    border-radius: 4px;
+    display: inline-block;
     justify-content: center;
     align-items: center;
     text-align: center;
-    opacity: 0;
-    transition: opacity 2.0s;
+    opacity: 1; /* Made it fully visible */
 }
 
 .unitCalculationText {
@@ -254,15 +232,15 @@ img {
 }
 
 .bedroomTypeInputGroup label {
-    flex-basis: 30%; /* Increased from 20% to 30% */
+    flex-basis: 30%;
     text-align: right;
     margin-right: 1em;
 }
 
 .bedroomTypeInputGroup input {
-    flex-basis: 8%; /* Reduced from 15% to 8% */
+    flex-basis: 8%;
     margin-right: 1em;
-    text-align: right; /* To align the numbers to the right, closer to the % symbol */
+    text-align: right;
 }
 
 .bedroomTypeInputGroup input::after {

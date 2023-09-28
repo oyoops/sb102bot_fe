@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -10,25 +11,8 @@
     <title>Live Local Calculator</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles.css">
-
-<style>
-    #countyDataTable {
-        border-collapse: collapse;
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    #countyDataTable, #countyDataTable th, #countyDataTable td {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    #countyDataTable th {
-        background-color: #f2f2f2;
-    }
-</style>
 </head>
+
 <body>
     <div id="menuBar">
         <a href="https://cresunshine.com">  🌴</a>
@@ -60,7 +44,7 @@
     </div>
 
     <div id="result">
-            <div class="imageContainer">
+        <div class="imageContainer">
             <div id="inputAddressImage" class="imageItem"></div>
             <div id="tallestBuildingImage" class="imageItem"></div>
         </div>
@@ -68,11 +52,11 @@
 
     <!--- Loading indicator -->
     <div class="loading">Conducting due diligence, please wait</div>
-    
+
     <!-- Footer -->
     <!-- <footer> -->
     <!--</footer> -->
-    
+
     <!-- Try Again button -->
     <button id="tryAgainButton" style="display: none;">
         <b>Search for a new property</b>
@@ -92,8 +76,8 @@
         <tbody>
             <!-- Data will be inserted here by JavaScript -->
         </tbody>
-    </table>    
-    
+    </table>
+
     <!-- Acreage input -->
     <div id="acreageSection" style="display: none;">
         <!-- <br><br> -->
@@ -105,7 +89,7 @@
 
     <!-- Bedroom type inputs -->
     <div id="bedroomTypeInputDiv" style="display: none;"></div>
-    
+
     <!-- Unit count result (???) -->
     <div id="unitCountResult" style="display: none;"></div>
 
@@ -115,4 +99,5 @@
     <!-- <script src="additionalContent.js"></script> -->
 
 </body>
+
 </html>
