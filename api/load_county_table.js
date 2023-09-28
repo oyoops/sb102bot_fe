@@ -43,8 +43,9 @@ module.exports = async (req, res) => {
         const dataResult = await pool.query(dataQuery, [countyName]);
 
         res.status(200).json(dataResult.rows[0]);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(`Error: ${err.message}`);
     }
     
 };
