@@ -21,6 +21,7 @@ module.exports = async (req, res) => {
 
     const lat = parseFloat(req.query.lat);
     const lng = parseFloat(req.query.lng);
+    console.log(`Received coordinates: Latitude = ${lat}, Longitude = ${lng}`);
 
     // Check if lat and lng are valid numbers
     if (isNaN(lat) || isNaN(lng)) {
@@ -28,34 +29,56 @@ module.exports = async (req, res) => {
     }
 
     try {
+        console.log('Starting county query...');
         const countyQuery = `
-        SELECT county_name 
-        FROM florida_counties 
-        WHERE ST_Contains(geom, ST_SetSRID(ST_MakePoint($1, $2), 4326));
+            WITH CloseParcels AS (
+                SELECT county_name, geom
+                FROM public.parcels_master
+            	WHERE ST_DWithin(geom, ST_SetSRID(ST_Point($1, $2), 4326), $3)
+            )
+            SELECT county_name
+            	FROM CloseParcels
+            	ORDER BY ST_Distance(geom, ST_SetSRID(ST_Point($1, $2), 4326))
+            	LIMIT 1;
         `;
+        const countySensitivity = 0.01; // distance (in km) to find closest parcel when given a lat/long (approx. ~0.35 mi. or something)
+        console.log('County query starting...');
+        const countyResult = await pool.query(countyQuery, [lng, lat, countySensitivity]);
+        console.log('County query complete.');
 
-        const countyResult = await pool.query(countyQuery, [lng, lat]);
+        if (countyResult.rows.length === 0) {
+            console.log('ERROR! No parcels found within ~0.25 mi. of input address.');
+            return res.status(404).send('No parcel found for the geocoded coordinates in the Florida database.');
+        }
+        
         const countyName = countyResult.rows[0].county_name;
+        console.log("COUNTY:",countyName);
+        console.log(`Found county: ${countyName}`);
 
+        console.log('Starting data query...');
         const dataQuery = `
-        SELECT 
-            fc.county_name, 
-            fc.area_median_income, 
-            fc.millage_rate,
-            ca.area_median_income AS county_amis_income,
-            cm.millage AS county_millage
-        FROM florida_counties AS fc
-        LEFT JOIN county_amis AS ca ON fc.county_name = ca.county_name
-        LEFT JOIN county_millages AS cm ON fc.county_name = cm.county_name
-        WHERE fc.county_name = $1;
+            SELECT 
+                fc.county_name, 
+                fc.area_median_income, 
+                fc.millage_rate,
+                ca.area_median_income AS county_amis_income,
+                cm.millage AS county_millage
+            FROM public.florida_counties AS fc
+            LEFT JOIN county_amis AS ca ON fc.county_name = ca.county_name
+            LEFT JOIN county_millages AS cm ON fc.county_name = cm.county_name
+            WHERE fc.county_name = $1;
         `;
-
         const dataResult = await pool.query(dataQuery, [countyName]);
-
+        console.log('Data query complete.');
+        
+        // ...
+        // ...
+        // ...
+        
+        console.log('Sending response to client.');
         res.status(200).json(dataResult.rows[0]);
     } catch (err) {
-        console.error(err);
+        console.error(`Error encountered: ${err.message}`);
         res.status(500).send(`Error: ${err.message}`);
     }
-    
 };
