@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
             	ORDER BY ST_Distance(geom, ST_SetSRID(ST_Point($1, $2), 4326))
             	LIMIT 1;
         `;
-        const countySensitivity = 0.005; // distance (in km) to find closest parcel when given a lat/long (approx. ~0.35 mi. or something)
+        const countySensitivity = 0.01; // distance (in km) to find closest parcel when given a lat/long (approx. ~0.35 mi. or something)
         console.log('County query starting...');
         const countyResult = await pool.query(countyQuery, [lng, lat, countySensitivity]);
         console.log('County query complete.');
