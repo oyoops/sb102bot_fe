@@ -35,6 +35,10 @@ module.exports = async (req, res) => {
         `;
         const countyResult = await pool.query(countyQuery, [lng, lat]);
         
+        if (countyResult.rows.length === 0) {
+            return res.status(404).send('No parcel found for the geocoded coordinates in the Florida database.');
+        }
+        
         const countyName = countyResult.rows[0].county_name;
         console.log("COUNTY:",countyName);
         
