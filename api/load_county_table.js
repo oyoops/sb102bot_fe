@@ -2,15 +2,16 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    user: process.env("DB_USER"),
-    host: process.env("DB_HOST"),
-    database: process.env("DB_NAME"),
-    password: process.env("DB_PASS"),
-    port: process.env("DB_PORT"),
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT,
     ssl: {
         rejectUnauthorized: false
     }
 });
+
 
 module.exports = async (req, res) => {
     const lat = req.query.lat;
@@ -43,6 +44,7 @@ module.exports = async (req, res) => {
 
         res.status(200).json(dataResult.rows[0]);
     } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ error: error.message });
     }
+    
 };
