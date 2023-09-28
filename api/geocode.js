@@ -1,29 +1,33 @@
-const axios = require('axios');
+const https = require('https');
 
-export default async (req, res) => {
-    if (req.method === 'POST') {
-        const { address } = req.body;
-        
-        if (!address) {
-            return res.status(400).json({ error: "Address is required" });
+module.exports = async (req, res) => {
+    try {
+        const { lat, lng } = req.query;
+
+        if (!lat || !lng) {
+            return res.status(400).send({ error: 'Latitude and longitude are required.' });
         }
-        
-        const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
-        const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${GOOGLE_MAPS_API_KEY}`;
-        
-        try {
-            const response = await axios.get(endpoint);
-            const data = response.data;            
-            if (data.status === "OK") {
-                const location = data.results[0].geometry.location;
-                return res.status(200).json(location);
-            } else {
-                return res.status(400).json({ error: "Geocoding error", message: data.status });
-            }
-        } catch (error) {
-            return res.status(500).json({ error: "Failed to fetch geocoding data" });
-        }
-    } else {
-        return res.status(405).json({ error: "Method not allowed" });  // Only POST requests are accepted
+
+        const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+        const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`;
+
+        https.get(endpoint, (response) => {
+            let data = '';
+
+            // A chunk of data has been received.
+            response.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            response.on('end', () => {
+                res.status(200).send(JSON.parse(data));
+            });
+        }).on("error", (err) => {
+            res.status(500).send({ error: `OOPS! Failed to fetch data. ${err.message}` });
+        });
+
+    } catch (error) {
+        res.status(500).send({ error: `Failed to fetch data. Please try again. ${error.message}` });
     }
 };
