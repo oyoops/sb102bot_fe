@@ -19,8 +19,13 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-    const lat = req.query.lat;
-    const lng = req.query.lng;
+    const lat = parseFloat(req.query.lat);
+    const lng = parseFloat(req.query.lng);
+
+    // Check if lat and lng are valid numbers
+    if (isNaN(lat) || isNaN(lng)) {
+        return res.status(400).send('Invalid latitude or longitude values provided.');
+    }
 
     try {
         const countyQuery = `
