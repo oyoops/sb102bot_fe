@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
                 fc.millage_rate,
                 ca.area_median_income AS county_amis_income,
                 cm.millage AS county_millage
-            FROM florida_counties AS fc
+            FROM public.florida_counties AS fc
             LEFT JOIN county_amis AS ca ON fc.county_name = ca.county_name
             LEFT JOIN county_millages AS cm ON fc.county_name = cm.county_name
             WHERE fc.county_name = $1;
