@@ -1,4 +1,9 @@
-const fetch = require('node-fetch');
+let fetch;
+
+// Dynamically import node-fetch
+import('node-fetch').then(nodeFetch => {
+    fetch = nodeFetch.default;
+});
 
 module.exports = async (req, res) => {
     const lat = req.query.lat;

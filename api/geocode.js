@@ -1,4 +1,9 @@
-const fetch = require('node-fetch');
+let fetch;
+
+// Dynamically import node-fetch
+import('node-fetch').then(nodeFetch => {
+    fetch = nodeFetch.default;
+});
 
 export default async (req, res) => {
     if (req.method === 'POST') {
