@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const geocodeData = await geocodeResponse.json();
 
             if (!geocodeData.results || geocodeData.results.length === 0) {
-                throw new Error('No matching location found for the provided address.');
+                console.log("Input Address: " + address);
+                throw new Error('No matching location found for the provided address.\n');
             }
 
             const lat = geocodeData.results[0].geometry.location.lat;
