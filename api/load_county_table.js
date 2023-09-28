@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
         const countyQuery = `
             SELECT pm.county_name 
                 FROM public.parcels_master AS pm
-                WHERE ST_Contains(pm.geom, ST_SetSRID(ST_MakePoint($1, $2), 4326));
+                WHERE ST_Contains(pm.geom, ST_SetSRID(ST_MakePoint($2, $1), 4326));
         `;
         const countyResult = await pool.query(countyQuery, [lng, lat]);
         
