@@ -1,6 +1,5 @@
 const axios = require('axios');
 
-
 module.exports = async (req, res) => {
     const lat = req.query.lat;
     const lng = req.query.lng;
