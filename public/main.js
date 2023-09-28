@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("F");
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
             console.log("G");
-            const countyDataResponse = await fetch(countyDataEndpoint);
+            const countyDataResponse = await fetch(countyDataEndpoint); /////////////
             console.log("H");
             const countyData = await countyDataResponse.json();
             console.log("I");
