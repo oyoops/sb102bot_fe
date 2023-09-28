@@ -14,7 +14,6 @@ const pool = new Pool({
 
 
 module.exports = async (req, res) => {
-    // Setting CORS headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -29,7 +28,6 @@ module.exports = async (req, res) => {
     }
 
     try {
-        console.log('Starting county query...');
         const countyQuery = `
             WITH CloseParcels AS (
                 SELECT county_name, geom
@@ -41,7 +39,7 @@ module.exports = async (req, res) => {
             	ORDER BY ST_Distance(geom, ST_SetSRID(ST_Point($1, $2), 4326))
             	LIMIT 1;
         `;
-        const countySensitivity = 0.01; // distance (in km) to find closest parcel when given a lat/long (approx. ~0.35 mi. or something)
+        const countySensitivity = 0.01; // distance (in km) to find closest parcel when given a lat/long (approx. ~0.07 mi. or something)
         console.log('County query starting...');
         const countyResult = await pool.query(countyQuery, [lng, lat, countySensitivity]);
         console.log('County query complete.');
@@ -53,7 +51,6 @@ module.exports = async (req, res) => {
         
         const countyName = countyResult.rows[0].county_name;
         console.log("COUNTY:",countyName);
-        console.log(`Found county: ${countyName}`);
 
         console.log('Starting data query...');
         const dataQuery = `
@@ -70,6 +67,8 @@ module.exports = async (req, res) => {
         `;
         const dataResult = await pool.query(dataQuery, [countyName]);
         console.log('Data query complete.');
+        console.log(`Data query returned ${dataResult.rowCount} rows.\nResponse: ${JSON.stringify(dataResult.rows[0])}`);
+        //console.log(dataResult.rows[0]);
         
         // ...
         // ...
