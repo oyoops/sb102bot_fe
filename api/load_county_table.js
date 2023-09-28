@@ -32,14 +32,15 @@ module.exports = async (req, res) => {
             WITH CloseParcels AS (
                 SELECT county_name, geom
                 FROM public.parcels_master
-                WHERE ST_DWithin(geom, ST_SetSRID(ST_Point($1, $2), 4326), 1)
+            	WHERE ST_DWithin(geom, ST_SetSRID(ST_Point($1, $2), 4326), $3)
             )
             SELECT county_name
-            FROM CloseParcels
-            ORDER BY ST_Distance(geom, ST_SetSRID(ST_Point($1, $2), 4326))
-            LIMIT 1;
+            	FROM CloseParcels
+            	ORDER BY ST_Distance(geom, ST_SetSRID(ST_Point($1, $2), 4326))
+            	LIMIT 1;
         `;
-        const countyResult = await pool.query(countyQuery, [lng, lat]);
+        const countySensitivity = 0.001; // distance (in km) to find closest parcel when given a lat/long (approx. ~0.07 mi. or something)
+        const countyResult = await pool.query(countyQuery, [lng, lat, countySensitivity]);
         
         if (countyResult.rows.length === 0) {
             return res.status(404).send('No parcel found for the geocoded coordinates in the Florida database.');
