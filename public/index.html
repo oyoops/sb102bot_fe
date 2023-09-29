@@ -61,13 +61,13 @@
     </button>
 
     <!-- County data table -->
-    <h3>Municipality</h3>
+    <h3>Municipal info:</h3>
     <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
         <thead>
             <tr>
                 <th>County</th>
                 <th>Area Median Income</th>
-                <th>Millage</th>
+                <th>County Millage</th>
             </tr>
         </thead>
         <tbody>
@@ -76,7 +76,7 @@
     </table>
 
     <!-- County max rents table -->
-    <h3>Affordable Rent Limits</h3>
+    <h3>Affordable rent limits:</h3>
     <table id="countyMaxRentsTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
         <thead>
             <tr>
@@ -91,12 +91,17 @@
         </tbody>
     </table>
 
+    <!-- Acreage input section -->
+    <div id="acreageSection" style="display: none;">
+        <br>
+        <h3>What's the acreage of the property?</h3>
+        <input type="number" id="acreageInput" placeholder="Acreage">
+        <button id="calculateUnitsButton">Calculate Maximum Units</button>
+        <br>
+        <div id="unitCalculationResult"></div>
+        <br>
+    </div>
 
-    <p>
-        <br><br>
-        Last updated Sept. 29, 2023
-        <br>Created by <a href="https://twitter.com/oyoops" target="_blank"><u>@oyoops</u></a> | <a href="https://cresunshine.com/" target="_blank"><u>CRE☀️</u></a>
-    </p>
 
 
 
@@ -111,14 +116,11 @@
         <input type="number" id="acreageInput" placeholder="Acreage">
         <button id="calculateUnitsButton">Find unit count</button>
         <div id="unitCalculationResult"></div>
-<!-- Slider for Affordable Percentage -->
-<div id="affordablePercentageSliderDiv" style="display: none;">
-    <h3>Set Affordable Percentage:</h3>
-    <input type="range" min="0" max="100" value="40" class="slider" id="affordablePercentageSlider">
-    <span id="affordablePercentageValue">40%</span>
-</div>
-
     </div>
+
+
+
+
 
     <!-- Bedroom type inputs -->
     <div id="bedroomTypeInputDiv" style="display: none;"></div>
@@ -126,8 +128,19 @@
     <!-- Unit count result (???) -->
     <div id="unitCountResult" style="display: none;"></div>
 
+        
+    <p>
+        <br><br>
+        Last updated Sept. 29, 2023
+        <br>Created by <a href="https://twitter.com/oyoops" target="_blank"><u>@oyoops</u></a> | <a href="https://cresunshine.com/" target="_blank"><u>CRE☀️</u></a>
+    </p>
+
+    
+
     <!-- Run scripts -->
     <script src="main.js"></script>
+    <script src="acreageCalculation.js"></script>
+
     <!-- <script src="addressAnalysis.js"></script> -->
     <!-- <script src="additionalContent.js"></script> -->
 
