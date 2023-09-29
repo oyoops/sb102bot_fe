@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // Populate the county data table
-            <h3>Municipality</h3>
             const countyRow = `
                 <tr>
                     <td>${countyData.county_name}</td>
@@ -47,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
             countyTableBody.innerHTML = countyRow;
 
             // Populate the max rents table
-            <h3>'Affordable' Rents</h3>
             const rentsRow = `
                 <tr>
                     <td>${countyData.max_rent_0bd_120ami}</td>
