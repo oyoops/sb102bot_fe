@@ -13,11 +13,13 @@ affordablePercentageSlider.oninput = function() {
 document.getElementById('affordablePctSlider').addEventListener('input', function() {
     document.getElementById('affordablePctDisplay').innerText = `${this.value}%`;
     calculateMaximumUnits();
+    calculateWeightedAverageSizes();
 });
 
 // Checkbox logic to set affordable units to the market unit sizes
 document.getElementById('matchAffordableSizes').addEventListener('change', function() {
-    recalculateUnits();
+    calculateMaximumUnits();
+    calculateWeightedAverageSizes();
 });
 
 // Event listeners for all size inputs to recalculate weighted averages in real-time

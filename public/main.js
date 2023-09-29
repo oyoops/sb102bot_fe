@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${countyData.county_millage}</td>
                 </tr>
             `;
-            countyTableBody.innerHTML = countyRow;            
+            countyTableBody.innerHTML = countyRow;
+
             // Display the county Data table (AMI & Millage rate) now that we have data
             ////document.getElementById('countyDataTable').style.display = 'block';
             document.getElementById('countyDataTable').style.display = 'table'; // Display the county data table
@@ -57,14 +58,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${countyData.max_rent_3bd_120ami}</td>
                 </tr>
             `;
-            rentsTableBody.innerHTML = rentsRow;            
+            rentsTableBody.innerHTML = rentsRow;
+
             // Display the county Max Rents table now that we have data
             ////document.getElementById('countyMaxRentsTable').style.display = 'block';
             document.getElementById('countyMaxRentsTable').style.display = 'table'; // Display the county max rents table
             
             // DONE with Part 1
             console.log('Part 1 -- Data successfully populated.');
-
 
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
