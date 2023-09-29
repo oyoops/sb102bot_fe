@@ -315,3 +315,34 @@ footer a:hover {
 .slider:hover {
     opacity: 1;
 }
+
+/* Style for the slider */
+input[type="range"] {
+    width: 100%;
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+/* Style for the checkboxes */
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+/* Style for the unit size input tables */
+table {
+    margin-top: 20px;
+}
+
+.sizeInput {
+    width: 80%;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Disable style for input fields */
+input:disabled {
+    background-color: #eee;
+    cursor: not-allowed;
+}

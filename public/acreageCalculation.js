@@ -1,125 +1,89 @@
-// Event listener for the Calculate Maximum Units button
-document.getElementById('calculateUnitsButton').addEventListener('click', function() {
-    // Fetch the acreage value
+// Calculate maximum units and show them in a table
+function calculateMaximumUnits() {
     const acreageValue = parseFloat(document.getElementById('acreageInput').value);
-    
-    // Assuming a constant density value for now (modify as needed)
     const densityValue = 10;  // Example density value, modify as needed
-    const affordablePctInput = 0.4
+    const affordablePctSlider = document.getElementById('affordablePctSlider');
+    const affordablePctDisplay = document.getElementById('affordablePctDisplay');
+    const affordablePct = parseFloat(affordablePctSlider.value) / 100;
 
-    // Calculate affordable and market units
-    const affordableUnits = Math.ceil(affordablePctInput * (acreageValue * densityValue));
-    const marketUnits = (acreageValue * densityValue) - affordableUnits;
-    
+    const totalUnits = Math.floor(acreageValue * densityValue);
+    const affordableUnits = Math.ceil(affordablePct * totalUnits);
+    const marketUnits = totalUnits - affordableUnits;
+
     // Update the table with calculated values
-    const tableBody = document.createElement('tbody');
-    const row = `
+    const tableBody = document.getElementById('unitCalculationTableBody');
+    tableBody.innerHTML = `
         <tr>
-            <td>${affordableUnits} units</td>
-            <td>${marketUnits} units</td>
+            <td>${affordableUnits}</td>
+            <td>${marketUnits}</td>
         </tr>
     `;
-    tableBody.innerHTML = row;
-    const table = document.createElement('table');
-    table.innerHTML = `
-        <thead>
-            <tr>
-                <th>Affordable</th>
-                <th>Market rate</th>
-            </tr>
-        </thead>
-    `;
-    table.appendChild(tableBody);
-    document.getElementById('acreageSection').appendChild(table);
-    
-    // Check and display warnings
-    const warningContainer = document.createElement('div');
+
+    // Update abatement
+    const abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100);
+    document.getElementById('abatementDisplay').innerText = `${abatementValue}% of ad valorem property taxes`;
+
+    // Check for warnings
+    const warningContainer = document.getElementById('warningContainer');
+    warningContainer.innerHTML = "";  // Clear previous warnings
     if (affordableUnits <= 70) {
-        const warning = document.createElement('p');
-        warning.innerText = "Not enough affordable units";
-        warning.style.color = "red";
-        warningContainer.appendChild(warning);
+        warningContainer.innerHTML += '<p style="color: red;">Not enough affordable units</p>';
     }
-    
-    const affordablePercentage = (affordableUnits / (affordableUnits + marketUnits)) * 100;
-    if (affordablePercentage < 40) {
-        const warning = document.createElement('p');
-        warning.innerText = "Not at 40% affordable threshold!";
-        warning.style.color = "red";
-        warningContainer.appendChild(warning);
+    if (affordablePct < 0.4) {
+        warningContainer.innerHTML += '<p style="color: red;">Not at 40% affordable threshold</p>';
     }
-    
-    // Display the abatement label
-    const abatementLabel = document.createElement('p');
-    const abatementValue = Math.round(0.75 * affordablePercentage);
-    abatementLabel.innerText = `Abatement = ${abatementValue}% of ad valorem property taxes`;
-    warningContainer.appendChild(abatementLabel);
-    
-    document.getElementById('acreageSection').appendChild(warningContainer);
+}
+
+// Set up an event listener for the affordable percentage slider to recalculate values in real-time
+document.getElementById('affordablePctSlider').addEventListener('input', function() {
+    document.getElementById('affordablePctDisplay').innerText = `${this.value}%`;
+    calculateMaximumUnits();
 });
 
-
-// Select the new input elements
-const marketStudioSize = document.getElementById('marketStudioSize');
-const market1BDSize = document.getElementById('market1BDSize');
-const market2BDSize = document.getElementById('market2BDSize');
-const market3BDSize = document.getElementById('market3BDSize');
-
-const affordableStudioSize = document.getElementById('affordableStudioSize');
-const affordable1BDSize = document.getElementById('affordable1BDSize');
-const affordable2BDSize = document.getElementById('affordable2BDSize');
-const affordable3BDSize = document.getElementById('affordable3BDSize');
-
-const matchSizesCheckbox = document.getElementById('matchAffordableSizes');
-
-// Add event listener for the checkbox
-matchSizesCheckbox.addEventListener('change', function() {
+// Checkbox logic to set affordable units to the market unit sizes
+document.getElementById('matchAffordableSizes').addEventListener('change', function() {
+    const affordableInputs = document.querySelectorAll('.affordableSizeInput');
+    const marketInputs = document.querySelectorAll('.marketSizeInput');
     if (this.checked) {
-        // Copy market unit sizes to affordable unit sizes
-        affordableStudioSize.value = marketStudioSize.value;
-        affordable1BDSize.value = market1BDSize.value;
-        affordable2BDSize.value = market2BDSize.value;
-        affordable3BDSize.value = market3BDSize.value;
-        
-        // Disable affordable unit size inputs
-        affordableStudioSize.disabled = true;
-        affordable1BDSize.disabled = true;
-        affordable2BDSize.disabled = true;
-        affordable3BDSize.disabled = true;
+        affordableInputs.forEach((input, index) => {
+            input.value = marketInputs[index].value;
+            input.disabled = true;
+        });
     } else {
-        // Re-enable affordable unit size inputs
-        affordableStudioSize.disabled = false;
-        affordable1BDSize.disabled = false;
-        affordable2BDSize.disabled = false;
-        affordable3BDSize.disabled = false;
+        affordableInputs.forEach(input => input.disabled = false);
     }
+    calculateWeightedAverageSizes();
 });
 
 // Function to calculate weighted average sizes
 function calculateWeightedAverageSizes() {
-    // Get the unit counts (from previous calculations)
-    const affordableUnits = Math.ceil(affordablePercentage / 100 * totalUnits);
-    const marketUnits = totalUnits - affordableUnits;
-    
-    // Calculate weighted averages for each unit type
-    const avgMarketSize = (marketStudioSize.value * studioUnits + market1BDSize.value * oneBDUnits + market2BDSize.value * twoBDUnits + market3BDSize.value * threeBDUnits) / marketUnits;
-    const avgAffordableSize = (affordableStudioSize.value * studioUnits + affordable1BDSize.value * oneBDUnits + affordable2BDSize.value * twoBDUnits + affordable3BDSize.value * threeBDUnits) / affordableUnits;
+    const affordableUnits = parseInt(document.querySelector('#unitCalculationTableBody td:first-child').innerText);
+    const marketUnits = parseInt(document.querySelector('#unitCalculationTableBody td:last-child').innerText);
+    const totalUnits = affordableUnits + marketUnits;
+
+    const marketStudioSize = parseFloat(document.getElementById('marketStudioSize').value) || 0;
+    const market1BDSize = parseFloat(document.getElementById('market1BDSize').value) || 0;
+    const market2BDSize = parseFloat(document.getElementById('market2BDSize').value) || 0;
+    const market3BDSize = parseFloat(document.getElementById('market3BDSize').value) || 0;
+
+    const affordableStudioSize = parseFloat(document.getElementById('affordableStudioSize').value) || 0;
+    const affordable1BDSize = parseFloat(document.getElementById('affordable1BDSize').value) || 0;
+    const affordable2BDSize = parseFloat(document.getElementById('affordable2BDSize').value) || 0;
+    const affordable3BDSize = parseFloat(document.getElementById('affordable3BDSize').value) || 0;
+
+    // Calculate the weighted average sizes for market, affordable, and total units
+    const avgMarketSize = (marketStudioSize + market1BDSize + market2BDSize + market3BDSize) / 4;
+    const avgAffordableSize = (affordableStudioSize + affordable1BDSize + affordable2BDSize + affordable3BDSize) / 4;
     const avgTotalSize = (avgMarketSize * marketUnits + avgAffordableSize * affordableUnits) / totalUnits;
-    
-    // Display these values somewhere on the page (you may need to adjust this based on where you want to show the results)
-    // For now, I'm just logging them to the console
-    console.log('Average Market Unit Size:', avgMarketSize);
-    console.log('Average Affordable Unit Size:', avgAffordableSize);
-    console.log('Average Total Unit Size:', avgTotalSize);
+
+    // Display these values
+    document.getElementById('avgMarketSizeDisplay').innerText = avgMarketSize.toFixed(2);
+    document.getElementById('avgAffordableSizeDisplay').innerText = avgAffordableSize.toFixed(2);
+    document.getElementById('avgTotalSizeDisplay').innerText = avgTotalSize.toFixed(2);
 }
 
-// Add event listeners for the input fields to update calculations in real-time
-marketStudioSize.addEventListener('input', calculateWeightedAverageSizes);
-market1BDSize.addEventListener('input', calculateWeightedAverageSizes);
-market2BDSize.addEventListener('input', calculateWeightedAverageSizes);
-market3BDSize.addEventListener('input', calculateWeightedAverageSizes);
+// Event listeners for all size inputs to recalculate weighted averages in real-time
+document.querySelectorAll('.sizeInput').forEach(input => {
+    input.addEventListener('input', calculateWeightedAverageSizes);
+});
 
-affordableStudioSize.addEventListener('input', calculateWeightedAverageSizes);
-affordable1BDSize.addEventListener('input', calculateWeightedAverageSizes);
-affordable2BDSize.addEventListener('input', calculateWeightedAverageSizes);
-affordable3BDSize.addEventListener('input', calculateWeightedAverageSizes);

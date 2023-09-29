@@ -108,63 +108,61 @@
     <!-- Additional content -->
 
 
-
-    <!-- Acreage input -->
+    <!-- Acreage input section -->
     <div id="acreageSection" style="display: none;">
-        <!-- <br><br> -->
+        <br>
         <h3>What's the acreage of the property?</h3>
         <input type="number" id="acreageInput" placeholder="Acreage">
-        <button id="calculateUnitsButton">Find unit count</button>
+        <button id="calculateUnitsButton">Calculate Maximum Units</button>
+        <br>
         <div id="unitCalculationResult"></div>
-    </div>
-
-    
-
-    <!-- Square footage input section -->
-    <div id="sqftInputSection" style="display: none;">
-        <h3>Enter the square footage for each unit type:</h3>
-        <label>
-            <input type="checkbox" id="matchAffordableSizes"> Use same sizes for affordable units
-        </label>
-        <table id="sqftInputTable">
+        <br>
+        
+        <!-- Affordable Percentage Slider -->
+        <label for="affordablePctSlider">Affordable Percentage: <span id="affordablePctDisplay">40%</span></label>
+        <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
+        <br>
+        
+        <!-- Unit Size Inputs -->
+        <h4>Unit Sizes (in sq. ft.)</h4>
+        <label><input type="checkbox" id="matchAffordableSizes"> Match Affordable Sizes to Market Sizes</label>
+        <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
                     <th>Unit Type</th>
-                    <th>Market Units (Sq. Ft.)</th>
-                    <th>Affordable Units (Sq. Ft.)</th>
+                    <th>Market Rate</th>
+                    <th>Affordable</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Studio</td>
-                    <td><input type="number" id="marketStudioSize"></td>
-                    <td><input type="number" id="affordableStudioSize"></td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="marketStudioSize" placeholder="Size"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordableStudioSize" placeholder="Size"></td>
                 </tr>
                 <tr>
                     <td>1BD</td>
-                    <td><input type="number" id="market1BDSize"></td>
-                    <td><input type="number" id="affordable1BDSize"></td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="market1BDSize" placeholder="Size"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable1BDSize" placeholder="Size"></td>
                 </tr>
                 <tr>
                     <td>2BD</td>
-                    <td><input type="number" id="market2BDSize"></td>
-                    <td><input type="number" id="affordable2BDSize"></td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="market2BDSize" placeholder="Size"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable2BDSize" placeholder="Size"></td>
                 </tr>
                 <tr>
                     <td>3BD</td>
-                    <td><input type="number" id="market3BDSize"></td>
-                    <td><input type="number" id="affordable3BDSize"></td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="market3BDSize" placeholder="Size"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable3BDSize" placeholder="Size"></td>
                 </tr>
             </tbody>
         </table>
+        <h4>Average Sizes (in sq. ft.)</h4>
+        <p>Market Rate: <span id="avgMarketSizeDisplay">0</span></p>
+        <p>Affordable: <span id="avgAffordableSizeDisplay">0</span></p>
+        <p>Total: <span id="avgTotalSizeDisplay">0</span></p>
     </div>
 
-
-    <!-- Bedroom type inputs -->
-    <div id="bedroomTypeInputDiv" style="display: none;"></div>
-
-    <!-- Unit count result (???) -->
-    <div id="unitCountResult" style="display: none;"></div>
 
         
     <p>
