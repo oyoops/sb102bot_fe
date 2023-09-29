@@ -80,6 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 calculateUnits(); // Recalculate units when the slider value changes.
             }
 
+            
+
 
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
@@ -94,3 +96,40 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+function calculateWeightedAverageSizes() {
+    // Fetch unit sizes
+    const marketSizes = {
+        studio: parseFloat(document.getElementById('marketStudioSize').value) || 0,
+        oneBD: parseFloat(document.getElementById('market1BDSize').value) || 0,
+        twoBD: parseFloat(document.getElementById('market2BDSize').value) || 0,
+        threeBD: parseFloat(document.getElementById('market3BDSize').value) || 0
+    };
+    
+    const affordableSizes = {
+        studio: parseFloat(document.getElementById('affordableStudioSize').value) || 0,
+        oneBD: parseFloat(document.getElementById('affordable1BDSize').value) || 0,
+        twoBD: parseFloat(document.getElementById('affordable2BDSize').value) || 0,
+        threeBD: parseFloat(document.getElementById('affordable3BDSize').value) || 0
+    };
+    
+    // For now, we'll assume equal number of each unit type.
+    // If you have specific distributions, you should modify this.
+    const numberOfEachUnit = 1;
+    
+    const totalMarketSize = (marketSizes.studio + marketSizes.oneBD + marketSizes.twoBD + marketSizes.threeBD) * numberOfEachUnit;
+    const totalAffordableSize = (affordableSizes.studio + affordableSizes.oneBD + affordableSizes.twoBD + affordableSizes.threeBD) * numberOfEachUnit;
+    const totalUnits = numberOfEachUnit * 4 * 2; // 4 types, market + affordable
+    
+    const avgMarketSize = totalMarketSize / (numberOfEachUnit * 4);  // divided by total market units
+    const avgAffordableSize = totalAffordableSize / (numberOfEachUnit * 4);  // divided by total affordable units
+    const avgTotalSize = (totalMarketSize + totalAffordableSize) / totalUnits;
+    
+    // Display these values
+    document.getElementById('avgMarketSizeDisplay').innerText = avgMarketSize.toFixed(2);
+    document.getElementById('avgAffordableSizeDisplay').innerText = avgAffordableSize.toFixed(2);
+    document.getElementById('avgTotalSizeDisplay').innerText = avgTotalSize.toFixed(2);
+}
+
+// Event listeners to recalculate on input change
+const sizeInputs = document.querySelectorAll('.sizeInput');
+sizeInputs.forEach(input => input.addEventListener('input', calculateWeightedAverageSizes));

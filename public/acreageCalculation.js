@@ -87,3 +87,4 @@ document.querySelectorAll('.sizeInput').forEach(input => {
     input.addEventListener('input', calculateWeightedAverageSizes);
 });
 
+
