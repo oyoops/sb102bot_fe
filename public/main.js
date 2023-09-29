@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const geocodeData = await geocodeResponse.json();
             if (!geocodeData.results || geocodeData.results.length === 0) {
-                throw new Error('No matching location found for the provided address.');
+                throw new Error('No parcel found at that address.');
             }
 
             const lat = geocodeData.results[0].geometry.location.lat;
@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // Populate the county data table
+            <h3>Municipality</h3>
             const countyRow = `
                 <tr>
                     <td>${countyData.county_name}</td>
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
             countyTableBody.innerHTML = countyRow;
 
             // Populate the max rents table
+            <h3>'Affordable' Rents</h3>
             const rentsRow = `
                 <tr>
                     <td>${countyData.max_rent_0bd_120ami}</td>
@@ -54,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${countyData.max_rent_3bd_120ami}</td>
                 </tr>
             `;
-            rentsTableBody.innerHTML = rentsRow;
+            rentsTableBody.innerHTML = rentsRow;            
 
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
