@@ -18,6 +18,21 @@ document.getElementById('affordablePctSlider').addEventListener('input', functio
 
 // Checkbox logic to set affordable units to the market unit sizes
 document.getElementById('matchAffordableSizes').addEventListener('change', function() {
+    const affordableInputs = document.querySelectorAll('.affordableSizeInput');
+    const marketInputs = document.querySelectorAll('.marketSizeInput');
+    
+    // If checkbox is checked
+    if (this.checked) {
+        affordableInputs.forEach((input, index) => {
+            input.value = marketInputs[index].value;  // Set affordable value to match market value
+            input.disabled = true;  // Disable the input
+        });
+    } else {
+        // If checkbox is unchecked
+        affordableInputs.forEach(input => input.disabled = false);  // Re-enable the input
+    }
+    
+    // Recalculate units and sizes
     calculateMaximumUnits();
     calculateWeightedAverageSizes();
 });
@@ -67,10 +82,10 @@ function calculateMaximumUnits() {
     const warningContainer = document.getElementById('warningContainer');
     warningContainer.innerHTML = "";  // Clear previous warnings
     if (affordableUnits <= 70) {
-        warningContainer.innerHTML += '<p style="color: red;">Not enough affordable units</p>';
+        warningContainer.innerHTML += '<p style="color: red;">Not enough affordable units!</p>';
     }
     if (affordablePct < 0.4) {
-        warningContainer.innerHTML += '<p style="color: red;">Not at 40% affordable threshold</p>';
+        warningContainer.innerHTML += '<p style="color: red;">Not at 40% affordable threshold!</p>';
     }
 }
 
