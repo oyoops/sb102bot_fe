@@ -60,9 +60,7 @@ module.exports = async (req, res) => {
                 cr.max_rent_0bd_120ami,
                 cr.max_rent_1bd_120ami,
                 cr.max_rent_2bd_120ami,
-                cr.max_rent_3bd_120ami,
-                cr.max_rent_4bd_120ami,
-                cr.max_rent_5bd_120ami
+                cr.max_rent_3bd_120ami
             FROM public.florida_counties AS fc
             LEFT JOIN county_amis AS ca ON fc.county_name = ca.county_name
             LEFT JOIN county_millages AS cm ON fc.county_name = cm.county_name
