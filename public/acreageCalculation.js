@@ -1,3 +1,30 @@
+// After successfully populating the tables, display the (poorly named) "acreage input section"
+document.getElementById('acreageSection').style.display = 'block';
+
+// Show affordable % slider
+const affordablePercentageSlider = document.getElementById("affordablePctSlider");
+const affordablePercentageValue = document.getElementById("affordablePercentageValue");
+affordablePercentageSlider.oninput = function() {
+    affordablePercentageValue.textContent = this.value + '%';
+    calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
+}
+
+// Set up an event listener for the affordable percentage slider to recalculate values in real-time
+document.getElementById('affordablePctSlider').addEventListener('input', function() {
+    document.getElementById('affordablePctDisplay').innerText = `${this.value}%`;
+    calculateMaximumUnits();
+});
+
+// Checkbox logic to set affordable units to the market unit sizes
+document.getElementById('matchAffordableSizes').addEventListener('change', function() {
+    recalculateUnits();
+});
+
+// Event listeners for all size inputs to recalculate weighted averages in real-time
+document.querySelectorAll('.sizeInput').forEach(input => {
+    input.addEventListener('input', calculateWeightedAverageSizes);
+});
+
 // Calculate maximum units and show them in a table
 function calculateMaximumUnits() {
     const acreageValue = parseFloat(document.getElementById('acreageInput').value);
@@ -19,9 +46,20 @@ function calculateMaximumUnits() {
         </tr>
     `;
 
+    // Display the unit calculation table now that we have data
+    document.getElementById('unitCalculationTable').style.display = 'block';
+
     // Update abatement
     const abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100);
-    document.getElementById('abatementDisplay').innerText = `${abatementValue}% of ad valorem property taxes`;
+    const abatementTableBody = document.getElementById('abatementTableBody');
+    abatementTableBody.innerHTML = `
+        <tr>
+            <td>${abatementValue}% of ad valorem property taxes</td>
+        </tr>
+    `;
+
+    // Display the abatement table now that we have data
+    document.getElementById('abatementTable').style.display = 'block';
 
     // Check for warnings
     const warningContainer = document.getElementById('warningContainer');
@@ -33,27 +71,6 @@ function calculateMaximumUnits() {
         warningContainer.innerHTML += '<p style="color: red;">Not at 40% affordable threshold</p>';
     }
 }
-
-// Set up an event listener for the affordable percentage slider to recalculate values in real-time
-document.getElementById('affordablePctSlider').addEventListener('input', function() {
-    document.getElementById('affordablePctDisplay').innerText = `${this.value}%`;
-    calculateMaximumUnits();
-});
-
-// Checkbox logic to set affordable units to the market unit sizes
-document.getElementById('matchAffordableSizes').addEventListener('change', function() {
-    const affordableInputs = document.querySelectorAll('.affordableSizeInput');
-    const marketInputs = document.querySelectorAll('.marketSizeInput');
-    if (this.checked) {
-        affordableInputs.forEach((input, index) => {
-            input.value = marketInputs[index].value;
-            input.disabled = true;
-        });
-    } else {
-        affordableInputs.forEach(input => input.disabled = false);
-    }
-    calculateWeightedAverageSizes();
-});
 
 // Function to calculate weighted average sizes
 function calculateWeightedAverageSizes() {
@@ -81,10 +98,3 @@ function calculateWeightedAverageSizes() {
     document.getElementById('avgAffordableSizeDisplay').innerText = avgAffordableSize.toFixed(2);
     document.getElementById('avgTotalSizeDisplay').innerText = avgTotalSize.toFixed(2);
 }
-
-// Event listeners for all size inputs to recalculate weighted averages in real-time
-document.querySelectorAll('.sizeInput').forEach(input => {
-    input.addEventListener('input', calculateWeightedAverageSizes);
-});
-
-
