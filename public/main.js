@@ -58,6 +58,15 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             rentsTableBody.innerHTML = rentsRow;            
 
+            console.log('Data populated successfully.');
+
+            // Display tables
+            document.getElementById('countyDataTable').style.display = 'table'; // Display the county data table
+            document.getElementById('countyMaxRentsTable').style.display = 'table'; // Display the county max rents table
+            document.getElementById('acreageSection').style.display = 'block'; // Display the acreage input section
+
+            // DONE with Part 1
+
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);
@@ -69,3 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+// After successfully populating the tables
+document.getElementById('countyDataTable').style.display = 'table'; // Display the county data table
+document.getElementById('countyMaxRentsTable').style.display = 'table'; // Display the county max rents table
+document.getElementById('acreageSection').style.display = 'block'; // Display the acreage input section

@@ -13,9 +13,9 @@ def get_desktop_path():
 # --- Main code starts here --- #
 
 # List of file names to combine
-file_names = ['public/index.html', 'public/styles.css', 'public/main.js', 'public/load_county_table.js',
-              'server.py', 'database.py', 'utils.py',
-              'api/aggregate_county_data.js', 'api/county_info.js', 'api/parcel_info.js']
+file_names = ['public/index.html', 'public/styles.css', 'public/main.js', 'api/load_county_table.js']
+              # 'server.py', 'database.py', 'utils.py',
+              # 'api/aggregate_county_data.js', 'api/county_info.js', 'api/parcel_info.js']
               # 'public/styles.css',
               # 'location.py', 'building.py',
               # 'density.py', 'utilities.py', 'constants.py'] # ,
