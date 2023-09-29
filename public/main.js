@@ -61,15 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Display tables
             document.getElementById('countyDataTable').style.display = 'table'; // Display the county data table
             document.getElementById('countyMaxRentsTable').style.display = 'table'; // Display the county max rents table
-            document.getElementById('acreageSection').style.display = 'block'; // Display the acreage input section
 
             // DONE with Part 1
 
-
             // After successfully populating the tables...
+
             //...display the acreage input section
-            document.getElementById('countyDataTable').style.display = 'table'; // Display the county data table
-            document.getElementById('countyMaxRentsTable').style.display = 'table'; // Display the county max rents table
             document.getElementById('acreageSection').style.display = 'block'; // Display the acreage input section
 
             //...show affordable % slider
@@ -77,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const affordablePercentageValue = document.getElementById("affordablePercentageValue");
             affordablePercentageSlider.oninput = function() {
                 affordablePercentageValue.textContent = this.value + '%';
-                calculateUnits(); // Recalculate units when the slider value changes.
+                calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
             }
 
             
