@@ -45,7 +45,9 @@ document.querySelectorAll('.sizeInput').forEach(input => {
 // Calculate maximum units and show them in a table
 function calculateMaximumUnits() {
     const acreageValue = parseFloat(document.getElementById('acreageInput').value);
+    
     const densityValue = 10;  // Example density value, modify as needed
+
     const affordablePctSlider = document.getElementById('affordablePctSlider');
     const affordablePctDisplay = document.getElementById('affordablePctDisplay');
     const affordablePct = parseFloat(affordablePctSlider.value) / 100;
@@ -53,6 +55,8 @@ function calculateMaximumUnits() {
     const totalUnits = Math.floor(acreageValue * densityValue);
     const affordableUnits = Math.ceil(affordablePct * totalUnits);
     const marketUnits = totalUnits - affordableUnits;
+
+
 
     // Update the table with calculated values
     const tableBody = document.getElementById('unitCalculationTableBody');
@@ -62,9 +66,10 @@ function calculateMaximumUnits() {
             <td>${marketUnits}</td>
         </tr>
     `;
-
     // Display the unit calculation table now that we have data
     document.getElementById('unitCalculationTable').style.display = 'block';
+
+
 
     // Update abatement
     const abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100);
@@ -74,9 +79,9 @@ function calculateMaximumUnits() {
             <td>${abatementValue}% of ad valorem property taxes</td>
         </tr>
     `;
-
     // Display the abatement table now that we have data
     document.getElementById('abatementTable').style.display = 'block';
+
 
     // Check for warnings
     const warningContainer = document.getElementById('warningContainer');
@@ -95,15 +100,15 @@ function calculateWeightedAverageSizes() {
     const marketUnits = parseInt(document.querySelector('#unitCalculationTableBody td:last-child').innerText);
     const totalUnits = affordableUnits + marketUnits;
 
-    const marketStudioSize = parseFloat(document.getElementById('marketStudioSize').value) || 0;
-    const market1BDSize = parseFloat(document.getElementById('market1BDSize').value) || 0;
-    const market2BDSize = parseFloat(document.getElementById('market2BDSize').value) || 0;
-    const market3BDSize = parseFloat(document.getElementById('market3BDSize').value) || 0;
+    const marketStudioSize = parseFloat(document.getElementById('marketStudioSize').value) || 500;
+    const market1BDSize = parseFloat(document.getElementById('market1BDSize').value) || 750;
+    const market2BDSize = parseFloat(document.getElementById('market2BDSize').value) || 1000;
+    const market3BDSize = parseFloat(document.getElementById('market3BDSize').value) || 1250;
 
-    const affordableStudioSize = parseFloat(document.getElementById('affordableStudioSize').value) || 0;
-    const affordable1BDSize = parseFloat(document.getElementById('affordable1BDSize').value) || 0;
-    const affordable2BDSize = parseFloat(document.getElementById('affordable2BDSize').value) || 0;
-    const affordable3BDSize = parseFloat(document.getElementById('affordable3BDSize').value) || 0;
+    const affordableStudioSize = parseFloat(document.getElementById('affordableStudioSize').value) || 500;
+    const affordable1BDSize = parseFloat(document.getElementById('affordable1BDSize').value) || 750;
+    const affordable2BDSize = parseFloat(document.getElementById('affordable2BDSize').value) || 1000;
+    const affordable3BDSize = parseFloat(document.getElementById('affordable3BDSize').value) || 1250;
 
     // Calculate the weighted average sizes for market, affordable, and total units
     const avgMarketSize = (marketStudioSize + market1BDSize + market2BDSize + market3BDSize) / 4;
@@ -111,7 +116,7 @@ function calculateWeightedAverageSizes() {
     const avgTotalSize = (avgMarketSize * marketUnits + avgAffordableSize * affordableUnits) / totalUnits;
 
     // Display these values
-    document.getElementById('avgMarketSizeDisplay').innerText = avgMarketSize.toFixed(2);
-    document.getElementById('avgAffordableSizeDisplay').innerText = avgAffordableSize.toFixed(2);
-    document.getElementById('avgTotalSizeDisplay').innerText = avgTotalSize.toFixed(2);
+    document.getElementById('avgMarketSizeDisplay').innerText = avgMarketSize.toFixed(0);
+    document.getElementById('avgAffordableSizeDisplay').innerText = avgAffordableSize.toFixed(0);
+    document.getElementById('avgTotalSizeDisplay').innerText = avgTotalSize.toFixed(0);
 }
