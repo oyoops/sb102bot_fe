@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('acreageSection').style.display = 'block'; // Display the acreage input section
 
             //...show affordable % slider
-            const affordablePercentageSlider = document.getElementById("affordablePercentageSlider");
+            const affordablePercentageSlider = document.getElementById("affordablePctSlider");
             const affordablePercentageValue = document.getElementById("affordablePercentageValue");
             affordablePercentageSlider.oninput = function() {
                 affordablePercentageValue.textContent = this.value + '%';
