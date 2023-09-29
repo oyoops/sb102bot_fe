@@ -52,8 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const row = `
                 <tr>
                     <td>${countyData.county_name}</td>
-                    <td>${countyData.area_median_income}</td>
-                    <td>${countyData.millage_rate}</td>
                     <td>${countyData.county_amis_income}</td>
                     <td>${countyData.county_millage}</td>
                 </tr>

@@ -1,4 +1,3 @@
-
 const { Pool } = require('pg');
 
 const pool = new Pool({
@@ -11,7 +10,6 @@ const pool = new Pool({
         rejectUnauthorized: false
     }
 });
-
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -32,14 +30,14 @@ module.exports = async (req, res) => {
             WITH CloseParcels AS (
                 SELECT county_name, geom
                 FROM public.parcels_master
-            	WHERE ST_DWithin(geom, ST_SetSRID(ST_Point($1, $2), 4326), $3)
+                WHERE ST_DWithin(geom, ST_SetSRID(ST_Point($1, $2), 4326), $3)
             )
             SELECT county_name
-            	FROM CloseParcels
-            	ORDER BY ST_Distance(geom, ST_SetSRID(ST_Point($1, $2), 4326))
-            	LIMIT 1;
+            FROM CloseParcels
+            ORDER BY ST_Distance(geom, ST_SetSRID(ST_Point($1, $2), 4326))
+            LIMIT 1;
         `;
-        const countySensitivity = 0.01; // distance (in km) to find closest parcel when given a lat/long (approx. ~0.07 mi. or something)
+        const countySensitivity = 0.01;
         console.log('County query starting...');
         const countyResult = await pool.query(countyQuery, [lng, lat, countySensitivity]);
         console.log('County query complete.');
@@ -57,21 +55,24 @@ module.exports = async (req, res) => {
             SELECT 
                 fc.county_name, 
                 fc.area_median_income, 
-                fc.millage_rate,
                 ca.area_median_income AS county_amis_income,
-                cm.millage AS county_millage
+                cm.millage AS county_millage,
+                cr.max_rent_0bd_120ami,
+                cr.max_rent_1bd_120ami,
+                cr.max_rent_2bd_120ami,
+                cr.max_rent_3bd_120ami,
+                cr.max_rent_4bd_120ami,
+                cr.max_rent_5bd_120ami
             FROM public.florida_counties AS fc
             LEFT JOIN county_amis AS ca ON fc.county_name = ca.county_name
             LEFT JOIN county_millages AS cm ON fc.county_name = cm.county_name
+            LEFT JOIN county_max_rents AS cr ON fc.county_name = cr.county_name
             WHERE fc.county_name = $1;
         `;
         const dataResult = await pool.query(dataQuery, [countyName]);
         console.log('Data query complete.');
         console.log(`Data query returned ${dataResult.rowCount} rows.\nResponse: ${JSON.stringify(dataResult.rows[0])}`);
-        //console.log(dataResult.rows[0]);
         
-        // ...
-        // ...
         // ...
         
         console.log('Sending response to client.');
