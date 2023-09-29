@@ -91,14 +91,7 @@
         </tbody>
     </table>
 
-    <!-- Acreage input section -->
-    <div id="acreageSection" style="display: none;">
-        <h3>What's the acreage of the property?</h3>
-        <input type="number" id="acreageInput" placeholder="Acreage">
-        <button id="calculateUnitsButton">Calculate Maximum Units</button>
-        <div id="unitCalculationResult"></div>
-    </div>
-    
+
     <p>
         <br><br>
         Last updated Sept. 29, 2023
@@ -118,6 +111,13 @@
         <input type="number" id="acreageInput" placeholder="Acreage">
         <button id="calculateUnitsButton">Find unit count</button>
         <div id="unitCalculationResult"></div>
+<!-- Slider for Affordable Percentage -->
+<div id="affordablePercentageSliderDiv" style="display: none;">
+    <h3>Set Affordable Percentage:</h3>
+    <input type="range" min="0" max="100" value="40" class="slider" id="affordablePercentageSlider">
+    <span id="affordablePercentageValue">40%</span>
+</div>
+
     </div>
 
     <!-- Bedroom type inputs -->
@@ -128,8 +128,6 @@
 
     <!-- Run scripts -->
     <script src="main.js"></script>
-    <script src="acreageCalculation.js"></script>
-
     <!-- <script src="addressAnalysis.js"></script> -->
     <!-- <script src="additionalContent.js"></script> -->
 

@@ -5,17 +5,18 @@ document.getElementById('calculateUnitsButton').addEventListener('click', functi
     
     // Assuming a constant density value for now (modify as needed)
     const densityValue = 10;  // Example density value, modify as needed
-    
+    const affordablePctInput = 0.4
+
     // Calculate affordable and market units
-    const affordableUnits = Math.ceil(0.4 * (acreageValue * densityValue));
+    const affordableUnits = Math.ceil(affordablePctInput * (acreageValue * densityValue));
     const marketUnits = (acreageValue * densityValue) - affordableUnits;
     
     // Update the table with calculated values
     const tableBody = document.createElement('tbody');
     const row = `
         <tr>
-            <td>${affordableUnits}</td>
-            <td>${marketUnits}</td>
+            <td>${affordableUnits} units</td>
+            <td>${marketUnits} units</td>
         </tr>
     `;
     tableBody.innerHTML = row;
@@ -24,7 +25,7 @@ document.getElementById('calculateUnitsButton').addEventListener('click', functi
         <thead>
             <tr>
                 <th>Affordable</th>
-                <th>Market</th>
+                <th>Market rate</th>
             </tr>
         </thead>
     `;
@@ -43,7 +44,7 @@ document.getElementById('calculateUnitsButton').addEventListener('click', functi
     const affordablePercentage = (affordableUnits / (affordableUnits + marketUnits)) * 100;
     if (affordablePercentage < 40) {
         const warning = document.createElement('p');
-        warning.innerText = "Not at 40% affordable threshold";
+        warning.innerText = "Not at 40% affordable threshold!";
         warning.style.color = "red";
         warningContainer.appendChild(warning);
     }
@@ -51,7 +52,7 @@ document.getElementById('calculateUnitsButton').addEventListener('click', functi
     // Display the abatement label
     const abatementLabel = document.createElement('p');
     const abatementValue = Math.round(0.75 * affordablePercentage);
-    abatementLabel.innerText = `Abatement = ${abatementValue}%`;
+    abatementLabel.innerText = `Abatement = ${abatementValue}% of ad valorem property taxes`;
     warningContainer.appendChild(abatementLabel);
     
     document.getElementById('acreageSection').appendChild(warningContainer);
