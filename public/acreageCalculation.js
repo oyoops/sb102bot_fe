@@ -58,4 +58,68 @@ document.getElementById('calculateUnitsButton').addEventListener('click', functi
     document.getElementById('acreageSection').appendChild(warningContainer);
 });
 
-// Event listener for the Calculate Maximum Rents button
+
+// Select the new input elements
+const marketStudioSize = document.getElementById('marketStudioSize');
+const market1BDSize = document.getElementById('market1BDSize');
+const market2BDSize = document.getElementById('market2BDSize');
+const market3BDSize = document.getElementById('market3BDSize');
+
+const affordableStudioSize = document.getElementById('affordableStudioSize');
+const affordable1BDSize = document.getElementById('affordable1BDSize');
+const affordable2BDSize = document.getElementById('affordable2BDSize');
+const affordable3BDSize = document.getElementById('affordable3BDSize');
+
+const matchSizesCheckbox = document.getElementById('matchAffordableSizes');
+
+// Add event listener for the checkbox
+matchSizesCheckbox.addEventListener('change', function() {
+    if (this.checked) {
+        // Copy market unit sizes to affordable unit sizes
+        affordableStudioSize.value = marketStudioSize.value;
+        affordable1BDSize.value = market1BDSize.value;
+        affordable2BDSize.value = market2BDSize.value;
+        affordable3BDSize.value = market3BDSize.value;
+        
+        // Disable affordable unit size inputs
+        affordableStudioSize.disabled = true;
+        affordable1BDSize.disabled = true;
+        affordable2BDSize.disabled = true;
+        affordable3BDSize.disabled = true;
+    } else {
+        // Re-enable affordable unit size inputs
+        affordableStudioSize.disabled = false;
+        affordable1BDSize.disabled = false;
+        affordable2BDSize.disabled = false;
+        affordable3BDSize.disabled = false;
+    }
+});
+
+// Function to calculate weighted average sizes
+function calculateWeightedAverageSizes() {
+    // Get the unit counts (from previous calculations)
+    const affordableUnits = Math.ceil(affordablePercentage / 100 * totalUnits);
+    const marketUnits = totalUnits - affordableUnits;
+    
+    // Calculate weighted averages for each unit type
+    const avgMarketSize = (marketStudioSize.value * studioUnits + market1BDSize.value * oneBDUnits + market2BDSize.value * twoBDUnits + market3BDSize.value * threeBDUnits) / marketUnits;
+    const avgAffordableSize = (affordableStudioSize.value * studioUnits + affordable1BDSize.value * oneBDUnits + affordable2BDSize.value * twoBDUnits + affordable3BDSize.value * threeBDUnits) / affordableUnits;
+    const avgTotalSize = (avgMarketSize * marketUnits + avgAffordableSize * affordableUnits) / totalUnits;
+    
+    // Display these values somewhere on the page (you may need to adjust this based on where you want to show the results)
+    // For now, I'm just logging them to the console
+    console.log('Average Market Unit Size:', avgMarketSize);
+    console.log('Average Affordable Unit Size:', avgAffordableSize);
+    console.log('Average Total Unit Size:', avgTotalSize);
+}
+
+// Add event listeners for the input fields to update calculations in real-time
+marketStudioSize.addEventListener('input', calculateWeightedAverageSizes);
+market1BDSize.addEventListener('input', calculateWeightedAverageSizes);
+market2BDSize.addEventListener('input', calculateWeightedAverageSizes);
+market3BDSize.addEventListener('input', calculateWeightedAverageSizes);
+
+affordableStudioSize.addEventListener('input', calculateWeightedAverageSizes);
+affordable1BDSize.addEventListener('input', calculateWeightedAverageSizes);
+affordable2BDSize.addEventListener('input', calculateWeightedAverageSizes);
+affordable3BDSize.addEventListener('input', calculateWeightedAverageSizes);

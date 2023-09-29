@@ -118,8 +118,46 @@
         <div id="unitCalculationResult"></div>
     </div>
 
+    
 
-
+    <!-- Square footage input section -->
+    <div id="sqftInputSection" style="display: none;">
+        <h3>Enter the square footage for each unit type:</h3>
+        <label>
+            <input type="checkbox" id="matchAffordableSizes"> Use same sizes for affordable units
+        </label>
+        <table id="sqftInputTable">
+            <thead>
+                <tr>
+                    <th>Unit Type</th>
+                    <th>Market Units (Sq. Ft.)</th>
+                    <th>Affordable Units (Sq. Ft.)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Studio</td>
+                    <td><input type="number" id="marketStudioSize"></td>
+                    <td><input type="number" id="affordableStudioSize"></td>
+                </tr>
+                <tr>
+                    <td>1BD</td>
+                    <td><input type="number" id="market1BDSize"></td>
+                    <td><input type="number" id="affordable1BDSize"></td>
+                </tr>
+                <tr>
+                    <td>2BD</td>
+                    <td><input type="number" id="market2BDSize"></td>
+                    <td><input type="number" id="affordable2BDSize"></td>
+                </tr>
+                <tr>
+                    <td>3BD</td>
+                    <td><input type="number" id="market3BDSize"></td>
+                    <td><input type="number" id="affordable3BDSize"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 
     <!-- Bedroom type inputs -->
