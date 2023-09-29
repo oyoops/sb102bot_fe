@@ -28,7 +28,7 @@
             <br>Enter an address to find out.
         </p>
         <form id="searchForm">
-            <input type="text" id="addressInput" placeholder="420 Calle Ocho, Miami, FL">
+            <input type="text" id="addressInput" placeholder="4111 NW 6th St, Deerfield Beach, FL">
             <br><br>
             <button type="submit">Underwrite</button>
         </form>
@@ -59,18 +59,17 @@
 
     <!-- Try Again button -->
     <button id="tryAgainButton" style="display: none;">
-        <b>Search for a new property</b>
+        <b>New Search</b>
     </button>
 
     <!-- County data table -->
+    <h3>Municipality</h3>
     <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
         <thead>
             <tr>
-                <th>County Name</th>
+                <th>County</th>
                 <th>Area Median Income</th>
-                <th>Millage Rate</th>
-                <th>County AMIS Income</th>
-                <th>County Millage</th>
+                <th>Millage</th>
             </tr>
         </thead>
         <tbody>
@@ -79,10 +78,10 @@
     </table>
 
     <!-- County max rents table -->
+    <h3>Affordable rent limits ('23)</h3>
     <table id="countyMaxRentsTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
         <thead>
             <tr>
-                <th>County Name</th>
                 <th>Studio</th>
                 <th>1BD</th>
                 <th>2BD</th>
