@@ -3,6 +3,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const countyTableBody = document.querySelector('#countyDataTable tbody');
     const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');  // Select the new table's tbody
 
+    function initializeMap(lat, lng) {
+        const mapOptions = {
+            center: { lat: lat, lng: lng },
+            zoom: 17,
+            mapTypeId: google.maps.MapTypeId.SATELLITE
+        };
+    
+        const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    
+        // Add a marker at the specified location
+        new google.maps.Marker({
+            position: { lat: lat, lng: lng },
+            map: map
+        });
+    }
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const addressInput = document.querySelector('#addressInput');
@@ -37,21 +53,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Only proceeds if geocode was successful
             // (so even if we never get an address, we can still do lat/long stuff)
+
+            // Get the lat/long from the geocode data
             const lat = geocodeData.results[0].geometry.location.lat;
             const lng = geocodeData.results[0].geometry.location.lng;
             
-            // Set up the Google Map of the input address
-            const mapOptions = {
-                center: { lat: lat, lng: lng },
-                zoom: 15,
-                mapTypeId: 'satellite'
-            };
+            // Dynamically create a div for the map
+            const mapDiv = document.createElement('div');
+            mapDiv.id = 'map';
+            mapDiv.style.width = '100%';
+            mapDiv.style.height = '400px';
+            document.querySelector('#result').appendChild(mapDiv);
 
-            // Initialize the map
-            const map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-             // Show the input address on the map
-            document.querySelector('mapInputAddress').style.display = 'block';
+            // Show the Google Map container
+            document.getElementById('mapContainer').style.display = 'block';
+            
+            // Initialize map using lat/lng instead of user input address
+            initializeMap(lat, lng);
 
             // Check the PostgreSQL database for the county at this location (geocoded lat/long derived from address)
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
