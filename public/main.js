@@ -107,7 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('There was an error with the server. Please try again later.');
             } else {
                 console.error('Error:', error);
-                alert('Failed to fetch data. Please try again.');
+                // TO-DO: Reset loading indicator (currently gets left hanging if error occurs before Part 1 is complete)
+                alert('Failed to fetch data.\nPlease try again in a few minutes.');
             }
         }
     });
