@@ -24,16 +24,28 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const geocodeData = await geocodeResponse.json();
             if (!geocodeData.results || geocodeData.results.length === 0) {
-                throw new Error('No parcel found at that address.');
+                throw new Error('WHOOPS!!!!!!!!\nNo parcel found there.');
             }
 
+            // only proceed if we have lat/lng
             const lat = geocodeData.results[0].geometry.location.lat;
             const lng = geocodeData.results[0].geometry.location.lng;
 
+            // Initialize the map
+            const mapOptions = {
+                center: { lat: lat, lng: lng },
+                zoom: 15,
+                mapTypeId: 'satellite'
+            };
+            const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+
+
+            // only proceed if we have county data
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
             const countyDataResponse = await fetch(countyDataEndpoint);
             const countyData = await countyDataResponse.json();
-
+            
             if (!countyData.county_name) {
                 throw new Error('No data available for the selected location.');
             }
