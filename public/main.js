@@ -17,6 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
             position: { lat: lat, lng: lng },
             map: map
         });
+
+        // Show the Google Map container
+        document.getElementById('mapContainer').style.display = 'block';
+        //// Show the Google Map
+        //document.getElementById('map').style.display = 'block';
     }
 
     form.addEventListener('submit', async (e) => {
@@ -54,19 +59,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // Only proceeds if geocode was successful
             // (so even if we never get an address, we can still do lat/long stuff)
 
+            // Hide the loading indicator
+            document.querySelector('.loading').style.display = 'none';
+
             // Get the lat/long from the geocode data
             const lat = geocodeData.results[0].geometry.location.lat;
             const lng = geocodeData.results[0].geometry.location.lng;
             
-            // Dynamically create a div for the map
-            const mapDiv = document.createElement('div');
-            mapDiv.id = 'map';
-            mapDiv.style.width = '100%';
-            mapDiv.style.height = '400px';
-            document.querySelector('#result').appendChild(mapDiv);
-
-            // Show the Google Map container
-            document.getElementById('mapContainer').style.display = 'block';
+            //// Show the Google Map container
+            ////document.getElementById('mapContainer').style.display = 'block';
             
             // Initialize map using lat/lng instead of user input address
             initializeMap(lat, lng);
