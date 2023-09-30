@@ -82,6 +82,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // DONE with Part 1
             console.log('Part 1 -- Data successfully populated.');
 
+            // After successfully populating the tables,
+            // display the 'Development Program' inputs section (Part 2)
+            document.getElementById('developmentProgramInputSection').style.display = 'block';
+
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);

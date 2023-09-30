@@ -43,8 +43,12 @@
     </div>
 
 
-    <!-- NOT IN USE: Tallest building information -->
-    <div id="result">
+    <!--- Loading indicator section -->
+    <div class="loading">Please wait, doing due diligence...</div>
+
+
+    <!-- (NOT IN USE YET) Tallest building information -->
+    <div id="result" style="display: none;">
         <div class="imageContainer">
             <div id="inputAddressImage" class="imageItem"></div>
             <div id="tallestBuildingImage" class="imageItem"></div>
@@ -52,15 +56,10 @@
     </div>
 
 
-    <!--- Loading indicator section -->
-    <div class="loading">Please wait, doing due diligence...</div>
-
-
     <!-- Google Map -->
     <div id="map" style="height: 300px; width: 100%; display: none;"></div>
 
-
-
+    
     <!-- Try Again button (hidden)-->
     <button id="tryAgainButton" style="display: none;">
         <b>New Search</b>
@@ -69,7 +68,7 @@
 
     <!-- County data table -->
     <h3>Municipal info:</h3>
-    <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+    <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
                 <th>County</th>
@@ -85,7 +84,7 @@
 
     <!-- County max rents table -->
     <h3>Affordable rent limits:</h3>
-    <table id="countyMaxRentsTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+    <table id="countyMaxRentsTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
                 <th>Studio</th>
@@ -100,9 +99,7 @@
     </table>
 
 
-
-
-    <!-- DEVELOPMENT PROGRAM INPUTS: -->
+    <!-- START: PART 2 -- DEVELOPMENT PROGRAM I/O -->
 
     <div id="developmentProgramInputSection" style="display: none;">
         <br>
@@ -203,12 +200,19 @@
             </tbody>
         </table>
 
-        <!-- Spacing -->
-        <br><br><br>
+        <!-- END: PART 2 -- DEVELOPMENT PROGRAM I/O -->
 
+
+
+
+        <!-- START: PART 3 -- (...) -->
+
+        <!-- END: PART 3 -- (...) -->
 
     </div>
 
+    <!-- Spacing -->
+    <br><br><br>
 
     <!-- Footer -->
     <footer>

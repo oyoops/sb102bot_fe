@@ -181,14 +181,14 @@ button:hover {
 footer {
     padding: 2px;
     background-color: #afc6ed;
-    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.1);
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     text-align: center;
-    font-weight: 300;
-    font-size: 0.8em;
+    font-weight: 200;
+    font-size: 0.6em;
 }
 
 footer a {
