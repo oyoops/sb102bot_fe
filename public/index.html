@@ -47,7 +47,8 @@
     <div class="loading">Please wait, doing due diligence...</div>
 
 
-    <!-- (NOT IN USE YET) Tallest building information -->
+    <!-- (NOT IN USE YET) 'Tallest nearby building' information section -->
+    <!-- (this section describes the location of the tallest building within a one-mile radius of the input location) -->
     <div id="result" style="display: none;">
         <div class="imageContainer">
             <div id="inputAddressImage" class="imageItem"></div>
@@ -56,18 +57,18 @@
     </div>
 
 
-    <!-- Google Map -->
+    <!-- Google Map showing input location -->
+    <!-- TO-DO: Show both the input location as a placemark AND the tallest building within one mile as another placemark -->
     <div id="mapInputAddress" style="height: 300px; width: 100%; display: none;"></div>
 
     
-    <!-- Try Again button (hidden)-->
-    <button id="tryAgainButton" style="display: none;">
-        <b>New Search</b>
-    </button>
+    <!-- (NOT IN USE YET!) Try Again button -->
+    <button id="tryAgainButton" style="display: none;"><b>New Search</b></button>
 
 
     <!-- County data table -->
-    <h3>Municipal info:</h3>
+    <!-- This table loads some general data about the municipality of the parcel returned by the query to the PostgreSQL Florida parcel database -->
+    <!-- <h3>Municipal info:</h3> -->
     <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
@@ -83,14 +84,15 @@
 
 
     <!-- County max rents table -->
-    <h3>Affordable rent limits:</h3>
+    <!-- This table loads data (maximum 'affordable' rent limits by bedroom count) returned by the query to the PostgreSQL Florida parcel database -->
+    <!-- <h3>Affordable rent limits:</h3> -->
     <table id="countyMaxRentsTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
-                <th>Studio</th>
-                <th>1BD</th>
-                <th>2BD</th>
-                <th>3BD</th>
+                <th>Max Studio</th>
+                <th>Max 1BD</th>
+                <th>Max 2BD</th>
+                <th>Max 3BD</th>
             </tr>
         </thead>
         <tbody>
@@ -105,12 +107,12 @@
         <br>
         
         <!-- Acreage Input -->
-        <h3>What's the acreage of the property?</h3>
+        <h3>What is the property's acreage?</h3>
         <input type="number" id="acreageInput" placeholder="Acreage">
         <br>
 
         <!-- Density Input -->
-        <h3>What's the maximum density per acre in the municipality?</h3>
+        <h3>What's the highest density allowed in this municipality?</h3>
         <input type="number" id="densityInput" placeholder="Units/ac.">
         <br>
 
@@ -120,9 +122,8 @@
 
         <!-- Affordable Percentage Slider -->
         <label for="affordablePctSlider">Affordable Percentage: <span id="affordablePctDisplay">40%</span></label>
-        <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
+        <input type="range" id="affordablePctSlider" min="0" max="100" value="10" step="1">
         <br>
-        
         
         <!-- Unit Count Outputs -->
         <h4>Unit Counts</h4>

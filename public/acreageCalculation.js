@@ -1,6 +1,4 @@
-// MOVED TO MAIN After successfully populating the tables, display the 'Development Program' input section
-//document.getElementById('developmentProgramInputSection').style.display = 'block';
-console.log('Part 2 -- Start: Development Program I/O');
+console.log('Start: Part 2 -- Development Program I/O');
 
 // Set up an event listener for the acreage input to recalculate values in real-time
 document.getElementById('acreageInput').addEventListener('input', function() {
@@ -15,7 +13,7 @@ document.getElementById('densityInput').addEventListener('input', function() {
 // Show affordable % slider
 const affordablePercentageSlider = document.getElementById("affordablePctSlider");
 const affordablePercentageValue = document.getElementById("affordablePercentageValue");
-affordablePercentageSlider.value = 0.00; // 0.40; // Set the default value of the slider to 40% upon initial load
+affordablePercentageSlider.value = 0.10; // 0.00; // 0.40; // Set the default value of the slider to 40% upon initial load
 affordablePercentageSlider.oninput = function() {
     affordablePercentageValue.textContent = this.value + '%';
     calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
@@ -57,7 +55,7 @@ document.querySelectorAll('.sizeInput').forEach(input => {
 });
 
 // Event listeners for Market size inputs to set equal Affordable sizes (if checkbox is checked)
-// and then recalculate weighted averages in real-time
+//     and then recalculate weighted averages in real-time
 document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
     input.addEventListener('input', () => {
         if (document.getElementById('matchAffordableSizes').checked) {
@@ -67,7 +65,7 @@ document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
     });
 });
 
-
+console.log('End: Part 2 -- Development Program I/O');
 
 //           //
 /* Functions */
