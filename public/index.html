@@ -95,16 +95,16 @@
     <!-- Additional content -->
 
 
-    <!-- Acreage input section -->
-    <div id="acreageSection" style="display: none;">
+    <!-- Development Program input section -->
+    <div id="developmentProgramInputSection" style="display: none;">
         <br>
         
         <h3>What's the acreage of the property?</h3>
         <input type="number" id="acreageInput" placeholder="Acreage">
         <br>
 
-        <h3>What's the density per acre?</h3>
-        <input type="number" id="densityInput" placeholder="Density per Acre">
+        <h3>What's the maximum density per acre in the municipality?</h3>
+        <input type="number" id="densityInput" placeholder="Units/ac.">
         <br>
 
         <div id="unitCalculationResult"></div>
@@ -116,12 +116,12 @@
         <br>
         
         <!-- Unit Size Inputs -->
-        <h4>Unit Sizes (in sq. ft.)</h4>
-        <label><input type="checkbox" id="matchAffordableSizes"> Match Affordable Sizes to Market Sizes</label>
+        <h4>Unit Sizes</h4>
+        <label><input type="checkbox" id="matchAffordableSizes"> Match Affordable to Market Sizes</label>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
-                    <th>Unit Type</th>
+                    <th></th>
                     <th>Market Rate</th>
                     <th>Affordable</th>
                 </tr>
@@ -149,18 +149,18 @@
                 </tr>
             </tbody>
         </table>
-        <h4>Average Sizes (in sq. ft.)</h4>
-        <p>Market Rate: <span id="avgMarketSizeDisplay">0</span></p>
-        <p>Affordable: <span id="avgAffordableSizeDisplay">0</span></p>
-        <p>Total: <span id="avgTotalSizeDisplay">0</span></p>
+
+
+
 
         <!-- Unit Count Outputs -->
-        <h4>Unit Calculation</h4>
+        <h4>Unit Counts</h4>
         <table id="unitCalculationTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
                 <tr>
-                    <th>Affordable Units</th>
-                    <th>Market Rate Units</th>
+                    <th>Affordable</th>
+                    <th>Market Rate</th>
+                    <th><b>Total</b></th>
                 </tr>
             </thead>
             <tbody id="unitCalculationTableBody">
@@ -168,12 +168,35 @@
             </tbody>
         </table>
     
+
+        <!-- Warnings Section -->
+        <table id="warningsTable" border="0" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
+            <thead>
+                <tr>
+                    <th>Notes:</th>
+                </tr>
+            </thead>
+            <tbody id="warningsTableBody">
+                <!-- Data will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+
+
+        <!-- Weighted Average Unit Size Outputs -->
+        <h4>Average Sizes (in sq. ft.)</h4>
+        <p>Market Rate: <span id="avgMarketSizeDisplay">0</span> SF</p>
+        <p>Affordable: <span id="avgAffordableSizeDisplay">0</span> SF</p>
+        <p>Blended: <span id="avgTotalSizeDisplay">0</span> SF</p>
+
+        
+        
+        
         <!-- Abatement Outputs -->
         <h4>Abatement Information</h4>
         <table id="abatementTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
                 <tr>
-                    <th>Abatement Value</th>
+                    <th>Property Tax Abatement Value</th>
                 </tr>
             </thead>
             <tbody id="abatementTableBody">

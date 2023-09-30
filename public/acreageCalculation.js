@@ -1,5 +1,5 @@
-// After successfully populating the tables, display the (poorly named) "acreage input section"
-document.getElementById('acreageSection').style.display = 'block';
+// After successfully populating the tables, display the Development Program input section input section"
+document.getElementById('developmentProgramInputSection').style.display = 'block';
 
 // Show affordable % slider
 const affordablePercentageSlider = document.getElementById("affordablePctSlider");
@@ -65,27 +65,30 @@ document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
 
 // Calculate maximum units and show them in a table
 function calculateMaximumUnits() {
+    // Acreage, density, and affordable percentage inputs
     const acreageValue = parseFloat(document.getElementById('acreageInput').value);
     const densityValue = parseFloat(document.getElementById('densityInput').value) || 10; // Default to 10 if not provided
-
     const affordablePctSlider = document.getElementById('affordablePctSlider');
     const affordablePctDisplay = document.getElementById('affordablePctDisplay');
     const affordablePct = parseFloat(affordablePctSlider.value) / 100;
 
+    // Calculate unit counts
     const totalUnits = Math.floor(acreageValue * densityValue);
     const affordableUnits = Math.ceil(affordablePct * totalUnits);
     const marketUnits = totalUnits - affordableUnits;
 
-    // Update the table with calculated values
+    // Update the table with unit counts
     const tableBody = document.getElementById('unitCalculationTableBody');
     tableBody.innerHTML = `
         <tr>
             <td>${affordableUnits}</td>
             <td>${marketUnits}</td>
+            <td>${totalUnits}</td>
         </tr>
     `;
     // Display the unit calculation table now that we have data
     document.getElementById('unitCalculationTable').style.display = 'block';
+
 
     // Update abatement
     const abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100);
