@@ -14,8 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
+            // Call the geocode API on input address
             const geocodeEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
+            document.querySelector('.loading').style.display = 'block';  // Show loading indicator
             const geocodeResponse = await fetch(geocodeEndpoint);
+            document.querySelector('.loading').style.display = 'none';  // Hide loading indicator
             if (!geocodeResponse.ok) {
                 throw new Error(`Server responded with ${geocodeResponse.status}: ${await geocodeResponse.text()}`);
             }
