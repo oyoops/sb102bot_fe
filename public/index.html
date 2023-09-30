@@ -40,6 +40,8 @@
         </p>
     </div>
 
+
+    <!-- NOT IN USE: Tallest building information -->
     <div id="result">
         <div class="imageContainer">
             <div id="inputAddressImage" class="imageItem"></div>
@@ -47,18 +49,21 @@
         </div>
     </div>
 
-    <!--- Loading indicator -->
-    <div class="loading">Conducting due diligence, please wait</div>
+
+    <!--- Loading indicator section -->
+    <div class="loading">Please wait, doing due diligence...</div>
+
 
     <!-- Footer -->
     <!-- <footer> -->
     <!--</footer> -->
 
-    <!-- Try Again button -->
-    <!-- <button id="tryAgainButton" style="display: none;"> -->
+
+    <!-- Try Again button (hidden)-->
     <button id="tryAgainButton" style="display: none;">
         <b>New Search</b>
     </button>
+
 
     <!-- County data table -->
     <h3>Municipal info:</h3>
@@ -74,6 +79,7 @@
             <!-- Data will be inserted here by JavaScript -->
         </tbody>
     </table>
+
 
     <!-- County max rents table -->
     <h3>Affordable rent limits:</h3>
@@ -92,13 +98,14 @@
     </table>
 
 
-    <!-- Additional content -->
 
 
-    <!-- Development Program input section -->
+    <!-- DEVELOPMENT PROGRAM INPUTS: -->
+
     <div id="developmentProgramInputSection" style="display: none;">
         <br>
         
+        <!-- Acreage and Density Inputs -->
         <h3>What's the acreage of the property?</h3>
         <input type="number" id="acreageInput" placeholder="Acreage">
         <br>
@@ -110,14 +117,36 @@
         <div id="unitCalculationResult"></div>
         <br>
         
+
         <!-- Affordable Percentage Slider -->
         <label for="affordablePctSlider">Affordable Percentage: <span id="affordablePctDisplay">40%</span></label>
         <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
         <br>
         
+        
+        <!-- Unit Count Outputs -->
+        <h4>Unit Counts</h4>
+        <table id="unitCalculationTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
+            <thead>
+                <tr>
+                    <th>Affordable</th>
+                    <th>Market Rate</th>
+                    <th><b>Total</b></th>
+                </tr>
+            </thead>
+            <tbody id="unitCalculationTableBody">
+                <!-- Data will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+    
+
+        <!-- Warnings Section -->
+        <div id="warningContainer" style="display: none"></div>
+
+
         <!-- Unit Size Inputs -->
         <h4>Unit Sizes</h4>
-        <label><input type="checkbox" id="matchAffordableSizes"> Match Affordable to Market Sizes</label>
+        <label><input type="checkbox" id="matchAffordableSizes"> Match Affordable to Market Unit Sizes</label>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
@@ -151,28 +180,6 @@
         </table>
 
 
-
-
-        <!-- Unit Count Outputs -->
-        <h4>Unit Counts</h4>
-        <table id="unitCalculationTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
-            <thead>
-                <tr>
-                    <th>Affordable</th>
-                    <th>Market Rate</th>
-                    <th><b>Total</b></th>
-                </tr>
-            </thead>
-            <tbody id="unitCalculationTableBody">
-                <!-- Data will be inserted here by JavaScript -->
-            </tbody>
-        </table>
-    
-
-        <!-- Warnings Section -->
-        <div id="warningContainer" style="display: none"></div>
-
-
         <!-- Weighted Average Unit Size Outputs -->
         <h4>Average Sizes (in sq. ft.)</h4>
         <p>Market Rate: <span id="avgMarketSizeDisplay">0</span> SF</p>
@@ -180,7 +187,7 @@
         <p>Blended: <span id="avgTotalSizeDisplay">0</span> SF</p>
 
         
-        <!-- Abatement Outputs -->
+        <!-- Property Tax Abatement Outputs -->
         <h4>Abatement Information</h4>
         <table id="abatementTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
@@ -195,21 +202,18 @@
     </div>
 
 
-        
-    <p>
-        <br><br>
-        Last updated Sept. 29, 2023
-        <br>Created by <a href="https://twitter.com/oyoops" target="_blank"><u>@oyoops</u></a> | <a href="https://cresunshine.com/" target="_blank"><u>CRE☀️</u></a>
-    </p>
+    <!-- Footer -->
+    <footer>
+        <p>
+            <br>Created by <a href="https://twitter.com/oyoops" target="_blank"><u>@oyoops</u></a> | <a href="https://cresunshine.com/" target="_blank"><u>CRE☀️</u></a>
+            <br>Last updated Sept. 30, 2023
+        </p>
+    </footer>
 
-    
 
-    <!-- Run scripts -->
+    <!-- Scripts -->
     <script src="main.js"></script>
     <script src="acreageCalculation.js"></script>
-
-    <!-- <script src="addressAnalysis.js"></script> -->
-    <!-- <script src="additionalContent.js"></script> -->
 
 </body>
 

@@ -12,6 +12,7 @@ document.getElementById('densityInput').addEventListener('input', function() {
 // Show affordable % slider
 const affordablePercentageSlider = document.getElementById("affordablePctSlider");
 const affordablePercentageValue = document.getElementById("affordablePercentageValue");
+affordablePercentageSlider.value = 0.40; // Set the default value of the slider to 40% upon initial load
 affordablePercentageSlider.oninput = function() {
     affordablePercentageValue.textContent = this.value + '%';
     calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
