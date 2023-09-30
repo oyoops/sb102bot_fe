@@ -1,6 +1,14 @@
 // After successfully populating the tables, display the Development Program input section input section"
 document.getElementById('developmentProgramInputSection').style.display = 'block';
 
+// Set up an event listener acreage and density inputs to recalculate values in real-time
+document.getElementById('acreageInput').addEventListener('input', function() {
+    calculateMaximumUnits();
+});
+document.getElementById('densityInput').addEventListener('input', function() {
+    calculateMaximumUnits();
+});
+
 // Show affordable % slider
 const affordablePercentageSlider = document.getElementById("affordablePctSlider");
 const affordablePercentageValue = document.getElementById("affordablePercentageValue");
