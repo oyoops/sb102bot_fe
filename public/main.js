@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
+            console.log('Part 1 -- Start: Geocoding + Database Lookup -> County Data');
             // Call the geocode API on input address
             const geocodeEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
             document.querySelector('.loading').style.display = 'block';  // Show loading indicator

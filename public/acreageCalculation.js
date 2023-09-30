@@ -1,5 +1,6 @@
 // MOVED TO MAIN After successfully populating the tables, display the 'Development Program' input section
 //document.getElementById('developmentProgramInputSection').style.display = 'block';
+console.log('Part 2 -- Start: Development Program I/O');
 
 // Set up an event listener for the acreage input to recalculate values in real-time
 document.getElementById('acreageInput').addEventListener('input', function() {
