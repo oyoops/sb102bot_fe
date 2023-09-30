@@ -117,8 +117,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // DONE with Part 1
             console.log('End: Part 1 -- Geocoding + Database Lookup -> County Data');
 
+            // Prep for Part 2:
             // Display the 'Development Program' inputs section (Part 2) after successfully populating the tables
             document.getElementById('developmentProgramInputSection').style.display = 'block';
+            // Call acreageCalculation.js to calculate initial maximum units using default values
+            calculateWeightedAverageSizes(); // this might not work...
 
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
