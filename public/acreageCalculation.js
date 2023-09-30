@@ -100,15 +100,15 @@ function calculateWeightedAverageSizes() {
     const marketUnits = parseInt(document.querySelector('#unitCalculationTableBody td:last-child').innerText);
     const totalUnits = affordableUnits + marketUnits;
 
-    const marketStudioSize = parseFloat(document.getElementById('marketStudioSize').value) || 500;
-    const market1BDSize = parseFloat(document.getElementById('market1BDSize').value) || 750;
-    const market2BDSize = parseFloat(document.getElementById('market2BDSize').value) || 1000;
-    const market3BDSize = parseFloat(document.getElementById('market3BDSize').value) || 1250;
+    const marketStudioSize = parseFloat(document.getElementById('marketStudioSize').value) || 0;
+    const market1BDSize = parseFloat(document.getElementById('market1BDSize').value) || 0;
+    const market2BDSize = parseFloat(document.getElementById('market2BDSize').value) || 0;
+    const market3BDSize = parseFloat(document.getElementById('market3BDSize').value) || 0;
 
-    const affordableStudioSize = parseFloat(document.getElementById('affordableStudioSize').value) || 500;
-    const affordable1BDSize = parseFloat(document.getElementById('affordable1BDSize').value) || 750;
-    const affordable2BDSize = parseFloat(document.getElementById('affordable2BDSize').value) || 1000;
-    const affordable3BDSize = parseFloat(document.getElementById('affordable3BDSize').value) || 1250;
+    const affordableStudioSize = parseFloat(document.getElementById('affordableStudioSize').value) || 0;
+    const affordable1BDSize = parseFloat(document.getElementById('affordable1BDSize').value) || 0;
+    const affordable2BDSize = parseFloat(document.getElementById('affordable2BDSize').value) || 0;
+    const affordable3BDSize = parseFloat(document.getElementById('affordable3BDSize').value) || 0;
 
     // Calculate the weighted average sizes for market, affordable, and total units
     const avgMarketSize = (marketStudioSize + market1BDSize + market2BDSize + market3BDSize) / 4;
