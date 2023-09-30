@@ -122,7 +122,7 @@ function calculateMaximumUnits() {
         warningContainer.innerHTML += '<p style="color: orange;">Not at 40% affordable threshold!</p>';
     } 
     if (affordablePct < 0.1) {
-        warningContainer.innerHTML += '<p style="color: orange;">Not at 10% affordable threshold!</p>';
+        warningContainer.innerHTML += '<p style="color: red;">Not at 10% affordable threshold!</p>';
         document.getElementById('warningContainer').style.display = 'block';
     }
     if (affordableUnits >= 70 && affordablePct >= 0.4) {
