@@ -66,8 +66,7 @@ document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
 // Calculate maximum units and show them in a table
 function calculateMaximumUnits() {
     const acreageValue = parseFloat(document.getElementById('acreageInput').value);
-    
-    const densityValue = parseFloat(document.getElementById('densityInput').value) || 99999; // Default to 10 if no value is provided
+    const densityValue = parseFloat(document.getElementById('densityInput').value) || 10; // Default to 10 if not provided
 
     const affordablePctSlider = document.getElementById('affordablePctSlider');
     const affordablePctDisplay = document.getElementById('affordablePctDisplay');
@@ -76,8 +75,6 @@ function calculateMaximumUnits() {
     const totalUnits = Math.floor(acreageValue * densityValue);
     const affordableUnits = Math.ceil(affordablePct * totalUnits);
     const marketUnits = totalUnits - affordableUnits;
-
-
 
     // Update the table with calculated values
     const tableBody = document.getElementById('unitCalculationTableBody');
@@ -90,8 +87,6 @@ function calculateMaximumUnits() {
     // Display the unit calculation table now that we have data
     document.getElementById('unitCalculationTable').style.display = 'block';
 
-
-
     // Update abatement
     const abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100);
     const abatementTableBody = document.getElementById('abatementTableBody');
@@ -103,7 +98,6 @@ function calculateMaximumUnits() {
     // Display the abatement table now that we have data
     document.getElementById('abatementTable').style.display = 'block';
 
-
     // Check for warnings
     const warningContainer = document.getElementById('warningContainer');
     warningContainer.innerHTML = "";  // Clear previous warnings
@@ -113,6 +107,8 @@ function calculateMaximumUnits() {
     if (affordablePct < 0.4) {
         warningContainer.innerHTML += '<p style="color: red;">Not at 40% affordable threshold!</p>';
     }
+
+    calculateWeightedAverageSizes(); // Moved this here
 }
 
 // Function to calculate weighted average sizes
