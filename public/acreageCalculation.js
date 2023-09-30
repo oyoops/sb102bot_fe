@@ -115,10 +115,15 @@ function calculateMaximumUnits() {
     const warningContainer = document.getElementById('warningContainer');
     warningContainer.innerHTML = "";  // Clear previous warnings
     if (affordableUnits <= 70) {
+        document.getElementById('warningContainer').style.display = 'block';
         warningContainer.innerHTML += '<p style="color: red;">Not enough affordable units!</p>';
     }
     if (affordablePct < 0.4) {
+        document.getElementById('warningContainer').style.display = 'block';
         warningContainer.innerHTML += '<p style="color: red;">Not at 40% affordable threshold!</p>';
+    } else {
+        warningContainer.innerHTML = '<p style="color: green;">All good!</p>'
+        document.getElementById('warningContainer').style.display = 'none'; // Hide the warning container
     }
 
     calculateWeightedAverageSizes(); // Moved this here
