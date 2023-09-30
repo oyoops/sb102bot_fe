@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('countyMaxRentsTable').style.display = 'table'; // Display the county max rents table
             
             // DONE with Part 1
-            console.log('Part 1 -- Data successfully populated.');
+            console.log('Part 1 -- End: Geocoding + Database Lookup -> County Data');
 
             // Display the 'Development Program' inputs section (Part 2) after successfully populating the tables
             document.getElementById('developmentProgramInputSection').style.display = 'block';
