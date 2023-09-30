@@ -12,10 +12,10 @@ document.getElementById('densityInput').addEventListener('input', function() {
 
 // Show affordable % slider
 const affordablePercentageSlider = document.getElementById("affordablePctSlider");
-const affordablePercentageValue = document.getElementById("affordablePercentageValue");
+//////////const affordablePercentageValue = document.getElementById("affordablePercentageValue");
 affordablePercentageSlider.value = 0.10; // 0.00; // 0.40; // Set the default value of the slider to 40% upon initial load
 affordablePercentageSlider.oninput = function() {
-    affordablePercentageValue.textContent = this.value + '%';
+    //////////affordablePercentageValue.textContent = this.value + '%';
     calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
 }
 
@@ -114,19 +114,22 @@ function calculateMaximumUnits() {
     // Check for warnings
     const warningContainer = document.getElementById('warningContainer');
     warningContainer.innerHTML = "";  // Clear previous warnings
-    if (affordableUnits <= 70) {
+    if (affordableUnits < 70) {
         document.getElementById('warningContainer').style.display = 'block';
-        warningContainer.innerHTML += '<p style="color: red;">Not enough affordable units!</p>';
     }
     if (affordablePct < 0.4) {
         document.getElementById('warningContainer').style.display = 'block';
-        warningContainer.innerHTML += '<p style="color: red;">Not at 40% affordable threshold!</p>';
-    } else {
-        warningContainer.innerHTML = '<p style="color: green;">All good!</p>'
-        document.getElementById('warningContainer').style.display = 'none'; // Hide the warning container
+        warningContainer.innerHTML += '<p style="color: orange;">Not at 40% affordable threshold!</p>';
+    } 
+    if (affordablePct < 0.1) {
+        warningContainer.innerHTML += '<p style="color: orange;">Not at 10% affordable threshold!</p>';
+        document.getElementById('warningContainer').style.display = 'block';
+    }
+    if (affordableUnits >= 70 && affordablePct >= 0.4) {
+        document.getElementById('warningContainer').style.display = 'none';
     }
 
-    calculateWeightedAverageSizes(); // Moved this here
+    calculateWeightedAverageSizes(); // Run it
 }
 
 // Function to calculate weighted average sizes
