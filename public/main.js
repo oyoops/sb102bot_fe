@@ -1,3 +1,7 @@
+function initMap() {
+    // Maps API is now loaded and can be used.
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('#searchForm');
     const countyTableBody = document.querySelector('#countyDataTable tbody');
