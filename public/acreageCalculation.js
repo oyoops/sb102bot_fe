@@ -38,8 +38,30 @@ document.getElementById('matchAffordableSizes').addEventListener('change', funct
 
 // Event listeners for all size inputs to recalculate weighted averages in real-time
 document.querySelectorAll('.sizeInput').forEach(input => {
-    input.addEventListener('input', calculateWeightedAverageSizes);
+    input.addEventListener('input', () => {
+        calculateMaximumUnits();
+        calculateWeightedAverageSizes();
+    });
 });
+
+// Event listeners for Market size inputs to set equal Affordable sizes (if checkbox is checked)
+// and then recalculate weighted averages in real-time
+document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
+    input.addEventListener('input', () => {
+        if (document.getElementById('matchAffordableSizes').checked) {
+            document.querySelectorAll('.affordableSizeInput')[index].value = input.value;
+            calculateWeightedAverageSizes();
+        }
+    });
+});
+
+
+
+//           //
+/* Functions */
+//           //
+
+
 
 // Calculate maximum units and show them in a table
 function calculateMaximumUnits() {
@@ -95,8 +117,8 @@ function calculateMaximumUnits() {
 
 // Function to calculate weighted average sizes
 function calculateWeightedAverageSizes() {
-    const affordableUnits = parseInt(document.querySelector('#unitCalculationTableBody td:first-child').innerText);
-    const marketUnits = parseInt(document.querySelector('#unitCalculationTableBody td:last-child').innerText);
+    const affordableUnits = Math.ceil(affordablePct * totalUnits);
+    const marketUnits = totalUnits - affordableUnits;
     const totalUnits = affordableUnits + marketUnits;
 
     const marketStudioSize = parseFloat(document.getElementById('marketStudioSize').value) || 0;
