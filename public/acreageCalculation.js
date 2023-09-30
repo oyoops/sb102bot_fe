@@ -13,7 +13,6 @@ affordablePercentageSlider.oninput = function() {
 document.getElementById('affordablePctSlider').addEventListener('input', function() {
     document.getElementById('affordablePctDisplay').innerText = `${this.value}%`;
     calculateMaximumUnits();
-    calculateWeightedAverageSizes();
 });
 
 // Checkbox logic to set affordable units to the market unit sizes
@@ -46,7 +45,7 @@ document.querySelectorAll('.sizeInput').forEach(input => {
 function calculateMaximumUnits() {
     const acreageValue = parseFloat(document.getElementById('acreageInput').value);
     
-    const densityValue = 10;  // Example density value, modify as needed
+    const densityValue = parseFloat(document.getElementById('densityInput').value) || 99999; // Default to 10 if no value is provided
 
     const affordablePctSlider = document.getElementById('affordablePctSlider');
     const affordablePctDisplay = document.getElementById('affordablePctDisplay');
