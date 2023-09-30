@@ -116,9 +116,14 @@ function calculateMaximumUnits() {
 
 // Function to calculate weighted average sizes
 function calculateWeightedAverageSizes() {
+    const affordablePctSlider = document.getElementById('affordablePctSlider');
+    const affordablePct = parseFloat(affordablePctSlider.value) / 100;
+    const acreageValue = parseFloat(document.getElementById('acreageInput').value);
+    const densityValue = parseFloat(document.getElementById('densityInput').value) || 10;
+
+    const totalUnits = Math.floor(acreageValue * densityValue);
     const affordableUnits = Math.ceil(affordablePct * totalUnits);
     const marketUnits = totalUnits - affordableUnits;
-    const totalUnits = affordableUnits + marketUnits;
 
     const marketStudioSize = parseFloat(document.getElementById('marketStudioSize').value) || 0;
     const market1BDSize = parseFloat(document.getElementById('market1BDSize').value) || 0;
