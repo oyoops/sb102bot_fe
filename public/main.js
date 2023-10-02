@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');  // Select the new table's tbody
 
     function initializeMap(lat, lng) {
+        console.log('Initializing map with lat:', lat, ', lng:', lng);
         const mapOptions = {
             center: { lat: lat, lng: lng },
             zoom: 17,
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     
         const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        console.log('Map initialized.');
     
         // Add a marker at the specified location
         new google.maps.Marker({
