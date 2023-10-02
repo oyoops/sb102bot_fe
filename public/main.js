@@ -140,6 +140,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Dynamically load the Google Maps API
+    function loadGoogleMapsAPI() {
+        const script = document.createElement('script');
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&callback=initMap";
+        document.body.appendChild(script);
+    }
+
+    loadGoogleMapsAPI();
+
 });
 
 
