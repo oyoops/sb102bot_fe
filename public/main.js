@@ -24,9 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             map: map
         });
 
-        // Show the Google Map container
-        //document.getElementById('mapContainer').style.display = 'block';
-        //// Show the Google Map
+        // Show the Google Map element
         document.getElementById('map').style.display = 'block';
     }
 
@@ -67,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Hide the loading indicator
             document.querySelector('.loading').style.display = 'none';
+            document.querySelector('.tryAgainButton').style.display = 'block';  // Show try again button
+            document.querySelector('.initialContent').style.display = 'none';  // Hide initial content
+            
 
             // Get the lat/long from the geocode data
             const lat = geocodeData.results[0].geometry.location.lat;
@@ -75,15 +76,15 @@ document.addEventListener('DOMContentLoaded', function() {
             //// Show the Google Map container
             //document.getElementById('mapContainer').style.display = 'block';
             
-            // Initialize map using lat/lng instead of user input address
+            // Initialize & show the Google Map using lat/lng instead of user input
             initializeMap(lat, lng);
 
-            // Check the PostgreSQL database for the county at this location (geocoded lat/long derived from address)
+            // Query the PostgreSQL database for the county at the geocoded lat/long, derived from address
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
             const countyDataResponse = await fetch(countyDataEndpoint);
             const countyData = await countyDataResponse.json();
 
-            // Check if PostgreSQL database successfully got the county at this location (geocoded lat/long derived from address)
+            // Check if PostgreSQL database successfully returned the county data for the locationn
             if (!countyData.county_name) {
                 throw new Error('No data available for the selected location.');
             }
