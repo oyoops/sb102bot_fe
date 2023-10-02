@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Show the Google Map container
-        document.getElementById('mapContainer').style.display = 'block';
+        //document.getElementById('mapContainer').style.display = 'block';
         //// Show the Google Map
         document.getElementById('map').style.display = 'block';
     }
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const lng = geocodeData.results[0].geometry.location.lng;
             
             //// Show the Google Map container
-            document.getElementById('mapContainer').style.display = 'block';
+            //document.getElementById('mapContainer').style.display = 'block';
             
             // Initialize map using lat/lng instead of user input address
             initializeMap(lat, lng);
