@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show the Google Map container
         document.getElementById('mapContainer').style.display = 'block';
         //// Show the Google Map
-        //document.getElementById('map').style.display = 'block';
+        document.getElementById('map').style.display = 'block';
     }
 
     form.addEventListener('submit', async (e) => {

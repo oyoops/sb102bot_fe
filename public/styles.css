@@ -346,3 +346,9 @@ input:disabled {
     background-color: #eee;
     cursor: not-allowed;
 }
+
+/* Added styles for Google Map container */
+#map {
+    width: 100%;
+    height: 400px;
+}
