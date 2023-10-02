@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Hide the loading indicator
             document.querySelector('.loading').style.display = 'none';
-            document.querySelector('.tryAgainButton').style.display = 'block';  // Show try again button
+            document.querySelector('#tryAgainButton').style.display = 'block';  // Show try again button
             document.querySelector('.initialContent').style.display = 'none';  // Hide initial content
             
 
