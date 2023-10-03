@@ -3,10 +3,9 @@ const { Client } = require('pg');
 
 
 module.exports = async (req, res) => {
-    console.log('Received request for check_city with lat:', lat, 'and lng:', lng);
-
     const lat = req.query.lat;
     const lng = req.query.lng;
+    console.log('Received request for check_city with lat:', lat, 'and lng:', lng);
 
     // Setup database connection
     const client = new Client({
