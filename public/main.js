@@ -278,6 +278,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // compute acreage from SF area
             const acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
             acres = acres.toFixed(2);
+            // set default placeholder acreage
+            document.getElementById("acreageInput").value = acres.toFixed(2);
             
             // Populate the parcel data table
             const parcelDataRow = `
@@ -292,8 +294,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Display the parcel data table now that we have data
             document.getElementById('parcelDataTable').style.display = 'table'; // Display the parcel data table
-
-
 
             // DONE with Part 1
             console.log('End: Part 1 -- Geocoding + Database Lookup -> County Data');
