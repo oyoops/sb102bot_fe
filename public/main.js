@@ -274,12 +274,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "24px";
             }
+
+            // compute acreage from SF area
+            const acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
+            acres = acres.toFixed(2);
             
             // Populate the parcel data table
             const parcelDataRow = `
                 <tr>
                     <td>${parcelData.parcel_id}</td>
-                    <td>${parcelData.lnd_sqfoot}</td>
+                    <td>${acres}</td>
                     <td>${parcelData.own_name}</td>
                     <td>${useCodeLookup[parcelData.dor_uc] || parcelData.dor_uc}</td>
                 </tr>
