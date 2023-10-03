@@ -86,20 +86,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
             const cityCheckResponse = await fetch(cityCheckEndpoint);
             const cityData = await cityCheckResponse.json();
+            console.log("City Data Received:", cityData);
 
             if (cityData.isInCity) {
-                console.log(`The address is within the city: ${cityData.cityname}`);
-                // TODO: Add logic to handle city-specific data or any other actions
+                console.log(`The address is within the city: ${cityData.cityName}`);
             } else {
-                console.log('The address is not within a city. Proceeding with county lookup.');
-                // Continue with the existing logic to look up the county
+                console.log('The address is not within a city. Defaulting to "Unincorporated".');
+                cityData.cityName = 'Unincorporated';
             }
-
-
+            
             // Query the PostgreSQL database for the county at the geocoded lat/long, derived from address
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
             const countyDataResponse = await fetch(countyDataEndpoint);
             const countyData = await countyDataResponse.json();
+            console.log("County Data Received:", countyData);
 
             // Check if PostgreSQL database returned county data
             if (!countyData.county_name) {
