@@ -54,40 +54,16 @@
     </div>
     
 
-
-
-
     <!-- Google Map showing the input location -->
     <div id="map" style="width: 90%; height: 400px;"></div>
     <!-- TO-DO: Show both the input location as a placemark AND the tallest building within one mile as another placemark -->
 
     
-
-
-    
-
     <!-- Eligibility -->
     <br>
     <div id="eligibilityStatus"></div>
     <br>
-
-    <!-- County data table -->
-    <!-- This table loads some general data about the municipality of the parcel returned by the query to the PostgreSQL Florida parcel database -->
-    <!-- <h3>Municipal info:</h3> -->
-    <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
-        <thead>
-            <tr>
-                <th>County</th>
-                <th>City</th>
-                <th>Area Median Income</th>
-                <th>County Millage</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be inserted here by JavaScript -->
-        </tbody>
-    </table>
-
+    
 
     <!-- Parcel data table -->
     <!-- This table loads parcel data returned by the query to the PostgreSQL Florida parcel database -->
@@ -107,6 +83,24 @@
     </table>
     
 
+    <!-- County data table -->
+    <!-- This table loads some general data about the municipality of the parcel returned by the query to the PostgreSQL Florida parcel database -->
+    <!-- <h3>Municipal info:</h3> -->
+    <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
+        <thead>
+            <tr>
+                <th>County</th>
+                <th>City</th>
+                <th>Area Median Income</th>
+                <th>County Millage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+
+
     <!-- County max rents table -->
     <!-- This table loads data (maximum 'affordable' rent limits by bedroom count) returned by the query to the PostgreSQL Florida parcel database -->
     <!-- <h3>Affordable rent limits:</h3> -->
@@ -123,11 +117,6 @@
             <!-- Data will be inserted here by JavaScript -->
         </tbody>
     </table>
-    
-
-
-
-
 
 
     <!-- START: PART 2 -- DEVELOPMENT PROGRAM I/O -->
