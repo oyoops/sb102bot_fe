@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const cityData = await cityCheckResponse.json();
 
             if (cityData.isInCity) {
-                console.log(`The address is within the city: ${cityData.cityName}`);
+                console.log(`The address is within the city: ${cityData.cityname}`);
                 // TODO: Add logic to handle city-specific data or any other actions
             } else {
                 console.log('The address is not within a city. Proceeding with county lookup.');
@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // If cityname is null, make cityName = 'Unincorporated'
             if (!cityData.cityname) {
+                console.log(cityData);
                 cityData.cityname = 'Unincorporated';
             }
                         
