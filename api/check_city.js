@@ -3,6 +3,8 @@ const { Client } = require('pg');
 
 
 module.exports = async (req, res) => {
+    console.log('Received request for check_city with lat:', lat, 'and lng:', lng);
+
     const lat = req.query.lat;
     const lng = req.query.lng;
 
@@ -28,11 +30,14 @@ module.exports = async (req, res) => {
         const result = await client.query(query, [lng, lat]);
 
         if (result.rows.length > 0) {
+            console.log('Address is within city:', result.rows[0].city_name);
             res.json({ isInCity: true, cityName: result.rows[0].city_name });
         } else {
+            console.log('Address is not within any city.');
             res.json({ isInCity: false });
         }
     } catch (error) {
+        console.error('Error querying the database:', error);
         res.status(500).send('Error querying the database.');
     } finally {
         await client.end();
