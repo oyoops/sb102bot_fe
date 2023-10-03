@@ -3,6 +3,11 @@ function initMap() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    const tryAgainButton = document.getElementById("tryAgainButton");    
+    tryAgainButton.addEventListener("click", function() {
+        location.reload();
+    });
+
     const form = document.querySelector('#searchForm');
     const countyTableBody = document.querySelector('#countyDataTable tbody');
     const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');  // Select the max rents table's tbody
