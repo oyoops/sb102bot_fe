@@ -61,13 +61,15 @@
     <div id="map" style="width: 90%; height: 400px;"></div>
     <!-- TO-DO: Show both the input location as a placemark AND the tallest building within one mile as another placemark -->
 
+    
+
+
+    
+
+    <!-- Eligibility -->
     <br>
-
-    <!-- Try Again button -->
-    <button id="tryAgainButton" style="display: none;"><b>New Search</b></button>
-
-
-
+    <div id="eligibilityStatus"></div>
+    <br>
 
     <!-- County data table -->
     <!-- This table loads some general data about the municipality of the parcel returned by the query to the PostgreSQL Florida parcel database -->
@@ -105,8 +107,6 @@
     </table>
     
 
-    <!-- Eligibility -->
-    <div id="eligibilityStatus"></div>
 
     <!-- Parcel data table -->
     <!-- This table loads parcel data returned by the query to the PostgreSQL Florida parcel database -->
@@ -236,6 +236,10 @@
             
     </div>
 
+    <!-- Try Again button -->
+    <button id="tryAgainButton" style="display: none;"><b>New Search</b></button>
+
+    
     <!-- Spacing -->
     <br>
     <br>
