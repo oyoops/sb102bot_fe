@@ -158,9 +158,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Populate the parcel data table
             const parcelDataRow = `
                 <tr>
-                    <td>${parcelData.PARCEL_ID}</td>
-                    <td>${parcelData.PARCEL_ID}</td>
-                    <td>${parcelData.PARCEL_ID}</td>
+                    <td>${parcelData.parcel_id}</td>
+                    <td>${parcelData.lnd_sqfoot}</td>
+                    <td>${parcelData.own_name}</td>
+                    <td>${parcelData.dor_uc}</td>
                 </tr>
             `;
             parcelDataTableBody.innerHTML = parcelDataRow;
