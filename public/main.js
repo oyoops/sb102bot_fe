@@ -110,16 +110,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // (which means we got a match at this lat/long in the database)
 
             // If cityname is null, make cityName = 'Unincorporated'
-            if (!cityData.cityname) {
+            if (!cityData.cityName) {
                 console.log(cityData);
-                cityData.cityname = 'Unincorporated';
+                cityData.cityName = 'Unincorporated';
             }
                         
             // Populate the municipal data table
             const countyRow = `
                 <tr>
                     <td>${countyData.county_name}</td>
-                    <td>${cityData.cityname}</td>
+                    <td>${cityData.cityName}</td>
                     <td>${countyData.county_amis_income}</td>
                     <td>${countyData.county_millage}</td>
                 </tr>
