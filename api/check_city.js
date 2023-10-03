@@ -29,8 +29,8 @@ module.exports = async (req, res) => {
         const result = await client.query(query, [lng, lat]);
 
         if (result.rows.length > 0) {
-            console.log('Address is within city:', result.rows[0].city_name);
-            res.json({ isInCity: true, cityName: result.rows[0].city_name });
+            console.log('Address is within city:', result.rows[0].cityname);
+            res.json({ isInCity: true, cityName: result.rows[0].cityname });
         } else {
             console.log('Address is not within any city.');
             res.json({ isInCity: false });
