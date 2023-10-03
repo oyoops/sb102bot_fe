@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const parcelDataRow = `
                 <tr>
                     <td>${parcelData.parcel_id}</td>
-                    <td>${acres}</td>
+                    <td>${acres.toFixed(2)}</td>
                     <td>${parcelData.own_name}</td>
                     <td>${useCodeLookup[parcelData.dor_uc] || parcelData.dor_uc}</td>
                 </tr>
