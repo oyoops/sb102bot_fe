@@ -352,3 +352,67 @@ input:disabled {
     width: 100%;
     height: 400px;
 }
+
+/* Reset some default styles for better consistency */
+body, h1, h2, h3, p, table {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+}
+
+#menuBar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+#mainHeader {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+#unitMixTableContainer {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#unitMixTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 50px;
+    background-color: #fff;
+}
+
+#unitMixTable thead th {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+}
+
+#unitMixTable tbody td, #unitMixTable tfoot td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.9em;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
