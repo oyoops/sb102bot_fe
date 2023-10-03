@@ -109,6 +109,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Only proceeds if we successfully got county data
             // (which means we got a match at this lat/long in the database)
 
+
+            // Look up parcel data in PostgreSQL database
+            const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
+            const parcelDataResponse = await fetch(parcelDataEndpoint);
+            const parcelData = await parcelDataResponse.json();
+            console.log("Parcel Data Received:", parcelData);
+
             // If cityname is null, make cityName = 'Unincorporated'
             if (!cityData.cityName) {
                 console.log(cityData);
@@ -127,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
             countyTableBody.innerHTML = countyRow;
 
             // Display the municipal Data table (city, AMI & Millage rate) now that we have data
-            ////document.getElementById('countyDataTable').style.display = 'block';
             document.getElementById('countyDataTable').style.display = 'table'; // Display the county data table
             
             // Populate the max rents table
@@ -142,9 +148,26 @@ document.addEventListener('DOMContentLoaded', function() {
             rentsTableBody.innerHTML = rentsRow;
 
             // Display the county Max Rents table now that we have data
-            ////document.getElementById('countyMaxRentsTable').style.display = 'block';
             document.getElementById('countyMaxRentsTable').style.display = 'table'; // Display the county max rents table
+
+            //////// Display the Parcel Data table now that we have data
+            //////document.getElementById('parcelDataTable').style.display = 'table'; // Display the parcel data table
             
+            // Populate the parcel data table
+            const parcelDataRow = `
+                <tr>
+                    <td>${parcelData.PARCEL_ID}</td>
+                    <td>${parcelData.PARCEL_ID}</td>
+                    <td>${parcelData.PARCEL_ID}</td>
+                </tr>
+            `;
+            parcelDataTableBody.innerHTML = parcelDataRow;
+
+            // Display the parcel data table now that we have data
+            document.getElementById('parcelDataTable').style.display = 'table'; // Display the parcel data table
+            
+
+
             // DONE with Part 1
             console.log('End: Part 1 -- Geocoding + Database Lookup -> County Data');
 
