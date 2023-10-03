@@ -79,12 +79,29 @@ document.addEventListener('DOMContentLoaded', function() {
             // Initialize & show the Google Map using lat/lng instead of user input
             initializeMap(lat, lng);
 
+
+
+
+            // Check if the address is within a city
+            const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
+            const cityCheckResponse = await fetch(cityCheckEndpoint);
+            const cityData = await cityCheckResponse.json();
+
+            if (cityData.isInCity) {
+                console.log(`The address is within the city: ${cityData.cityName}`);
+                // TODO: Add logic to handle city-specific data or any other actions
+            } else {
+                console.log('The address is not within a city. Proceeding with county lookup.');
+                // Continue with the existing logic to look up the county
+            }
+
+
             // Query the PostgreSQL database for the county at the geocoded lat/long, derived from address
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
             const countyDataResponse = await fetch(countyDataEndpoint);
             const countyData = await countyDataResponse.json();
 
-            // Check if PostgreSQL database successfully returned the county data for the locationn
+            // Check if PostgreSQL database returned county data
             if (!countyData.county_name) {
                 throw new Error('No data available for the selected location.');
             }
@@ -92,17 +109,23 @@ document.addEventListener('DOMContentLoaded', function() {
             // Only proceeds if we successfully got county data
             // (which means we got a match at this lat/long in the database)
 
-            // Populate the county data table
+            // If cityName is null, make cityName = 'Unincorporated'
+            if (!cityData.cityName) {
+                cityData.cityName = 'Unincorporated';
+            }
+                        
+            // Populate the municipal data table
             const countyRow = `
                 <tr>
                     <td>${countyData.county_name}</td>
+                    <td>${cityData.cityName}</td>
                     <td>${countyData.county_amis_income}</td>
                     <td>${countyData.county_millage}</td>
                 </tr>
             `;
             countyTableBody.innerHTML = countyRow;
 
-            // Display the county Data table (AMI & Millage rate) now that we have data
+            // Display the municipal Data table (city, AMI & Millage rate) now that we have data
             ////document.getElementById('countyDataTable').style.display = 'block';
             document.getElementById('countyDataTable').style.display = 'table'; // Display the county data table
             
