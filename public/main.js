@@ -297,6 +297,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Prep for Part 2:
             // Display the 'Development Program' inputs section (Part 2) after successfully populating the tables
             document.getElementById('developmentProgramInputSection').style.display = 'block';
+
+            // Display the 'Unit count' table
+            document.getElementById('unitCalculationTable').style.display = 'block';
+            
             // Call acreageCalculation.js to calculate initial maximum units using default values
             calculateWeightedAverageSizes(); // this might not work...
 
