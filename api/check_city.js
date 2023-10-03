@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
     try {
         // Perform a spatial query to check if the provided lat/lng lies within any city
         const query = `
-            SELECT city_name 
+            SELECT cityname 
             FROM broward_cities 
             WHERE ST_Contains(geom, ST_SetSRID(ST_Point($1, $2), 4326));
         `;
