@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
 
     const lat = parseFloat(req.query.lat);
     const lng = parseFloat(req.query.lng);
-    const county_name = parseString(req.query.county_name);
+    const county_name = req.query.county_name;
     console.log(`Received coordinates: Latitude = ${lat}, Longitude = ${lng}, County = ${county_name}`);
     
     // Check if lat and lng are valid numbers
