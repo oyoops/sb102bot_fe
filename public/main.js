@@ -277,7 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // compute acreage from SF area
             const acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
-            acres = acres.toFixed(2);
             // set default placeholder acreage
             document.getElementById("acreageInput").value = acres.toFixed(2);
             
