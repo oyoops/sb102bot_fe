@@ -80,3 +80,4 @@ try:
     print(f"Combined files into {txt_file_name}")
 except Exception as e:
     print(f"Could not create the files. Error: {e}")
+    
