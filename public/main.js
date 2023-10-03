@@ -5,7 +5,9 @@ function initMap() {
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('#searchForm');
     const countyTableBody = document.querySelector('#countyDataTable tbody');
-    const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');  // Select the new table's tbody
+    const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');  // Select the max rents table's tbody
+    const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');  // Select the parcel data table's tbody
+    
 
     function initializeMap(lat, lng) {
         console.log('Initializing map with lat:', lat, ', lng:', lng);
