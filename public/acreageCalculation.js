@@ -68,13 +68,35 @@ document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
     });
 });
 
+// Event listeners for market-rate rent inputs
+const marketRateInputs = document.querySelectorAll('.marketRateInput');
+marketRateInputs.forEach(input => {
+    input.addEventListener('input', function() {
+        updateRentPerSqFtTable();
+        // Update Revenue Table
+    });
+});
+
+
+
 console.log('End: Part 2 -- Development Program I/O');
 
 //           //
 /* Functions */
 //           //
 
-
+// Function to update the Rent per Sq. Ft. table
+function updateRentPerSqFtTable() {
+    // Create functions getMarketRatePerSqFt and getAffordableRatePerSqFt to calculate these values
+    document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('Studio');
+    document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('Studio');
+    document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('1BD');
+    document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('1BD');
+    document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('2BD');
+    document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('2BD');
+    document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('3BD');
+    document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('3BD');
+}
 
 // Calculate maximum units and show them in a table
 function calculateMaximumUnits() {
