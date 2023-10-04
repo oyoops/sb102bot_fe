@@ -129,6 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Only proceeds if we successfully got county data
             // (which means we got a match at this lat/long in the database)
 
+            // Emit countyDataLoaded event
+            document.dispatchEvent(new Event('countyDataLoaded'));
 
             // Call the callback function if it exists
             if (countyDataLoadedCallback) {
