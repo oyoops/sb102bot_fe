@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td>${countyData.county_name}</td>
                     <td>${cityData.cityName}</td>
-                    <td>${countyData.county_amis_income}</td>
+                    <td>$${countyData.county_amis_income}</td>
                     <td>${countyData.county_millage}</td>
                 </tr>
             `;
