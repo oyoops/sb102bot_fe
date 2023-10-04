@@ -21,16 +21,17 @@ module.exports = async (req, res) => {
     try {
         // Perform a spatial query to check if the provided lat/lng lies within any city
         const query = `
-            SELECT cityname 
-            FROM broward_cities 
+            SELECT name 
+            FROM city_boundaries 
             WHERE ST_Contains(geom, ST_SetSRID(ST_Point($1, $2), 4326));
         `;
 
         const result = await client.query(query, [lng, lat]);
 
         if (result.rows.length > 0) {
-            console.log('Address is within city:', result.rows[0].cityname);
-            res.json({ isInCity: true, cityName: result.rows[0].cityname });
+            console.log('Address is within city:', result.rows[0].name,'and county:', result.rows[0].county);
+
+            res.json({ isInCity: true, cityName: result.rows[0].name });
         } else {
             console.log('Address is not within any city.');
             res.json({ isInCity: false });
