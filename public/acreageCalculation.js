@@ -1,35 +1,66 @@
 console.log('Start: Part 2 -- Development Program I/O');
 
-// show market rate inputs
+// Unhide Tables
+
+// Show market rate inputs
 document.getElementById('marketRateInputSection').style.display = 'block';
+// Show the rent/SqFt table section
+document.getElementById('rentPerSqFtTableSection').style.display = 'block';
+// Show the abatement table
+document.getElementById('abatementTable').style.display = 'block';
+
+
+
+// Show affordable % slider
+const affordablePercentageSlider = document.getElementById("affordablePctSlider");
+affordablePercentageSlider.value = 0.10; // 0.00; // 0.40; // Set the default value of the slider to 40% upon initial load
+affordablePercentageSlider.oninput = function() {
+    calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
+}
+
+// Event Listeners
 
 // Set up an event listener for the acreage input to recalculate values in real-time
 document.getElementById('acreageInput').addEventListener('input', function() {
     calculateMaximumUnits();
 });
-
 // Set up an event listener for the density input to recalculate values in real-time
 document.getElementById('densityInput').addEventListener('input', function() {
     calculateMaximumUnits();
 });
-
-// Show affordable % slider
-const affordablePercentageSlider = document.getElementById("affordablePctSlider");
-//////////const affordablePercentageValue = document.getElementById("affordablePercentageValue");
-affordablePercentageSlider.value = 0.10; // 0.00; // 0.40; // Set the default value of the slider to 40% upon initial load
-affordablePercentageSlider.oninput = function() {
-    //////////affordablePercentageValue.textContent = this.value + '%';
-    calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
-}
-
-
-
-
 // Set up an event listener for the affordable percentage slider to recalculate values in real-time
 document.getElementById('affordablePctSlider').addEventListener('input', function() {
     document.getElementById('affordablePctDisplay').innerText = `${this.value}%`;
     calculateMaximumUnits();
 });
+// Event listeners for all size inputs to recalculate weighted averages in real-time
+document.querySelectorAll('.sizeInput').forEach(input => {
+    input.addEventListener('input', () => {
+        calculateMaximumUnits();
+        calculateWeightedAverageSizes();
+    });
+});
+// Event listeners for Market size inputs to set equal Affordable sizes (if checkbox is checked)
+//     and then recalculate weighted averages in real-time
+document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
+    input.addEventListener('input', () => {
+        if (document.getElementById('matchAffordableSizes').checked) {
+            document.querySelectorAll('.affordableSizeInput')[index].value = input.value;
+            calculateWeightedAverageSizes();
+        }
+    });
+});
+// Event listeners for market-rate rent inputs
+marketRateInputs.forEach(input => {
+    input.addEventListener('input', function() {
+        updateRentPerSqFtTable();
+        // Update Revenue Table
+    });
+});
+
+
+//  Checkbox for unit size matching
+
 
 // Checkbox logic to set affordable units to the market unit sizes
 document.getElementById('matchAffordableSizes').addEventListener('change', function() {
@@ -53,36 +84,9 @@ document.getElementById('matchAffordableSizes').addEventListener('change', funct
     calculateWeightedAverageSizes();
 });
 
-// Event listeners for all size inputs to recalculate weighted averages in real-time
-document.querySelectorAll('.sizeInput').forEach(input => {
-    input.addEventListener('input', () => {
-        calculateMaximumUnits();
-        calculateWeightedAverageSizes();
-    });
-});
-
-// Event listeners for Market size inputs to set equal Affordable sizes (if checkbox is checked)
-//     and then recalculate weighted averages in real-time
-document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
-    input.addEventListener('input', () => {
-        if (document.getElementById('matchAffordableSizes').checked) {
-            document.querySelectorAll('.affordableSizeInput')[index].value = input.value;
-            calculateWeightedAverageSizes();
-        }
-    });
-});
-
-// Event listeners for market-rate rent inputs
-marketRateInputs.forEach(input => {
-    input.addEventListener('input', function() {
-        updateRentPerSqFtTable();
-        // Update Revenue Table
-    });
-});
-
-
-
 console.log('End: Part 2 -- Development Program I/O');
+
+
 
 //           //
 /* Functions */
@@ -136,13 +140,6 @@ function calculateMaximumUnits() {
             <td>${abatementValue}% of ad valorem property taxes</td>
         </tr>
     `;
-    
-    // Display the abatement table now that we have data
-    document.getElementById('abatementTable').style.display = 'block';
-
-    // Display the rentPerSqFtTableSection table now that we have data
-    document.getElementById('rentPerSqFtTableSection').style.display = 'block';
-    
 
     // Check for warnings
     const warningContainer = document.getElementById('warningContainer');
