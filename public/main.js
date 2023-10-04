@@ -4,6 +4,8 @@ function initMap() {
 
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
+
+    document.getElementById('map').style.display = 'none';
     
     const tryAgainButton = document.getElementById("tryAgainButton");    
     tryAgainButton.addEventListener("click", function() {
