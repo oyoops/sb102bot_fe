@@ -1,5 +1,11 @@
+let countyDataLoadedCallback = null;
+
 function initMap() {
     // Maps API is now loaded and can be used.
+}
+
+function onCountyDataLoaded(callback) {
+    countyDataLoadedCallback = callback;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -125,8 +131,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Emit countyDataLoaded event
                 document.dispatchEvent(new Event('countyDataLoaded'));
 
-                // Call the callback function now that countyData is available
-                callback();
+                // Call the callback function if it exists
+                if (countyDataLoadedCallback) {
+                    countyDataLoadedCallback();
+                }
     
                 // Look up parcel data in PostgreSQL database
                 const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
