@@ -1,5 +1,10 @@
 console.log('Start: Part 2 -- Development Program I/O');
 
+onCountyDataLoaded(function() {
+    // countyData should be available now
+    updateRentPerSqFtTable();
+});
+
 // Unhide Tables
 
 // Show market rate inputs
