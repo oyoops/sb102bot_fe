@@ -134,8 +134,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td>${countyData.county_name}</td>
                     <td>${cityData.cityName}</td>
-                    <td>${countyData.county_amis_income}</td>
-                    <td>${countyData.county_millage}</td>
+                    <td>${countyData.county_amis_income.toFixed(0)}</td>
+                    <td>${countyData.county_millage.toFixed(4)}</td>
                 </tr>
             `;
             countyTableBody.innerHTML = countyRow;
@@ -146,10 +146,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Populate the max rents table
             const rentsRow = `
                 <tr>
-                    <td>${countyData.max_rent_0bd_120ami}</td>
-                    <td>${countyData.max_rent_1bd_120ami}</td>
-                    <td>${countyData.max_rent_2bd_120ami}</td>
-                    <td>${countyData.max_rent_3bd_120ami}</td>
+                    <td>$${countyData.max_rent_0bd_120ami.toFixed(0)}</td>
+                    <td>$${countyData.max_rent_1bd_120ami.toFixed(0)}</td>
+                    <td>$${countyData.max_rent_2bd_120ami.toFixed(0)}</td>
+                    <td>$${countyData.max_rent_3bd_120ami.toFixed(0)}</td>
                 </tr>
             `;
             rentsTableBody.innerHTML = rentsRow;
