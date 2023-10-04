@@ -134,8 +134,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td>${countyData.county_name}</td>
                     <td>${cityData.cityName}</td>
-                    <td>${countyData.county_amis_income.toFixed(0)}</td>
-                    <td>${countyData.county_millage.toFixed(4)}</td>
+                    <td>${countyData.county_amis_income}</td>
+                    <td>${countyData.county_millage}</td>
                 </tr>
             `;
             countyTableBody.innerHTML = countyRow;
