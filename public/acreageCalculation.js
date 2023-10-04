@@ -174,13 +174,39 @@ function getMarketRatePerSqFt(unitType) {
 
 // Function to calculate Affordable Rate per Sq. Ft.
 function getAffordableRatePerSqFt(unitType) {
-    // Assuming we have an input field for affordable rate, similar to market rate
-    const affordableRate = parseFloat(document.getElementById(`affordableRate${unitType}`).value) || 0;
+    let affordableRate = 0;
+  
+    // Convert countyData to floats
+    const maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami);
+    const maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami);
+    const maxRent2bd = parseFloat(countyData.max_rent_2bd_120ami);
+    const maxRent3bd = parseFloat(countyData.max_rent_3bd_120ami);
+
+    // Select the appropriate affordable rate based on unit type
+    switch (unitType) {
+        case 'Studio':
+            affordableRate = maxRent0bd;
+            break;
+        case '1BD':
+            affordableRate = maxRent1bd;
+            break;
+        case '2BD':
+            affordableRate = maxRent2bd;
+            break;
+        case '3BD':
+            affordableRate = maxRent3bd;
+            break;
+        default:
+            console.error("Invalid unit type");
+            return 'N/A';
+    }
+    
     const unitSize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;
     console.log(`Affordable Rate for ${unitType}: ${affordableRate}`);
     console.log(`Unit Size for ${unitType}: ${unitSize}`);
     return (unitSize === 0) ? 'N/A' : (affordableRate / unitSize).toFixed(2);
 }
+
 
 // Function to calculate weighted average sizes
 function calculateWeightedAverageSizes() {
