@@ -22,6 +22,9 @@ affordablePercentageSlider.oninput = function() {
     calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
 }
 
+
+
+
 // Set up an event listener for the affordable percentage slider to recalculate values in real-time
 document.getElementById('affordablePctSlider').addEventListener('input', function() {
     document.getElementById('affordablePctDisplay').innerText = `${this.value}%`;
@@ -32,6 +35,7 @@ document.getElementById('affordablePctSlider').addEventListener('input', functio
 document.getElementById('matchAffordableSizes').addEventListener('change', function() {
     const affordableInputs = document.querySelectorAll('.affordableSizeInput');
     const marketInputs = document.querySelectorAll('.marketSizeInput');
+    const marketRateInputs = document.querySelectorAll('.marketRateInput');
     
     // If checkbox is checked
     if (this.checked) {
@@ -69,7 +73,6 @@ document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
 });
 
 // Event listeners for market-rate rent inputs
-const marketRateInputs = document.querySelectorAll('.marketRateInput');
 marketRateInputs.forEach(input => {
     input.addEventListener('input', function() {
         updateRentPerSqFtTable();
@@ -133,8 +136,13 @@ function calculateMaximumUnits() {
             <td>${abatementValue}% of ad valorem property taxes</td>
         </tr>
     `;
+    
     // Display the abatement table now that we have data
     document.getElementById('abatementTable').style.display = 'block';
+
+    // Display the rentPerSqFtTableSection table now that we have data
+    document.getElementById('rentPerSqFtTableSection').style.display = 'block';
+    
 
     // Check for warnings
     const warningContainer = document.getElementById('warningContainer');
