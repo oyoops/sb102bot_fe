@@ -1,14 +1,6 @@
-let countyDataLoadedCallback = null;
-
 function initMap() {
     // Maps API is now loaded and can be used.
 }
-
-onCountyDataLoaded(function(countyData) {
-    // countyData should be available now
-    updateRentPerSqFtTable(countyData);
-});
-
 
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
@@ -47,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('map').style.display = 'block';
     }
 
-    // Listen for submit click
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const addressInput = document.querySelector('#addressInput');
@@ -129,13 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Only proceeds if we successfully got county data
             // (which means we got a match at this lat/long in the database)
 
-            // Emit countyDataLoaded event
-            document.dispatchEvent(new Event('countyDataLoaded'));
-
-            // Call the callback function if it exists
-            if (countyDataLoadedCallback) {
-                countyDataLoadedCallback();
-            }
 
             // Look up parcel data in PostgreSQL database
             const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
@@ -343,7 +327,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-    
 
     // Dynamically load the Google Maps API
     function loadGoogleMapsAPI() {
