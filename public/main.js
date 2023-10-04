@@ -3,6 +3,8 @@ function initMap() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    window.scrollTo(0, 0);
+    
     const tryAgainButton = document.getElementById("tryAgainButton");    
     tryAgainButton.addEventListener("click", function() {
         location.reload();
