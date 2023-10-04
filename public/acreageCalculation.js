@@ -1,5 +1,8 @@
 console.log('Start: Part 2 -- Development Program I/O');
 
+// show market rate inputs
+document.getElementById('marketRateInputSection').style.display = 'block';
+
 // Set up an event listener for the acreage input to recalculate values in real-time
 document.getElementById('acreageInput').addEventListener('input', function() {
     calculateMaximumUnits();
