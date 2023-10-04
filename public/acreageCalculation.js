@@ -52,6 +52,7 @@ document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
         }
     });
 });
+
 // Event listeners for market-rate rent inputs
 marketRateInputs.forEach(input => {
     input.addEventListener('input', function() {
@@ -82,6 +83,8 @@ document.getElementById('matchAffordableSizes').addEventListener('change', funct
     // Recalculate units and sizes
     calculateMaximumUnits();
     calculateWeightedAverageSizes();
+    updateRentPerSqFtTable();
+    // Update Revenue Table
 });
 
 console.log('End: Part 2 -- Development Program I/O');
@@ -94,6 +97,12 @@ console.log('End: Part 2 -- Development Program I/O');
 
 // Function to update the Rent per Sq. Ft. table
 function updateRentPerSqFtTable() {
+    console.log("UpdateRentPerSqFtTable function triggered");  // Debugging Step 2: Check if this function is triggered
+
+    // Debugging Step 1: Print the values being used for calculations
+    console.log("Debugging Data Availability:");
+    console.log(`Max affordable rates from main.js: ${countyData.max_rent_0bd_120ami}, ${countyData.max_rent_1bd_120ami}, ${countyData.max_rent_2bd_120ami}, ${countyData.max_rent_3bd_120ami}`);
+    
     // Create functions getMarketRatePerSqFt and getAffordableRatePerSqFt to calculate these values
     document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('Studio');
     document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('Studio');
@@ -166,6 +175,10 @@ function calculateMaximumUnits() {
 function getMarketRatePerSqFt(unitType) {
     const marketRate = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
     const unitSize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
+    // Debugging Step 4: Print if unit size is zero
+    if (unitSize === 0) {
+        console.log(`Unit size for ${unitType} is zero.`);
+    }
     console.log(`Market Rate for ${unitType}: ${marketRate}`);
     console.log(`Unit Size for ${unitType}: ${unitSize}`);
     return (unitSize === 0) ? 'N/A' : (marketRate / unitSize).toFixed(2);
@@ -174,6 +187,12 @@ function getMarketRatePerSqFt(unitType) {
 
 // Function to calculate Affordable Rate per Sq. Ft.
 function getAffordableRatePerSqFt(unitType) {
+    // Debugging Step 3: Check if the function is waiting for main.js to populate data
+    if (typeof countyData === 'undefined') {
+        console.log("countyData is not available yet.");
+        return 'N/A';
+    }
+    
     let affordableRate = 0;
   
     // Remove the dollar sign and convert to floats
@@ -202,8 +221,14 @@ function getAffordableRatePerSqFt(unitType) {
     }
     
     const unitSize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;
+    
+    // Debugging Step 4: Print if unit size is zero
+    if (unitSize === 0) {
+        console.log(`Unit size for ${unitType} is zero.`);
+    }
     console.log(`Affordable Rate for ${unitType}: ${affordableRate}`);
     console.log(`Unit Size for ${unitType}: ${unitSize}`);
+    
     return (unitSize === 0) ? 'N/A' : (affordableRate / unitSize).toFixed(2);
 }
 
