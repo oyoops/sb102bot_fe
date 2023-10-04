@@ -120,6 +120,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Only proceeds if we successfully got county data
             // (which means we got a match at this lat/long in the database)
 
+            // Emit countyDataLoaded event
+            document.dispatchEvent(new Event('countyDataLoaded'));
 
             // Look up parcel data in PostgreSQL database
             const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
