@@ -101,7 +101,7 @@ console.log('End: Part 2 -- Development Program I/O');
 //           //
 
 // Function to update the Rent per Sq. Ft. table
-function updateRentPerSqFtTable() {
+function updateRentPerSqFtTable(countyData) {
     console.log("UpdateRentPerSqFtTable function triggered");  // Debugging Step 2: Check if this function is triggered
 
     // Debugging Step 1: Print the values being used for calculations
