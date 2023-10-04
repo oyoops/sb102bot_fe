@@ -166,14 +166,19 @@ function calculateMaximumUnits() {
 function getMarketRatePerSqFt(unitType) {
     const marketRate = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
     const unitSize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
+    console.log(`Market Rate for ${unitType}: ${marketRate}`);
+    console.log(`Unit Size for ${unitType}: ${unitSize}`);
     return (unitSize === 0) ? 'N/A' : (marketRate / unitSize).toFixed(2);
 }
+
 
 // Function to calculate Affordable Rate per Sq. Ft.
 function getAffordableRatePerSqFt(unitType) {
     // Assuming we have an input field for affordable rate, similar to market rate
     const affordableRate = parseFloat(document.getElementById(`affordableRate${unitType}`).value) || 0;
     const unitSize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;
+    console.log(`Affordable Rate for ${unitType}: ${affordableRate}`);
+    console.log(`Unit Size for ${unitType}: ${unitSize}`);
     return (unitSize === 0) ? 'N/A' : (affordableRate / unitSize).toFixed(2);
 }
 
