@@ -146,10 +146,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Populate the max rents table
             const rentsRow = `
                 <tr>
-                    <td>$${countyData.max_rent_0bd_120ami.toFixed(0)}</td>
-                    <td>$${countyData.max_rent_1bd_120ami.toFixed(0)}</td>
-                    <td>$${countyData.max_rent_2bd_120ami.toFixed(0)}</td>
-                    <td>$${countyData.max_rent_3bd_120ami.toFixed(0)}</td>
+                    <td>$${countyData.max_rent_0bd_120ami}</td>
+                    <td>$${countyData.max_rent_1bd_120ami}</td>
+                    <td>$${countyData.max_rent_2bd_120ami}</td>
+                    <td>$${countyData.max_rent_3bd_120ami}</td>
                 </tr>
             `;
             rentsTableBody.innerHTML = rentsRow;
