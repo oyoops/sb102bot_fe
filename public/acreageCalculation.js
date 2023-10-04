@@ -9,10 +9,12 @@ document.getElementById('rentPerSqFtTableSection').style.display = 'block';
 // Show the abatement table
 document.getElementById('abatementTable').style.display = 'block';
 
-
+// Get refs to DOM
+const affordablePercentageSlider = document.getElementById("affordablePctSlider");
+const marketInputs = document.querySelectorAll('.marketSizeInput');
+const marketRateInputs = document.querySelectorAll('.marketRateInput');
 
 // Show affordable % slider
-const affordablePercentageSlider = document.getElementById("affordablePctSlider");
 affordablePercentageSlider.value = 0.10; // 0.00; // 0.40; // Set the default value of the slider to 40% upon initial load
 affordablePercentageSlider.oninput = function() {
     calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
@@ -65,9 +67,6 @@ marketRateInputs.forEach(input => {
 // Checkbox logic to set affordable units to the market unit sizes
 document.getElementById('matchAffordableSizes').addEventListener('change', function() {
     const affordableInputs = document.querySelectorAll('.affordableSizeInput');
-    const marketInputs = document.querySelectorAll('.marketSizeInput');
-    const marketRateInputs = document.querySelectorAll('.marketRateInput');
-
     
     // If checkbox is checked
     if (this.checked) {
