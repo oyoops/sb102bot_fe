@@ -67,6 +67,7 @@ document.getElementById('matchAffordableSizes').addEventListener('change', funct
     const affordableInputs = document.querySelectorAll('.affordableSizeInput');
     const marketInputs = document.querySelectorAll('.marketSizeInput');
     const marketRateInputs = document.querySelectorAll('.marketRateInput');
+
     
     // If checkbox is checked
     if (this.checked) {
@@ -97,12 +98,12 @@ function updateRentPerSqFtTable() {
     // Create functions getMarketRatePerSqFt and getAffordableRatePerSqFt to calculate these values
     document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('Studio');
     document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('Studio');
-    document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('1BD');
-    document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('1BD');
-    document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('2BD');
-    document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('2BD');
-    document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('3BD');
-    document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('3BD');
+    document.getElementById('marketRate1BDPerSqFt').innerText = getMarketRatePerSqFt('1BD');
+    document.getElementById('affordable1BDPerSqFt').innerText = getAffordableRatePerSqFt('1BD');
+    document.getElementById('marketRate2BDPerSqFt').innerText = getMarketRatePerSqFt('2BD');
+    document.getElementById('affordable2BDPerSqFt').innerText = getAffordableRatePerSqFt('2BD');
+    document.getElementById('marketRate3BDPerSqFt').innerText = getMarketRatePerSqFt('3BD');
+    document.getElementById('affordable3BDPerSqFt').innerText = getAffordableRatePerSqFt('3BD');
 }
 
 // Calculate maximum units and show them in a table
