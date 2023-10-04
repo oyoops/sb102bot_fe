@@ -4,9 +4,11 @@ function initMap() {
     // Maps API is now loaded and can be used.
 }
 
-function onCountyDataLoaded(callback) {
-    countyDataLoadedCallback = callback;
-}
+onCountyDataLoaded(function(countyData) {
+    // countyData should be available now
+    updateRentPerSqFtTable(countyData);
+});
+
 
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
