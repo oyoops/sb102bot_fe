@@ -176,11 +176,11 @@ function getMarketRatePerSqFt(unitType) {
 function getAffordableRatePerSqFt(unitType) {
     let affordableRate = 0;
   
-    // Convert countyData to floats
-    const maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami);
-    const maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami);
-    const maxRent2bd = parseFloat(countyData.max_rent_2bd_120ami);
-    const maxRent3bd = parseFloat(countyData.max_rent_3bd_120ami);
+    // Remove the dollar sign and convert to floats
+    const maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami.substring(1));
+    const maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami.substring(1));
+    const maxRent2bd = parseFloat(countyData.max_rent_2bd_120ami.substring(1));
+    const maxRent3bd = parseFloat(countyData.max_rent_3bd_120ami.substring(1));
 
     // Select the appropriate affordable rate based on unit type
     switch (unitType) {
@@ -206,6 +206,7 @@ function getAffordableRatePerSqFt(unitType) {
     console.log(`Unit Size for ${unitType}: ${unitSize}`);
     return (unitSize === 0) ? 'N/A' : (affordableRate / unitSize).toFixed(2);
 }
+
 
 
 // Function to calculate weighted average sizes
