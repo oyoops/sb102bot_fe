@@ -84,13 +84,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const lat = geocodeData.results[0].geometry.location.lat;
             const lng = geocodeData.results[0].geometry.location.lng;
             
-            //// Show the Google Map container
-            //document.getElementById('mapContainer').style.display = 'block';
             
             // Initialize & show the Google Map using lat/lng instead of user input
             initializeMap(lat, lng);
-
-
 
 
             // Check if the address is within a city
@@ -277,15 +273,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const eligibilityDiv = document.getElementById("eligibilityStatus");
             
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = "This parcel is PROBABLY NOT ELIGIBLE for Live Local Act development.";
+                eligibilityDiv.innerHTML = "This parcel is <b>PROBABLY <u>NOT</u> ELIGIBLE</b> for Live Local Act development.";
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = "This parcel is ELIGIBLE for Live Local Act development!";
+                eligibilityDiv.innerHTML = "This parcel is likely <b><u>ELIGIBLE</u></b> for Live Local Act development!";
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "22px";
             } else {
-                eligibilityDiv.innerHTML = "This parcel is NOT ELIGIBLE for Live Local Act development.";
+                eligibilityDiv.innerHTML = "This parcel is <b><u>NOT ELIGIBLE</u></b> for Live Local Act development.";
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "22px";
             }
