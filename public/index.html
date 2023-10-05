@@ -209,19 +209,19 @@
         <!-- Market Rate Rents Input Section -->
         <section id="marketRateInputSection" style="display: none;">
             <h4>Market Rate Rents</h4>
-            <input type="number" id="marketRateStudio" placeholder="Studio Mkt Rent">
-            <input type="number" id="marketRate1BD" placeholder="1BD Mkt Rent">
-            <input type="number" id="marketRate2BD" placeholder="2BD Mkt Rent">
-            <input type="number" id="marketRate3BD" placeholder="3BD Mkt Rent">
+            <input type="number" id="marketRateStudio" placeholder="$2,000" value="2000">
+            <input type="number" id="marketRate1BD" placeholder="$2,400" value="2400">
+            <input type="number" id="marketRate2BD" placeholder="$2,800" value="2800">
+            <input type="number" id="marketRate3BD" placeholder="$3,200" value="3200">
         </section>
 
         <!-- Rent per Sq. Ft. Table -->
         <section id="rentPerSqFtTableSection" style="display: none;">
-            <h2>Rent per Sq. Ft.</h2>
+            <h4>Rent per Sq. Ft.</h4>
             <table id="rentPerSqFtTable">
                 <thead>
                     <tr>
-                        <th>Unit Type</th>
+                        <th></th>
                         <th>Market Rate</th>
                         <th>Affordable</th>
                     </tr>
@@ -229,34 +229,34 @@
                 <tbody>
                     <tr>
                         <td>Studio</td>
-                        <td id="marketRateStudioPerSqFt">N/A</td>
-                        <td id="affordableStudioPerSqFt">N/A</td>
+                        <td id="marketRateStudioPerSqFt">-</td>
+                        <td id="affordableStudioPerSqFt">-</td>
                     </tr>
                     <tr>
                         <td>1BD</td>
-                        <td id="marketRate1BDPerSqFt">N/A</td>
-                        <td id="affordable1BDPerSqFt">N/A</td>
+                        <td id="marketRate1BDPerSqFt">-</td>
+                        <td id="affordable1BDPerSqFt">-</td>
                     </tr>
                     <tr>
                         <td>2BD</td>
-                        <td id="marketRate2BDPerSqFt">N/A</td>
-                        <td id="affordable2BDPerSqFt">N/A</td>
+                        <td id="marketRate2BDPerSqFt">-</td>
+                        <td id="affordable2BDPerSqFt">-</td>
                     </tr>
                     <tr>
                         <td>3BD</td>
-                        <td id="marketRate3BDPerSqFt">N/A</td>
-                        <td id="affordable3BDPerSqFt">N/A</td>
+                        <td id="marketRate3BDPerSqFt">-</td>
+                        <td id="affordable3BDPerSqFt">-</td>
                     </tr>
                 </tbody>
             </table>
         </section>
         
         <!-- Property Tax Abatement Outputs -->
-        <h4>Abatement Information</h4>
+        <h4>Property Taxes</h4>
         <table id="abatementTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
                 <tr>
-                    <th>Property Tax Abatement Value</th>
+                    <th>Ad Valorem Abatement</th>
                 </tr>
             </thead>
             <tbody id="abatementTableBody">
@@ -286,7 +286,7 @@
     <!-- Footer -->
     <footer>
         <p>
-            <br>Created by <a href="https://twitter.com/oyoops" target="_blank"><u>@oyoops</u></a> | <a href="https://cresunshine.com/" target="_blank"><u>CRE☀️</u></a>
+            <br>Created by <a href="https://twitter.com/oyoops" target="_blank"><u>@oyoops</u></a> | <a href="https://cresunshine.com/" target="_blank"><u>CRE☀️</u></a> | <a href="https://www.github.com/oyoops/sb102bot-fe"><u>GitHub</u></a>
             <br>Last updated Oct. 4, 2023
         </p>
     </footer>
@@ -294,7 +294,7 @@
 
     <!-- Scripts -->
     <script src="main.js"></script>
-    <script src="acreageCalculation.js"></script>
+    <!-- <script src="acreageCalculation.js"></script> -->
 
 </body>
 </html>
