@@ -172,9 +172,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 "005": "Cooperatives",
                 "006": "Retirement Homes not eligible for exemption",
                 "007": "Miscellaneous Residential (migrant camps, boarding homes, etc.)",
-                "008": "Multi-family - fewer than 10 units",
+                "008": "Residential Multifamily (<10 units)",
                 "009": "Residential Common Elements/Areas",
-                "003": "Multi-family - 10 units or more",
+                "003": "'Commercial Multifamily' (10+ units)",
                 "010": "Vacant Commercial",
                 "011": "Stores, one story",
                 "012": "Mixed use - store and office or store and residential combination",
@@ -266,22 +266,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 "098": "Centrally assessed",
                 "099": "Acreage not zoned agricultural with or without extra features"
             };
-                        
-            const eligibleCodes = ['003', '010', '011', '012', '013', '014', '015', '016', '017', '018', '019', 
+
+            const maybeEligibleCodes = ['003'];
+
+            const eligibleCodes = ['010', '011', '012', '013', '014', '015', '016', '017', '018', '019', 
                                     '020', '021', '022', '023', '024', '025', '026', '027', '028', '029', '030', 
                                     '031', '032', '033', '034', '035', '036', '037', '038', '039', '040', '041', 
                                     '042', '043', '044', '045', '046', '047', '048', '049'];
 
             const eligibilityDiv = document.getElementById("eligibilityStatus");
             
-            if (eligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = "This parcel is ELIGIBLE for Live Local Act development";
+            if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
+                eligibilityDiv.innerHTML = "This parcel is PROBABLY NOT ELIGIBLE for Live Local Act development.";
+                eligibilityDiv.style.color = "orange";
+                eligibilityDiv.style.fontSize = "20px";
+            } else if (eligibleCodes.includes(parcelData.dor_uc)) {
+                eligibilityDiv.innerHTML = "This parcel is ELIGIBLE for Live Local Act development!";
                 eligibilityDiv.style.color = "green";
-                eligibilityDiv.style.fontSize = "24px";
+                eligibilityDiv.style.fontSize = "22px";
             } else {
-                eligibilityDiv.innerHTML = "This parcel is NOT ELIGIBLE for Live Local Act development";
+                eligibilityDiv.innerHTML = "This parcel is NOT ELIGIBLE for Live Local Act development.";
                 eligibilityDiv.style.color = "red";
-                eligibilityDiv.style.fontSize = "24px";
+                eligibilityDiv.style.fontSize = "22px";
             }
 
             // compute acreage from SF area
