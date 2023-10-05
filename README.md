@@ -2,57 +2,50 @@
 
 **NOTE: This entire description was written by `ChatGPT`.**
 
+# SB102Bot: Multifamily Development Intensity Calculator
 
-  
-## Introduction
-SB102Bot is a Flask-based web application designed for real estate developers in South Florida. It allows you to enter an address and magically reveals the maximum allowable development intensity for multifamily construction at that address. Yup, it's like having your own underwriting assistant who never sleeps.
+## Overview
+SB102Bot is a Flask web application designed to assist developers and property owners in Florida in evaluating the maximum allowable development intensity for multifamily constructions. The application uses a variety of data sources including county and parcel databases to provide a comprehensive report. The report includes unit counts, affordable housing options, tax abatements, and more.
 
-> "Making South Florida's real estate development as easy as 1-2-3, or well, SB-102!"
+## Technology Stack
+- Backend: Python, Flask
+- Frontend: HTML, CSS, JavaScript
+- Database: PostgreSQL
+- Deployment: Vercel
+- APIs: Google Maps API
+- Libraries: NumPy, Pandas, Geopy, SQLAlchemy
 
-## Features :sparkles:
+## Project Structure
+- `/api`: Contains JavaScript files for serverless functions that handle API endpoints.
+- `/public`: Holds the frontend HTML, CSS, and JavaScript files.
+  - `index.html`: Main HTML file that serves as the entry point of the application.
+  - `main.js`: Contains the core JavaScript logic to handle form submissions and API interactions.
+  - `styles.css`: Stylesheet for the frontend.
+  - `acreageCalculation.js`: Contains JavaScript functions related to acreage calculations.
+- `server.py`: Main Flask file that initializes the server and routes.
+- `database.py`: Handles database connections and queries.
+- `utils.py`: Utility functions for data processing and calculations.
+- `package.json`: Lists package dependencies for the Node.js environment.
+- `requirements.txt`: Lists package dependencies for the Python environment.
+- `vercel.json`: Configuration file for Vercel deployment.
 
-- **Address Input**: Just type in the address, and hit "Underwrite". It's that simple.
-- **Geocoding & Reverse Geocoding**: We find out where on Earth your property is.
-- **Density Analysis**: The maximum allowable residential density for that location. Get those units!
-- **Walk Score**: Because nobody wants to live where you can't walk to a café.
-- **Maps & Street View**: See the property from space! Or at least from Google's satellites and cars.
-- **Intuitive UI**: We've put in hours of work to make it look like we didn't put in any work at all.
-  
-## How it Works :gear:
+## Features
+- Accepts an address as input and performs geocoding.
+- Queries a PostgreSQL database to retrieve parcel and county data.
+- Calculates the maximum number of units that can be developed, including both market-rate and affordable housing.
+- Provides real-time updates based on user input for parameters like acreage, unit sizes, and affordable housing percentages.
+- Displays the results in a detailed HTML report that includes tables and Google Maps integration.
+- Provides tax abatement information based on the percentage of affordable units.
 
-1. The frontend uses Vanilla JS to capture your address.
-2. The backend is a Flask app deployed on Vercel.
-3. We use Google Maps API for geocoding and fetching those sweet, sweet map images.
-4. Our Python backend does all the heavy lifting, fetching density data and walk scores.
-5. The results are displayed in a neat HTML report. Right in your browser. Instantly.
-
-## Code Structure :file_folder:
-
-- **public/script2.js**: The JavaScript magic wand. Handles UI changes and API calls.
-- **public/index.html**: Where HTML elements come to life.
-- **api/analyze_address.py**: The Flask endpoint that ties everything together.
-
-## Setup :wrench:
-
-To get this project running locally:
-
+## Setup
 1. Clone the repository.
-2. Obtain API keys for Google Maps and insert them in `script2.js` and `analyze_address.py`.
-3. Run `flask run` in the root directory.
+2. Install Python dependencies: `pip install -r requirements.txt`.
+3. Install Node.js dependencies: `npm install`.
+4. Set up your PostgreSQL database and update the database configuration in `database.py`.
+5. Deploy the application with Vercel or run it locally using `flask run`.
 
-## Humor Segment :clown_face:
+## Usage
+1. Open the application in a web browser.
+2. Enter an address in the search bar and click "What can I do?".
+3. Review the generated report for maximum allowable development intensity.
 
-> Why did the developer go broke?
-> 
-> Because he kept using `window.alert()` and it kept blocking his income!
-
-## Credits :clap:
-
-- Developer: [Oyoops](https://twitter.com/oyoops)
-- Inspiration: The confusing yet fascinating world of South Florida real estate.
-
-## Last Words :memo:
-
-If you find a bug, don't keep it; let us know! If you don't find a bug, well, you're not looking hard enough.
-
-_Last Updated: Sept. 21, 2023_
