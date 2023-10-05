@@ -454,12 +454,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to update the Rent per Sq. Ft. table
 function updateRentPerSqFtTable() {
-    console.log("UpdateRentPerSqFtTable function triggered");  // Debugging Step 2: Check if this function is triggered
 
-    // Debugging Step 1: Print the values being used for calculations
-    console.log("Debugging Data Availability:");
-    console.log(`Max affordable rates from main.js: ${countyData.max_rent_0bd_120ami}, ${countyData.max_rent_1bd_120ami}, ${countyData.max_rent_2bd_120ami}, ${countyData.max_rent_3bd_120ami}`);
-    
     // Create functions getMarketRatePerSqFt and getAffordableRatePerSqFt to calculate these values
     document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('Studio');
     document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('Studio');
