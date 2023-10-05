@@ -38,7 +38,7 @@ document.getElementById('affordablePctSlider').addEventListener('input', functio
 // Event listeners for all size inputs to recalculate weighted averages in real-time
 document.querySelectorAll('.sizeInput').forEach(input => {
     input.addEventListener('input', () => {
-        calculateMaximumUnits();
+        calculateMaximumUnits(); // unnecessary?
         calculateWeightedAverageSizes();
     });
 });
@@ -60,9 +60,6 @@ marketRateInputs.forEach(input => {
         // Update Revenue Table
     });
 });
-
-
-//  Checkbox for unit size matching
 
 
 // Checkbox logic to set affordable units to the market unit sizes
@@ -196,10 +193,10 @@ function getAffordableRatePerSqFt(unitType) {
     let affordableRate = 0;
   
     // Remove the dollar sign and convert to floats
-    const maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami.substring(1));
-    const maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami.substring(1));
-    const maxRent2bd = parseFloat(countyData.max_rent_2bd_120ami.substring(1));
-    const maxRent3bd = parseFloat(countyData.max_rent_3bd_120ami.substring(1));
+    const maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami);
+    const maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami);
+    const maxRent2bd = parseFloat(countyData.max_rent_2bd_120ami);
+    const maxRent3bd = parseFloat(countyData.max_rent_3bd_120ami);
 
     // Select the appropriate affordable rate based on unit type
     switch (unitType) {
