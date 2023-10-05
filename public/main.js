@@ -167,9 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Display the county Max Rents table now that we have data
             document.getElementById('countyMaxRentsTable').style.display = 'table'; // Display the county max rents table
 
-            //////// Display the Parcel Data table now that we have data
-            //////document.getElementById('parcelDataTable').style.display = 'table'; // Display the parcel data table
-
+            // Use code lookup dictionary
             const useCodeLookup = {
                 "000": "Vacant Residential",
                 "001": "Single Family",
@@ -298,8 +296,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // compute acreage from SF area
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
-            // set default placeholder acreage
-            document.getElementById("acreageInput").value = acres.toFixed(2);
             
             // Populate the parcel data table
             const parcelDataRow = `
@@ -312,27 +308,22 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             parcelDataTableBody.innerHTML = parcelDataRow;
 
+
+
+            // Call acreageCalculation.js to calculate initial maximum units using default values
+            //calculateWeightedAverageSizes();
+
+
+            /* INPUTS SECTION: */
+
+            // Unhide Tables and I/O Sections:
+
             // Display the parcel data table now that we have data
-            document.getElementById('parcelDataTable').style.display = 'table'; // Display the parcel data table
-
-            // DONE with Part 1
-            console.log('End: Part 1 -- Geocoding + Database Lookup -> County Data');
-
-            // Prep for Part 2:
-            // Display the 'Development Program' inputs section (Part 2) after successfully populating the tables
+            document.getElementById('parcelDataTable').style.display = 'table'; // Display the parcel data table            
+            // Display the 'Development Program' inputs section
             document.getElementById('developmentProgramInputSection').style.display = 'block';
-
             // Display the 'Unit count' table
             document.getElementById('unitCalculationTable').style.display = 'block';
-            
-            // Call acreageCalculation.js to calculate initial maximum units using default values
-            //calculateWeightedAverageSizes(); // this might not work...
-
-
-            console.log('Start: Part 2 -- Development Program I/O');
-
-            // Unhide Tables
-
             // Show market rate inputs
             document.getElementById('marketRateInputSection').style.display = 'block';
             // Show the rent/SqFt table section
@@ -340,18 +331,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show the abatement table
             document.getElementById('abatementTable').style.display = 'block';
 
-            // Get refs to DOM
+            // Define DOM references
             const affordablePercentageSlider = document.getElementById("affordablePctSlider");
             const marketInputs = document.querySelectorAll('.marketSizeInput');
             const marketRateInputs = document.querySelectorAll('.marketRateInput');
 
+            // Set default input acreage
+            document.getElementById("acreageInput").value = acres.toFixed(2);
+
             // Show affordable % slider
-            affordablePercentageSlider.value = 0.10; // 0.00; // 0.40; // Set the default value of the slider to 40% upon initial load
+            affordablePercentageSlider.value = 0.10; // Set the default value of the slider to N% upon initial load
             affordablePercentageSlider.oninput = function() {
                 calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
             }
 
-            // Event Listeners
+
+            /* Event Listeners: */
 
             // Set up an event listener for the acreage input to recalculate values in real-time
             document.getElementById('acreageInput').addEventListener('input', function() {
@@ -374,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
             // Event listeners for Market size inputs to set equal Affordable sizes (if checkbox is checked)
-            //     and then recalculate weighted averages in real-time
+            // and then recalculate weighted averages in real-time
             document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
                 input.addEventListener('input', () => {
                     if (document.getElementById('matchAffordableSizes').checked) {
@@ -415,10 +410,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Update Revenue Table
             });
 
-            console.log('End: Part 2 -- Development Program I/O');
-
-
-
+          
+            
 
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
