@@ -2,6 +2,13 @@ function initMap() {
     // Maps API is now loaded and can be used.
 }
 
+let lat;
+let lng;
+let countyData;
+let cityData;
+let parcelData;
+let acres;
+
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
 
@@ -81,8 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
 
             // Get the lat/long from the geocode data
-            const lat = geocodeData.results[0].geometry.location.lat;
-            const lng = geocodeData.results[0].geometry.location.lng;
+            lat = geocodeData.results[0].geometry.location.lat;
+            lng = geocodeData.results[0].geometry.location.lng;
             
             
             // Initialize & show the Google Map using lat/lng instead of user input
@@ -92,7 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Check if the address is within a city
             const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
             const cityCheckResponse = await fetch(cityCheckEndpoint);
-            const cityData = await cityCheckResponse.json();
+            
+            cityData = await cityCheckResponse.json();
             console.log("City Data Received:", cityData);
 
             if (cityData.isInCity) {
@@ -105,7 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Query the PostgreSQL database for the county at the geocoded lat/long, derived from address
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
             const countyDataResponse = await fetch(countyDataEndpoint);
-            const countyData = await countyDataResponse.json();
+            
+            countyData = await countyDataResponse.json();
             console.log("County Data Received:", countyData);
 
             // Check if PostgreSQL database returned county data
@@ -120,7 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Look up parcel data in PostgreSQL database
             const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
             const parcelDataResponse = await fetch(parcelDataEndpoint);
-            const parcelData = await parcelDataResponse.json();
+            
+            parcelData = await parcelDataResponse.json();
             console.log("Parcel Data Received:", parcelData);
 
             // If cityname is null, make cityName = 'Unincorporated'
@@ -287,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // compute acreage from SF area
-            const acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
+            acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
             // set default placeholder acreage
             document.getElementById("acreageInput").value = acres.toFixed(2);
             
