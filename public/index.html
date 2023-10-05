@@ -209,11 +209,34 @@
         <!-- Market Rate Rents Input Section -->
         <section id="marketRateInputSection" style="display: none;">
             <h4>Market Rate Rents</h4>
-            <input type="number" id="marketRateStudio" placeholder="$2,000" value="2000">
-            <input type="number" id="marketRate1BD" placeholder="$2,400" value="2400">
-            <input type="number" id="marketRate2BD" placeholder="$2,800" value="2800">
-            <input type="number" id="marketRate3BD" placeholder="$3,200" value="3200">
+            <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Unit Type</th>
+                        <th>Rent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Studio</td>
+                        <td><input type="number" id="marketRateStudio" placeholder="$2,000" value="2000"></td>
+                    </tr>
+                    <tr>
+                        <td>1BD</td>
+                        <td><input type="number" id="marketRate1BD" placeholder="$2,400" value="2400"></td>
+                    </tr>
+                    <tr>
+                        <td>2BD</td>
+                        <td><input type="number" id="marketRate2BD" placeholder="$2,800" value="2800"></td>
+                    </tr>
+                    <tr>
+                        <td>3BD</td>
+                        <td><input type="number" id="marketRate3BD" placeholder="$3,200" value="3200"></td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
+
 
         <!-- Rent per Sq. Ft. Table -->
         <section id="rentPerSqFtTableSection" style="display: none;">
