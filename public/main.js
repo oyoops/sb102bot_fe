@@ -333,11 +333,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Define DOM references
             const affordablePercentageSlider = document.getElementById("affordablePctSlider");
+            const affordablePctDisplay = document.getElementById('affordablePctDisplay');
+            const sizeInputs = document.querySelectorAll('.sizeInput')
             const marketInputs = document.querySelectorAll('.marketSizeInput');
+            const affordableSizeInputs = document.querySelectorAll('.affordableSizeInput');
             const marketRateInputs = document.querySelectorAll('.marketRateInput');
+            const acreageInput = document.getElementById("acreageInput");
+            const densityInput = document.getElementById('densityInput');
+            const matchAffordableSizesCheckbox = document.getElementById('matchAffordableSizes');
 
             // Set default input acreage
-            document.getElementById("acreageInput").value = acres.toFixed(2);
+            acreageInput.value = acres.toFixed(2);
 
             // Show affordable % slider
             affordablePercentageSlider.value = 0.10; // Set the default value of the slider to N% upon initial load
@@ -349,20 +355,20 @@ document.addEventListener('DOMContentLoaded', function() {
             /* Event Listeners: */
 
             // Set up an event listener for the acreage input to recalculate values in real-time
-            document.getElementById('acreageInput').addEventListener('input', function() {
+            acreageInput.addEventListener('input', function() {
                 calculateMaximumUnits();
             });
             // Set up an event listener for the density input to recalculate values in real-time
-            document.getElementById('densityInput').addEventListener('input', function() {
+            densityInput.addEventListener('input', function() {
                 calculateMaximumUnits();
             });
             // Set up an event listener for the affordable percentage slider to recalculate values in real-time
-            document.getElementById('affordablePctSlider').addEventListener('input', function() {
-                document.getElementById('affordablePctDisplay').innerText = `${this.value}%`;
+            affordablePercentageSlider.addEventListener('input', function() {
+                affordablePctDisplay.innerText = `${this.value}%`;
                 calculateMaximumUnits();
             });
             // Event listeners for all size inputs to recalculate weighted averages in real-time
-            document.querySelectorAll('.sizeInput').forEach(input => {
+            sizeInputs.forEach(input => {
                 input.addEventListener('input', () => {
                     calculateMaximumUnits(); // unnecessary?
                     calculateWeightedAverageSizes();
@@ -371,10 +377,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             // Event listeners for Market size inputs to set equal Affordable sizes (if checkbox is checked)
             // and then recalculate weighted averages in real-time
-            document.querySelectorAll('.marketSizeInput').forEach((input, index) => {
+            marketInputs.forEach((input, index) => {
                 input.addEventListener('input', () => {
-                    if (document.getElementById('matchAffordableSizes').checked) {
-                        document.querySelectorAll('.affordableSizeInput')[index].value = input.value;
+                    if (matchAffordableSizesCheckbox.checked) {
+                        affordableSizeInputs[index].value = input.value;
                         calculateWeightedAverageSizes();
                     }
                 });
@@ -390,8 +396,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             // Checkbox logic to set affordable units to the market unit sizes
-            document.getElementById('matchAffordableSizes').addEventListener('change', function() {
-                const affordableInputs = document.querySelectorAll('.affordableSizeInput');
+            matchAffordableSizesCheckbox.addEventListener('change', function() {
+                const affordableInputs = affordableSizeInputs;
                 
                 // If checkbox is checked
                 if (this.checked) {
@@ -487,7 +493,6 @@ function calculateMaximumUnits() {
     // Display the unit calculation table now that we have data
     document.getElementById('unitCalculationTable').style.display = 'block';
 
-
     // Update abatement
     const abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100);
     const abatementTableBody = document.getElementById('abatementTableBody');
@@ -502,6 +507,7 @@ function calculateMaximumUnits() {
     warningContainer.innerHTML = "";  // Clear previous warnings
     if (affordableUnits < 70) {
         document.getElementById('warningContainer').style.display = 'block';
+        warningContainer.innerHTML += '<p style="color: red;">Need at least 70 affordable units for the steamroll option!</p>';
     }
     if (affordablePct < 0.4) {
         document.getElementById('warningContainer').style.display = 'block';
@@ -526,8 +532,6 @@ function getMarketRatePerSqFt(unitType) {
     if (unitSize === 0) {
         console.log(`Unit size for ${unitType} is zero.`);
     }
-    console.log(`Market Rate for ${unitType}: ${marketRate}`);
-    console.log(`Unit Size for ${unitType}: ${unitSize}`);
     return (unitSize === 0) ? 'N/A' : (marketRate / unitSize).toFixed(2);
 }
 
@@ -578,7 +582,6 @@ function getAffordableRatePerSqFt(unitType) {
     
     return (unitSize === 0) ? 'N/A' : (affordableRate / unitSize).toFixed(2);
 }
-
 
 
 // Function to calculate weighted average sizes
