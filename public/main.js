@@ -366,6 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.addEventListener('input', () => {
                     calculateMaximumUnits(); // unnecessary?
                     calculateWeightedAverageSizes();
+                    updateRentPerSqFtTable();
                 });
             });
             // Event listeners for Market size inputs to set equal Affordable sizes (if checkbox is checked)
