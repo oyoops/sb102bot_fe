@@ -349,6 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
             affordablePercentageSlider.value = 0.10; // Set the default value of the slider to N% upon initial load
             affordablePercentageSlider.oninput = function() {
                 calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
+                updateRentPerSqFtTable();
             }
 
 
@@ -357,15 +358,18 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set up an event listener for the acreage input to recalculate values in real-time
             acreageInput.addEventListener('input', function() {
                 calculateMaximumUnits();
+                updateRentPerSqFtTable();
             });
             // Set up an event listener for the density input to recalculate values in real-time
             densityInput.addEventListener('input', function() {
                 calculateMaximumUnits();
+                updateRentPerSqFtTable();
             });
             // Set up an event listener for the affordable percentage slider to recalculate values in real-time
             affordablePercentageSlider.addEventListener('input', function() {
                 affordablePctDisplay.innerText = `${this.value}%`;
                 calculateMaximumUnits();
+                updateRentPerSqFtTable();
             });
             // Event listeners for all size inputs to recalculate weighted averages in real-time
             sizeInputs.forEach(input => {
