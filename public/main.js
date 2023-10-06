@@ -438,6 +438,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const runAIButton = document.getElementById("runAIButton");
             runAIButton.addEventListener('click', runAISection);
+            
+            
+            
             /*
                 Params: 
                     address, 
@@ -450,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     aff2BD,
                     aff3BD,
                     textModifier
-            */
+            
             const textMod = ` Utilize HTML extensively in your response for aesthetics; font, line breaks, etc. (everything except bullet point lists).`;
 
             aiContainer.style.display = 'block';
@@ -461,6 +464,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("IC Memo Received:", icMemo);
             aiContainer.innerHTML = icMemo;
             
+            */
 
             // ...
 

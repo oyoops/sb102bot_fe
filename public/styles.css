@@ -271,6 +271,22 @@ footer a:hover {
     opacity: 1; /* Made it fully visible */
 }
 
+#runAIButton {
+    font-weight: 500;
+    background-color: #052864;
+    color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 400px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 1; /* Made it fully visible */
+}
+
 .unitCalculationText {
     font-weight: 300;
     color: #666;
