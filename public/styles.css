@@ -358,11 +358,11 @@ input:disabled {
 
 #aiContainer {
     display: none;
-    max-width: 80%;
-    font-family: 'Verdana', serif;
+    max-width: 70%;
+    font-family: 'Roboto', serif;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    text-align: justify;
     margin-left: auto;
     margin-right: auto;
 }
