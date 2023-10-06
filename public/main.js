@@ -432,18 +432,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // ...
 
-            // AI OUTPUT:
 
-            aiContainer.innerHTML = "Thinking...";
+
+            /* AI OUTPUT: */
+
+
+            /*
+                Params: 
+                    address, 
+                    county, 
+                    acreage, 
+                    totalUnits, 
+                    affordablePct, 
+                    marketRent, 
+                    textModifier
+            */
+            aiContainer.innerHTML = "Drafting your investment memo...";
             aiContainer.style.display = 'block';
-            
-            //params: address, county, acreage, totalUnits, affordablePct, marketRent, textModifier
             const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${countyData.county_name}&acreage=${acreageValue}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&marketRent=${marketRate}&textModifier=${textMod}`;            
             const icMemoResponse = await fetch(icMemoEndpoint);
-            
             icMemo = await icMemoResponse.json();
             console.log("IC Memo Received:", icMemo);
           
+
+
+
             // ...
 
 
