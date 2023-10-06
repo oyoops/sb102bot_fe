@@ -360,7 +360,6 @@ input:disabled {
     display: none;
     max-width: 70%;
     font-family: 'Roboto', serif;
-    align-items: center;
     text-align: justify;
     margin-left: auto;
     margin-right: auto;
