@@ -3,7 +3,7 @@ const axios = require('axios');
 
 // Export the serverless function
 module.exports = async (req, res) => {
-    const {address, county, acreage, totalUnits, affordablePct, marketRent, textModifier} = req.query;
+    const {address, county, acreage, totalUnits, affordablePct, affStudio, aff1BD, aff2BD, aff3BD, textModifier} = req.query;
 
     // Set AI parameters
     const aiMaxTokens = 300;
@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
     console.log("Prompt Prefix: " + promptPrefix);
 
     // Log the client-generated prompt
-    const prompt = `The user is recommending that the Investment Committee buy ${acreage} acres of land at ${address} which is in ${municipality} County, FL. The proposed development program consists of ${totalUnits} total units, of which ${affordablePct}% are 'Affordable' units and the rest are market-rate units with an average rent of $${marketRent} per month. ${textModifier} ... Please write the memo for the Investment Committee, suggesting a price to pay for this land.`;
+    const prompt = `The user is recommending that the Investment Committee buy ${acreage} acres of land at ${address} which is in ${county} County, FL. The proposed development program consists of ${totalUnits} total units, of which ${affordablePct}% are 'Affordable' units with rents of ${affStudio}, ${aff1BD}, ${aff2BD}, and ${aff3BD} for Studio, 1BD, 2BD, and 3BD units, respectively. ${textModifier} ... Please write the memo for the Investment Committee, suggesting a price to pay for this land.`;
     console.log("Prompt (main): " + prompt);
 
     // Get the serverside modifier based on the county

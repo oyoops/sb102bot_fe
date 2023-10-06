@@ -9,6 +9,12 @@ let cityData;
 let parcelData;
 let acres;
 
+let totalUnits;
+let affordableUnits;
+let marketUnits;
+let affordablePct;
+
+
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
 
@@ -436,20 +442,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
             /* AI OUTPUT: */
 
-
             /*
                 Params: 
                     address, 
                     county, 
                     acreage, 
                     totalUnits, 
-                    affordablePct, 
-                    marketRent, 
+                    affordablePct,
+                    affStudio,
+                    aff1BD,
+                    aff2BD,
+                    aff3BD,
                     textModifier
             */
+            const textMod = ` Rave excessively about how great of a 'Live Local Act' opportunity this is. `;
+
             aiContainer.innerHTML = "Drafting your investment memo...";
             aiContainer.style.display = 'block';
-            const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${countyData.county_name}&acreage=${acreageValue}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&marketRent=${marketRate}&textModifier=${textMod}`;            
+            const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${countyData.county_name}&acreage=${acreageInput.value}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&affStudio=${countyData.max_rent_0bd_120ami}&aff1BD=${countyData.max_rent_1bd_120ami}&aff2BD=${countyData.max_rent_2bd_120ami}&aff3BD=${countyData.max_rent_3bd_120ami}&textModifier=${encodeURIComponent(textMod)}`;
             const icMemoResponse = await fetch(icMemoEndpoint);
             icMemo = await icMemoResponse.json();
             console.log("IC Memo Received:", icMemo);
@@ -510,12 +520,12 @@ function calculateMaximumUnits() {
     const densityValue = parseFloat(document.getElementById('densityInput').value) || 10; // Default to 10 if not provided
     const affordablePctSlider = document.getElementById('affordablePctSlider');
     const affordablePctDisplay = document.getElementById('affordablePctDisplay');
-    const affordablePct = parseFloat(affordablePctSlider.value) / 100;
+    affordablePct = parseFloat(affordablePctSlider.value) / 100;
 
     // Calculate unit counts
-    const totalUnits = Math.floor(acreageValue * densityValue);
-    const affordableUnits = Math.ceil(affordablePct * totalUnits);
-    const marketUnits = totalUnits - affordableUnits;
+    totalUnits = Math.floor(acreageValue * densityValue);
+    affordableUnits = Math.ceil(affordablePct * totalUnits);
+    marketUnits = totalUnits - affordableUnits;
 
     // Update the table with unit counts
     const tableBody = document.getElementById('unitCalculationTableBody');
@@ -627,9 +637,9 @@ function calculateWeightedAverageSizes() {
     const acreageValue = parseFloat(document.getElementById('acreageInput').value);
     const densityValue = parseFloat(document.getElementById('densityInput').value) || 10;
 
-    const totalUnits = Math.floor(acreageValue * densityValue);
-    const affordableUnits = Math.ceil(affordablePct * totalUnits);
-    const marketUnits = totalUnits - affordableUnits;
+    totalUnits = Math.floor(acreageValue * densityValue);
+    affordableUnits = Math.ceil(affordablePct * totalUnits);
+    marketUnits = totalUnits - affordableUnits;
 
     const marketStudioSize = parseFloat(document.getElementById('marketStudioSize').value) || 0;
     const market1BDSize = parseFloat(document.getElementById('market1BDSize').value) || 0;
