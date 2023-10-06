@@ -129,25 +129,25 @@
 
 
     <div id="developmentProgramInputSection" style="display: none;">
-        <br>
         
         <!-- Acreage Input -->
-        <h3>What is the property's acreage?</h3>
+        <br>
+        <h4>How many acres is the site?</h4>
         <input type="number" id="acreageInput" placeholder="Acreage" value="10">
-        <br>
-
+        
         <!-- Density Input -->
-        <h3>What's the highest density allowed in this municipality?</h3>
-        <input type="number" id="densityInput" placeholder="Units/ac." value="30">
         <br>
-
+        <h4>What's the municipality's maximum density?</h4>
+        <input type="number" id="densityInput" placeholder="Units/ac." value="50">
+        
         <!-- Unit Calc Outputs (???) -->
         <!-- <div id="unitCalculationResult"></div> -->
         <!-- <br> -->
 
         <!-- Affordable Percentage Slider -->
-        <label for="affordablePctSlider">Affordable Percentage: <span id="affordablePctDisplay">0%</span></label>
-        <input type="range" id="affordablePctSlider" min="0" max="100" value="0" step="1">
+        <br>
+        <label for="affordablePctSlider">'Affordable' units: <span id="affordablePctDisplay">40%</span></label>
+        <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
         <br>
         
         <!-- Unit Count Outputs -->
@@ -157,7 +157,7 @@
                 <tr>
                     <th>Affordable</th>
                     <th>Market Rate</th>
-                    <th><b>Total Units</b></th>
+                    <th><b>Total</b></th>
                 </tr>
             </thead>
             <tbody id="unitCalculationTableBody">
@@ -171,8 +171,8 @@
 
 
         <!-- Unit Size Inputs -->
-        <h4>Average Unit Sizes</h4>
-        <label><input type="checkbox" id="matchAffordableSizes"> Match Affordable to Market Unit Sizes</label>
+        <h4>Avg. Sizes</h4>
+        <label><input type="checkbox" id="matchAffordableSizes"> Match affordable and market-rate unit sizes?</label>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
@@ -207,13 +207,15 @@
 
 
         <!-- Weighted Average Unit Size Outputs -->
-        <h4>Average Sq. Ft.</h4>
+        <br>
+        <h4>Averages:</h4>
         <p>Market Rate: <span id="avgMarketSizeDisplay">0</span> SF</p>
         <p>Affordable: <span id="avgAffordableSizeDisplay">0</span> SF</p>
         <p>Blended: <span id="avgTotalSizeDisplay">0</span> SF</p>
 
 
         <!-- Market Rate Rents Input Section -->
+        <br>
         <section id="marketRateInputSection" style="display: none;">
             <h4>Market Rate Rents</h4>
             <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
@@ -246,6 +248,7 @@
 
 
         <!-- Rent per Sq. Ft. Table -->
+        <br>
         <section id="rentPerSqFtTableSection" style="display: none;">
             <h4>Rent per Sq. Ft.</h4>
             <table id="rentPerSqFtTable">
@@ -281,12 +284,10 @@
             </table>
         </section>
 
-        <br>
-        <br>
         
-
         
         <!-- Property Tax Abatement Outputs -->
+        <br>
         <h4>Property Taxes</h4>
         <table id="abatementTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
@@ -303,8 +304,7 @@
 
         <!-- AI IC Memo Output -->
         <br>
-        <h3><u>Financial AI-nalyst</u></h3>
-        
+        <h4><u>Financial AI-nalyst</u></h4>
         <div id="aiContainer" style="display: none;">
             <p>Hey, nice property you've got here.
             </br>Why don't I write an Investment Committee memo for you about it?</p>

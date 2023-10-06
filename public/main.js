@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function() {
             acreageInput.value = acres.toFixed(2);
 
             // Show affordable % slider
-            affordablePercentageSlider.value = 0.10; // Set the default value of the slider to N% upon initial load
+            affordablePercentageSlider.value = 0.40; // Set the default value of the slider to N% upon initial load
             affordablePercentageSlider.oninput = function() {
                 calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
                 updateRentPerSqFtTable();
@@ -435,6 +435,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
 
+            // initial runs
+            calculateMaximumUnits();
+            calculateWeightedAverageSizes();
+            updateRentPerSqFtTable();
 
             // ...
 
@@ -458,7 +462,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const textMod = ` Utilize HTML extensively in your response for aesthetics; font, lists, line breaks, everything.`;
 
             aiContainer.style.display = 'block';
-            aiContainer.innerHTML = `<i><h6>Drafting an investment memo, please wait...<h6></i>`;
+            aiContainer.innerHTML = `<i><p>Drafting your memo, please be patient...<p></i>`;
             const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${countyData.county_name}&acreage=${acreageInput.value}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&affStudio=${countyData.max_rent_0bd_120ami}&aff1BD=${countyData.max_rent_1bd_120ami}&aff2BD=${countyData.max_rent_2bd_120ami}&aff3BD=${countyData.max_rent_3bd_120ami}&textModifier=${encodeURIComponent(textMod)}`;
             const icMemoResponse = await fetch(icMemoEndpoint);
             icMemo = await icMemoResponse.text();
