@@ -1,4 +1,4 @@
-# SB102Bot: FL Multifamily Development Calculator
+# SB102Bot: FL Multifamily Development Calculator :house_with_garden: :construction_worker:
 
 `This whole description was written by ChatGPT`
 
