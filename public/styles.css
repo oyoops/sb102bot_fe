@@ -256,11 +256,11 @@ footer a:hover {
 }
 
 #tryAgainButton {
-    font-weight: 800;
-    background-color: #92b8fa;
-    color: #333;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    font-weight: 500;
+    background-color: #052864;
+    color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 10px;
     width: 400px;
     padding: 5px 10px;
     border-radius: 5px;
