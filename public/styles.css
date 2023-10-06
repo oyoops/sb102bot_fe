@@ -138,7 +138,36 @@ button:hover {
     background-color: #044b98;
 }
 
-/* ... (Other existing styles you had, if any) ... */
+
+
+
+
+/* Improved: Menu Bar Icon Styles */
+#menuBar a:first-child, #menuBar a:last-child {
+    font-size: 1.5em;  /* Increased the font size */
+    color: #333;  /* Changed the color */
+    padding: 0 15px;  /* Added padding */
+}
+
+/* Improved: New Search Button */
+#tryAgainButton {
+    width: auto;  /* Changed from 400px to auto */
+    margin: 20px auto;  /* Centered the button */
+    padding: 12px 24px;  /* Changed padding */
+    font-weight: 600;  /* Made the text bolder */
+    background-color: #4678dc;  /* Adjusted the background color */
+    color: #fff;  /* Made the text color white */
+    border-radius: 4px;  /* Rounded corners */
+    cursor: pointer;  /* Hand cursor on hover */
+    transition: background-color 0.3s;  /* Smooth transition */
+}
+
+#tryAgainButton:hover {
+    background-color: #044b98;  /* Darker shade on hover */
+}
+
+
+
 
 /* New or improved styles */
 
