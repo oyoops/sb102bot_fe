@@ -6,8 +6,8 @@ module.exports = async (req, res) => {
     const {address, county, acreage, totalUnits, affordablePct, affStudio, aff1BD, aff2BD, aff3BD, textModifier} = req.query;
 
     // Set AI parameters
-    const aiMaxTokens = 300;
-    const aiTemperature = 0.7;
+    const aiMaxTokens = 1000;
+    const aiTemperature = 0.8;
     const aiPresencePenalty = 0.1;
     const aiFrequencyPenalty = 0.1;
 
@@ -54,12 +54,12 @@ module.exports = async (req, res) => {
         
         const generatedText = response.data.choices[0].message.content.trim();
         console.log("Response: " + generatedText);
-        
+        console.log("\nFinancial AI-nalyst successfully sent the finished IC memo to the client.");
         res.status(200).send(generatedText);
     } catch (error) {
         console.log("Whoops, Financial AI-nalyst encountered an error and needs to take a Mental Health Day.");
         console.error(error);
         res.status(500).json('Sorry, Financial AI-nalyst encountered an error and needs to take a Mental Health Day...');
     }
-    console.log("Oopsie! Financial AI-nalyst encountered an error and needs to take a Mental Health Day.");
+    
 };
