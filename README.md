@@ -1,4 +1,4 @@
-# SB102Bot: Multifamily Development Intensity Calculator
+# SB102Bot: FL Multifamily Development Calculator
 
 **NOTE: This entire description was written by `ChatGPT`.**
 
