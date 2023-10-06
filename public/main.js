@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const countyTableBody = document.querySelector('#countyDataTable tbody');
     const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');  // Select the max rents table's tbody
     const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');  // Select the parcel data table's tbody
-    
+    const aiContainer = document.getElementById('aiContainer');
 
     function initializeMap(lat, lng) {
         console.log('Initializing map with lat:', lat, ', lng:', lng);
@@ -314,6 +314,13 @@ document.addEventListener('DOMContentLoaded', function() {
             //calculateWeightedAverageSizes();
 
 
+            
+
+
+
+
+
+
             /* INPUTS SECTION: */
 
             // Unhide Tables and I/O Sections:
@@ -421,8 +428,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Update Revenue Table
             });
 
-          
+
+
+            // ...
+
+            // AI OUTPUT:
+
+            aiContainer.innerHTML = "Thinking...";
+            aiContainer.style.display = 'block';
             
+            //params: address, county, acreage, totalUnits, affordablePct, marketRent, textModifier
+            const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${county_name}&acreage=${acreageValue}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&marketRent=${marketRate}&textModifier=${textMod}`;            
+            const icMemoResponse = await fetch(icMemoEndpoint);
+            
+            icMemo = await icMemoResponse.json();
+            console.log("IC Memo Received:", icMemo);
+          
+            // ...
+
+
 
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
