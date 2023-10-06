@@ -1,8 +1,6 @@
-# SB102Bot :house_with_garden: :construction_worker:
+# SB102Bot: Multifamily Development Intensity Calculator
 
 **NOTE: This entire description was written by `ChatGPT`.**
-
-# SB102Bot: Multifamily Development Intensity Calculator
 
 ## Overview
 SB102Bot is a Flask web application designed to assist developers and property owners in Florida in evaluating the maximum allowable development intensity for multifamily constructions. The application uses a variety of data sources including county and parcel databases to provide a comprehensive report. The report includes unit counts, affordable housing options, tax abatements, and more.
