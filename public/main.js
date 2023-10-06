@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     aff3BD,
                     textModifier
             */
-            const textMod = ` Rave excessively about how great of a 'Live Local Act' opportunity this is. Utilize HTML heavily in your response for aesthetics and for all line breaks.`;
+            const textMod = ` Rave excessively about how great of a 'Live Local Act' opportunity this is. Utilize HTML extensively in your response for aesthetics; font, lists, line breaks, everything.`;
 
             aiContainer.style.display = 'block';
             aiContainer.innerHTML = `<i><h6>Drafting an investment memo, please wait...<h6></i><br>${address}`;
