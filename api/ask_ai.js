@@ -3,7 +3,7 @@ const axios = require('axios');
 
 // Export the serverless function
 module.exports = async (req, res) => {
-    const { team, score, textModifier } = req.query;
+    const {municipality, totalUnits, affordablePct, marketRent} = req.query;
 
     // Set AI parameters
     const aiMaxTokens = 300;
@@ -13,11 +13,11 @@ module.exports = async (req, res) => {
 
     // Define responses for each team
     
-    let teamResponses = {
-        "Portland Trail Blazers": " Blazers, huh? Joe Cronin is a complete and total snake in the grass. I won't show up to training camp, and I'll retire -- this team sucks!",
-        "Washington Wizards": " Wizards? Too close to the Feds. Joe Cronin makes Joe Biden look like Albert Einstein.",
-        "Houston Rockets": " Rockets? No thanks, I'm good, I'd rather retire than live in crappy Texas (2nd worst state, behind Massachusetts).",
-        "Charlotte Hornets": " Hornets? Oh, great, Michael Jordan can learn from me.",
+    let muniResponses = {
+        "miamidade": "Awesome!",
+        "broward": "Awesome!",
+        "palmbeach": "Awesome!",
+        "martin": "Neat.",
         "Boston Celtics": " Celtics? Larry Bird and Paul Pierce were extremely overrated and benefitted from luck to have won any championships at all, and the fans are notoriously racist. Everybody knows that.",
         "Detroit Pistons": " Pistons? Isiah Thomas was a good player but he couldn't hold a candle to the greats.",
         "Utah Jazz": " Jazz? Karl Malone couldn't win a championship even with Stockton's help.",
