@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function() {
             aiContainer.style.display = 'block';
             
             //params: address, county, acreage, totalUnits, affordablePct, marketRent, textModifier
-            const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${county_name}&acreage=${acreageValue}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&marketRent=${marketRate}&textModifier=${textMod}`;            
+            const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${countyData.county_name}&acreage=${acreageValue}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&marketRent=${marketRate}&textModifier=${textMod}`;            
             const icMemoResponse = await fetch(icMemoEndpoint);
             
             icMemo = await icMemoResponse.json();
