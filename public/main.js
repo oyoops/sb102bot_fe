@@ -434,8 +434,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-            /* AI OUTPUT: */
+            /* AI SECTION: */
 
+            const runAIButton = document.getElementById("runAIButton");
+            runAIButton.addEventListener('click', runAISection);
             /*
                 Params: 
                     address, 
@@ -449,7 +451,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     aff3BD,
                     textModifier
             */
-            const textMod = ` Utilize HTML extensively in your response for aesthetics; font, lists, line breaks, everything.`;
+            const textMod = ` Utilize HTML extensively in your response for aesthetics; font, line breaks, etc. (everything except bullet point lists).`;
 
             aiContainer.style.display = 'block';
             aiContainer.innerHTML = `<i><p>Drafting your memo, please be patient...<p></i>`;
@@ -653,4 +655,18 @@ function calculateWeightedAverageSizes() {
     document.getElementById('avgMarketSizeDisplay').innerText = avgMarketSize.toFixed(0);
     document.getElementById('avgAffordableSizeDisplay').innerText = avgAffordableSize.toFixed(0);
     document.getElementById('avgTotalSizeDisplay').innerText = avgTotalSize.toFixed(0);
+}
+
+
+async function runAISection() {
+    const textMod = ` Utilize HTML extensively in your response for aesthetics; font, lists, line breaks, everything.`;
+
+    const aiContainer = document.getElementById('aiContainer');
+    aiContainer.style.display = 'block';
+    aiContainer.innerHTML = `<i><p>Drafting your memo, please be patient...<p></i>`;
+    const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${countyData.county_name}&acreage=${acreageInput.value}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&affStudio=${countyData.max_rent_0bd_120ami}&aff1BD=${countyData.max_rent_1bd_120ami}&aff2BD=${countyData.max_rent_2bd_120ami}&aff3BD=${countyData.max_rent_3bd_120ami}&textModifier=${encodeURIComponent(textMod)}`;
+    const icMemoResponse = await fetch(icMemoEndpoint);
+    const icMemo = await icMemoResponse.text();
+    console.log("IC Memo Received:", icMemo);
+    aiContainer.innerHTML = icMemo;
 }
