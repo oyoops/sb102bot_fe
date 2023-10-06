@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const eligibilityDiv = document.getElementById("eligibilityStatus");
             
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = "This parcel is <b>PROBABLY <u>NOT</u> ELIGIBLE</b> for Live Local Act development.";
+                eligibilityDiv.innerHTML = "This parcel is <b><u>PROBABLY NOT</u> ELIGIBLE</b> for Live Local Act development.";
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
@@ -313,16 +313,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
             parcelDataTableBody.innerHTML = parcelDataRow;
-
-
-
-            // Call acreageCalculation.js to calculate initial maximum units using default values
-            //calculateWeightedAverageSizes();
-
-
-            
-
-
 
 
 

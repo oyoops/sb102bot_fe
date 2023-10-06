@@ -14,16 +14,24 @@
 </head>
 
 <body>
+    
     <div id="menuBar">
         <a href="https://cresunshine.com">  🌴</a>
         <a href="https://oyoops.com" target="_self"><div class="sun"></div></a>
         <a href="https://cresunshine.com">🌴  </a>
     </div>
+    
+    <!-- Try Again button -->
+    <button id="tryAgainButton" style="display: none;"><b>New Search</b></button>
     <br>
+
+    <!-- Main header -->
     <h1 id="mainHeader">
         What does <b>Live Local</b> mean for you?
         <br>
     </h1>
+
+    <!-- Initial Content (Address input) -->
     <div id="initialContent">
         <p>
             Enter an address below to find out.
@@ -43,12 +51,6 @@
     <!--- Loading indicator section -->
     <div class="loading">Please wait. Doing due diligence</div>
 
-    <!-- Try Again button -->
-    <br>
-    <button id="tryAgainButton" style="display: none;"><b>New Search</b></button>
-    <br>
-
-    
     <!-- (OLD / NOT IN USE!) 'Tallest nearby building' information section -->
     <!-- (this section describes the location of the tallest building within a one-mile radius of the input location) -->
     <div id="result" style="display: none;">
@@ -64,7 +66,7 @@
     <!-- TO-DO: Show both the input location as a placemark AND the tallest building within one mile as another placemark -->
 
     
-    <!-- Eligibility -->
+    <!-- Eligibility Result -->
     <br>
     <div id="eligibilityStatus"></div>
     <br>
