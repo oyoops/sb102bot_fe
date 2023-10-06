@@ -2,6 +2,7 @@ function initMap() {
     // Maps API is now loaded and can be used.
 }
 
+let address;
 let lat;
 let lng;
 let countyData;
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const countyTableBody = document.querySelector('#countyDataTable tbody');
     const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');  // Select the max rents table's tbody
     const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');  // Select the parcel data table's tbody
-    const aiContainer = document.getElementById('aiContainer');
+    //const aiContainer = document.getElementById('aiContainer');
 
     function initializeMap(lat, lng) {
         console.log('Initializing map with lat:', lat, ', lng:', lng);
@@ -55,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const addressInput = document.querySelector('#addressInput');
-        const address = addressInput.value;
+        address = addressInput.value;
 
         if (!address) {
             alert('Please enter an address.');
