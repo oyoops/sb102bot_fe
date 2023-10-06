@@ -24,7 +24,6 @@
     <!-- Main header -->
     <h1 id="mainHeader">
         What does <b>Live Local</b> mean for you?
-        <br>
     </h1>
 
     <!-- Initial Content (Address input) -->
@@ -43,9 +42,6 @@
         </p>
     </div>
 
-    <!-- Try Again button -->
-    <button id="tryAgainButton" style="display: none;">Search for another property</button>
-
     <!--- Loading indicator section -->
     <div class="loading">Please wait. Doing due diligence</div>
 
@@ -58,17 +54,17 @@
         </div>
     </div>
     
-
     <!-- Google Map showing the input location -->
     <div id="map" style="width: 90%; height: 400px;"></div>
     <!-- TO-DO: Show both the input location as a placemark AND the tallest building within one mile as another placemark -->
 
-    
     <!-- Eligibility Result -->
     <br>
     <div id="eligibilityStatus"></div>
     <br>
     
+    <!-- Try Again button -->
+    <button id="tryAgainButton" style="display: none;">New Search</button>
 
     <!-- Parcel data table -->
     <!-- This table loads parcel data returned by the query to the PostgreSQL Florida parcel database -->
