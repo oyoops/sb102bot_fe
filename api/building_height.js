@@ -10,6 +10,8 @@ module.exports = async (req, res) => {
     const radiusMiles = parseFloat(req.query.radius ?? 1); 
     const radiusMeters = radiusMiles * 1609.34;
 
+    console.log(`Received coordinates: Latitude = ${lat}, Longitude = ${lng}, Radius = ${radiusMiles} miles`);
+
     if (isNaN(lat) || isNaN(lng) || isNaN(radiusMiles)) {
         return res.status(400).send('Invalid latitude, longitude, or radius value(s).');
     }
@@ -23,11 +25,14 @@ module.exports = async (req, res) => {
             out body;
         `;
         
+        console.log("Querying Overpass API for buildings");
         const overpassResult = await axios.get('https://overpass-api.de/api/interpreter', {
             params: { data: overpassQuery }
         });
 
         const buildings = overpassResult.data.elements;
+        console.log(`Fetched ${buildings.length} buildings`);
+
         if (buildings.length === 0) {
             return res.status(404).send('No buildings found within the specified radius.');
         }
@@ -49,11 +54,14 @@ module.exports = async (req, res) => {
             out body;
         `;
 
+        console.log("Querying Overpass API for nodes of tallest building");
         const nodeResult = await axios.get('https://overpass-api.de/api/interpreter', {
             params: { data: nodeQuery }
         });
 
         const nodes = nodeResult.data.elements;
+        console.log(`Fetched ${nodes.length} nodes for tallest building`);
+        
         let sumLat = 0, sumLon = 0;
         nodes.forEach(node => {
             sumLat += node.lat;

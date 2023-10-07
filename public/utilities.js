@@ -203,10 +203,12 @@ async function initializeMap(lat, lng) {
         mapTypeId: google.maps.MapTypeId.SATELLITE
     };
 
+    console.log("Creating new Google Map");
     const map = new google.maps.Map(document.getElementById('map'), mapOptions);
     console.log('Map initialized.');
 
     // Add a marker at the user's input location
+    console.log("Adding user marker");
     const userMarker = new google.maps.Marker({
         position: { lat: lat, lng: lng },
         map: map
@@ -222,10 +224,12 @@ async function initializeMap(lat, lng) {
     });
 
     // Fetch and add a marker for the tallest building within a 1-mile radius
+    console.log("Fetching tallest building data");
     const tallestBuildingData = await fetchTallestBuilding(lat, lng);
     console.log("\nTallest building within radius: ", tallestBuildingData);
-
+        
     if (tallestBuildingData) {
+        console.log("Adding tallest building marker");
         const buildingLat = parseFloat(tallestBuildingData.lat);
         const buildingLng = parseFloat(tallestBuildingData.lng);
         console.log("\nTallest building coordinates: ", buildingLat, buildingLng);
@@ -252,7 +256,6 @@ async function initializeMap(lat, lng) {
             </div>
         `;
         console.log("Building Info Content: " + buildingInfoContent);
-        print(buildingInfoContent);
 
         const buildingInfowindow = new google.maps.InfoWindow({
             content: buildingInfoContent
@@ -262,10 +265,11 @@ async function initializeMap(lat, lng) {
             buildingInfowindow.open(map, buildingMarker);
         });
     } else {
-        console.error("Could not fetch tallest building data or it is in an unexpected format.");
+        console.error("An error occurred during map initialization:", error);
     }
 
     // Show the Google Map element
+    console.log("Displaying map");
     document.getElementById('map').style.display = 'block';
     console.log("Map displayed.");
     print("Map displayed.");
