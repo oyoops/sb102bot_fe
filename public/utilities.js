@@ -245,7 +245,8 @@ async function initializeMap(lat, lng) {
 
         const buildingMarker = new google.maps.Marker({
             position: { lat: buildingLat, lng: buildingLng },
-            map: map
+            map: map//,
+            //icon: './img/building_icon.png'
         });
 
         const buildingInfoContent = `
@@ -264,13 +265,67 @@ async function initializeMap(lat, lng) {
         buildingMarker.addListener('click', function() {
             buildingInfowindow.open(map, buildingMarker);
         });
+
+        // Add a circle with a radius of 1 mile around the input address
+        const circle = new google.maps.Circle({
+            center: { lat: lat, lng: lng },
+            radius: 1609.34,  // 1 mile in meters
+            strokeColor: '#0000FF',
+            strokeOpacity: 0.5,
+            fillColor: '#0000FF',
+            fillOpacity: 0.2,
+            map: map
+        });
+
+        // Draw a line between the two placemarks and show the distance
+        const line = new google.maps.Polyline({
+            path: [
+                { lat: lat, lng: lng },
+                { lat: buildingLat, lng: buildingLng }
+            ],
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: map
+        });
+
+        // Calculate distance between the two placemarks
+        const distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(
+            new google.maps.LatLng(lat, lng),
+            new google.maps.LatLng(buildingLat, buildingLng)
+        );
+        const distanceInMiles = distanceInMeters * 0.000621371;
+        
+        // Add a label to the line showing the distance
+        const lineLabel = new MapLabel({
+            text: `${distanceInMiles.toFixed(2)} mi.`,
+            position: new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2),
+            map: map,
+            fontSize: 16,
+            align: 'center'
+        });
+
+        // Add a label to the circle showing the radius
+        const circleLabel = new MapLabel({
+            text: '1 mi.',
+            position: new google.maps.LatLng(lat, lng),
+            map: map,
+            fontSize: 16,
+            align: 'center'
+        });
+        
+        // Adjust extent to fit both placemarks
+        const bounds = new google.maps.LatLngBounds();
+        bounds.extend(new google.maps.LatLng(lat, lng));  // Placemark 1: Input address
+        bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));  // Placemark 2: Tallest building <= 1 mi.
+        map.fitBounds(bounds);
+        
+        /* Done initializing map */
+
     } else {
         console.error("An error occurred during map initialization:", error);
     }
 
     // Show the Google Map element
-    console.log("Displaying map");
     document.getElementById('map').style.display = 'block';
-    console.log("Map displayed.");
-    print("Map displayed.");
 }
