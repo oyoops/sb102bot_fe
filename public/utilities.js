@@ -1,5 +1,4 @@
-// utilities.js
-// contains the utility functions for the SB102bot web app.
+// utilities.js - contains the utility functions for the SB102bot web app.
 
 /*===========//
 // Functions //
