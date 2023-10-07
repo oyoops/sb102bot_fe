@@ -41,12 +41,12 @@ module.exports = async (req, res) => {
                 return {
                     id: building.id,
                     height: height,
-                    name: building.tags.name || 'Unknown',
+                    name: building.tags.name || '',
                     address: {
-                        street: building.tags['addr:street'] || 'Unknown',
-                        housenumber: building.tags['addr:housenumber'] || 'Unknown',
-                        postcode: building.tags['addr:postcode'] || 'Unknown',
-                        city: building.tags['addr:city'] || 'Unknown'
+                        street: building.tags['addr:street'] || '',
+                        housenumber: building.tags['addr:housenumber'] || '',
+                        postcode: building.tags['addr:postcode'] || '',
+                        city: building.tags['addr:city'] || ''
                     }
                 };
             }
@@ -81,7 +81,7 @@ module.exports = async (req, res) => {
 
             const avgLat = sumLat / nodeResponse.data.elements.length;
             const avgLon = sumLon / nodeResponse.data.elements.length;
-            
+
             const addressString = `${building.address.housenumber} ${building.address.street}, ${building.address.city}`;
 
             results.push({
