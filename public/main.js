@@ -1,8 +1,6 @@
 // main.js - the primary script for SB102bot web app.
 
-
-const { useCodeLookup, maybeEligibleCodes, eligibleCodes } = require('./useCodes');
-
+// Global variables
 let address;
 let lat;
 let lng;
