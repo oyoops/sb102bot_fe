@@ -16,18 +16,20 @@ let affordablePct;
 // after page is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
-    document.getElementById('map').style.display = 'none'; // hide map
 
     // DOM
     const form = document.querySelector('#searchForm');
+    const googlemap = document.getElementById('map');
     const countyTableBody = document.querySelector('#countyDataTable tbody');
-    const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');  // Select the max rents table's tbody
-    const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');  // Select the parcel data table's tbody
+    const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');
+    const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');
     const tryAgainButton = document.getElementById("tryAgainButton");
     tryAgainButton.addEventListener("click", function() {
         location.reload();
     });
     
+    //googlemap.style.display = 'none';
+
     // on form submit
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
