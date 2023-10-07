@@ -7,16 +7,15 @@ module.exports = async (req, res) => {
 
     const lat = parseFloat(req.query.lat);
     const lng = parseFloat(req.query.lng);
-    const radiusMiles = parseFloat(req.query.radius ?? 1); 
+    const radiusMiles = parseFloat(req.query.radius ?? 1);
     const radiusMeters = radiusMiles * 1609.34;
-
-    console.log(`Received coordinates: Latitude = ${lat}, Longitude = ${lng}, Radius = ${radiusMiles} miles`);
 
     if (isNaN(lat) || isNaN(lng) || isNaN(radiusMiles)) {
         return res.status(400).send('Invalid latitude, longitude, or radius value(s).');
     }
 
     try {
+        // Query Overpass API for building heights
         const overpassQuery = `
             [out:json];
             (
@@ -24,22 +23,19 @@ module.exports = async (req, res) => {
             );
             out body;
         `;
-        
-        console.log("Querying Overpass API for buildings");
+
         const overpassResult = await axios.get('https://overpass-api.de/api/interpreter', {
             params: { data: overpassQuery }
         });
 
         const buildings = overpassResult.data.elements;
-        console.log(`Fetched ${buildings.length} buildings`);
 
         if (buildings.length === 0) {
             return res.status(404).send('No buildings found within the specified radius.');
         }
 
+        // Find the tallest building
         let tallestBuilding = buildings[0];
-        console.log(`Tallest building ID: ${tallestBuilding.id}`);
-
         buildings.forEach(building => {
             if (building.tags && building.tags.height && tallestBuilding.tags && tallestBuilding.tags.height) {
                 if (parseFloat(building.tags.height) > parseFloat(tallestBuilding.tags.height)) {
@@ -48,41 +44,35 @@ module.exports = async (req, res) => {
             }
         });
 
-        const nodeQuery = `
-            [out:json];
-            (
-                node(w:${tallestBuilding.id});
-            );
-            out body;
-        `;
+        // Fetch geometry (coordinates) using OpenStreetMap API
+        const geometryUrl = `https://api.openstreetmap.org/api/0.6/way/${tallestBuilding.id}.json`;
+        const geometryResponse = await axios.get(geometryUrl);
+        const nodes = geometryResponse.data.elements[0].nodes;
 
-        console.log("Querying Overpass API for nodes of tallest building");
-        const nodeResult = await axios.get('https://overpass-api.de/api/interpreter', {
-            params: { data: nodeQuery }
-        });
-        console.log(`Node query result: ${JSON.stringify(nodeResult.data)}`);
-        const nodes = nodeResult.data.elements;
-        console.log(`Fetched ${nodes.length} nodes for tallest building`);
+        // Fetch node details
+        const nodeUrl = `https://api.openstreetmap.org/api/0.6/nodes?nodes=${nodes.join(',')}`;
+        const nodeResponse = await axios.get(nodeUrl);
 
         let sumLat = 0, sumLon = 0;
-        nodes.forEach(node => {
-            sumLat += node.lat;
-            sumLon += node.lon;
+        nodeResponse.data.elements.forEach(node => {
+            sumLat += parseFloat(node.lat);
+            sumLon += parseFloat(node.lon);
         });
 
-        const avgLat = sumLat / nodes.length;
-        const avgLon = sumLon / nodes.length;
+        const avgLat = sumLat / nodeResponse.data.elements.length;
+        const avgLon = sumLon / nodeResponse.data.elements.length;
 
         // Prepare the final tallestBuilding object to return
         let result = {
             lat: avgLat,
             lng: avgLon,
-            height: tallestBuilding.tags.height ? parseFloat(tallestBuilding.tags.height) * 3.28084 : null, // Convert meters to feet
+            height: tallestBuilding.tags.height ? parseFloat(tallestBuilding.tags.height) * 3.28084 : null,
             name: tallestBuilding.tags.name || null,
             address: tallestBuilding.tags['addr:street'] || null
         };
 
         res.status(200).json(result);
+
     } catch (err) {
         console.error(`Error encountered: ${err.message}`);
         res.status(500).send(`Error: ${err.message}`);
