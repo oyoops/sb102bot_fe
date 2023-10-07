@@ -270,9 +270,9 @@ async function initializeMap(lat, lng) {
         const circle = new google.maps.Circle({
             center: { lat: lat, lng: lng },
             radius: 1609.34,  // 1 mile in meters
-            strokeColor: '#0000FF',
+            strokeColor: '#00BFFF',
             strokeOpacity: 0.5,
-            fillColor: '#0000FF',
+            fillColor: '#00BFFF',
             fillOpacity: 0.2,
             map: map
         });
