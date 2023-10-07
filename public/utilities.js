@@ -229,8 +229,8 @@ async function initializeMap(lat, lng) {
             const buildingLat = parseFloat(buildingData.lat);
             const buildingLng = parseFloat(buildingData.lng);
             const buildingHeight = buildingData.height || "Uncertain";
-            const buildingName = buildingData.name || `Tallest Building ${index + 1}`;
-            const buildingAddress = buildingData.address || "Unknown";
+            const buildingName = buildingData.name || `#${index + 1} Tallest Bldg. < 1mi.`;
+            const buildingAddress = buildingData.address || "-";
 
             const buildingMarker = new google.maps.Marker({
                 position: { lat: buildingLat, lng: buildingLng },
@@ -240,8 +240,8 @@ async function initializeMap(lat, lng) {
             const buildingInfoContent = `
                 <div style="text-align:center;">
                     <strong>${buildingName}</strong><br>
-                    Height: ${buildingHeight.toFixed(0)} feet tall<br>
-                    Address: ${buildingAddress}
+                    ${buildingHeight.toFixed(0)} feet tall<br>
+                    ${buildingAddress}
                 </div>
             `;
 
@@ -260,7 +260,7 @@ async function initializeMap(lat, lng) {
                     { lat: buildingLat, lng: buildingLng }
                 ],
                 strokeColor: '#FF0000',
-                strokeOpacity: 1.0,
+                strokeOpacity: 0.7,
                 strokeWeight: 2,
                 map: map
             });
@@ -305,9 +305,9 @@ function createStyledMarker(position, map, label) {
         },
         label: {
             text: label,
-            color: "white",
+            color: "black",
             fontWeight: "bold",
-            fontSize: "20px"
+            fontSize: "18px"
         }
     });
     return marker;

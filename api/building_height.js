@@ -81,18 +81,15 @@ module.exports = async (req, res) => {
 
             const avgLat = sumLat / nodeResponse.data.elements.length;
             const avgLon = sumLon / nodeResponse.data.elements.length;
+            
+            const addressString = `${building.address.housenumber} ${building.address.street}, ${building.address.city}`;
 
             results.push({
                 lat: avgLat,
                 lng: avgLon,
                 height: building.height * 3.28084, // Convert to feet
                 name: building.name,
-                address: {
-                    street: building.address.street,
-                    housenumber: building.address.housenumber,
-                    postcode: building.address.postcode,
-                    city: building.address.city
-                }
+                address: addressString
             });
         }
 
