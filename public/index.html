@@ -10,11 +10,12 @@
     <link rel="manifest" href="/misc/site.webmanifest">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    
     <title>Live Local Calculator</title>
 </head>
 
 <body>
-    
+    <!-- Menu bar -->   
     <div id="menuBar">
         <a href="https://cresunshine.com">  🌴</a>
         <a href="https://oyoops.com" target="_self"><div class="sun"></div></a>
@@ -23,52 +24,50 @@
 
     <!-- Main header -->
     <h1 id="mainHeader">
-        What does <b>Live Local</b> mean for you?
+        So you want to <u>Live Local</u>...
     </h1>
 
     <!-- Initial Content (Address input) -->
     <div id="initialContent">
         <p>
-            Enter an address below to find out.
+            Enter a Florida address to check if it qualifies.
         </p>
         <form id="searchForm">
             <input type="text" id="addressInput" placeholder="Address...">
             <br>
-            <button type="submit">What can I do?</button>
+            <button type="submit">What could it be?</button>
         </form>
         <p>
-            <br>Evaluate your Florida property in 30 seconds.
-            <br>It might have more potential than you thought.
+            <br>Find out if your Florida property can go <b>SB-102</b> up in this bitch.
+            <br>If so, I'll calculate its new development potential for you.
+            <br>Takes under 30 seconds. No registration required.
         </p>
     </div>
 
-    <!--- Loading indicator section -->
-    <div class="loading">Please wait. Doing due diligence</div>
+    <!--- Loading Indicator -->
+    <div class="loading">Please wait.  Conducting due diligence</div>
 
     <!-- (OLD / NOT IN USE!) 'Tallest nearby building' information section -->
     <!-- (this section describes the location of the tallest building within a one-mile radius of the input location) -->
-    <div id="result" style="display: none;">
-        <div class="imageContainer">
-            <div id="inputAddressImage" class="imageItem"></div>
-            <div id="tallestBuildingImage" class="imageItem"></div>
-        </div>
-    </div>
+     <!-- <div id="result" style="display: none;"> -->
+        <!-- <div class="imageContainer"> -->
+            <!-- <div id="inputAddressImage" class="imageItem"></div> -->
+            <!-- <div id="tallestBuildingImage" class="imageItem"></div> -->
+        <!-- </div> -->
+     <!-- </div> -->
     
-    <!-- Google Map showing the input location -->
-    <div id="map" style="width: 90%; height: 400px;"></div>
-    <!-- TO-DO: Show both the input location as a placemark AND the tallest building within one mile as another placemark -->
+    <!-- Map -->
+    <div id="map" style="width: 90%; height: 400px; display: none"></div>
 
     <!-- Eligibility Result -->
     <br>
     <div id="eligibilityStatus"></div>
-    <br>
     
     <!-- Try Again button -->
-    <button id="tryAgainButton" style="display: none;">New Search</button>
+    <br>
+    <button id="tryAgainButton" style="display: none;">Try another property</button>
 
     <!-- Parcel data table -->
-    <!-- This table loads parcel data returned by the query to the PostgreSQL Florida parcel database -->
-    <!-- <h3>Parcel data:</h3> -->
     <table id="parcelDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
@@ -83,10 +82,7 @@
         </tbody>
     </table>
     
-
     <!-- County data table -->
-    <!-- This table loads some general data about the municipality of the parcel returned by the query to the PostgreSQL Florida parcel database -->
-    <!-- <h3>Municipal info:</h3> -->
     <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
@@ -101,10 +97,7 @@
         </tbody>
     </table>
 
-
     <!-- County max rents table -->
-    <!-- This table loads data (maximum 'affordable' rent limits by bedroom count) returned by the query to the PostgreSQL Florida parcel database -->
-    <!-- <h3>Affordable rent limits:</h3> -->
     <table id="countyMaxRentsTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
@@ -119,36 +112,26 @@
         </tbody>
     </table>
 
-
     <!-- START: PART 2 -- DEVELOPMENT PROGRAM I/O -->
-
-    
-
-
     <div id="developmentProgramInputSection" style="display: none;">
         
         <!-- Acreage Input -->
         <br>
-        <h4>How many acres is the site?</h4>
+        <h4>How many acres is the property?</h4>
         <input type="number" id="acreageInput" placeholder="Acreage" value="10">
         
-        <!-- Density Input -->
+        <!-- Density Input (Max. units/ac. allowed) -->
         <br>
-        <h4>What's the municipality's maximum density?</h4>
+        <h4>What's the maximum density allowed in the municipality?</h4>
         <input type="number" id="densityInput" placeholder="Units/ac." value="50">
-        <br>
 
-        <!-- Unit Calc Outputs (???) -->
-        <!-- <div id="unitCalculationResult"></div> -->
-        <!-- <br> -->
-
-        <!-- Affordable Percentage Slider -->
-        <br>
+        <!-- Affordable Units Percentage Slider -->
+        <br><br>
         <label for="affordablePctSlider"><h4>Affordable: <span id="affordablePctDisplay">0%</span></h4></label>
         <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
-        <br>
         
         <!-- Unit Count Outputs -->
+        <br>
         <h4>Unit Counts</h4>
         <table id="unitCalculationTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
@@ -163,12 +146,10 @@
             </tbody>
         </table>
     
-
-        <!-- Warnings Section -->
+        <!-- Warnings Container (UnitCountError, %AffordableError, etc.) -->
         <div id="warningContainer" style="display: none"></div>
 
-
-        <!-- Unit Size Inputs -->
+        <!-- Unit Size Inputs Section (Table w/ checkbox) -->
         <h4>Avg. Sizes</h4>
         <label><input type="checkbox" id="matchAffordableSizes"> Match affordable and market-rate unit sizes?</label>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
@@ -203,14 +184,12 @@
             </tbody>
         </table>
 
-
         <!-- Weighted Average Unit Size Outputs -->
         <br>
         <h4>Averages:</h4>
         <p>Market Rate: <span id="avgMarketSizeDisplay">0</span> SF</p>
         <p>Affordable: <span id="avgAffordableSizeDisplay">0</span> SF</p>
         <p>Blended: <span id="avgTotalSizeDisplay">0</span> SF</p>
-
 
         <!-- Market Rate Rents Input Section -->
         <br>
@@ -243,7 +222,6 @@
                 </tbody>
             </table>
         </section>
-
 
         <!-- Rent per Sq. Ft. Table -->
         <br>
@@ -282,7 +260,6 @@
             </table>
         </section>
 
-        
         <!-- Property Tax Abatement Outputs -->
         <br>
         <h4>Property Taxes</h4>
@@ -298,7 +275,6 @@
         </table>
         <br>
 
-
         <!-- AI IC Memo Output -->
         <h4><u>Financial AI-nalyst</u></h4>
         <button id="runAIButton">Run AI</button>
@@ -310,19 +286,12 @@
             <!-- Data will be inserted here by JavaScript -->
         </div>
 
-
         <!-- START: PART 3 -- (...) -->
-
-        <!-- END: PART 3 -- (...) -->
-            
+        <!-- END: PART 3 -- (...) -->            
     </div>
 
-    
     <!-- Spacing -->
-    <br>
-    <br>
-    <br>
-
+    <br><br><br>
 
     <!-- Footer -->
     <footer>
@@ -332,10 +301,9 @@
         </p>
     </footer>
 
-
     <!-- Scripts -->
-    <script src="main.js"></script>
-    <!-- <script src="acreageCalculation.js"></script> -->
+    <script src="./utilities.js"></script>
+    <script src="./main.js"></script>
 
 </body>
 </html>
