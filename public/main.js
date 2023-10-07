@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
             lng = geocodeData.results[0].geometry.location.lng; // global
             
             // hide initial content
-            document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
             document.querySelector('#initialContent').style.display = 'none';  // hide initial content
 
             // show map w/ two placemarks: (1) input address; center of map, and (2) the tallest bldg. within a 1-mi radius
@@ -116,6 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // hide loading indicator
             document.querySelector('.loading').style.display = 'none';
+
+            // show try again button
+            document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
             
             // ...
                         
