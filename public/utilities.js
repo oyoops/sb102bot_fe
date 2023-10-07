@@ -272,6 +272,7 @@ async function initializeMap(lat, lng) {
             );
             const distanceInMiles = distanceInMeters * 0.000621371;
 
+            // Draw a label showing distanc between input address and tallest building(s)
             const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
             createStyledMarker(lineLabelPos, map, `${distanceInMiles.toFixed(2)} mi.`);
 
@@ -305,9 +306,9 @@ function createStyledMarker(position, map, label) {
         },
         label: {
             text: label,
-            color: "black",
+            color: "yellow",
             fontWeight: "bold",
-            fontSize: "18px"
+            fontSize: "20px"
         }
     });
     return marker;
