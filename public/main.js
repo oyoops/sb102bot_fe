@@ -1,3 +1,5 @@
+import './utilities.js';
+
 function initMap() {
     // Maps API is now loaded and can be used.
 }
@@ -15,7 +17,6 @@ let affordableUnits;
 let marketUnits;
 let affordablePct;
 
-
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
 
@@ -32,31 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');  // Select the parcel data table's tbody
     //const aiContainer = document.getElementById('aiContainer');
 
-    function initializeMap(lat, lng) {
-        console.log('Initializing map with lat:', lat, ', lng:', lng);
-        const mapOptions = {
-            center: { lat: lat, lng: lng },
-            zoom: 17,
-            mapTypeId: google.maps.MapTypeId.SATELLITE
-        };
-    
-        const map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        console.log('Map initialized.');
-    
-        // Add a marker at the specified location
-        new google.maps.Marker({
-            position: { lat: lat, lng: lng },
-            map: map
-        });
-
-        // Show the Google Map element
-        document.getElementById('map').style.display = 'block';
-    }
-
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const addressInput = document.querySelector('#addressInput');
-        address = addressInput.value;
+        address = addressInput.value; // global
 
         if (!address) {
             alert('Please enter an address.');
@@ -64,87 +44,66 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            console.log('Start: Part 1 -- Geocoding + Database Lookup -> County Data');
-
-            // Call the geocode API on input address
+            // show loading
+            document.querySelector('.loading').style.display = 'block';
+            // geocode the input address
             const geocodeEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
-            document.querySelector('.loading').style.display = 'block';  // Show loading indicator
             const geocodeResponse = await fetch(geocodeEndpoint);
-            
-            // Check if fetch went through successfully
+            // check success
             if (!geocodeResponse.ok) {
-                console.log('ERROR! Geocode API call failed.');
+                console.log('ERROR: Geocode failed.');
                 throw new Error(`Server responded with ${geocodeResponse.status}: ${await geocodeResponse.text()}`);
             }
-
-            // Get the geocode data
             const geocodeData = await geocodeResponse.json();
-
-            // Check if geocode successfully returned any result(s)
             if (!geocodeData.results || geocodeData.results.length === 0) {
-                throw new Error('WHOOPS!!!!!!!!\nNo parcel found there.');
+                throw new Error(`Whoops! That address isn't in my coverage area.\nI only know about Florida (and only the good counties at that).`);
             }
 
-            // Only proceeds if geocode was successful
-            // (so even if we never get an address, we can still do lat/long stuff)
-
-            // Hide the loading indicator
-            document.querySelector('.loading').style.display = 'none';
-            document.querySelector('#tryAgainButton').style.display = 'block';  // Show try again button
-            document.querySelector('#initialContent').style.display = 'none';  // Hide initial content
+            /* Geocode was successful */
             
-
-            // Get the lat/long from the geocode data
-            lat = geocodeData.results[0].geometry.location.lat;
-            lng = geocodeData.results[0].geometry.location.lng;
+            // get coordinates from results
+            lat = geocodeData.results[0].geometry.location.lat; // global
+            lng = geocodeData.results[0].geometry.location.lng; // global
             
-            
-            // Initialize & show the Google Map using lat/lng instead of user input
+            // show map w/ two placemarks: (1) input address; center of map, and (2) the tallest bldg. within a 1-mi radius
             initializeMap(lat, lng);
 
-
-            // Check if the address is within a city
+            // fetch the city of the address (Lat,Lng = CityData || CityName = Unincorporated if not in a city)
             const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
             const cityCheckResponse = await fetch(cityCheckEndpoint);
-            
-            cityData = await cityCheckResponse.json();
+            cityData = await cityCheckResponse.json(); // global
             console.log("City Data Received:", cityData);
-
             if (cityData.isInCity) {
-                console.log(`The address is within the city: ${cityData.cityName}`);
+                console.log(`Address is within city: ${cityData.cityName}`);
             } else {
-                console.log('The address is not within a city. Defaulting to "Unincorporated".');
+                console.log('Address is unincorporated.');
                 cityData.cityName = 'Unincorporated';
             }
             
-            // Query the PostgreSQL database for the county at the geocoded lat/long, derived from address
+            // fetch the county data for the address (Lat,Lng = CountyData)
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
             const countyDataResponse = await fetch(countyDataEndpoint);
-            
-            countyData = await countyDataResponse.json();
+            countyData = await countyDataResponse.json(); // global
             console.log("County Data Received:", countyData);
-
-            // Check if PostgreSQL database returned county data
             if (!countyData.county_name) {
-                throw new Error('No data available for the selected location.');
+                throw new Error('No county data available for the address.');
             }
 
-            // Only proceeds if we successfully got county data
-            // (which means we got a match at this lat/long in the database)
+            /* PostgreSQL match found */
 
-
-            // Look up parcel data in PostgreSQL database
+            // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
             const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
             const parcelDataResponse = await fetch(parcelDataEndpoint);
-            
-            parcelData = await parcelDataResponse.json();
+            parcelData = await parcelDataResponse.json(); // global
             console.log("Parcel Data Received:", parcelData);
 
-            // If cityname is null, make cityName = 'Unincorporated'
-            if (!cityData.cityName) {
-                console.log(cityData);
-                cityData.cityName = 'Unincorporated';
-            }
+            
+            // done loading main content
+            document.querySelector('.loading').style.display = 'none'; // hide loading indicator
+            document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
+            document.querySelector('#initialContent').style.display = 'none';  // hide initial content
+                        
+
                         
             // Populate the municipal data table
             const countyRow = `
@@ -156,9 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
             countyTableBody.innerHTML = countyRow;
-
-            // Display the municipal Data table (city, AMI & Millage rate) now that we have data
-            document.getElementById('countyDataTable').style.display = 'table'; // Display the county data table
+            document.getElementById('countyDataTable').style.display = 'table'; // Unhide
             
             // Populate the max rents table
             const rentsRow = `
@@ -170,9 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
             rentsTableBody.innerHTML = rentsRow;
-
-            // Display the county Max Rents table now that we have data
-            document.getElementById('countyMaxRentsTable').style.display = 'table'; // Display the county max rents table
+            document.getElementById('countyMaxRentsTable').style.display = 'table'; // Unhide
 
             // Use code lookup dictionary
             const useCodeLookup = {
@@ -301,10 +256,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.fontSize = "22px";
             }
 
-            // compute acreage from SF area
-            acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
+            // convert land sq. ft. to acres
+            acres = parseFloat(parcelData.lnd_sqfoot) / 43560; // global
             
-            // Populate the parcel data table
+            // Populate parcel data table
             const parcelDataRow = `
                 <tr>
                     <td>${parcelData.parcel_id}</td>
@@ -316,160 +271,145 @@ document.addEventListener('DOMContentLoaded', function() {
             parcelDataTableBody.innerHTML = parcelDataRow;
 
 
+            /* USER INPUTS SECTION START */
 
-
-            /* INPUTS SECTION: */
-
-            // Unhide Tables and I/O Sections:
-
-            // Display the parcel data table now that we have data
-            document.getElementById('parcelDataTable').style.display = 'table'; // Display the parcel data table            
-            // Display the 'Development Program' inputs section
-            document.getElementById('developmentProgramInputSection').style.display = 'block';
-            // Display the 'Unit count' table
-            document.getElementById('unitCalculationTable').style.display = 'block';
-            // Show market rate inputs
-            document.getElementById('marketRateInputSection').style.display = 'block';
-            // Show the rent/SqFt table section
-            document.getElementById('rentPerSqFtTableSection').style.display = 'block';
-            // Show the abatement table
-            document.getElementById('abatementTable').style.display = 'block';
-
-            // Define DOM references
+            // DOM references
+            const parcelDataTable = document.getElementById('parcelDataTable');
+            const developmentProgramInputSection = document.getElementById('developmentProgramInputSection');
             const affordablePercentageSlider = document.getElementById("affordablePctSlider");
             const affordablePctDisplay = document.getElementById('affordablePctDisplay');
-            const sizeInputs = document.querySelectorAll('.sizeInput')
+            const unitCalculationTable = document.getElementById('unitCalculationTable');
+            const sizeInputs = document.querySelectorAll('.sizeInput');
             const marketInputs = document.querySelectorAll('.marketSizeInput');
             const affordableSizeInputs = document.querySelectorAll('.affordableSizeInput');
+            const marketRateInputSection = document.getElementById('marketRateInputSection');
             const marketRateInputs = document.querySelectorAll('.marketRateInput');
             const acreageInput = document.getElementById("acreageInput");
             const densityInput = document.getElementById('densityInput');
             const matchAffordableSizesCheckbox = document.getElementById('matchAffordableSizes');
+            const rentPerSqFtTableSection = document.getElementById('rentPerSqFtTableSection');
+            const abatementTable = document.getElementById('abatementTable');
 
-            // Set default input acreage
+            // unhide tables and I/O sections            
+            parcelDataTable.style.display = 'table'; // parcel data
+            developmentProgramInputSection.style.display = 'block'; // development program inputs (??)
+            unitCalculationTable.style.display = 'block'; // unit counts
+            marketRateInputSection.style.display = 'block'; // market-rate rent inputs
+            rentPerSqFtTableSection.style.display = 'block'; // rent/SqFt
+            abatementTable.style.display = 'block'; // property tax abatement
+            
+            // set acreage input placeholder
             acreageInput.value = acres.toFixed(2);
 
-            // Show affordable % slider
-            affordablePercentageSlider.value = 0.40; // Set the default value of the slider to N% upon initial load
+            // affordable percentage slider
+            affordablePercentageSlider.value = 0.40; // default = 40% affordable units
             affordablePercentageSlider.oninput = function() {
-                calculateWeightedAverageSizes(); // Recalculate units when the slider value changes.
+                // Recalculate unit sizes and revenues on slider change
+                calculateWeightedAverageSizes();
                 updateRentPerSqFtTable();
+                
             }
 
 
             /* Event Listeners: */
 
-            // Set up an event listener for the acreage input to recalculate values in real-time
+            // on acreage [A ac.] input:
             acreageInput.addEventListener('input', function() {
+                // Recalculate unit counts and revenues
                 calculateMaximumUnits();
                 updateRentPerSqFtTable();
+                
             });
-            // Set up an event listener for the density input to recalculate values in real-time
+            // on density [D units/ac.] input:
             densityInput.addEventListener('input', function() {
+                // Recalculate unit counts and revenues
                 calculateMaximumUnits();
                 updateRentPerSqFtTable();
+                
             });
-            // Set up an event listener for the affordable percentage slider to recalculate values in real-time
+            // on affordable % slider [%aff] change:
             affordablePercentageSlider.addEventListener('input', function() {
                 affordablePctDisplay.innerText = `${this.value}%`;
+                // Recalculate unit counts and revenues
                 calculateMaximumUnits();
                 updateRentPerSqFtTable();
+                
             });
-            // Event listeners for all size inputs to recalculate weighted averages in real-time
+            // on all SqFt/unit [s SqFt] inputs:
             sizeInputs.forEach(input => {
                 input.addEventListener('input', () => {
+                    // Recalculate unit counts, unit sizes, and revenues
                     calculateMaximumUnits(); // unnecessary?
                     calculateWeightedAverageSizes();
                     updateRentPerSqFtTable();
+                    
                 });
             });
-            // Event listeners for Market size inputs to set equal Affordable sizes (if checkbox is checked)
-            // and then recalculate weighted averages in real-time
+            // on market-rate SqFt/unit [s SqFt(mkt)] inputs: (if checkbox = checked)
             marketInputs.forEach((input, index) => {
                 input.addEventListener('input', () => {
                     if (matchAffordableSizesCheckbox.checked) {
                         affordableSizeInputs[index].value = input.value;
+                        // Recalculate unit sizes
                         calculateWeightedAverageSizes();
                     }
                 });
             });
-
-            // Event listeners for market-rate rent inputs
+            // on market-rate rent per unit [$ Rent(mkt)] inputs:
             marketRateInputs.forEach(input => {
                 input.addEventListener('input', function() {
+                    // Recalculate revenues
                     updateRentPerSqFtTable();
-                    // Update Revenue Table
+                    
                 });
             });
-
-
-            // Checkbox logic to set affordable units to the market unit sizes
+            // on checkbox change:
             matchAffordableSizesCheckbox.addEventListener('change', function() {
-                const affordableInputs = affordableSizeInputs;
-                
-                // If checkbox is checked
+                const affordableInputs = affordableSizeInputs;    
+                //      Checked   = Lock affordable avg. size inputs; keep them matched to corresponding market-rate sizes.
+                //      Unchecked = Unlock affordable avg. size inputs; allow affordable units to have different avg. sizes.
                 if (this.checked) {
+                    // checkbox = checked
                     affordableInputs.forEach((input, index) => {
-                        input.value = marketInputs[index].value;  // Set affordable value to match market value
-                        input.disabled = true;  // Disable the input
+                        input.value = marketInputs[index].value;
+                        input.disabled = true;
                     });
                 } else {
-                    // If checkbox is unchecked
-                    affordableInputs.forEach(input => input.disabled = false);  // Re-enable the input
+                    // checkbox = unchecked
+                    affordableInputs.forEach(input => input.disabled = false);
                 }
-                
-                // Recalculate units and sizes
+                // Recalculate unit counts, unit sizes, and revenues
                 calculateMaximumUnits();
                 calculateWeightedAverageSizes();
                 updateRentPerSqFtTable();
-                // Update Revenue Table
+                
             });
 
-
-            // initial runs
+            // initial calculations using loaded + default values
             calculateMaximumUnits();
             calculateWeightedAverageSizes();
             updateRentPerSqFtTable();
+            
+            /* USER INPUTS SECTION END. */
 
-            // ...
-
-
-
-            /* AI SECTION: */
+            /* AI SECTION START */
 
             const runAIButton = document.getElementById("runAIButton");
             runAIButton.addEventListener('click', runAISection);
-            
-            
-            
-            /*
-                Params: 
-                    address, 
-                    county, 
-                    acreage, 
-                    totalUnits, 
-                    affordablePct,
-                    affStudio,
-                    aff1BD,
-                    aff2BD,
-                    aff3BD,
-                    textModifier
-            
-            const textMod = ` Utilize HTML extensively in your response for aesthetics; font, line breaks, etc. (everything except bullet point lists).`;
+            /* ENDPOINT PARAMS:
+                    ASK_AI: 
+                        address, 
+                        county, 
+                        acreage, 
+                        totalUnits, 
+                        affordablePct,
+                        affStudio,
+                        aff1BD,
+                        aff2BD,
+                        aff3BD,
+                        textModifier */
 
-            aiContainer.style.display = 'block';
-            aiContainer.innerHTML = `<i><p>Drafting your memo, please be patient...<p></i>`;
-            const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${countyData.county_name}&acreage=${acreageInput.value}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&affStudio=${countyData.max_rent_0bd_120ami}&aff1BD=${countyData.max_rent_1bd_120ami}&aff2BD=${countyData.max_rent_2bd_120ami}&aff3BD=${countyData.max_rent_3bd_120ami}&textModifier=${encodeURIComponent(textMod)}`;
-            const icMemoResponse = await fetch(icMemoEndpoint);
-            icMemo = await icMemoResponse.text();
-            console.log("IC Memo Received:", icMemo);
-            aiContainer.innerHTML = icMemo;
-            
-            */
-
-            // ...
-
-
+            /* AI SECTION END */
 
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
@@ -477,8 +417,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('There was an error with the server. Please try again later.');
             } else {
                 console.error('Error:', error);
-                // TO-DO: Reset loading indicator (currently gets left hanging if error occurs before Part 1 is complete)
-                alert('Failed to fetch data.\nPlease try again in a few minutes.');
+                // to-do: significantly improve error handling.
+                alert('Whoops, something bad happened and I broke.\nEither try again or give up. The choice is yours!');
             }
         }
     });
@@ -489,189 +429,8 @@ document.addEventListener('DOMContentLoaded', function() {
         script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&callback=initMap";
         document.body.appendChild(script);
     }
-
     loadGoogleMapsAPI();
 
 });
 
 
-//           //
-/* Functions */
-//           //
-
-// Function to update the Rent per Sq. Ft. table
-function updateRentPerSqFtTable() {
-
-    // Create functions getMarketRatePerSqFt and getAffordableRatePerSqFt to calculate these values
-    document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('Studio');
-    document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('Studio');
-    document.getElementById('marketRate1BDPerSqFt').innerText = getMarketRatePerSqFt('1BD');
-    document.getElementById('affordable1BDPerSqFt').innerText = getAffordableRatePerSqFt('1BD');
-    document.getElementById('marketRate2BDPerSqFt').innerText = getMarketRatePerSqFt('2BD');
-    document.getElementById('affordable2BDPerSqFt').innerText = getAffordableRatePerSqFt('2BD');
-    document.getElementById('marketRate3BDPerSqFt').innerText = getMarketRatePerSqFt('3BD');
-    document.getElementById('affordable3BDPerSqFt').innerText = getAffordableRatePerSqFt('3BD');
-}
-
-// Calculate maximum units and show them in a table
-function calculateMaximumUnits() {
-    // Acreage, density, and affordable percentage inputs
-    const acreageValue = parseFloat(document.getElementById('acreageInput').value);
-    const densityValue = parseFloat(document.getElementById('densityInput').value) || 10; // Default to 10 if not provided
-    const affordablePctSlider = document.getElementById('affordablePctSlider');
-    const affordablePctDisplay = document.getElementById('affordablePctDisplay');
-    affordablePct = parseFloat(affordablePctSlider.value) / 100;
-
-    // Calculate unit counts
-    totalUnits = Math.floor(acreageValue * densityValue);
-    affordableUnits = Math.ceil(affordablePct * totalUnits);
-    marketUnits = totalUnits - affordableUnits;
-
-    // Update the table with unit counts
-    const tableBody = document.getElementById('unitCalculationTableBody');
-    tableBody.innerHTML = `
-        <tr>
-            <td>${affordableUnits}</td>
-            <td>${marketUnits}</td>
-            <td>${totalUnits}</td>
-        </tr>
-    `;
-    // Display the unit calculation table now that we have data
-    document.getElementById('unitCalculationTable').style.display = 'block';
-
-    // Update abatement
-    const abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100);
-    const abatementTableBody = document.getElementById('abatementTableBody');
-    abatementTableBody.innerHTML = `
-        <tr>
-            <td>${abatementValue}% of ad valorem property taxes</td>
-        </tr>
-    `;
-
-    // Check for warnings
-    const warningContainer = document.getElementById('warningContainer');
-    warningContainer.innerHTML = "";  // Clear previous warnings
-    if (affordableUnits < 70) {
-        document.getElementById('warningContainer').style.display = 'block';
-        warningContainer.innerHTML += '<p style="color: red;">Need at least 70 affordable units for the steamroll option!</p>';
-    }
-    if (affordablePct < 0.4) {
-        document.getElementById('warningContainer').style.display = 'block';
-        warningContainer.innerHTML += '<p style="color: orange;">Not at 40% affordable threshold!</p>';
-    } 
-    if (affordablePct < 0.1) {
-        warningContainer.innerHTML += '<p style="color: red;">Not at 10% affordable threshold!</p>';
-        document.getElementById('warningContainer').style.display = 'block';
-    }
-    if (affordableUnits >= 70 && affordablePct >= 0.4) {
-        document.getElementById('warningContainer').style.display = 'none';
-    }
-
-    calculateWeightedAverageSizes(); // Run it
-}
-
-// Function to calculate Market Rate per Sq. Ft.
-function getMarketRatePerSqFt(unitType) {
-    const marketRate = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
-    const unitSize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
-    // Debugging Step 4: Print if unit size is zero
-    if (unitSize === 0) {
-        console.log(`Unit size for ${unitType} is zero.`);
-    }
-    return (unitSize === 0) ? 'N/A' : (marketRate / unitSize).toFixed(2);
-}
-
-
-// Function to calculate Affordable Rate per Sq. Ft.
-function getAffordableRatePerSqFt(unitType) {
-    // Debugging Step 3: Check if the function is waiting for main.js to populate data
-    if (typeof countyData === 'undefined') {
-        console.log("countyData is not available yet.");
-        return 'N/A';
-    }
-    
-    let affordableRate = 0;
-  
-    // Remove the dollar sign and convert to floats
-    const maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami);
-    const maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami);
-    const maxRent2bd = parseFloat(countyData.max_rent_2bd_120ami);
-    const maxRent3bd = parseFloat(countyData.max_rent_3bd_120ami);
-
-    // Select the appropriate affordable rate based on unit type
-    switch (unitType) {
-        case 'Studio':
-            affordableRate = maxRent0bd;
-            break;
-        case '1BD':
-            affordableRate = maxRent1bd;
-            break;
-        case '2BD':
-            affordableRate = maxRent2bd;
-            break;
-        case '3BD':
-            affordableRate = maxRent3bd;
-            break;
-        default:
-            console.error("Invalid unit type");
-            return 'N/A';
-    }
-    
-    const unitSize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;
-    
-    // Debugging Step 4: Print if unit size is zero
-    if (unitSize === 0) {
-        console.log(`Unit size for ${unitType} is zero.`);
-    }
-    console.log(`Affordable Rate for ${unitType}: ${affordableRate}`);
-    console.log(`Unit Size for ${unitType}: ${unitSize}`);
-    
-    return (unitSize === 0) ? 'N/A' : (affordableRate / unitSize).toFixed(2);
-}
-
-
-// Function to calculate weighted average sizes
-function calculateWeightedAverageSizes() {
-    const affordablePctSlider = document.getElementById('affordablePctSlider');
-    const affordablePct = parseFloat(affordablePctSlider.value) / 100;
-    const acreageValue = parseFloat(document.getElementById('acreageInput').value);
-    const densityValue = parseFloat(document.getElementById('densityInput').value) || 10;
-
-    totalUnits = Math.floor(acreageValue * densityValue);
-    affordableUnits = Math.ceil(affordablePct * totalUnits);
-    marketUnits = totalUnits - affordableUnits;
-
-    const marketStudioSize = parseFloat(document.getElementById('marketStudioSize').value) || 0;
-    const market1BDSize = parseFloat(document.getElementById('market1BDSize').value) || 0;
-    const market2BDSize = parseFloat(document.getElementById('market2BDSize').value) || 0;
-    const market3BDSize = parseFloat(document.getElementById('market3BDSize').value) || 0;
-
-    const affordableStudioSize = parseFloat(document.getElementById('affordableStudioSize').value) || 0;
-    const affordable1BDSize = parseFloat(document.getElementById('affordable1BDSize').value) || 0;
-    const affordable2BDSize = parseFloat(document.getElementById('affordable2BDSize').value) || 0;
-    const affordable3BDSize = parseFloat(document.getElementById('affordable3BDSize').value) || 0;
-
-    // Calculate the weighted average sizes for market, affordable, and total units
-    const avgMarketSize = (marketStudioSize + market1BDSize + market2BDSize + market3BDSize) / 4;
-    const avgAffordableSize = (affordableStudioSize + affordable1BDSize + affordable2BDSize + affordable3BDSize) / 4;
-    const avgTotalSize = (avgMarketSize * marketUnits + avgAffordableSize * affordableUnits) / totalUnits;
-
-    // Display these values
-    document.getElementById('avgMarketSizeDisplay').innerText = avgMarketSize.toFixed(0);
-    document.getElementById('avgAffordableSizeDisplay').innerText = avgAffordableSize.toFixed(0);
-    document.getElementById('avgTotalSizeDisplay').innerText = avgTotalSize.toFixed(0);
-}
-
-
-async function runAISection() {
-    const textMod = ` Utilize HTML extensively in your response for aesthetics; font, lists, line breaks, everything.`;
-
-    const aiContainer = document.getElementById('aiContainer');
-    aiContainer.style.display = 'block';
-    aiContainer.innerHTML = `<i><p>Drafting your memo, please be patient...<p></i>`;
-    const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${countyData.county_name}&acreage=${acreageInput.value}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&affStudio=${countyData.max_rent_0bd_120ami}&aff1BD=${countyData.max_rent_1bd_120ami}&aff2BD=${countyData.max_rent_2bd_120ami}&aff3BD=${countyData.max_rent_3bd_120ami}&textModifier=${encodeURIComponent(textMod)}`;
-    const icMemoResponse = await fetch(icMemoEndpoint);
-    const icMemo = await icMemoResponse.text();
-    console.log("IC Memo Received:", icMemo);
-    aiContainer.innerHTML = icMemo;
-}
