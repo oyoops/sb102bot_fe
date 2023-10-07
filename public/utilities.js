@@ -187,7 +187,14 @@ async function fetchTallestBuilding(lat, lng) {
     }
 }
 
-// Initialize the google map
+// Dynamically load the Google Maps API
+function loadGoogleMapsAPI() {
+    const script = document.createElement('script');
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&callback=initMap";
+    document.body.appendChild(script);
+}
+
+// Initialize the Google Map
 async function initializeMap(lat, lng) {
     console.log('Initializing map with lat:', lat, ', lng:', lng);
     const mapOptions = {
@@ -216,12 +223,20 @@ async function initializeMap(lat, lng) {
 
     // Fetch and add a marker for the tallest building within a 1-mile radius
     const tallestBuildingData = await fetchTallestBuilding(lat, lng);
+    console.log("Fetched tallest building data: ", tallestBuildingData);  // Added log
+
     if (tallestBuildingData && tallestBuildingData.tags) {
         const buildingLat = parseFloat(tallestBuildingData.lat);
         const buildingLng = parseFloat(tallestBuildingData.lon);
-        const buildingHeight = tallestBuildingData.tags.height || "Unknown";
-        const buildingName = tallestBuildingData.tags.name || "Unknown";
-        const buildingAddress = tallestBuildingData.tags['addr:street'] || "Address not available";
+        console.log("Parsed building coordinates: ", buildingLat, buildingLng);  // Added log
+        if(isNaN(buildingLat) || isNaN(buildingLng)) {  // Added check
+            console.error("Invalid building coordinates!");
+            return;
+        }
+
+        const buildingHeight = tallestBuildingData.tags.height || "Height Unknown";
+        const buildingName = tallestBuildingData.tags.name || "Name Unknown";
+        const buildingAddress = tallestBuildingData.tags['addr:street'] || "Address Unknown";
 
         const buildingMarker = new google.maps.Marker({
             position: { lat: buildingLat, lng: buildingLng },
@@ -235,6 +250,8 @@ async function initializeMap(lat, lng) {
                 Address: ${buildingAddress}
             </div>
         `;
+        console.log("Building Info Content: " + buildingInfoContent);
+        print(buildingInfoContent);
 
         const buildingInfowindow = new google.maps.InfoWindow({
             content: buildingInfoContent
@@ -248,4 +265,5 @@ async function initializeMap(lat, lng) {
     // Show the Google Map element
     document.getElementById('map').style.display = 'block';
     console.log("Map displayed.");
+    print("Map displayed.");
 }
