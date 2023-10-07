@@ -175,7 +175,7 @@ async function runAISection() {
 // Fetch tallest building within a 1-mile radius of the address
 async function fetchTallestBuilding(lat, lng) {
     try {
-        const response = await fetch(`https://oyoops.com/api/building_height?lat=${lat}&lng=${lng}`);
+        const response = await fetch(`https://www.oyoops.com/api/building_height?lat=${lat}&lng=${lng}`);
         const data = await response.json();
         return data;
     } catch (error) {
