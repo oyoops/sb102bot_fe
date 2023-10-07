@@ -35,14 +35,25 @@ module.exports = async (req, res) => {
         }
 
         // Find the tallest building
-        let tallestBuilding = buildings[0];
+        let tallestBuilding = null;
+        let maxHeight = -1;
+        
         buildings.forEach(building => {
-            if (building.tags && building.tags.height && tallestBuilding.tags && tallestBuilding.tags.height) {
-                if (parseFloat(building.tags.height) > parseFloat(tallestBuilding.tags.height)) {
+            if (building.tags && building.tags.height) {
+                const height = parseFloat(building.tags.height);
+                if (height > maxHeight) {
                     tallestBuilding = building;
+                    maxHeight = height;
                 }
             }
         });
+        
+        if (!tallestBuilding) {
+            console.log("No tallest building found with a height value.");
+            return res.status(404).send('No tallest building found with a height value.');
+        }
+        
+        console.log(`Tallest building ID: ${tallestBuilding.id}, Height: ${maxHeight} meters`);        
 
         // Fetch geometry (coordinates) using OpenStreetMap API
         const geometryUrl = `https://api.openstreetmap.org/api/0.6/way/${tallestBuilding.id}.json`;
