@@ -223,20 +223,21 @@ async function initializeMap(lat, lng) {
 
     // Fetch and add a marker for the tallest building within a 1-mile radius
     const tallestBuildingData = await fetchTallestBuilding(lat, lng);
-    console.log("Fetched tallest building data: ", tallestBuildingData);  // Added log
+    console.log("\nTallest building within radius: ", tallestBuildingData);
 
     if (tallestBuildingData && tallestBuildingData.tags) {
         const buildingLat = parseFloat(tallestBuildingData.lat);
         const buildingLng = parseFloat(tallestBuildingData.lon);
-        console.log("Parsed building coordinates: ", buildingLat, buildingLng);  // Added log
-        if(isNaN(buildingLat) || isNaN(buildingLng)) {  // Added check
-            console.error("Invalid building coordinates!");
+        console.log("\nTallest building coordinates: ", buildingLat, buildingLng);
+        if(isNaN(buildingLat) || isNaN(buildingLng)) { 
+            // Map will fail to initialize
+            console.error("Invalid tallest building coordinates!");
             return;
         }
 
-        const buildingHeight = tallestBuildingData.tags.height || "Height Unknown";
-        const buildingName = tallestBuildingData.tags.name || "Name Unknown";
-        const buildingAddress = tallestBuildingData.tags['addr:street'] || "Address Unknown";
+        const buildingHeight = tallestBuildingData.height || "Height Unknown";
+        const buildingName = tallestBuildingData.name || "Name Unknown";
+        const buildingAddress = tallestBuildingData.address || "Address Unknown";
 
         const buildingMarker = new google.maps.Marker({
             position: { lat: buildingLat, lng: buildingLng },
