@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');
     const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');
     const tryAgainButton = document.getElementById("tryAgainButton");
+    
     tryAgainButton.addEventListener("click", function() {
         location.reload();
     });
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         address = addressInput.value; // global
 
         if (!address) {
-            alert('Please enter an address.');
+            alert('You might want to enter an address first. Just a suggestion though...');
             return;
         }
 
