@@ -78,6 +78,10 @@ document.addEventListener('DOMContentLoaded', function() {
             lat = geocodeData.results[0].geometry.location.lat; // global
             lng = geocodeData.results[0].geometry.location.lng; // global
             
+            // hide initial content
+            document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
+            document.querySelector('#initialContent').style.display = 'none';  // hide initial content
+
             // show map w/ two placemarks: (1) input address; center of map, and (2) the tallest bldg. within a 1-mi radius
             initializeMap(lat, lng);
 
@@ -110,13 +114,10 @@ document.addEventListener('DOMContentLoaded', function() {
             parcelData = await parcelDataResponse.json(); // global
             console.log("Parcel Data Received:", parcelData);
 
+            // hide loading indicator
+            document.querySelector('.loading').style.display = 'none';
             
-            // done loading main content
-            document.querySelector('.loading').style.display = 'none'; // hide loading indicator
-            document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
-            document.querySelector('#initialContent').style.display = 'none';  // hide initial content
-                        
-
+            // ...
                         
             // Populate the municipal data table
             const countyRow = `
