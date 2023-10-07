@@ -9,7 +9,7 @@ function initMap() {
 }
 
 // Update the Rent per Sq. Ft. table
-export function updateRentPerSqFtTable() {
+function updateRentPerSqFtTable() {
     document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('Studio');
     document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('Studio');
     document.getElementById('marketRate1BDPerSqFt').innerText = getMarketRatePerSqFt('1BD');
@@ -21,7 +21,7 @@ export function updateRentPerSqFtTable() {
 }
 
 // Calculate maximum units and show them in a table
-export function calculateMaximumUnits() {
+function calculateMaximumUnits() {
     // Acreage, density, and affordable percentage inputs
     const acreageValue = parseFloat(document.getElementById('acreageInput').value);
     const densityValue = parseFloat(document.getElementById('densityInput').value) || 50; // default max. muni. density = 50 units/ac.
@@ -77,7 +77,7 @@ export function calculateMaximumUnits() {
 }
 
 // Calculate Market-Rate rents per Sq. Ft.
-export function getMarketRatePerSqFt(unitType) {
+function getMarketRatePerSqFt(unitType) {
     const marketRate = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
     const unitSize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
     // Debugging Step 4: Print if unit size is zero
@@ -88,7 +88,7 @@ export function getMarketRatePerSqFt(unitType) {
 }
 
 // Calculate Affordable rents per Sq. Ft.
-export function getAffordableRatePerSqFt(unitType) {
+function getAffordableRatePerSqFt(unitType) {
     if (typeof countyData === 'undefined') {
         console.log("countyData is not available yet.");
         return 'N/A';
@@ -127,7 +127,7 @@ export function getAffordableRatePerSqFt(unitType) {
 }
 
 // Calculate weighted average sizes
-export function calculateWeightedAverageSizes() {
+function calculateWeightedAverageSizes() {
     const affordablePctSlider = document.getElementById('affordablePctSlider');
     const affordablePct = parseFloat(affordablePctSlider.value) / 100;
     const acreageValue = parseFloat(document.getElementById('acreageInput').value);
@@ -159,7 +159,7 @@ export function calculateWeightedAverageSizes() {
 }
 
 // Fetch the AI 'memo' by adding all relevant global vars as endpoint parameters
-export async function runAISection() {
+async function runAISection() {
     const textMod = ` Make it good. `;
 
     const aiContainer = document.getElementById('aiContainer');
@@ -173,7 +173,7 @@ export async function runAISection() {
 }
 
 // Fetch tallest building within a 1-mile radius of the address
-export async function fetchTallestBuilding(lat, lng) {
+async function fetchTallestBuilding(lat, lng) {
     try {
         const response = await fetch(`https://oyoops.com/api/building_height?lat=${lat}&lng=${lng}`);
         const data = await response.json();
@@ -185,7 +185,7 @@ export async function fetchTallestBuilding(lat, lng) {
 }
 
 // Initialize the google map
-export async function initializeMap(lat, lng) {
+async function initializeMap(lat, lng) {
     console.log('Initializing map with lat:', lat, ', lng:', lng);
     const mapOptions = {
         center: { lat: lat, lng: lng },
