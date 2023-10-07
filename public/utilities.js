@@ -297,16 +297,8 @@ async function initializeMap(lat, lng) {
         const distanceInMiles = distanceInMeters * 0.000621371;
         
         // Add a label to the line showing the distance
-        const markerWithLabel = new google.maps.Marker({
-            position: new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2),
-            label: {
-                text: `${distanceInMiles.toFixed(2)} mi.`,
-                color: "black",
-                fontSize: "16px",
-            },
-            map: map,
-        });
-
+        const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
+        createStyledMarker(lineLabelPos, map, `${distanceInMiles.toFixed(2)} mi.`);        
         
         // Adjust extent to fit both placemarks
         const bounds = new google.maps.LatLngBounds();
@@ -322,4 +314,22 @@ async function initializeMap(lat, lng) {
 
     // Show the Google Map element
     document.getElementById('map').style.display = 'block';
+}
+
+function createStyledMarker(position, map, label) {
+    const marker = new google.maps.Marker({
+        position: position,
+        map: map,
+        icon: {
+            url: "data:image/svg+xml;utf-8,",
+            labelOrigin: new google.maps.Point(0, -10)
+        },
+        label: {
+            text: label,
+            color: "white",
+            fontWeight: "bold",
+            fontSize: "20px"
+        }
+    });
+    return marker;
 }
