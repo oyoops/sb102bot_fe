@@ -1,3 +1,5 @@
+// main.js
+// the primary script for SB102bot web app.
 
 let address;
 let lat;
@@ -6,28 +8,27 @@ let countyData;
 let cityData;
 let parcelData;
 let acres;
-
 let totalUnits;
 let affordableUnits;
 let marketUnits;
 let affordablePct;
 
+// after page is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); // scroll to top
+    document.getElementById('map').style.display = 'none'; // hide map
 
-    document.getElementById('map').style.display = 'none';
-    
-    const tryAgainButton = document.getElementById("tryAgainButton");    
-    tryAgainButton.addEventListener("click", function() {
-        location.reload();
-    });
-
+    // DOM
     const form = document.querySelector('#searchForm');
     const countyTableBody = document.querySelector('#countyDataTable tbody');
     const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');  // Select the max rents table's tbody
     const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');  // Select the parcel data table's tbody
-    //const aiContainer = document.getElementById('aiContainer');
-
+    const tryAgainButton = document.getElementById("tryAgainButton");
+    tryAgainButton.addEventListener("click", function() {
+        location.reload();
+    });
+    
+    // on form submit
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const addressInput = document.querySelector('#addressInput');
