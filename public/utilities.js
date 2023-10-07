@@ -171,9 +171,9 @@ async function runAISection() {
 }
 
 // Fetch tallest building within a 1-mile radius of the address
-async function fetchTallestBuilding(lat, lng) {
+async function fetchTallestBuilding(lat, lng, radius) {
     try {
-        const response = await fetch(`https://www.oyoops.com/api/building_height?lat=${lat}&lng=${lng}`);
+        const response = await fetch(`https://www.oyoops.com/api/building_height?lat=${lat}&lng=${lng}&radius=${radius}`);
         const data = await response.json();
         return data;
     } catch (error) {
@@ -219,7 +219,7 @@ async function initializeMap(lat, lng) {
     });
 
     // Fetch and add markers for the three tallest buildings within a 1-mile radius
-    const tallestBuildingsData = await fetchTallestBuilding(lat, lng); // Assume this now returns an array
+    const tallestBuildingsData = await fetchTallestBuilding(lat, lng, 1.02); // Assume this now returns an array
 
     if (tallestBuildingsData && tallestBuildingsData.length > 0) {
         const bounds = new google.maps.LatLngBounds();
