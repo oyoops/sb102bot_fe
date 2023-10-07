@@ -247,4 +247,5 @@ async function initializeMap(lat, lng) {
 
     // Show the Google Map element
     document.getElementById('map').style.display = 'block';
+    console.log("Map displayed.");
 }
