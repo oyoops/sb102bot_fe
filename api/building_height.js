@@ -38,6 +38,8 @@ module.exports = async (req, res) => {
         }
 
         let tallestBuilding = buildings[0];
+        console.log(`Tallest building ID: ${tallestBuilding.id}`);
+
         buildings.forEach(building => {
             if (building.tags && building.tags.height && tallestBuilding.tags && tallestBuilding.tags.height) {
                 if (parseFloat(building.tags.height) > parseFloat(tallestBuilding.tags.height)) {
@@ -58,10 +60,10 @@ module.exports = async (req, res) => {
         const nodeResult = await axios.get('https://overpass-api.de/api/interpreter', {
             params: { data: nodeQuery }
         });
-
+        console.log(`Node query result: ${JSON.stringify(nodeResult.data)}`);
         const nodes = nodeResult.data.elements;
         console.log(`Fetched ${nodes.length} nodes for tallest building`);
-        
+
         let sumLat = 0, sumLon = 0;
         nodes.forEach(node => {
             sumLat += node.lat;
