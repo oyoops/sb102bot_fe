@@ -260,6 +260,8 @@ async function initializeMap(lat, lng) {
         buildingMarker.addListener('click', function() {
             buildingInfowindow.open(map, buildingMarker);
         });
+    } else {
+        console.error("Could not fetch tallest building data or it is in an unexpected format.");
     }
 
     // Show the Google Map element
