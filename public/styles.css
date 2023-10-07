@@ -381,7 +381,8 @@ input:disabled {
     display: none;
     max-width: 70%;
     font-family: 'Roboto', serif;
-    text-align: justify;
     margin-left: auto;
     margin-right: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
