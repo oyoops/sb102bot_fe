@@ -297,22 +297,16 @@ async function initializeMap(lat, lng) {
         const distanceInMiles = distanceInMeters * 0.000621371;
         
         // Add a label to the line showing the distance
-        const lineLabel = new MapLabel({
-            text: `${distanceInMiles.toFixed(2)} mi.`,
+        const markerWithLabel = new google.maps.Marker({
             position: new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2),
+            label: {
+                text: `${distanceInMiles.toFixed(2)} mi.`,
+                color: "black",
+                fontSize: "16px",
+            },
             map: map,
-            fontSize: 16,
-            align: 'center'
         });
 
-        // Add a label to the circle showing the radius
-        const circleLabel = new MapLabel({
-            text: '1 mi.',
-            position: new google.maps.LatLng(lat, lng),
-            map: map,
-            fontSize: 16,
-            align: 'center'
-        });
         
         // Adjust extent to fit both placemarks
         const bounds = new google.maps.LatLngBounds();
