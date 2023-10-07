@@ -4,10 +4,12 @@
 //  main.js  //
 //===========*/
 
+function initMap() {
+    // Maps API is now loaded and can be used.
+}
+
 // Update the Rent per Sq. Ft. table
 export function updateRentPerSqFtTable() {
-
-    // Create functions getMarketRatePerSqFt and getAffordableRatePerSqFt to calculate these values
     document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('Studio');
     document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('Studio');
     document.getElementById('marketRate1BDPerSqFt').innerText = getMarketRatePerSqFt('1BD');
@@ -22,7 +24,7 @@ export function updateRentPerSqFtTable() {
 export function calculateMaximumUnits() {
     // Acreage, density, and affordable percentage inputs
     const acreageValue = parseFloat(document.getElementById('acreageInput').value);
-    const densityValue = parseFloat(document.getElementById('densityInput').value) || 10; // Default to 10 if not provided
+    const densityValue = parseFloat(document.getElementById('densityInput').value) || 50; // default max. muni. density = 50 units/ac.
     const affordablePctSlider = document.getElementById('affordablePctSlider');
     const affordablePctDisplay = document.getElementById('affordablePctDisplay');
     affordablePct = parseFloat(affordablePctSlider.value) / 100;
@@ -41,8 +43,7 @@ export function calculateMaximumUnits() {
             <td>${totalUnits}</td>
         </tr>
     `;
-
-    // Display the unit calculation table now that we have data
+    // Unhide unit count table
     document.getElementById('unitCalculationTable').style.display = 'block';
 
     // Update abatement

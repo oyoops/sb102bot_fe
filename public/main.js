@@ -1,8 +1,3 @@
-import './utilities.js';
-
-function initMap() {
-    // Maps API is now loaded and can be used.
-}
 
 let address;
 let lat;
