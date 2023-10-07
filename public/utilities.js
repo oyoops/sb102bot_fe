@@ -219,7 +219,8 @@ async function initializeMap(lat, lng) {
     });
 
     // Fetch and add markers for the three tallest buildings within a 1-mile radius
-    const tallestBuildingsData = await fetchTallestBuilding(lat, lng, 1.02); // Assume this now returns an array
+    const radius = 1.02; // 1.02 miles
+    const tallestBuildingsData = await fetchTallestBuilding(lat, lng, radius); // Assume this now returns an array
 
     if (tallestBuildingsData && tallestBuildingsData.length > 0) {
         const bounds = new google.maps.LatLngBounds();
