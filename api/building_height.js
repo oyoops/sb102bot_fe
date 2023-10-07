@@ -34,55 +34,69 @@ module.exports = async (req, res) => {
             return res.status(404).send('No buildings found within the specified radius.');
         }
 
-        // Find the tallest building
-        let tallestBuilding = null;
-        let maxHeight = -1;
-        
-        buildings.forEach(building => {
+        // Collect all buildings with height information
+        const buildingsWithHeight = buildings.map(building => {
             if (building.tags && building.tags.height) {
                 const height = parseFloat(building.tags.height);
-                if (height > maxHeight) {
-                    tallestBuilding = building;
-                    maxHeight = height;
-                }
+                return {
+                    id: building.id,
+                    height: height,
+                    name: building.tags.name || 'Unknown',
+                    address: {
+                        street: building.tags['addr:street'] || 'Unknown',
+                        housenumber: building.tags['addr:housenumber'] || 'Unknown',
+                        postcode: building.tags['addr:postcode'] || 'Unknown',
+                        city: building.tags['addr:city'] || 'Unknown'
+                    }
+                };
             }
-        });
-        
-        if (!tallestBuilding) {
-            console.log("No tallest building found with a height value.");
-            return res.status(404).send('No tallest building found with a height value.');
+            return null;
+        }).filter(b => b !== null);
+
+        // Sort buildings by height in descending order and take the top 3
+        const topThreeTallestBuildings = buildingsWithHeight.sort((a, b) => b.height - a.height).slice(0, 3);
+
+        if (topThreeTallestBuildings.length === 0) {
+            console.log("No buildings found with a height value.");
+            return res.status(404).send('No buildings found with a height value.');
         }
-        
-        console.log(`Tallest building ID: ${tallestBuilding.id}, Height: ${maxHeight} meters`);        
 
-        // Fetch geometry (coordinates) using OpenStreetMap API
-        const geometryUrl = `https://api.openstreetmap.org/api/0.6/way/${tallestBuilding.id}.json`;
-        const geometryResponse = await axios.get(geometryUrl);
-        const nodes = geometryResponse.data.elements[0].nodes;
+        // Fetch coordinates for each of the top 3 tallest buildings
+        const results = [];
+        for (const building of topThreeTallestBuildings) {
+            // Fetch geometry (coordinates) using OpenStreetMap API
+            const geometryUrl = `https://api.openstreetmap.org/api/0.6/way/${building.id}.json`;
+            const geometryResponse = await axios.get(geometryUrl);
+            const nodes = geometryResponse.data.elements[0].nodes;
 
-        // Fetch node details
-        const nodeUrl = `https://api.openstreetmap.org/api/0.6/nodes?nodes=${nodes.join(',')}`;
-        const nodeResponse = await axios.get(nodeUrl);
+            // Fetch node details
+            const nodeUrl = `https://api.openstreetmap.org/api/0.6/nodes?nodes=${nodes.join(',')}`;
+            const nodeResponse = await axios.get(nodeUrl);
 
-        let sumLat = 0, sumLon = 0;
-        nodeResponse.data.elements.forEach(node => {
-            sumLat += parseFloat(node.lat);
-            sumLon += parseFloat(node.lon);
-        });
+            let sumLat = 0, sumLon = 0;
+            nodeResponse.data.elements.forEach(node => {
+                sumLat += parseFloat(node.lat);
+                sumLon += parseFloat(node.lon);
+            });
 
-        const avgLat = sumLat / nodeResponse.data.elements.length;
-        const avgLon = sumLon / nodeResponse.data.elements.length;
+            const avgLat = sumLat / nodeResponse.data.elements.length;
+            const avgLon = sumLon / nodeResponse.data.elements.length;
 
-        // Prepare the final tallestBuilding object to return
-        let result = {
-            lat: avgLat,
-            lng: avgLon,
-            height: tallestBuilding.tags.height ? parseFloat(tallestBuilding.tags.height) * 3.28084 : null,
-            name: tallestBuilding.tags.name || null,
-            address: tallestBuilding.tags['addr:street'] || null
-        };
+            results.push({
+                lat: avgLat,
+                lng: avgLon,
+                height: building.height * 3.28084, // Convert to feet
+                name: building.name,
+                address: {
+                    street: building.address.street,
+                    housenumber: building.address.housenumber,
+                    postcode: building.address.postcode,
+                    city: building.address.city
+                }
+            });
+        }
 
-        res.status(200).json(result);
+        res.status(200).json(results);
 
     } catch (err) {
         console.error(`Error encountered: ${err.message}`);

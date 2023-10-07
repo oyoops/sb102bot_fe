@@ -6,10 +6,6 @@
 //  main.js  //
 //===========*/
 
-function initMap() {
-    // Maps API is now loaded and can be used.
-}
-
 // Update the Rent per Sq. Ft. table
 function updateRentPerSqFtTable() {
     document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('Studio');
@@ -222,87 +218,68 @@ async function initializeMap(lat, lng) {
         userInfowindow.open(map, userMarker);
     });
 
-    // Fetch and add a marker for the tallest building within a 1-mile radius
-    console.log("Fetching tallest building data");
-    const tallestBuildingData = await fetchTallestBuilding(lat, lng);
-    console.log("\nTallest building within radius: ", tallestBuildingData);
-        
-    if (tallestBuildingData) {
-        console.log("Adding tallest building marker");
-        const buildingLat = parseFloat(tallestBuildingData.lat);
-        const buildingLng = parseFloat(tallestBuildingData.lng);
-        console.log("\nTallest building coordinates: ", buildingLat, buildingLng);
-        
-        if(isNaN(buildingLat) || isNaN(buildingLng)) { 
-            console.error("Invalid tallest building coordinates!");
-            return;
-        }
+    // Fetch and add markers for the three tallest buildings within a 1-mile radius
+    const tallestBuildingsData = await fetchTallestBuilding(lat, lng); // Assume this now returns an array
 
-        const buildingHeight = tallestBuildingData.height || "Uncertain";
-        const buildingName = tallestBuildingData.name || "Tallest Bldg. < 1 mi.";
-        const buildingAddress = tallestBuildingData.address || "Unknown";
-
-        const buildingMarker = new google.maps.Marker({
-            position: { lat: buildingLat, lng: buildingLng },
-            map: map//,
-            //icon: './img/building_icon.png'
-        });
-
-        const buildingInfoContent = `
-            <div style="text-align:center;">
-                <strong>${buildingName}</strong><br>
-                Height: ${buildingHeight.toFixed(0)} feet tall<br>
-                Address: ${buildingAddress}
-            </div>
-        `;
-        console.log("Building Info Content: " + buildingInfoContent);
-
-        const buildingInfowindow = new google.maps.InfoWindow({
-            content: buildingInfoContent
-        });
-
-        buildingMarker.addListener('click', function() {
-            buildingInfowindow.open(map, buildingMarker);
-        });
-
-        // Add a circle with a radius of 1 mile around the input address
-        const circle = new google.maps.Circle({
-            center: { lat: lat, lng: lng },
-            radius: 1609.34,  // 1 mile in meters
-            strokeColor: '#00BFFF',
-            strokeOpacity: 0.5,
-            fillColor: '#00BFFF',
-            fillOpacity: 0.2,
-            map: map
-        });
-
-        // Draw a line between the two placemarks and show the distance
-        const line = new google.maps.Polyline({
-            path: [
-                { lat: lat, lng: lng },
-                { lat: buildingLat, lng: buildingLng }
-            ],
-            strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 2,
-            map: map
-        });
-
-        // Calculate distance between the two placemarks
-        const distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(
-            new google.maps.LatLng(lat, lng),
-            new google.maps.LatLng(buildingLat, buildingLng)
-        );
-        const distanceInMiles = distanceInMeters * 0.000621371;
-        
-        // Add a label to the line showing the distance
-        const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
-        createStyledMarker(lineLabelPos, map, `${distanceInMiles.toFixed(2)} mi.`);        
-        
-        // Adjust extent to fit both placemarks
+    if (tallestBuildingsData && tallestBuildingsData.length > 0) {
         const bounds = new google.maps.LatLngBounds();
-        bounds.extend(new google.maps.LatLng(lat, lng));  // Placemark 1: Input address
-        bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));  // Placemark 2: Tallest building <= 1 mi.
+        bounds.extend(new google.maps.LatLng(lat, lng));
+
+        tallestBuildingsData.forEach((buildingData, index) => {
+            const buildingLat = parseFloat(buildingData.lat);
+            const buildingLng = parseFloat(buildingData.lng);
+            const buildingHeight = buildingData.height || "Uncertain";
+            const buildingName = buildingData.name || `Tallest Building ${index + 1}`;
+            const buildingAddress = buildingData.address || "Unknown";
+
+            const buildingMarker = new google.maps.Marker({
+                position: { lat: buildingLat, lng: buildingLng },
+                map: map,
+            });
+
+            const buildingInfoContent = `
+                <div style="text-align:center;">
+                    <strong>${buildingName}</strong><br>
+                    Height: ${buildingHeight.toFixed(0)} feet tall<br>
+                    Address: ${buildingAddress}
+                </div>
+            `;
+
+            const buildingInfowindow = new google.maps.InfoWindow({
+                content: buildingInfoContent
+            });
+
+            buildingMarker.addListener('click', function () {
+                buildingInfowindow.open(map, buildingMarker);
+            });
+
+            // Draw a line between the input address and this building
+            const line = new google.maps.Polyline({
+                path: [
+                    { lat: lat, lng: lng },
+                    { lat: buildingLat, lng: buildingLng }
+                ],
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                map: map
+            });
+
+            // Calculate and display the distance
+            const distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(
+                new google.maps.LatLng(lat, lng),
+                new google.maps.LatLng(buildingLat, buildingLng)
+            );
+            const distanceInMiles = distanceInMeters * 0.000621371;
+
+            const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
+            createStyledMarker(lineLabelPos, map, `${distanceInMiles.toFixed(2)} mi.`);
+
+            // Extend the map bounds to include this building
+            bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));
+        });
+
+        // Adjust the map view to show all markers
         map.fitBounds(bounds);
         
         /* Done initializing map */
@@ -321,8 +298,10 @@ function createStyledMarker(position, map, label) {
         position: position,
         map: map,
         icon: {
-            url: "data:image/svg+xml;utf-8,",
-            labelOrigin: new google.maps.Point(0, -10)
+            labelOrigin: new google.maps.Point(11, 50),
+            url: 'data:image/svg+xml;charset=utf-8,' +
+                encodeURIComponent('<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg"></svg>'),
+            size: new google.maps.Size(22, 22),
         },
         label: {
             text: label,
@@ -332,4 +311,9 @@ function createStyledMarker(position, map, label) {
         }
     });
     return marker;
+}
+
+// ???
+function initMap() {
+    // Maps API is now loaded and can be used.
 }
