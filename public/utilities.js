@@ -315,6 +315,7 @@ async function initializeMap(lat, lng) {
     document.getElementById('map').style.display = 'block';
 }
 
+// Create a text marker (transparent placemark with a label)
 function createStyledMarker(position, map, label) {
     const marker = new google.maps.Marker({
         position: position,
