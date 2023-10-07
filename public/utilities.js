@@ -239,8 +239,8 @@ async function initializeMap(lat, lng) {
             return;
         }
 
-        const buildingHeight = tallestBuildingData.height || "Unknown";
-        const buildingName = tallestBuildingData.name || "Unknown";
+        const buildingHeight = tallestBuildingData.height || "Uncertain";
+        const buildingName = tallestBuildingData.name || "Tallest Bldg. < 1 mi.";
         const buildingAddress = tallestBuildingData.address || "Unknown";
 
         const buildingMarker = new google.maps.Marker({
@@ -251,7 +251,7 @@ async function initializeMap(lat, lng) {
         const buildingInfoContent = `
             <div style="text-align:center;">
                 <strong>${buildingName}</strong><br>
-                Height: ${buildingHeight} m<br>
+                Height: ${buildingHeight.toFixed(0)} feet tall<br>
                 Address: ${buildingAddress}
             </div>
         `;
