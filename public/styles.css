@@ -88,9 +88,9 @@ tbody tr:hover {
     border-radius: 4px;
     border: 1px solid #ccc;
     width: 95%;
-    margin-left: auto;
-    margin-right: auto;
     margin: 0 auto; /* Center the input field */
+    margin-left: 10px;
+    margin-right: 10px;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
     color: black; 
@@ -100,7 +100,10 @@ tbody tr:hover {
 /* Responsive styles for smaller screen widths */
 @media (max-width: 800px) {
     form {
-        width: 90%; 
+        width: 90%;
+        margin: 0 auto; /* Center the input field */
+        margin-left: 10px;
+        margin-right: 10px;
         padding-left: 10px;
         padding-right: 10px;
     }
@@ -130,6 +133,8 @@ tbody tr:hover {
         font-size: 0.9em; /* Adjust font size for the input field */
         width: 100%;
         box-sizing: border-box;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 }
 
