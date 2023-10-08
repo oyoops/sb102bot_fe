@@ -18,10 +18,10 @@ body {
 
 h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 2.0em;
+    font-size: 1.8em;
     color: #333;
     margin-top: 20px; /* Reduced margin-top */
-    font-weight: 700;
+    font-weight: 600;
 }
 
 p {
