@@ -16,6 +16,20 @@ body {
     overflow-x: hidden;
 }
 
+/* Hide mobile logo by default */
+#logoMobile {
+    display: none;
+}
+/* Media query to switch logos based on screen size */
+@media (max-width: 800px) {
+    #logo {
+        display: none;
+    }
+    #logoMobile {
+        display: block;
+    }
+}
+
 h1 {
     font-family: 'Playfair Display', serif;
     font-size: 1.8em;
