@@ -23,9 +23,11 @@ body {
 /* Media query to switch logos based on screen size */
 @media (max-width: 800px) {
     #logo {
+        align-items: center; /* Center children elements */
         display: none;
     }
     #logoMobile {
+        align-items: center; /* Center children elements */
         display: block;
     }
 }
