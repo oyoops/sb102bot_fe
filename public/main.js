@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
 
     // DOM
+    const mainHeader = document.getElementById("mainHeader");
+    const initialContent = document.querySelector('#initialContent');
     const form = document.querySelector('#searchForm');
     const addressInput = document.querySelector('#addressInput');
     const googlemap = document.getElementById('map');
@@ -79,7 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
             lng = geocodeData.results[0].geometry.location.lng; // global
             
             // hide initial content
-            document.querySelector('#initialContent').style.display = 'none';  // hide initial content
+            initialContent.style.display = 'none';  // hide initial content
+            mainHeader.style.display = 'none';  // hide main header
 
             // show map w/ two placemarks: (1) input address; center of map, and (2) the tallest bldg. within a 1-mi radius
             initializeMap(lat, lng);
