@@ -253,44 +253,6 @@ footer a:hover {
     animation: spin 1s infinite;
 }
 
-.imageContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
-    width: 100%;
-}
-
-.imageContainer p {
-    margin-top: 10px;
-    font-size: 0.9rem;
-}
-
-.imageItem {
-    width: calc(50% - 2%);
-    margin: 1% 1%;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-.imageItem img {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-}
-
-#calculateUnitsButton {
-    width: auto;
-    padding: 5px 10px;
-    background-color: #4c85cf;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    opacity: 1; /* Made it fully visible */
-}
-
 #tryAgainButton {
     font-weight: 500;
     background-color: #163f85;
@@ -328,34 +290,6 @@ footer a:hover {
     color: #666;
 }
 
-.bedroomTypeInputGroup {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1em;
-}
-
-.bedroomTypeInputGroup label {
-    flex-basis: 30%;
-    text-align: right;
-    margin-right: 1em;
-}
-
-.bedroomTypeInputGroup input {
-    flex-basis: 8%;
-    margin-right: 1em;
-    text-align: right;
-}
-
-.bedroomTypeInputGroup input::after {
-    content: '%';
-    position: absolute;
-    margin-left: 5px;
-}
-
-.bedroomTypeInputGroup span {
-    flex-basis: 20%;
-}
 /* Slider styling */
 .slider {
     width: 100%;
