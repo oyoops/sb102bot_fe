@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
             initialContent.style.display = 'none';  // hide initial content
             mainHeader.style.display = 'none';  // hide main header
 
-            // show map w/ two placemarks: (1) input address; center of map, and (2) the tallest bldg. within a 1-mi radius
+            // show map w/ placemarks: (1) input address at center of map; (2,3,4) the tallest three bldgs. within a ~1-mi radius
             initializeMap(lat, lng);
 
             // fetch the city of the address (Lat,Lng = CityData || CityName = Unincorporated if not in a city)
@@ -150,17 +150,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Display eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = "This parcel is <b><u>PROBABLY NOT</u> ELIGIBLE</b> for Live Local Act development.<br>It's already residential.";
+                eligibilityDiv.innerHTML = "This parcel is <b><u>PROBABLY NOT ELIGIBLE</u></b> for Live Local Act development.<br>To qualify, it can't already be multifamily!";
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 eligibilityDiv.innerHTML = "This parcel is likely <b><u>ELIGIBLE</u></b> for Live Local Act development!";
                 eligibilityDiv.style.color = "green";
-                eligibilityDiv.style.fontSize = "22px";
+                eligibilityDiv.style.fontSize = "20px";
             } else {
-                eligibilityDiv.innerHTML = "This parcel is <b><u>NOT ELIGIBLE</u></b> for Live Local Act development.<br>It needs to be commercial or industrial.";
+                eligibilityDiv.innerHTML = "This parcel is <b><u>NOT ELIGIBLE</u></b> for Live Local Act development.<br>To qualify, it must to be commercial or industrial.";
                 eligibilityDiv.style.color = "red";
-                eligibilityDiv.style.fontSize = "22px";
+                eligibilityDiv.style.fontSize = "20px";
             }
 
             // convert land sq. ft. to acres
