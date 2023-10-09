@@ -177,6 +177,9 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             parcelDataTableBody.innerHTML = parcelDataRow;
 
+            // scroll to top after everything is loaded
+            googlemap.scrollIntoView();
+
 
             /* USER INPUTS SECTION START */
 
