@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
         }).filter(b => b !== null);
 
         // Sort buildings by height in descending order and take the top 3
-        const topThreeTallestBuildings = buildingsWithHeight.sort((a, b) => b.height - a.height).slice(0, 3);
+        const topThreeTallestBuildings = buildingsWithHeight.sort((a, b) => b.height - a.height).slice(0, 1);
 
         if (topThreeTallestBuildings.length === 0) {
             console.log("No buildings found with a height value.");
