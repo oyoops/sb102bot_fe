@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Display eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = "This parcel is <b><u>PROBABLY NOT</u> ELIGIBLE</b> for Live Local Act development.";
+                eligibilityDiv.innerHTML = "This parcel is <b><u>PROBABLY NOT</u> ELIGIBLE</b> for Live Local Act development.<br>It's already residential.";
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "22px";
             } else {
-                eligibilityDiv.innerHTML = "This parcel is <b><u>NOT ELIGIBLE</u></b> for Live Local Act development.";
+                eligibilityDiv.innerHTML = "This parcel is <b><u>NOT ELIGIBLE</u></b> for Live Local Act development.<br>It needs to be commercial or industrial.";
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "22px";
             }
