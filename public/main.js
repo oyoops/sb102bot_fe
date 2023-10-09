@@ -177,9 +177,10 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             parcelDataTableBody.innerHTML = parcelDataRow;
 
-            // scroll to top after everything is loaded
+            // scroll to top of map after everything is loaded x1
             googlemap.scrollIntoView();
-
+            window.scrollTo(0, 0);
+            
 
             /* USER INPUTS SECTION START */
 
@@ -202,7 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateRentPerSqFtTable();
                 
             }
-
 
             /* Event Listeners: */
 
@@ -304,6 +304,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             /* AI SECTION END */
 
+            // scroll to top x2
+            window.scrollTo(0, 0); // scroll to top
+            
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);
