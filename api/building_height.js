@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const NUM_TALLEST_BLDGS = 1;
+
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
@@ -54,7 +56,7 @@ module.exports = async (req, res) => {
         }).filter(b => b !== null);
 
         // Sort buildings by height in descending order and take the top 3
-        const topThreeTallestBuildings = buildingsWithHeight.sort((a, b) => b.height - a.height).slice(0, 1);
+        const topThreeTallestBuildings = buildingsWithHeight.sort((a, b) => b.height - a.height).slice(0, NUM_TALLEST_BLDGS);
 
         if (topThreeTallestBuildings.length === 0) {
             console.log("No buildings found with a height value.");
