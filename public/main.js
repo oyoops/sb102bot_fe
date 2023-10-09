@@ -305,7 +305,8 @@ document.addEventListener('DOMContentLoaded', function() {
             /* AI SECTION END */
 
             // scroll to top x2
-            window.scrollTo(0, 0); // scroll to top
+            googlemap.scrollIntoView();
+            window.scrollTo(0, 0);
             
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
