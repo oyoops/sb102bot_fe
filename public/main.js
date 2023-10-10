@@ -315,11 +315,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             /* USER INPUTS SECTION END. */
 
-            /* AI SECTION START */
-
+            
+            /*
+            // AI SECTION START            
             const runAIButton = document.getElementById("runAIButton");
             runAIButton.addEventListener('click', runAISection);
-            /* ENDPOINT PARAMS:
+               ENDPOINT PARAMS:
                     ASK_AI: 
                         address, 
                         county, 
@@ -330,10 +331,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         aff1BD,
                         aff2BD,
                         aff3BD,
-                        textModifier */
-
-            /* AI SECTION END */
-
+                        textModifier
+            // AI SECTION END
+            */
+            
             // scroll to top x2
             googlemap.scrollIntoView();
             window.scrollTo(0, 0);
