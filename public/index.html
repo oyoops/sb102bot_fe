@@ -269,6 +269,59 @@
             </table>
         </section>
 
+        <!-- Land + Total HC Inputs for Property Tax Abatement -->
+        <br>
+        <section id="landAndTotalHcInputSection" style="display: none;">
+            <h4>Land + Total HC</h4>
+            <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Land Price per unit</th>
+                        <th>Hard Costs per unit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="number" class="landInput" id="landCostPerUnit" placeholder="$50,000" value="40000"></td>
+                        <td><input type="number" class="hcInput" id="totalHCPerUnit" placeholder="$250,000" value="250000"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Output, where inputs (land price and hard cost) are totaled and shown in a similar table  -->
+        <br>
+        <section id="totalLandAndTotalHcOutputSection" style="display: none;">
+            <h4>Total Land + Total HC</h4>
+            <table id="totalLandAndTotalHcTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse:
+            collapse; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Land</th>
+                        <th>Hard Costs</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="totalLandCost">-</td>
+                        <td id="totalHcCost">-</td>
+                        <td id="totalLandAndTotalHc">-</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">Total Land + Total HC per unit</th>
+                        <th id="totalLandAndTotalHcPerUnit">-</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Total Land + Total HC per SF</th>
+                        <th id="totalLandAndTotalHcPerSqFt">-</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
         <!-- Property Tax Abatement Outputs -->
         <br>
         <h4>Property Tax Abatement</h4>
