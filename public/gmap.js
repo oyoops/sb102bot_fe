@@ -10,7 +10,7 @@ let buildingHeight;
 let buildingName; // may not work
 let buildingAddress; // may not work
 // DOM:
-const map = document.getElementById('map');
+const mapDisplay = document.getElementById('map');
 */
 
 /* FUNCTIONS */
@@ -36,8 +36,9 @@ async function initializeMap(lat, lng) {
         mapTypeId: google.maps.MapTypeId.SATELLITE
     };
 
+    // Initialize map
     console.log("Generating map...");
-    const map = new google.maps.Map(map, mapOptions);
+    const map = new google.maps.Map(mapDisplay, mapOptions);
     console.log('Map generated.');
 
     // Add a marker at the user's input location
