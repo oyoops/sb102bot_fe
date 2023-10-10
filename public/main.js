@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = `This parcel is likely <b>ELIGIBLE</b> for Live Local Act development, <br>and you could build up to <b>${buildingHeight} feet</b> tall.`;
+                eligibilityDiv.innerHTML = `This parcel is likely <b>ELIGIBLE</b> for Live Local Act development! <br>You can build up to <b>${buildingHeight.toFixed(0)} feet</b> tall here.`;
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "20px";
             } else {
