@@ -1,5 +1,7 @@
 // calculations.js - contains the functions for recalculating the proforma math live.
 
+const MILLAGE_ADJUSTMENT = 9.9999;
+
 /* GLOBALS */
 let acreageValue;
 let densityValue;
@@ -88,7 +90,7 @@ function calculateAbatement() {
     } else {
         abatementValue = 0;
     }
-    abatementEstimate = (((abatementValue / 100) * totalLandAndTotalHcPerUnit) * (parseFloat(countyData.county_millage) / 100) * (1 - 0.04) / 12); // estimate = abatement % * estimated tax/unit
+    abatementEstimate = (((abatementValue / 100) * totalLandAndTotalHcPerUnit) * ((MILLAGE_ADJUSTMENT + parseFloat(countyData.county_millage) / 1000)) * (1 - 0.04) / 12); // estimate = abatement % * estimated tax/unit
     abatementEstimate = abatementEstimate.toFixed(0);
     abatementTableBody.innerHTML = `
         <tr>
