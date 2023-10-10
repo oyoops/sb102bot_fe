@@ -28,6 +28,8 @@ let totalHcCost;
 let totalLandAndTotalHc;
 let totalLandAndTotalHcPerUnit;  
 let totalLandAndTotalHcPerSqFt;
+// abatement outputs
+let abatementEstimate;
 /* MAP GLOBALS */
 // tallest building details (may break if tallestBuilding array >1)
 let buildingLat;
@@ -78,7 +80,21 @@ const abatementTableBody = document.getElementById('abatementTableBody');
 //  Functions  //
 //=============*/
 
-// Calculate maximum units and show them in a table
+// Recalculate abatement table [called by calculateMaximumUnits()]
+function calculateAbatement() {
+    // Update abatement
+    abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assume 75% x affordable%, which is pretty safe
+    abatementEstimate = ((abatementValue / 100) * totalLandAndTotalHcPerUnit) * (parseFloat(countyData.county_millage) / 100) * (1 - 0.04); // estimate = abatement % * estimated tax/unit
+    abatementEstimate = abatementEstimate.toFixed(0);
+    abatementTableBody.innerHTML = `
+        <tr>
+            <td>${abatementValue}%</td>
+            <td>$${abatementEstimate} per unit</td>
+        </tr>
+    `;
+}
+
+// Recalculate unit counts table (and Warnings)
 function calculateMaximumUnits() {
     // Acreage, density, and affordable percentage inputs
     acreageValue = parseFloat(acreageInputDisplay.value);
@@ -101,18 +117,9 @@ function calculateMaximumUnits() {
     // Unhide unit count table
     document.getElementById('unitCalculationTable').style.display = 'block';
 
-    // Update abatement
-    abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assume 75% x affordable%, which is pretty safe
-    abatementTableBody.innerHTML = `
-        <tr>
-            <td>${abatementValue}% ad val. tax abatement for 30 yrs.</td>
-        </tr>
-    `;
-
     // Reset warnings
     warningContainer.innerHTML = "";  // Clear previous warnings
     // Set warnings
-    
     //// Warning check #1: Minimum percent affordable by approval pathway
     if (affordablePct >= 0.4) {
         if (affordableUnits < 70) {
@@ -130,10 +137,11 @@ function calculateMaximumUnits() {
             warningContainer.style.display = 'block';
         } else {
             warningContainer.style.display = 'block';
-            warningContainer.innerHTML += '<p style="color: orange;">✅⚠️ Good! <br>However, municipal cooperation will be required.</p>';
+            warningContainer.innerHTML += '<p style="color: orange;">✅⚠️ Good! <br>However, municipal cooperation will be required.<br>And no tax abatement for you.</p>';
         }
     }
     calculateWeightedAverageSizes();
+    calculateAbatement();
 }
 
 // Calculate weighted average sizes
