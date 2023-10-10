@@ -68,8 +68,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            // show loading
+            // hide initial content
+            mainHeader.style.display = 'none';  // hide main header
+            initialContent.style.display = 'none';  // hide rest of initial content
+            
+            // show map loading indicator
             document.querySelector('.loading').style.display = 'block';
+            
             // geocode the input address
             const geocodeEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
             const geocodeResponse = await fetch(geocodeEndpoint);
@@ -88,13 +93,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // get coordinates from results
             lat = geocodeData.results[0].geometry.location.lat; // global
             lng = geocodeData.results[0].geometry.location.lng; // global
-            
-            // hide initial content
-            initialContent.style.display = 'none';  // hide initial content
-            mainHeader.style.display = 'none';  // hide main header
 
-            // show map w/ placemarks: (1) input address at center of map; (2,3,4) the tallest three bldgs. within a ~1-mi radius
+            // show map with placemarks: (1) input address at center of map; (2,3,4) the tallest three bldgs. within a ~1-mi radius
             initializeMap(lat, lng);
+
+            // hide map loading indicator
+            document.querySelector('.loading').style.display = 'none';
 
             // fetch the city of the address (Lat,Lng = CityData || CityName = Unincorporated if not in a city)
             const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
@@ -124,9 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const parcelDataResponse = await fetch(parcelDataEndpoint);
             parcelData = await parcelDataResponse.json(); // global
             console.log("Parcel Data Received:", parcelData);
-
-            // hide loading indicator
-            document.querySelector('.loading').style.display = 'none';
 
             // show try again button
             document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
