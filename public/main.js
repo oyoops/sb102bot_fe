@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // on form submit:
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        address = addressInput.value; // global
+        address = addressInput.value;
 
         if (!address) {
-            alert('You might want to enter an address first. Just a suggestion though...');
+            alert('You might want to enter an address first... <br>Just a suggestion, though!');
             return;
         }
 
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const geocodeData = await geocodeResponse.json();
             if (!geocodeData.results || geocodeData.results.length === 0) {
-                throw new Error(`Whoops! That address isn't in my coverage area.\nI only know about Florida (and only the good counties at that).`);
+                throw new Error(`Whoops, that address isn't in my coverage area.\nI only know about Florida (and only the good counties at that).`);
             }
 
             /* Geocode was successful */
@@ -163,21 +163,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Display eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = "This parcel is <b><u>PROBABLY NOT ELIGIBLE</u></b> for Live Local Act development.<br>To qualify, it can't already be multifamily!";
+                eligibilityDiv.innerHTML = "This parcel is <b><i>PROBABLY</i> NOT ELIGIBLE</b> for Live Local Act development<br>To qualify, it can't already be multifamily!";
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = "This parcel is likely <b><u>ELIGIBLE</u></b> for Live Local Act development!";
+                eligibilityDiv.innerHTML = "This parcel is likely <b>ELIGIBLE</b> for Live Local Act development";
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "20px";
             } else {
-                eligibilityDiv.innerHTML = "This parcel is <b><u>NOT ELIGIBLE</u></b> for Live Local Act development.<br>To qualify, it must to be commercial or industrial.";
+                eligibilityDiv.innerHTML = "This parcel is <b>NOT ELIGIBLE</b> for Live Local Act development<br>To qualify, it has to be commercial or industrial.";
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "20px";
             }
 
             // convert land sq. ft. to acres
-            acres = parseFloat(parcelData.lnd_sqfoot) / 43560; // global
+            acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
             
             // Populate parcel data table
             const parcelDataRow = `
@@ -201,18 +201,24 @@ document.addEventListener('DOMContentLoaded', function() {
             parcelDataTable.style.display = 'table'; // parcel data
             developmentProgramInputSection.style.display = 'block'; // development program inputs (??)
             unitCalculationTable.style.display = 'block'; // unit counts
-            marketRateInputSection.style.display = 'block'; // market-rate rent inputs
-            rentPerSqFtTableSection.style.display = 'block'; // rent/SqFt
+            marketRateInputSection.style.display = 'block'; // market rate rent inputs
+            rentPerSqFtTableSection.style.display = 'block'; // rent per Sq Ft
             abatementTable.style.display = 'block'; // property tax abatement
             // ...
             landAndTotalHcInputSection.style.display = 'block';
             landAndTotalHcOutputSection.style.display = 'block';
+            // ...
+            
+
+
+
+            // ...
             
             // set acreage input placeholder
             acreageInput.value = acres.toFixed(2);
 
             // affordable percentage slider
-            affordablePercentageSlider.value = 0.40; // default = 40% affordable units
+            affordablePercentageSlider.value = 40; // 0.40; // default = 40% affordable units
             affordablePercentageSlider.oninput = function() {
                 // Recalculate unit sizes and revenues on slider change
                 calculateWeightedAverageSizes();
