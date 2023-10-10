@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 eligibilityDiv.innerHTML = `This site is <b>ELIGIBLE</b> for Live Local Act development. <br>You could build up to <b>${buildingHeight.toFixed(0)} feet</b> tall here. `;
                 if (buildingHeight >= 100) {
-                    eligibilityDiv.innerHTML += `<b>Wow!</b> That's a lot of feet. 👣👀`;
+                    eligibilityDiv.innerHTML += `Wow, That's a lot of <i>feet</i> 👣👀`;
                 }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "20px";
