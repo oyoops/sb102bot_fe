@@ -8,7 +8,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-36Y7QNF54Z');
     </script>
 
@@ -21,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles.css">
     
-    <title>Live Local Calculator</title>
+    <title>Live Local Buddy</title>
 </head>
 
 <body>
@@ -33,23 +32,23 @@
 
     <!-- Main header -->
     <h1 id="mainHeader">
-        So you want to <b>Live Local</b>?
+        <b>Live Local</b> Buddy
     </h1>
 
     <!-- Initial Content (Address input) -->
     <div id="initialContent">
         <p>
-            Enter an address to see what you can do on the property.
+            Enter an address to see what you can do with the property.
         </p>
         <form id="searchForm">
             <input type="text" id="addressInput" placeholder="Address...">
             <br>
-            <button type="submit">What can be built here?</button>
+            <button type="submit">What can I build?</button>
         </form>
         <p>
             <br>Find out if a property qualifies for <a href="https://www.cresunshine.com/"><u>Live Local</u></a> development.
-            <br>If it does, I can help you calculate its new potential.
-            <br>Results in 10 seconds. No registration needed.
+            <br>If it does, I'll help you calculate its new potential.
+            <br>Read more about the new state law <a href="https://www.cresunshine.com/"><u>here</u></a>.
         </p>
     </div>
 
@@ -98,7 +97,7 @@
                 <th>County</th>
                 <th>Municipality</th>
                 <th>Area Median Income</th>
-                <th>County Mills</th>
+                <th>County Millage</th>
             </tr>
         </thead>
         <tbody>
@@ -127,16 +126,16 @@
         <!-- Acreage Input -->
         <br>
         <h4>How many acres is the property?</h4>
-        <input type="number" id="acreageInput" placeholder="Acreage" value="10">
+        <input type="number" id="acreageInput" placeholder="Acreage" value="10" step="0.25">
         
         <!-- Density Input (Max. units/ac. allowed) -->
         <br>
         <h4>What's the maximum density allowed in the municipality?</h4>
-        <input type="number" id="densityInput" placeholder="Units/ac." value="50">
+        <input type="number" id="densityInput" placeholder="Units/ac." value="50" step="5">
 
         <!-- Affordable Units Percentage Slider -->
         <br><br>
-        <label for="affordablePctSlider"><h4>Affordable: <span id="affordablePctDisplay">0%</span></h4></label>
+        <label for="affordablePctSlider"><h4>Affordable: <span id="affordablePctDisplay">40%</span></h4></label>
         <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
         
         <!-- Unit Count Outputs -->
@@ -172,23 +171,23 @@
             <tbody>
                 <tr>
                     <td>Studio</td>
-                    <td><input type="number" class="sizeInput marketSizeInput" id="marketStudioSize" placeholder="Size" value="500"></td>
-                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordableStudioSize" placeholder="Size" value="500"></td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="marketStudioSize" placeholder="Size" value="500" step="25"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordableStudioSize" placeholder="Size" value="500" step="25"></td>
                 </tr>
                 <tr>
                     <td>1BD</td>
-                    <td><input type="number" class="sizeInput marketSizeInput" id="market1BDSize" placeholder="Size" value="750"></td>
-                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable1BDSize" placeholder="Size" value="750"></td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="market1BDSize" placeholder="Size" value="750" step="25"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable1BDSize" placeholder="Size" value="750" step="25"></td>
                 </tr>
                 <tr>
                     <td>2BD</td>
-                    <td><input type="number" class="sizeInput marketSizeInput" id="market2BDSize" placeholder="Size" value="1000"></td>
-                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable2BDSize" placeholder="Size" value="1000"></td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="market2BDSize" placeholder="Size" value="1000" step="25"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable2BDSize" placeholder="Size" value="1000" step="25"></td>
                 </tr>
                 <tr>
                     <td>3BD</td>
-                    <td><input type="number" class="sizeInput marketSizeInput" id="market3BDSize" placeholder="Size" value="1250"></td>
-                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable3BDSize" placeholder="Size" value="1250"></td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="market3BDSize" placeholder="Size" value="1250" step="25"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable3BDSize" placeholder="Size" value="1250" step="25"></td>
                 </tr>
             </tbody>
         </table>
@@ -214,19 +213,19 @@
                 <tbody>
                     <tr>
                         <td>Studio</td>
-                        <td><input type="number" class="marketRateInput" id="marketRateStudio" placeholder="$2,000" value="2000"></td>
+                        <td><input type="number" class="marketRateInput" id="marketRateStudio" placeholder="$2,000" value="2000" step="100"></td>
                     </tr>
                     <tr>
                         <td>1BD</td>
-                        <td><input type="number" class="marketRateInput" id="marketRate1BD" placeholder="$2,400" value="2400"></td>
+                        <td><input type="number" class="marketRateInput" id="marketRate1BD" placeholder="$2,400" value="2400" step="100"></td>
                     </tr>
                     <tr>
                         <td>2BD</td>
-                        <td><input type="number" class="marketRateInput" id="marketRate2BD" placeholder="$2,800" value="2800"></td>
+                        <td><input type="number" class="marketRateInput" id="marketRate2BD" placeholder="$2,800" value="2800" step="100"></td>
                     </tr>
                     <tr>
                         <td>3BD</td>
-                        <td><input type="number" class="marketRateInput" id="marketRate3BD" placeholder="$3,200" value="3200"></td>
+                        <td><input type="number" class="marketRateInput" id="marketRate3BD" placeholder="$3,200" value="3200" step="100"></td>
                     </tr>
                 </tbody>
             </table>
@@ -282,8 +281,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="number" class="landInput" id="landCostPerUnitInput" placeholder="$50,000" value="50000"></td>
-                        <td><input type="number" class="hcInput" id="totalHCPerUnitInput" placeholder="$250,000" value="250000"></td>
+                        <td><input type="number" class="landInput" id="landCostPerUnitInput" placeholder="$50,000" value="50000" step="1000"></td>
+                        <td><input type="number" class="hcInput" id="totalHCPerUnitInput" placeholder="$250,000" value="250000" step="10000"></td>
                     </tr>
                 </tbody>
             </table>
@@ -310,11 +309,11 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="2">Total Land + Total HC per unit</th>
+                        <th colspan="2">Land + Hard Costs per unit</th>
                         <th id="totalLandAndTotalHcPerUnit">-</th>
                     </tr>
                     <tr>
-                        <th colspan="2">Total Land + Total HC per SF</th>
+                        <th colspan="2">Land + Hard Costs per sq. ft.</th>
                         <th id="totalLandAndTotalHcPerSqFt">-</th>
                     </tr>
                 </tfoot>
@@ -323,12 +322,12 @@
 
         <!-- Property Tax Abatement Outputs -->
         <br>
-        <h4>Ad Valorem Tax</h4>
+        <h4>Tax Abatement</h4>
         <table id="abatementTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
                 <tr>
                     <th>
-                        Tax Savings
+                        % Savings
                     </th>
                     <th>
                         Δ$ Rent Equivalent
@@ -339,11 +338,11 @@
                 <!-- Data will be inserted here by JavaScript -->
             </tbody>
         </table>
-        <p>The 30-year abatement excludes non-ad valorem <br>property taxes (e.g., CDD, fire/waste assessments, ...</p>
+        <p>The 30-year abatement excludes non-ad valorem <br>property taxes (e.g., CDD, fire/waste assessments, etc.)</p>
 
         <!-- Try Again button -->
         <br>
-        <button id="tryAgainButton" style="display: none;">New Search</button>    
+        <button id="tryAgainButton" style="display: none;">New search</button>    
         
         <!-- AI IC Memo Output -->
         <br>
@@ -367,7 +366,7 @@
     <!-- Footer -->
     <footer>
         <p>
-            <br>Last update: Oct. 9, 2023
+            <br>Last update: Oct. 10, 2023
             <br>Created by <a href="https://www.twitter.com/oyoops" target="_blank"><u>@oyoops</u></a> | <a href="https://www.cresunshine.com/" target="_blank"><u>CRE☀️</u></a> | <a href="https://www.github.com/oyoops/sb102bot_fe"><u>GitHub</u></a>
         </p>
     </footer>
