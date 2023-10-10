@@ -37,6 +37,8 @@ let buildingName; // may not work
 let buildingAddress; // may not work
 
 /* DOM */
+// map
+const map = document.getElementById('map');
 // acreage & density inputs
 const acreageInputDisplay = document.getElementById('acreageInput');
 const densityInputDisplay = document.getElementById('densityInput');
