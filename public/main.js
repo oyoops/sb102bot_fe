@@ -163,15 +163,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Display eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = "This parcel is <b>PROBABLY NOT ELIGIBLE</b> for Live Local Act development<br>To qualify, it can't <i>already</i> be multifamily!";
+                eligibilityDiv.innerHTML = "This parcel is <b>VERY UNLIKELY</b> to be eligible for Live Local Act development.<br>In order to qualify, it can't <b>already</b> be multifamily... <br>Someone with a law degree may disagree (but I doubt it)";
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = "This parcel is likely <b>ELIGIBLE</b> for Live Local Act development <br>I'm pretty accurate, but not perfect.";
+                eligibilityDiv.innerHTML = "This parcel is likely <b>ELIGIBLE</b> for Live Local Act development! <br>And you can build up to <b>${buildingHeight} feet<b> in height";
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "20px";
             } else {
-                eligibilityDiv.innerHTML = "This parcel is <b>NOT ELIGIBLE</b> for Live Local Act development<br>To qualify, it has to be <i>commercial</i> or <i>industrial</i>.";
+                eligibilityDiv.innerHTML = "This parcel is <b>NOT ELIGIBLE</b> for Live Local Act development<br>To qualify, the property must be <b>commercial</b> or <b>industrial</b>. <br>I could be wrong (unlikely!), so check its actual zoning";
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "20px";
             }
