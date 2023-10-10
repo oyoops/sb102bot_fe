@@ -168,7 +168,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = `This parcel is likely <b>ELIGIBLE</b> for Live Local Act development. <br>You could build up to <b>${buildingHeight.toFixed(0)} feet</b> tall here! WOW!`;
+                eligibilityDiv.innerHTML = `This parcel is likely <b>ELIGIBLE</b> for Live Local Act development. <br>You could build up to <b>${buildingHeight.toFixed(0)} feet</b> tall here. `;
+                if (buildingHeight > 80) {
+                    eligibilityDiv.innerHTML += `<br>Wow, that's a lot of feet! 👣👀`;
+                }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "20px";
             } else {
