@@ -292,7 +292,6 @@
         <!-- Output, where inputs (land price and hard cost) are totaled and shown in a similar table  -->
         <br>
         <section id="totalLandAndTotalHcOutputSection" style="display: none;">
-            <h4>Total Land + Total HC</h4>
             <table id="totalLandAndTotalHcTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse:
             collapse; width: 100%;">
                 <thead>
@@ -324,17 +323,23 @@
 
         <!-- Property Tax Abatement Outputs -->
         <br>
-        <h4>Property Tax Abatement</h4>
+        <h4>Ad Valorem Tax</h4>
         <table id="abatementTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
                 <tr>
-                    <th>Net Savings (30 yrs.)</th>
+                    <th>
+                        Effective Tax Savings
+                    </th>
+                    <th>
+                        Equivalent Δ$ Rent (estimate)
+                    </th>
                 </tr>
             </thead>
             <tbody id="abatementTableBody">
                 <!-- Data will be inserted here by JavaScript -->
             </tbody>
         </table>
+        <p>Abatement lasts for 30 years and excludes any non-ad property valorem taxes like CDDs, fire/waste assessments, etc.</p>
 
         <!-- Try Again button -->
         <br>
