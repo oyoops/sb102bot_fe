@@ -1,9 +1,27 @@
-// url callback (??)
+// gmap.js - Functions for the Google Map
+
+
+/* MAP GLOBALS */
+/*// tallest building details (may break if tallestBuilding array >1)
+let buildingLat;
+let buildingLng;
+let buildingHeight;
+let buildingName; // may not work
+let buildingAddress; // may not work
+*/
+
+/* DOM */
+const map = document.getElementById('map');
+
+
+/* FUNCTIONS */
+
+// url callback (?)
 function initMap() {
     // Maps API is now loaded and can be used.
 }
 
-// Dynamically load the Google Maps API
+// Load the Google Maps API dynamically
 function loadGoogleMapsAPI() {
     const script = document.createElement('script');
     script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&libraries=geometry&callback=initMap";
@@ -12,16 +30,16 @@ function loadGoogleMapsAPI() {
 
 // Initialize the Google Map
 async function initializeMap(lat, lng) {
-    console.log('Initializing map with lat:', lat, ', lng:', lng);
+    console.log('Centering map on lat:', lat, ', lng:', lng);
     const mapOptions = {
         center: { lat: lat, lng: lng },
         zoom: 17,
         mapTypeId: google.maps.MapTypeId.SATELLITE
     };
 
-    console.log("Creating new Google Map");
-    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    console.log('Map initialized.');
+    console.log("Generating map...");
+    const map = new google.maps.Map(map, mapOptions);
+    console.log('Map generated.');
 
     // Add a marker at the user's input location
     console.log("Adding user marker");
@@ -31,8 +49,8 @@ async function initializeMap(lat, lng) {
     });
 
     const userInfowindow = new google.maps.InfoWindow({
-        content: `<div style="text-align:center;"><strong>You</strong></div>`
-        //content: `<div style="text-align:center;"><strong>${address}</strong></div>`
+        content: `<div style="text-align:center;"><strong>Subject</strong></div>`
+        ////////content: `<div style="text-align:center;">${address}</div>`
     });
 
     userMarker.addListener('click', function() {
@@ -40,19 +58,19 @@ async function initializeMap(lat, lng) {
     });
 
     // Fetch and add markers for the three tallest buildings within a 1-mile radius
-    const radius = 1.02; // 1.02 miles
-    const tallestBuildingsData = await fetchTallestBuilding(lat, lng, radius); // Assume this now returns an array
+    const radius = 1.02; // 1 mi. + 2% tolerance
+    const tallestBuildingsData = await fetchTallestBuilding(lat, lng, radius); // returns an array of bldg(s)
 
     if (tallestBuildingsData && tallestBuildingsData.length > 0) {
         const bounds = new google.maps.LatLngBounds();
         bounds.extend(new google.maps.LatLng(lat, lng));
 
         tallestBuildingsData.forEach((buildingData, index) => {
-            const buildingLat = parseFloat(buildingData.lat);
-            const buildingLng = parseFloat(buildingData.lng);
-            const buildingHeight = buildingData.height || "Uncertain";
-            const buildingName = buildingData.name || `#${index + 1} Tallest Bldg. < 1mi.`;
-            const buildingAddress = buildingData.address || "-";
+            buildingLat = parseFloat(buildingData.lat);
+            buildingLng = parseFloat(buildingData.lng);
+            buildingHeight = buildingData.height || "Uncertain";
+            buildingName = buildingData.name || `#${index + 1} Tallest Bldg. < 1mi.`;
+            buildingAddress = buildingData.address || "-";
 
             const buildingMarker = new google.maps.Marker({
                 position: { lat: buildingLat, lng: buildingLng },
