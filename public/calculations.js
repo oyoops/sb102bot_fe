@@ -205,8 +205,8 @@ function updateRentPerSqFtTable() {
 // Recalculate total costs
 function updateTotalCosts() {
     // Get input values
-    var landCostPerUnit = parseFloat(landCostPerUnit.value);
-    var totalHCPerUnit = parseFloat(totalHCPerUnit.value);
+    var landCostPerUnit = parseFloat(landCostPerUnitDisplay.value);
+    var totalHCPerUnit = parseFloat(totalHCPerUnitDisplay.value);
 
     // Ensure the inputs are numbers
     if (isNaN(landCostPerUnit) || isNaN(totalHCPerUnit)) {
