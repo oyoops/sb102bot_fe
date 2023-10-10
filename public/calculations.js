@@ -193,7 +193,7 @@ function getAffordableRatePerSqFt(unitType) {
             return 'N/A';
     }
     let affordableunitsize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;    
-    return (affordableunitsize === 0) ? 'N/A' : (affordablerent / affordableunitsize).toFixed(0);
+    return (affordableunitsize === 0) ? 'N/A' : (affordablerent / affordableunitsize).toFixed(2);
 }
 
 // Update rent per sq. ft. table
