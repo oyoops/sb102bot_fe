@@ -123,7 +123,7 @@ function calculateMaximumUnits() {
             warningContainer.style.display = 'block';
         } else {
             warningContainer.style.display = 'block';
-            warningContainer.innerHTML += '<p style="color: yellow;">✅⚠️ Good! <br>However, municipal cooperation will be required.</p>';
+            warningContainer.innerHTML += '<p style="color: orange;">✅⚠️ Good! <br>However, municipal cooperation will be required.</p>';
         }
     }
     calculateWeightedAverageSizes();
