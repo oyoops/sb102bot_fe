@@ -83,13 +83,13 @@ const abatementTableBody = document.getElementById('abatementTableBody');
 // Recalculate abatement table [called by calculateMaximumUnits()]
 function calculateAbatement() {
     // Update abatement
-    abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assume 75% x affordable%, which is pretty safe
-    abatementEstimate = ((abatementValue / 100) * totalLandAndTotalHcPerUnit) * (parseFloat(countyData.county_millage) / 100) * (1 - 0.04); // estimate = abatement % * estimated tax/unit
+    abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assumes all affordable units are 120% AMI
+    abatementEstimate = (((abatementValue / 100) * totalLandAndTotalHcPerUnit) * (parseFloat(countyData.county_millage) / 100) * (1 - 0.04) / 12); // estimate = abatement % * estimated tax/unit
     abatementEstimate = abatementEstimate.toFixed(0);
     abatementTableBody.innerHTML = `
         <tr>
-            <td>${abatementValue}%</td>
-            <td>$${abatementEstimate} per unit</td>
+            <td>${abatementValue}% net</td>
+            <td>$${abatementEstimate} per unit/mo.</td>
         </tr>
     `;
 }
