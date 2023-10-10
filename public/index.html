@@ -65,7 +65,7 @@
      <!-- </div> -->
 
     <!-- Spacing -->
-    <br><br>
+    <br><br><br>
     
     <!-- Map -->
     <div id="map" style="width: 90%; display: none"></div>
@@ -131,16 +131,20 @@
         <!-- Density Input (Max. units/ac. allowed) -->
         <br>
         <h4>What's the maximum density allowed in the municipality?</h4>
-        <input type="number" id="densityInput" placeholder="Units/ac." value="50" step="5">
+        <input type="number" id="densityInput" placeholder="Units/ac." value="50" step="5">  <i>Not automatic!</i>
 
         <!-- Affordable Units Percentage Slider -->
         <br><br>
-        <label for="affordablePctSlider"><h4>Affordable: <span id="affordablePctDisplay">40%</span></h4></label>
+        <label for="affordablePctSlider">
+            <h3>
+                Affordable: <span id="affordablePctDisplay">40%</span>
+            </h3>
+        </label>
         <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
         
         <!-- Unit Count Outputs -->
         <br>
-        <h4>Unit Counts</h4>
+        <!-- <h4>Unit Counts</h4> -->
         <table id="unitCalculationTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
                 <tr>
@@ -154,12 +158,12 @@
             </tbody>
         </table>
     
-        <!-- Warnings Container (UnitCountError, %AffordableError, etc.) -->
+        <!-- Warnings Container -->
         <div id="warningContainer" style="display: none"></div>
 
-        <!-- Unit Size Inputs Section (Table w/ checkbox) -->
-        <h4>Avg. Sizes</h4>
-        <label><input type="checkbox" id="matchAffordableSizes"> Match affordable and market-rate unit sizes?</label>
+        <!-- Unit Size Inputs Section (Table + checkbox) -->
+        <h3>Unit Sizes</h3>
+        <label><input type="checkbox" id="matchAffordableSizes"> Match market-rate and affordable sizes?</label>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
@@ -194,19 +198,19 @@
 
         <!-- Weighted Average Unit Size Outputs -->
         <br>
-        <h4>Averages:</h4>
-        <p>Market Rate: <span id="avgMarketSizeDisplay">0</span> SF</p>
-        <p>Affordable: <span id="avgAffordableSizeDisplay">0</span> SF</p>
-        <p>Blended: <span id="avgBlendedSizeDisplay">0</span> SF</p>
+        <h4>Weighted Averages:</h4>
+        <p>Market rate: <span id="avgMarketSizeDisplay">0</span> sq. ft.</p>
+        <p>Affordable: <span id="avgAffordableSizeDisplay">0</span> sq. ft.</p>
+        <p><b>Blended: <span id="avgBlendedSizeDisplay">0</span> sq. ft.</b></p>
 
         <!-- Market Rate Rents Input Section -->
         <br>
         <section id="marketRateInputSection" style="display: none;">
-            <h4>Market Rate Rents</h4>
+            <h3><u>Market</u> Rents</h3>
             <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
                 <thead>
                     <tr>
-                        <th>Unit Type</th>
+                        <th></th>
                         <th>Rent</th>
                     </tr>
                 </thead>
@@ -229,12 +233,15 @@
                     </tr>
                 </tbody>
             </table>
+            <p>
+                <i>These placeholders are not representative of the subject.</i>
+            </p>
         </section>
 
         <!-- Rent per Sq. Ft. Table -->
         <br>
         <section id="rentPerSqFtTableSection" style="display: none;">
-            <h4>Rent per Sq. Ft.</h4>
+            <!-- <h4>Rent per Sq. Ft.</h4> -->
             <table id="rentPerSqFtTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
                 <thead>
                     <tr>
@@ -268,15 +275,15 @@
             </table>
         </section>
 
-        <!-- Land + Total HC Inputs for Property Tax Abatement -->
+        <!-- Land + Total HC Inputs -->
         <br>
         <section id="landAndTotalHcInputSection" style="display: none;">
-            <h4>Land + Total HC</h4>
+            <h3>Development Costs</h3>
             <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
                 <thead>
                     <tr>
-                        <th>Land Price per unit</th>
-                        <th>Hard Costs per unit</th>
+                        <th>Land Price /unit</th>
+                        <th>Hard Costs /unit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -286,9 +293,12 @@
                     </tr>
                 </tbody>
             </table>
+            <p>
+                <i>The tax abatement estimate is based on these inputs.</i>
+            </p>
         </section>
 
-        <!-- Output, where inputs (land price and hard cost) are totaled and shown in a similar table  -->
+        <!-- Land + Total HC Outputs  -->
         <br>
         <section id="totalLandAndTotalHcOutputSection" style="display: none;">
             <table id="totalLandAndTotalHcTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse:
@@ -338,10 +348,12 @@
                 <!-- Data will be inserted here by JavaScript -->
             </tbody>
         </table>
-        <p>The 30-year abatement excludes non-ad valorem <br>property taxes (e.g., CDD, fire/waste assessments, etc.)</p>
+        <p>
+            <i>The 30-year abatement excludes non-ad valorem <br>property taxes (e.g., CDD, fire/waste assessments, etc.)</i>
+        </p>
 
-        <!-- Try Again button -->
-        <br>
+        <!-- New Search ('Try Again') Button -->
+        <br><br>
         <button id="tryAgainButton" style="display: none;">New Search</button>    
         
         <!-- AI IC Memo Output -->
