@@ -33,10 +33,10 @@ let totalLandAndTotalHcPerSqFt;
 /* DOM */
 
 // acreage & density inputs
-const acreageInput = document.getElementById('acreageInput');
-const densityInput = document.getElementById('densityInput');
+const acreageInputDisplay = document.getElementById('acreageInput');
+const densityInputDisplay = document.getElementById('densityInput');
 // affordable percentage input/output
-const affordablePctSlider = document.getElementById('affordablePctSlider');
+const affordablePctSliderDisplay = document.getElementById('affordablePctSlider');
 const affordablePctDisplay = document.getElementById('affordablePctDisplay');
 // unit count outputs
 const unitCountTableBody = document.getElementById('unitCalculationTableBody');
@@ -53,6 +53,9 @@ const affordable3BDSizeDisplay = document.getElementById('affordable3BDSize');
 const avgAffordableSizeDisplay = document.getElementById('avgAffordableSizeDisplay');
 const avgMarketSizeDisplay = document.getElementById('avgMarketSizeDisplay');
 const avgBlendedSizeDisplay = document.getElementById('avgBlendedSizeDisplay');
+// cost inputs
+const landCostPerUnitInputDisplay = document.getElementById('landCostPerUnitInput');
+const totalHCPerUnitInputDisplay = document.getElementById('totalHCPerUnitInput');
 // cost outputs
 const totalLandCostDisplay = document.getElementById('totalLandCost');
 const totalHcCostDisplay = document.getElementById('totalHcCost');
@@ -71,9 +74,9 @@ const abatementTableBody = document.getElementById('abatementTableBody');
 // Calculate maximum units and show them in a table
 function calculateMaximumUnits() {
     // Acreage, density, and affordable percentage inputs
-    acreageValue = parseFloat(acreageInput.value);
-    densityValue = parseFloat(densityInput.value) || 50; // default density = 50 units/ac.
-    affordablePct = parseFloat(affordablePctSlider.value) / 100;
+    acreageValue = parseFloat(acreageInputDisplay.value);
+    densityValue = parseFloat(densityInputDisplay.value) || 50; // default density = 50 units/ac.
+    affordablePct = parseFloat(affordablePctSliderDisplay.value) / 100;
 
     // Calculate unit counts
     totalUnits = Math.floor(acreageValue * densityValue);
@@ -122,9 +125,9 @@ function calculateMaximumUnits() {
 
 // Calculate weighted average sizes
 function calculateWeightedAverageSizes() {
-    affordablePct = parseFloat(affordablePctSlider.value) / 100;
-    acreageValue = parseFloat(acreageInput.value);
-    densityValue = parseFloat(densityInput.value);
+    affordablePct = parseFloat(affordablePctSliderDisplay.value) / 100;
+    acreageValue = parseFloat(acreageInputDisplay.value);
+    densityValue = parseFloat(densityInputDisplay.value);
 
     totalUnits = Math.floor(acreageValue * densityValue);
     affordableUnits = Math.ceil(affordablePct * totalUnits);
@@ -208,8 +211,8 @@ function updateRentPerSqFtTable() {
 // Recalculate total costs
 function updateTotalCosts() {
     // Get input values
-    landCostPerUnit = parseFloat(landCostPerUnit.value);
-    totalHCPerUnit = parseFloat(totalHCPerUnit.value);
+    landCostPerUnit = parseFloat(landCostPerUnitInputDisplay.value);
+    totalHCPerUnit = parseFloat(totalHCPerUnitInputDisplay.value);
 
     // Ensure the inputs are numbers
     if (isNaN(landCostPerUnit) || isNaN(totalHCPerUnit)) {
