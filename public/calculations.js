@@ -20,7 +20,10 @@ let maxRent0bd;
 let maxRent1bd;
 let maxRent2bd;
 let maxRent3bd;
-// costs
+// cost inputs
+let landCostPerUnit;
+let totalHCPerUnit;
+// cost outputs
 let totalLandCost;
 let totalHcCost;
 let totalLandAndTotalHc;
@@ -205,8 +208,8 @@ function updateRentPerSqFtTable() {
 // Recalculate total costs
 function updateTotalCosts() {
     // Get input values
-    var landCostPerUnit = parseFloat(landCostPerUnitDisplay.value);
-    var totalHCPerUnit = parseFloat(totalHCPerUnitDisplay.value);
+    landCostPerUnit = parseFloat(landCostPerUnit.value);
+    totalHCPerUnit = parseFloat(totalHCPerUnit.value);
 
     // Ensure the inputs are numbers
     if (isNaN(landCostPerUnit) || isNaN(totalHCPerUnit)) {
