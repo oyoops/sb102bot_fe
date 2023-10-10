@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Display eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = `This site is <b>VERY UNLIKELY</b> to be eligible for Live Local Act development. <br>To qualify, it can't <b>already</b> be an apartment complex. <br>Someone with a law degree <i>could</i> argue otherwise... But not very well!`;
+                eligibilityDiv.innerHTML = `This site is <b>VERY UNLIKELY</b> to be eligible for Live Local Act development. <br>To qualify, it can't <b>already</b> be apartments.`;
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
