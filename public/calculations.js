@@ -104,21 +104,26 @@ function calculateMaximumUnits() {
 
     // Reset warnings
     warningContainer.innerHTML = "";  // Clear previous warnings
-    // Set warnings, if any
-    if (affordableUnits < 70) {
-        warningContainer.style.display = 'block';
-        warningContainer.innerHTML += '<p style="color: red;">Under 70 total affordable units! <br>Needs both 40% <u>and</u> 70+ affordable units for muni. bypass.</p>';
-    }
+    // Set warnings
+    
+    //// Warning check #1: Minimum percent affordable by approval pathway
     if (affordablePct < 0.4) {
-        warningContainer.style.display = 'block';
-        warningContainer.innerHTML += '<p style="color: orange;">Under 40% affordable units! <br>Muni. cooperation will be required.</p>';
-    } 
-    if (affordablePct < 0.1) {
-        warningContainer.innerHTML += '<p style="color: red;">Under 10% affordable units! <br>Needs at least 10% to Live Local.</p>';
+        if (affordableUnits < 70) {
+            //// Warning check #2: If going for steamroll, need >= 70 affordable
+            warningContainer.style.display = 'block';
+            warningContainer.innerHTML += '<p style="color: red;">⚠️ Under 70 total affordable units! <br>Needs both 40% <u>and</u> 70+ affordable units to steamroll.</p>';
+        } else {
+            warningContainer.style.display = 'block';
+            warningContainer.innerHTML += '<p style="color: orange;">⚠️ Under 40% affordable units! <br>Muni. cooperation will be required.</p>';
+        }
+    } else if (affordablePct < 0.1) {
+        warningContainer.innerHTML += '<p style="color: red;">❌ Under 10% affordable units! <br>Needs at least 10% to Live Local.</p>';
         warningContainer.style.display = 'block';
     }
+    // Warning check #3: All-clear to steamroll (affordable # >= 70 and affordable % >= 40%)
     if (affordableUnits >= 70 && affordablePct >= 0.4) {
-        warningContainer.style.display = 'none';
+        warningContainer.style.display = 'block';
+        warningContainer.innerHTML = '<p style="color: green;">✅ Good!</p>';
     }
     calculateWeightedAverageSizes();
 }
@@ -161,7 +166,6 @@ function getMarketRatePerSqFt(unitType) {
     const mktunitsize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
     return (mktunitsize === 0) ? 'N/A' : (mktrent / mktunitsize).toFixed(2);
 }
-
 // (get by unit type) calculate affordable rents per Sq. Ft.
 function getAffordableRatePerSqFt(unitType) {
     if (typeof countyData === 'undefined') {
@@ -198,14 +202,14 @@ function getAffordableRatePerSqFt(unitType) {
 
 // Update rent per sq. ft. table
 function updateRentPerSqFtTable() {
-    document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('Studio');
-    document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('Studio');
-    document.getElementById('marketRate1BDPerSqFt').innerText = getMarketRatePerSqFt('1BD');
-    document.getElementById('affordable1BDPerSqFt').innerText = getAffordableRatePerSqFt('1BD');
-    document.getElementById('marketRate2BDPerSqFt').innerText = getMarketRatePerSqFt('2BD');
-    document.getElementById('affordable2BDPerSqFt').innerText = getAffordableRatePerSqFt('2BD');
-    document.getElementById('marketRate3BDPerSqFt').innerText = getMarketRatePerSqFt('3BD');
-    document.getElementById('affordable3BDPerSqFt').innerText = getAffordableRatePerSqFt('3BD');
+    document.getElementById('marketRateStudioPerSqFt').innerText = '$' + getMarketRatePerSqFt('Studio');
+    document.getElementById('affordableStudioPerSqFt').innerText = '$' + getAffordableRatePerSqFt('Studio');
+    document.getElementById('marketRate1BDPerSqFt').innerText = '$' + getMarketRatePerSqFt('1BD');
+    document.getElementById('affordable1BDPerSqFt').innerText = '$' + getAffordableRatePerSqFt('1BD');
+    document.getElementById('marketRate2BDPerSqFt').innerText = '$' + getMarketRatePerSqFt('2BD');
+    document.getElementById('affordable2BDPerSqFt').innerText = '$' + getAffordableRatePerSqFt('2BD');
+    document.getElementById('marketRate3BDPerSqFt').innerText = '$' + getMarketRatePerSqFt('3BD');
+    document.getElementById('affordable3BDPerSqFt').innerText = '$' + getAffordableRatePerSqFt('3BD');
 }
 
 // Recalculate total costs
@@ -224,8 +228,8 @@ function updateTotalCosts() {
     totalLandCost = landCostPerUnit * totalUnits;
     totalHcCost = totalHCPerUnit * totalUnits;
     totalLandAndTotalHc = totalLandCost + totalHcCost;
-    totalLandAndTotalHcPerUnit = totalLandAndTotalHc * totalUnits;  
-    totalLandAndTotalHcPerSqFt = totalLandAndTotalHc * totalUnits / avgBlendedSize;  
+    totalLandAndTotalHcPerUnit = totalLandAndTotalHc / totalUnits;  
+    totalLandAndTotalHcPerSqFt = totalLandAndTotalHc / totalUnits / avgBlendedSize;  
     
     // Update costs table
     totalLandCostDisplay.textContent = '$' + totalLandCost.toFixed(0);
