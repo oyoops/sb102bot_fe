@@ -90,7 +90,7 @@ function calculateAbatement() {
     } else {
         abatementValue = 0;
     }
-    abatementEstimate = (((abatementValue / 100) * totalLandAndTotalHcPerUnit) * ((MILLAGE_ADJUSTMENT + parseFloat(countyData.county_millage) / 1000)) * (1 - 0.04) / 12); // estimate = abatement % * estimated tax/unit
+    abatementEstimate = ((((abatementValue / 100) * totalLandAndTotalHcPerUnit) * (((MILLAGE_ADJUSTMENT + parseFloat(countyData.county_millage)) / 1000)) * (1 - 0.04)) / 12); // estimate = abatement % * estimated tax/unit
     abatementEstimate = abatementEstimate.toFixed(0);
     abatementTableBody.innerHTML = `
         <tr>
