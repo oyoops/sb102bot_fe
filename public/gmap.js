@@ -2,17 +2,16 @@
 
 
 /* MAP GLOBALS */
-/*// tallest building details (may break if tallestBuilding array >1)
+/*
+// tallest building details (may break if tallestBuilding array >1)
 let buildingLat;
 let buildingLng;
 let buildingHeight;
 let buildingName; // may not work
 let buildingAddress; // may not work
-*/
-
-/* DOM */
+// DOM:
 const map = document.getElementById('map');
-
+*/
 
 /* FUNCTIONS */
 
