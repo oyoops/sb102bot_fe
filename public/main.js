@@ -164,18 +164,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Display eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = `This parcel is <b>VERY UNLIKELY</b> to be eligible for Live Local Act development.<br>In order to qualify, it can't <b>already</b> be multifamily. <br>Someone with a law degree <i>could</i> argue otherwise... But not very well!`;
+                eligibilityDiv.innerHTML = `This site is <b>VERY UNLIKELY</b> to be eligible for Live Local Act development. <br>To qualify, it can't <b>already</b> be an apartment complex. <br>Someone with a law degree <i>could</i> argue otherwise... But not very well!`;
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = `This parcel is likely <b>ELIGIBLE</b> for Live Local Act development. <br>You could build up to <b>${buildingHeight.toFixed(0)} feet</b> tall here. `;
+                eligibilityDiv.innerHTML = `This site is <b>ELIGIBLE</b> for Live Local Act development. <br>You could build up to <b>${buildingHeight.toFixed(0)} feet</b> tall here. `;
                 if (buildingHeight > 80) {
-                    eligibilityDiv.innerHTML += `<br>Wow, that's a lot of feet! 👣👀`;
+                    eligibilityDiv.innerHTML += `Wow, that's a lot of feet! 👣👀`;
                 }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "20px";
             } else {
-                eligibilityDiv.innerHTML = `This parcel is <b>NOT ELIGIBLE</b> for Live Local Act development<br>To qualify, it must currently be <b>commercial</b> or <b>industrial</b>. <br>I could be wrong about this parcel, though, so verify its zoning.`;
+                eligibilityDiv.innerHTML = `This site is <b>NOT ELIGIBLE</b> for Live Local Act development. <br>To qualify, it must currently be <b>commercial</b> or <b>industrial</b>. <br>I could be wrong about this parcel, though, so verify its zoning.`;
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "20px";
             }
