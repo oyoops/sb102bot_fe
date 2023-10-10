@@ -123,25 +123,25 @@
     <!-- START: PART 2 -- DEVELOPMENT PROGRAM I/O -->
     <div id="developmentProgramInputSection" style="display: none;">
 
+        <br>
         <h2><u>Property</u></h2>
         
         <!-- Acreage Input -->
-        <br>
         <h4>How many acres will be used for multifamily?</h4>
         <input type="number" id="acreageInput" placeholder="Acreage" value="10" step="0.25">      <i>Automatic!</i>
         
         <!-- Density Input (Max. units/ac. allowed) -->
         <br>
-        <h4>What is the highest density allowed by the municipality?</h4>
+        <h4>What is the highest density allowed in the municipality?</h4>
         <input type="number" id="densityInput" placeholder="Units/ac." value="50" step="5">  <i><u>Not</u> automatic!</i>
 
+        <br>
         <h2><u>Unit Mix</u></h2>
         
         <!-- Affordable Units Percentage Slider -->
-        <br><br>
         <label for="affordablePctSlider">
             <h3>
-                Affordable Units (<span id="affordablePctDisplay">40%</span>)
+                Affordable (<span id="affordablePctDisplay">40%</span> of total units)
             </h3>
         </label>
         <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
@@ -167,8 +167,8 @@
 
         <!-- Unit Size Inputs Section (Table + checkbox) -->
         <br>
-        <h3>Unit Sizes</h3>
-        <label><input type="checkbox" id="matchAffordableSizes"> Match market-rate and affordable sizes?</label>
+        <h3>Average Sizes</h3>
+        <label><input type="checkbox" id="matchAffordableSizes"> Match market-rate and affordable unit sizes?</label>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
@@ -202,8 +202,7 @@
         </table>
 
         <!-- Weighted Average Unit Size Outputs -->
-        <br>
-        <h4>Weighted avg. unit sizes:</h4>
+        <h4>Weighted Averages:</h4>
         <p>Market:  <span id="avgMarketSizeDisplay">0</span> sq. ft.</p>
         <p>Affordable:  <span id="avgAffordableSizeDisplay">0</span> sq. ft.</p>
         <p><b>Blended:  <span id="avgBlendedSizeDisplay">0</span> sq. ft.</b></p>
@@ -295,13 +294,9 @@
                     </tr>
                 </tbody>
             </table>
-            <p>
-                <i>The tax abatement estimate is based on these inputs.</i>
-            </p>
         </section>
 
         <!-- Land + Total HC Outputs  -->
-        <br>
         <section id="totalLandAndTotalHcOutputSection" style="display: none;">
             <table id="totalLandAndTotalHcTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse:
             collapse; width: 100%;">
@@ -351,7 +346,7 @@
             </tbody>
         </table>
         <p>
-            <i>The 30-year abatement excludes non-ad valorem <br>property taxes (e.g., CDD, fire/waste assessments, etc.)</i>
+            <b>'Δ$ Rent Equivalent'</b> = Rent discount that would offset tax savings</b> <br><i>The 30-year abatement excludes non-ad valorem property taxes <br>(e.g., CDD, fire/waste assessments, ...)</i>
         </p>
 
         <!-- New Search ('Try Again') Button -->
@@ -369,6 +364,7 @@
             </br>Why don't I write an Investment Committee memo for you about it?</p>
             <!-- Data will be inserted here by JavaScript -->
         </div>
+        <br>
 
         <!-- START: PART 3 -- (...) -->
         <!-- END: PART 3 -- (...) -->
