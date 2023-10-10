@@ -44,15 +44,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const rentPerSqFtTableSection = document.getElementById('rentPerSqFtTableSection');
     
     const landAndTotalHcInputSection = document.getElementById('landAndTotalHcInputSection');
+    const landCostPerUnit = document.getElementById('landCostPerUnitInput');
+    const totalHCPerUnit = document.getElementById('totalHCPerUnitInput');
+    
     const landAndTotalHcOutputSection = document.getElementById('totalLandAndTotalHcOutputSection');
     
     const abatementTable = document.getElementById('abatementTable');
     const tryAgainButton = document.getElementById("tryAgainButton");
+
+    // on New Search button click:
     tryAgainButton.addEventListener("click", function() {
         location.reload();
     });
     
-    // On form submit:
+    // on form submit:
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         address = addressInput.value; // global
@@ -288,11 +293,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateRentPerSqFtTable();
                 
             });
+            // on cost inputs change:
+            landCostPerUnit.addEventListener('input', updateTotals);
+            totalHCPerUnit.addEventListener('input', updateTotals);
 
-            // initial calculations using loaded + default values
+            // (more event listeners...)
+            
+            
+            // run initial calculations using loaded & default values
             calculateMaximumUnits();
             calculateWeightedAverageSizes();
             updateRentPerSqFtTable();
+            updateTotals();
             
             /* USER INPUTS SECTION END. */
 
