@@ -1,7 +1,6 @@
 // calculations.js - contains the functions for recalculating the proforma math live.
 
 /* GLOBALS */
-
 let acreageValue;
 let densityValue;
 let abatementValue;
@@ -28,10 +27,16 @@ let totalLandCost;
 let totalHcCost;
 let totalLandAndTotalHc;
 let totalLandAndTotalHcPerUnit;  
-let totalLandAndTotalHcPerSqFt;  
+let totalLandAndTotalHcPerSqFt;
+/* MAP GLOBALS */
+// tallest building details (may break if tallestBuilding array >1)
+let buildingLat;
+let buildingLng;
+let buildingHeight;
+let buildingName; // may not work
+let buildingAddress; // may not work
 
 /* DOM */
-
 // acreage & density inputs
 const acreageInputDisplay = document.getElementById('acreageInput');
 const densityInputDisplay = document.getElementById('densityInput');
