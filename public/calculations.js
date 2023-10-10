@@ -107,23 +107,24 @@ function calculateMaximumUnits() {
     // Set warnings
     
     //// Warning check #1: Minimum percent affordable by approval pathway
-    if (affordablePct < 0.4) {
+    if (affordablePct >= 0.4) {
         if (affordableUnits < 70) {
             //// Warning check #2: If going for steamroll, need >= 70 affordable
             warningContainer.style.display = 'block';
             warningContainer.innerHTML += '<p style="color: red;">⚠️ Under 70 total affordable units! <br>Needs both 40% <u>and</u> 70+ affordable units to steamroll.</p>';
         } else {
+            // Warning check #3: All-clear to steamroll (affordable # >= 70 and affordable % >= 40%)
             warningContainer.style.display = 'block';
-            warningContainer.innerHTML += '<p style="color: orange;">⚠️ Under 40% affordable units! <br>Muni. cooperation will be required.</p>';
+            warningContainer.innerHTML = '<p style="color: green;">✅🎉 Good! <br>No public hearings would be required.</p>';
         }
-    } else if (affordablePct < 0.1) {
-        warningContainer.innerHTML += '<p style="color: red;">❌ Under 10% affordable units! <br>Needs at least 10% to Live Local.</p>';
-        warningContainer.style.display = 'block';
-    }
-    // Warning check #3: All-clear to steamroll (affordable # >= 70 and affordable % >= 40%)
-    if (affordableUnits >= 70 && affordablePct >= 0.4) {
-        warningContainer.style.display = 'block';
-        warningContainer.innerHTML = '<p style="color: green;">✅ Good!</p>';
+    } else {
+        if (affordablePct < 0.1) {
+            warningContainer.innerHTML += '<p style="color: red;">❌ Under 10% affordable units! <br>Needs 10% at minimum to Live Local.</p>';
+            warningContainer.style.display = 'block';
+        } else {
+            warningContainer.style.display = 'block';
+            warningContainer.innerHTML += '<p style="color: yellow;">✅⚠️ Good! <br>However, municipal cooperation will be required.</p>';
+        }
     }
     calculateWeightedAverageSizes();
 }
