@@ -348,8 +348,8 @@ input:disabled {
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
     display: none;
     position: relative;
-    transform: translateY(-50px);
-    transition: opacity 2s, transform 2s;
+    transform: translateY(20px);
+    transition: opacity 3s, transform 3s;
 }
 
 #aiContainer {
