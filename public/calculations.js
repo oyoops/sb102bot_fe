@@ -83,7 +83,11 @@ const abatementTableBody = document.getElementById('abatementTableBody');
 // Recalculate abatement table [called by calculateMaximumUnits()]
 function calculateAbatement() {
     // Update abatement
-    abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assumes all affordable units are 120% AMI
+    if (affordablePct >= 0.40) {    
+        abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assumes all affordable units are 120% AMI
+    } else {
+        abatementValue = 0;
+    }
     abatementEstimate = (((abatementValue / 100) * totalLandAndTotalHcPerUnit) * (parseFloat(countyData.county_millage) / 100) * (1 - 0.04) / 12); // estimate = abatement % * estimated tax/unit
     abatementEstimate = abatementEstimate.toFixed(0);
     abatementTableBody.innerHTML = `
@@ -125,7 +129,7 @@ function calculateMaximumUnits() {
         if (affordableUnits < 70) {
             //// Warning check #2: If going for steamroll, need >= 70 affordable
             warningContainer.style.display = 'block';
-            warningContainer.innerHTML += '<p style="color: red;">⚠️ Under 70 total affordable units! <br>Needs both 40% <u>and</u> 70+ affordable units to steamroll.</p>';
+            warningContainer.innerHTML += '<p style="color: orange;">⚠️ Not enough affordable units! <br>Need 40%+ <u>and</u> 70+ affordable to avoid public hearings.</p>';
         } else {
             // Warning check #3: All-clear to steamroll (affordable # >= 70 and affordable % >= 40%)
             warningContainer.style.display = 'block';
@@ -133,11 +137,11 @@ function calculateMaximumUnits() {
         }
     } else {
         if (affordablePct < 0.1) {
-            warningContainer.innerHTML += '<p style="color: red;">❌ Under 10% affordable units! <br>Needs 10% at minimum to Live Local.</p>';
+            warningContainer.innerHTML += '<p style="color: red;">❌ Not enough affordable units! <br>Need <u>at least</u> 10% affordable to Live Local.</p>';
             warningContainer.style.display = 'block';
         } else {
             warningContainer.style.display = 'block';
-            warningContainer.innerHTML += '<p style="color: orange;">✅⚠️ Good! <br>However, municipal cooperation will be required.<br>And no tax abatement for you.</p>';
+            warningContainer.innerHTML += '<p style="color: orange;">✅⚠️ Good! <br>However, you will need municipal cooperation.<br>And no tax abatement for you!</p>';
         }
     }
     calculateWeightedAverageSizes();
