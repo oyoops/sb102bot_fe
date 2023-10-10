@@ -168,6 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
+                buildingHeight = parseFloat(buildingHeight);
+                console.log("HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML = `This site is <b>ELIGIBLE</b> for Live Local Act development. <br>You could build up to <b>${buildingHeight.toFixed(0)} feet</b> tall here. `;
                 if (buildingHeight >= 100) {
                     eligibilityDiv.innerHTML += `<br><i>Wow, that's a lot of feet!</i> 👣👣👣👀`;
