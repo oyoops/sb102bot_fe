@@ -294,8 +294,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
             });
             // on cost inputs change:
-            landCostPerUnit.addEventListener('input', updateTotals);
-            totalHCPerUnit.addEventListener('input', updateTotals);
+            landCostPerUnit.addEventListener('input', updateTotalCosts);
+            totalHCPerUnit.addEventListener('input', updateTotalCosts);
 
             // (more event listeners...)
             
@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
             calculateMaximumUnits();
             calculateWeightedAverageSizes();
             updateRentPerSqFtTable();
-            updateTotals();
+            updateTotalCosts();
             
             /* USER INPUTS SECTION END. */
 
