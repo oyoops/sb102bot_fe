@@ -70,9 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             // hide initial content
             mainHeader.style.display = 'none';  // hide main header
-            initialContent.style.display = 'none';  // hide rest of initial content
+            initialContent.style.display = 'none';  // hide the rest of initial content
             
-            // show map loading indicator
+            // show loading indicator
             document.querySelector('.loading').style.display = 'block';
             
             // geocode the input address
@@ -80,12 +80,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const geocodeResponse = await fetch(geocodeEndpoint);
             // check success
             if (!geocodeResponse.ok) {
-                console.log('ERROR: Geocode failed.');
+                console.log('ERROR: Geocode failed!');
                 throw new Error(`Server responded with ${geocodeResponse.status}: ${await geocodeResponse.text()}`);
             }
             const geocodeData = await geocodeResponse.json();
             if (!geocodeData.results || geocodeData.results.length === 0) {
-                throw new Error(`Whoops, that address isn't in my coverage area.\nI only know about Florida (and only the good counties at that).`);
+                throw new Error(`Whoops... That address isn't in my coverage area.\nI only know about Florida (and only the good counties at that).`);
             }
 
             /* Geocode was successful */
@@ -96,9 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // show map with placemarks: (1) input address at center of map; (2,3,4) the tallest three bldgs. within a ~1-mi radius
             initializeMap(lat, lng);
-
-            // hide map loading indicator
-            document.querySelector('.loading').style.display = 'none';
 
             // fetch the city of the address (Lat,Lng = CityData || CityName = Unincorporated if not in a city)
             const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
@@ -129,6 +126,9 @@ document.addEventListener('DOMContentLoaded', function() {
             parcelData = await parcelDataResponse.json(); // global
             console.log("Parcel Data Received:", parcelData);
 
+            // hide loading indicator
+            document.querySelector('.loading').style.display = 'none';
+            
             // show try again button
             document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
             
