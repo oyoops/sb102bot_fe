@@ -156,3 +156,33 @@ function updateRentPerSqFtTable() {
     document.getElementById('affordable3BDPerSqFt').innerText = getAffordableRatePerSqFt('3BD');
 }
 
+// Function to update the totals
+function updateTotalCosts() {
+    // Get input values
+    var landCostPerUnit = parseFloat(document.getElementById('landCostPerUnit').value);
+    var totalHCPerUnit = parseFloat(document.getElementById('totalHCPerUnit').value);
+
+    // Ensure the inputs are numbers
+    if (isNaN(landCostPerUnit) || isNaN(totalHCPerUnit)) {
+        alert('Please enter valid numbers');
+        return;
+    }
+
+    // Calculate total costs
+    var totalLandCost = landCostPerUnit * totalUnits;
+    var totalHcCost = totalHCPerUnit * totalUnits;
+    var totalLandAndTotalHc = totalLandCost + totalHcCost;
+    // Assuming 1000 SF/unit for simplicity, adjust later
+    var totalLandAndTotalHcPerUnit = totalLandAndTotalHc * totalUnits;  
+    var totalLandAndTotalHcPerSqFt = totalLandAndTotalHc * totalUnits / 1000;  
+
+    // Update the DOM
+    document.getElementById('totalLandCost').textContent = '$' + totalLandCost.toFixed(0);
+    document.getElementById('totalHcCost').textContent = '$' + totalHcCost.toFixed(0);
+    document.getElementById('totalLandAndTotalHc').textContent = '$' + totalLandAndTotalHc.toFixed(0);
+    document.getElementById('totalLandAndTotalHcPerUnit').textContent = '$' + totalLandAndTotalHcPerUnit.toFixed(0);
+    document.getElementById('totalLandAndTotalHcPerSqFt').textContent = '$' + totalLandAndTotalHcPerSqFt.toFixed(2);
+}
+
+
+
