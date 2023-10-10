@@ -86,7 +86,7 @@ const abatementTableBody = document.getElementById('abatementTableBody');
 function calculateAbatement() {
     // Update abatement
     if (affordablePct >= 0.40) {    
-        abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assumes all affordable units are @ 120% AMI
+        abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assumes all affordable units are 120% AMI
     } else {
         abatementValue = 0;
     }
