@@ -349,7 +349,7 @@ input:disabled {
     display: none;
     position: relative;
     transform: translateY(20px);
-    transition: opacity 3s, transform 3s;
+    transition: opacity 1s, transform 1s;
 }
 
 #aiContainer {
