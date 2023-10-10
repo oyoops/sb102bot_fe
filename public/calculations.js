@@ -153,7 +153,7 @@ function calculateWeightedAverageSizes() {
 function getMarketRatePerSqFt(unitType) {
     const mktrent = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
     const mktunitsize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
-    return (unitSize === 0) ? 'N/A' : (mktrent / mktunitsize).toFixed(2);
+    return (mktunitsize === 0) ? 'N/A' : (mktrent / mktunitsize).toFixed(2);
 }
 
 // (get by unit type) calculate affordable rents per Sq. Ft.
