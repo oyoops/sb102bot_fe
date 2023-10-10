@@ -1,18 +1,75 @@
 // calculations.js - contains the functions for recalculating the proforma math live.
 
-/*===========//
-// Functions //
-//    for    //
-//  main.js  //
-//===========*/
+/* GLOBALS */
+
+let acreageValue;
+let densityValue;
+let abatementValue;
+let marketStudioSize;
+let market1BDSize;
+let market2BDSize;
+let market3BDSize;
+let affordableStudioSize;
+let affordable1BDSize;
+let affordable2BDSize;
+let affordable3BDSize;
+let avgMarketSize;
+let avgAffordableSize;
+let avgBlendedSize;
+let maxRent0bd;
+let maxRent1bd;
+let maxRent2bd;
+let maxRent3bd;
+// costs
+let totalLandCost;
+let totalHcCost;
+let totalLandAndTotalHc;
+let totalLandAndTotalHcPerUnit;  
+let totalLandAndTotalHcPerSqFt;  
+
+/* DOM */
+
+// acreage & density inputs
+const acreageInput = document.getElementById('acreageInput');
+const densityInput = document.getElementById('densityInput');
+// affordable percentage input/output
+const affordablePctSlider = document.getElementById('affordablePctSlider');
+const affordablePctDisplay = document.getElementById('affordablePctDisplay');
+// unit count outputs
+const unitCountTableBody = document.getElementById('unitCalculationTableBody');
+const warningContainer = document.getElementById('warningContainer');
+// unit size outputs
+const marketStudioSizeDisplay = document.getElementById('marketStudioSize');
+const market1BDSizeDisplay = document.getElementById('market1BDSize');
+const market2BDSizeDisplay = document.getElementById('market2BDSize');
+const market3BDSizeDisplay = document.getElementById('market3BDSize');
+const affordableStudioSizeDisplay = document.getElementById('affordableStudioSize');
+const affordable1BDSizeDisplay = document.getElementById('affordable1BDSize');
+const affordable2BDSizeDisplay = document.getElementById('affordable2BDSize');
+const affordable3BDSizeDisplay = document.getElementById('affordable3BDSize');
+const avgAffordableSizeDisplay = document.getElementById('avgAffordableSizeDisplay');
+const avgMarketSizeDisplay = document.getElementById('avgMarketSizeDisplay');
+const avgBlendedSizeDisplay = document.getElementById('avgBlendedSizeDisplay');
+// cost outputs
+const totalLandCostDisplay = document.getElementById('totalLandCost');
+const totalHcCostDisplay = document.getElementById('totalHcCost');
+const totalLandAndTotalHcDisplay = document.getElementById('totalLandAndTotalHc');
+const totalLandAndTotalHcPerUnitDisplay = document.getElementById('totalLandAndTotalHcPerUnit');
+const totalLandAndTotalHcPerSqFtDisplay = document.getElementById('totalLandAndTotalHcPerSqFt');
+// abatement output
+const abatementTableBody = document.getElementById('abatementTableBody');
+
+
+/*=============//
+// Calculation //
+//  Functions  //
+//=============*/
 
 // Calculate maximum units and show them in a table
 function calculateMaximumUnits() {
     // Acreage, density, and affordable percentage inputs
-    const acreageValue = parseFloat(document.getElementById('acreageInput').value);
-    const densityValue = parseFloat(document.getElementById('densityInput').value) || 50; // default max. muni. density = 50 units/ac.
-    const affordablePctSlider = document.getElementById('affordablePctSlider');
-    const affordablePctDisplay = document.getElementById('affordablePctDisplay');
+    acreageValue = parseFloat(acreageInput.value);
+    densityValue = parseFloat(densityInput.value) || 50; // default density = 50 units/ac.
     affordablePct = parseFloat(affordablePctSlider.value) / 100;
 
     // Calculate unit counts
@@ -21,8 +78,7 @@ function calculateMaximumUnits() {
     marketUnits = totalUnits - affordableUnits;
 
     // Update the table with unit counts
-    const tableBody = document.getElementById('unitCalculationTableBody');
-    tableBody.innerHTML = `
+    unitCountTableBody.innerHTML = `
         <tr>
             <td>${affordableUnits}</td>
             <td>${marketUnits}</td>
@@ -33,118 +89,108 @@ function calculateMaximumUnits() {
     document.getElementById('unitCalculationTable').style.display = 'block';
 
     // Update abatement
-    const abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100);
-    const abatementTableBody = document.getElementById('abatementTableBody');
+    abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assume 75% x affordable%, which is pretty safe
     abatementTableBody.innerHTML = `
         <tr>
-            <td>${abatementValue}% of ad valorem property taxes</td>
+            <td>${abatementValue}% ad val. tax abatement for 30 yrs.</td>
         </tr>
     `;
 
-    // Check for warnings
-    const warningContainer = document.getElementById('warningContainer');
+    // Reset warnings
     warningContainer.innerHTML = "";  // Clear previous warnings
+    // Set warnings, if any
     if (affordableUnits < 70) {
-        document.getElementById('warningContainer').style.display = 'block';
-        warningContainer.innerHTML += '<p style="color: red;">Need at least 70 affordable units for the steamroll option!</p>';
+        warningContainer.style.display = 'block';
+        warningContainer.innerHTML += '<p style="color: red;">Under 70 total affordable units! <br>Needs both 40% <u>and</u> 70+ affordable units for muni. bypass.</p>';
     }
     if (affordablePct < 0.4) {
-        document.getElementById('warningContainer').style.display = 'block';
-        warningContainer.innerHTML += '<p style="color: orange;">Not at 40% affordable threshold!</p>';
+        warningContainer.style.display = 'block';
+        warningContainer.innerHTML += '<p style="color: orange;">Under 40% affordable units! <br>Muni. cooperation will be required.</p>';
     } 
     if (affordablePct < 0.1) {
-        warningContainer.innerHTML += '<p style="color: red;">Not at 10% affordable threshold!</p>';
-        document.getElementById('warningContainer').style.display = 'block';
+        warningContainer.innerHTML += '<p style="color: red;">Under 10% affordable units! <br>Needs at least 10% to Live Local.</p>';
+        warningContainer.style.display = 'block';
     }
     if (affordableUnits >= 70 && affordablePct >= 0.4) {
-        document.getElementById('warningContainer').style.display = 'none';
+        warningContainer.style.display = 'none';
     }
     calculateWeightedAverageSizes();
 }
 
 // Calculate weighted average sizes
 function calculateWeightedAverageSizes() {
-    const affordablePctSlider = document.getElementById('affordablePctSlider');
-    const affordablePct = parseFloat(affordablePctSlider.value) / 100;
-    const acreageValue = parseFloat(document.getElementById('acreageInput').value);
-    const densityValue = parseFloat(document.getElementById('densityInput').value) || 10;
+    affordablePct = parseFloat(affordablePctSlider.value) / 100;
+    acreageValue = parseFloat(acreageInput.value);
+    densityValue = parseFloat(densityInput.value);
 
     totalUnits = Math.floor(acreageValue * densityValue);
     affordableUnits = Math.ceil(affordablePct * totalUnits);
     marketUnits = totalUnits - affordableUnits;
 
-    const marketStudioSize = parseFloat(document.getElementById('marketStudioSize').value) || 0;
-    const market1BDSize = parseFloat(document.getElementById('market1BDSize').value) || 0;
-    const market2BDSize = parseFloat(document.getElementById('market2BDSize').value) || 0;
-    const market3BDSize = parseFloat(document.getElementById('market3BDSize').value) || 0;
+    marketStudioSize = parseFloat(marketStudioSizeDisplay.value) || 0;
+    market1BDSize = parseFloat(market1BDSizeDisplay.value) || 0;
+    market2BDSize = parseFloat(market2BDSizeDisplay.value) || 0;
+    market3BDSize = parseFloat(market3BDSizeDisplay.value) || 0;
 
-    const affordableStudioSize = parseFloat(document.getElementById('affordableStudioSize').value) || 0;
-    const affordable1BDSize = parseFloat(document.getElementById('affordable1BDSize').value) || 0;
-    const affordable2BDSize = parseFloat(document.getElementById('affordable2BDSize').value) || 0;
-    const affordable3BDSize = parseFloat(document.getElementById('affordable3BDSize').value) || 0;
+    affordableStudioSize = parseFloat(affordableStudioSizeDisplay.value) || 0;
+    affordable1BDSize = parseFloat(affordable1BDSizeDisplay.value) || 0;
+    affordable2BDSize = parseFloat(affordable2BDSizeDisplay.value) || 0;
+    affordable3BDSize = parseFloat(affordable3BDSizeDisplay.value) || 0;
 
-    // Calculate the weighted average sizes for market, affordable, and total units
-    const avgMarketSize = (marketStudioSize + market1BDSize + market2BDSize + market3BDSize) / 4;
-    const avgAffordableSize = (affordableStudioSize + affordable1BDSize + affordable2BDSize + affordable3BDSize) / 4;
-    const avgTotalSize = (avgMarketSize * marketUnits + avgAffordableSize * affordableUnits) / totalUnits;
+    // Calculate weighted avg. sq. ft. for market units, affordable units, and blended
+    avgMarketSize = (marketStudioSize + market1BDSize + market2BDSize + market3BDSize) / 4;
+    avgAffordableSize = (affordableStudioSize + affordable1BDSize + affordable2BDSize + affordable3BDSize) / 4;
+    avgBlendedSize = (avgMarketSize * marketUnits + avgAffordableSize * affordableUnits) / totalUnits;
 
-    // Display these values
-    document.getElementById('avgMarketSizeDisplay').innerText = avgMarketSize.toFixed(0);
-    document.getElementById('avgAffordableSizeDisplay').innerText = avgAffordableSize.toFixed(0);
-    document.getElementById('avgTotalSizeDisplay').innerText = avgTotalSize.toFixed(0);
+    /* MOVE THESE AVGS. TO A NEW TABLE ROW */
+    // Display avg. sq. ft. values
+    avgMarketSizeDisplay.innerText = avgMarketSize.toFixed(0);
+    avgAffordableSizeDisplay.innerText = avgAffordableSize.toFixed(0);
+    avgBlendedSizeDisplay.innerText = avgBlendedSize.toFixed(0);
 }
 
-// Calculate Market-Rate rents per Sq. Ft.
+// (get by unit type) market-rate rent per sq. ft.
 function getMarketRatePerSqFt(unitType) {
-    const marketRate = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
-    const unitSize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
-    // Debugging Step 4: Print if unit size is zero
-    if (unitSize === 0) {
-        console.log(`Unit size for ${unitType} is zero.`);
-    }
-    return (unitSize === 0) ? 'N/A' : (marketRate / unitSize).toFixed(2);
+    const mktrent = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
+    const mktunitsize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
+    return (unitSize === 0) ? 'N/A' : (mktrent / mktunitsize).toFixed(2);
 }
 
-// Calculate Affordable rents per Sq. Ft.
+// (get by unit type) calculate affordable rents per Sq. Ft.
 function getAffordableRatePerSqFt(unitType) {
     if (typeof countyData === 'undefined') {
-        console.log("countyData is not available yet.");
+        console.log("Error! County data not yet available.");
         return 'N/A';
     }  
-    let affordableRate = 0;
+    let affordablerent = 0;
     // convert max rent strings to floats
-    const maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami);
-    const maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami);
-    const maxRent2bd = parseFloat(countyData.max_rent_2bd_120ami);
-    const maxRent3bd = parseFloat(countyData.max_rent_3bd_120ami);
+    maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami);
+    maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami);
+    maxRent2bd = parseFloat(countyData.max_rent_2bd_120ami);
+    maxRent3bd = parseFloat(countyData.max_rent_3bd_120ami);
     // select appropriate affordable rate based on unit type
     switch (unitType) {
         case 'Studio':
-            affordableRate = maxRent0bd;
+            affordablerent = maxRent0bd;
             break;
         case '1BD':
-            affordableRate = maxRent1bd;
+            affordablerent = maxRent1bd;
             break;
         case '2BD':
-            affordableRate = maxRent2bd;
+            affordablerent = maxRent2bd;
             break;
         case '3BD':
-            affordableRate = maxRent3bd;
+            affordablerent = maxRent3bd;
             break;
         default:
             console.error("Invalid unit type.");
             return 'N/A';
     }
-    const unitSize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;
-    
-    if (unitSize === 0) {console.log(`Unit size for ${unitType} is zero.`);}
-    console.log(`Affordable Rate for ${unitType}: ${affordableRate}`);
-    console.log(`Unit Size for ${unitType}: ${unitSize}`);
-    
-    return (unitSize === 0) ? 'N/A' : (affordableRate / unitSize).toFixed(2);
+    let affordableunitsize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;    
+    return (affordableunitsize === 0) ? 'N/A' : (affordablerent / affordableunitsize).toFixed(0);
 }
 
-// Update the Rent per Sq. Ft. table
+// Update rent per sq. ft. table
 function updateRentPerSqFtTable() {
     document.getElementById('marketRateStudioPerSqFt').innerText = getMarketRatePerSqFt('Studio');
     document.getElementById('affordableStudioPerSqFt').innerText = getAffordableRatePerSqFt('Studio');
@@ -156,32 +202,31 @@ function updateRentPerSqFtTable() {
     document.getElementById('affordable3BDPerSqFt').innerText = getAffordableRatePerSqFt('3BD');
 }
 
-// Function to update the totals
+// Recalculate total costs
 function updateTotalCosts() {
     // Get input values
-    var landCostPerUnit = parseFloat(document.getElementById('landCostPerUnit').value);
-    var totalHCPerUnit = parseFloat(document.getElementById('totalHCPerUnit').value);
+    var landCostPerUnit = parseFloat(landCostPerUnit.value);
+    var totalHCPerUnit = parseFloat(totalHCPerUnit.value);
 
     // Ensure the inputs are numbers
     if (isNaN(landCostPerUnit) || isNaN(totalHCPerUnit)) {
-        alert('Please enter valid numbers');
+        alert('Please enter valid costs (positive numbers)!');
         return;
     }
 
-    // Calculate total costs
-    var totalLandCost = landCostPerUnit * totalUnits;
-    var totalHcCost = totalHCPerUnit * totalUnits;
-    var totalLandAndTotalHc = totalLandCost + totalHcCost;
-    // Assuming 1000 SF/unit for simplicity, adjust later
-    var totalLandAndTotalHcPerUnit = totalLandAndTotalHc * totalUnits;  
-    var totalLandAndTotalHcPerSqFt = totalLandAndTotalHc * totalUnits / 1000;  
-
-    // Update the DOM
-    document.getElementById('totalLandCost').textContent = '$' + totalLandCost.toFixed(0);
-    document.getElementById('totalHcCost').textContent = '$' + totalHcCost.toFixed(0);
-    document.getElementById('totalLandAndTotalHc').textContent = '$' + totalLandAndTotalHc.toFixed(0);
-    document.getElementById('totalLandAndTotalHcPerUnit').textContent = '$' + totalLandAndTotalHcPerUnit.toFixed(0);
-    document.getElementById('totalLandAndTotalHcPerSqFt').textContent = '$' + totalLandAndTotalHcPerSqFt.toFixed(2);
+    // Recalculate costs
+    totalLandCost = landCostPerUnit * totalUnits;
+    totalHcCost = totalHCPerUnit * totalUnits;
+    totalLandAndTotalHc = totalLandCost + totalHcCost;
+    totalLandAndTotalHcPerUnit = totalLandAndTotalHc * totalUnits;  
+    totalLandAndTotalHcPerSqFt = totalLandAndTotalHc * totalUnits / avgBlendedSize;  
+    
+    // Update costs table
+    totalLandCostDisplay.textContent = '$' + totalLandCost.toFixed(0);
+    totalHcCostDisplay.textContent = '$' + totalHcCost.toFixed(0);
+    totalLandAndTotalHcDisplay.textContent = '$' + totalLandAndTotalHc.toFixed(0);
+    totalLandAndTotalHcPerUnitDisplay.textContent = '$' + totalLandAndTotalHcPerUnit.toFixed(0);
+    totalLandAndTotalHcPerSqFtDisplay.textContent = '$' + totalLandAndTotalHcPerSqFt.toFixed(2);
 }
 
 
