@@ -42,6 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const densityInput = document.getElementById('densityInput');
     const matchAffordableSizesCheckbox = document.getElementById('matchAffordableSizes');
     const rentPerSqFtTableSection = document.getElementById('rentPerSqFtTableSection');
+    
+    const landAndTotalHcInputSection = document.getElementById('landAndTotalHcInputSection');
+    const landAndTotalHcOutputSection = document.getElementById('totalLandAndTotalHcOutputSection');
+    
     const abatementTable = document.getElementById('abatementTable');
     const tryAgainButton = document.getElementById("tryAgainButton");
     tryAgainButton.addEventListener("click", function() {
@@ -123,6 +127,10 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
             
             // ...
+
+            
+            
+            // ...
                         
             // Populate the municipal data table
             const countyRow = `
@@ -191,6 +199,9 @@ document.addEventListener('DOMContentLoaded', function() {
             marketRateInputSection.style.display = 'block'; // market-rate rent inputs
             rentPerSqFtTableSection.style.display = 'block'; // rent/SqFt
             abatementTable.style.display = 'block'; // property tax abatement
+            // ...
+            landAndTotalHcInputSection.style.display = 'block';
+            landAndTotalHcOutputSection.style.display = 'block';
             
             // set acreage input placeholder
             acreageInput.value = acres.toFixed(2);
