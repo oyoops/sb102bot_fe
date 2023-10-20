@@ -188,23 +188,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML += `<b>The property is almost <u>CERTAINLY INELIGIBLE</u> for Live Local development.</b> <br>To qualify, it can't <b>already</b> be apartments.`;
+                eligibilityDiv.innerHTML += `<b>The property is almost <u>CERTAINLY INELIGIBLE</u> for Live Local development.</b> <br>Properties that are <u>already</u> residential don't qualify!`;
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<b>The property looks <u>ELIGIBLE</u> for Live Local development. Congrats!</b> 
+                eligibilityDiv.innerHTML += `<b>The property looks <u>ELIGIBLE</u> for Live Local development. Nice!</b> 
 
                     </br></br><b>First, that means you can build as high as the tallest building within a 1-mile radius.</b>
-                    </br>On this site, the ceiling would be <b>${buildingHeight.toFixed(0)} feet tall</b>.`
+                    </br>This site's max. height would be <b>${buildingHeight.toFixed(0)} feet tall</b>.`
                 if (buildingHeight >= 200) {
-                    eligibilityDiv.innerHTML += ` <i><b>Ohh yeah,</b> that's a lot of juicy feet 👣👣👀👣</i>`;
+                    eligibilityDiv.innerHTML += ` <i><b>Ohh yeah...</b> That's a lot of juicy feet 👣👣👀👣</i>`;
                 }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<b>The property is <u>NOT ELIGIBLE</u> for Live Local development.</b> <br>To qualify, it must currently be <b>commercial</b> or <b>industrial</b>. <br>I could be wrong about this parcel, though, so verify its zoning.`;
+                eligibilityDiv.innerHTML += `<b>The property looks <u>INELIGIBLE</u> for Live Local development.</b> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
@@ -299,13 +299,11 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 /*
                 eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
-                    </br></br>I require LIVE LOCAL SITES -- Not ineligible garbage.
-                    </br></br>Actually, I'm getting pretty sick of being fed mediocre sites all day!!!
-                    </br>So, next time, if you could bring me a better site... That'd be great.`;
+                    </br></br>Actually, I'm getting pretty sick of being fed mediocre sites all day!!!`;
                 */
                 eligibilityDiv.innerHTML += `</br></br>
-                    <b><i>Bring me a commercial or industrial property next time.</i>
-                    </br> :'-( </b>
+                    <b><i>Bring me a commercial or industrial property next time.</i>  
+                      :'-( </b>
                     </br>`;
             }
 
