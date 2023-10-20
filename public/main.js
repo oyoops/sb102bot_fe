@@ -294,9 +294,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 </br>According to my data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>.
                 
                 </br></br>So... with ${acres.toFixed(2)} gross acres at ${maxMuniDensity} units/ac., you're looking
-                </br>at a maximum yield of <b>${maxCapacity} units</b>* via the Live Local Act approval pathway.
+                </br>at a maximum yield of <b>${maxCapacity} units</b>* via the Live Local approval pathway.
                 </br>(* must set aside <i>the greater of</i> 40% or 70 units as <i>affordable</i>; see rent limits table below)`;
-
 
             // ...
 
