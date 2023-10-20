@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             // DENSITY TESTING!
-            const maxDensity = await getMaxDensity(county, city);
+            const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             if (maxDensity !== null) {
                 // set global
                 maxMuniDensity = maxDensity;
