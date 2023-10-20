@@ -293,9 +293,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 </br></br><b>Live Local also lets you match the highest density allowed within the municipality.</b>
                 </br>According to my data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>.
                 
-                </br></br>So, with ${acres} gross ac. at ${maxMuniDensity} units per acre,
-                </br>you're looking at a maximum total yield of <b>${maxCapacity} units</b>*.
-                </br>* - Must set aside <i>the greater of</i> 40% or 70 units as 'Affordable'. See affordable rent limits below.`;
+                </br></br>So... With ${acres} gross ac. at ${maxMuniDensity} units per acre, I'm seeing a
+                </br>maximum yield of <b>${maxCapacity} units</b>* by utilizing Live Local.
+                </br>* - Must set aside <i>the greater of</i> 40% or 70 units as 'Affordable'; see affordable rent limits table.`;
 
 
 
