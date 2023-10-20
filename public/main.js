@@ -8,6 +8,7 @@ let countyData;
 let cityData;
 let parcelData;
 let acres;
+let fakeMillage;
 let maxMuniDensity;
 let maxCapacity = 0;
 
@@ -128,12 +129,10 @@ document.addEventListener('DOMContentLoaded', function() {
             parcelData = await parcelDataResponse.json(); // global
             console.log("Parcel Data Received:", parcelData);
 
-
-            // Convert city and county to proper case
+            // get City and County in Proper Case for display purposes
             const cityNameProper = toProperCase(cityData.cityName);
             const countyNameProper = specialCountyFormatting(countyData.county_name);
 
-                        
             // hide loading indicator
             document.querySelector('.loading').style.display = 'none';
             
@@ -149,8 +148,16 @@ document.addEventListener('DOMContentLoaded', function() {
             
             
             // MILLAGE MANUAL ADJUSTMENT
-            const fakeMillage = countyData.county_millage + 9.9999; // fake millage, a.k.a. "a rough estimate"  
+            fakeMillage = parseFloat(countyData.county_millage) + MILLAGE_ADJUSTMENT; // "rough estimate" using known county mills + a constant manual adjustment to approximate state (and perhaps local...) portion of grand total millage
             
+
+
+            // ...
+
+
+
+            // ...
+
             // Populate the municipal data table
             const countyRow = `
                 <tr>
