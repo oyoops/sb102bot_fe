@@ -1,6 +1,6 @@
 // calculations.js - contains the functions for recalculating the proforma math live.
 
-const MILLAGE_ADJUSTMENT = 9.9999;
+const MILLAGE_ADJUSTMENT = 9.999;
 
 /* GLOBALS */
 let acreageValue;
