@@ -21,6 +21,10 @@ let maxRent0bd;
 let maxRent1bd;
 let maxRent2bd;
 let maxRent3bd;
+let affordablerent;
+let affordableunitsize;
+let mktrent;
+let mktunitsize;
 // cost inputs
 let landCostPerUnit;
 let totalHCPerUnit;
@@ -184,8 +188,10 @@ function calculateWeightedAverageSizes() {
 
 // (get by unit type) market-rate rent per sq. ft.
 function getMarketRatePerSqFt(unitType) {
-    const mktrent = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
-    const mktunitsize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
+    mktrent = 0;
+    mktunitsize = 0;
+    mktrent = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
+    mktunitsize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
     return (mktunitsize === 0) ? 'N/A' : (mktrent / mktunitsize).toFixed(2);
 }
 // (get by unit type) calculate affordable rents per Sq. Ft.
@@ -194,7 +200,7 @@ function getAffordableRatePerSqFt(unitType) {
         console.log("Error! County data not yet available.");
         return 'N/A';
     }  
-    let affordablerent = 0;
+    affordablerent = 0;
     // convert max rent strings to floats
     maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami);
     maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami);
@@ -218,7 +224,7 @@ function getAffordableRatePerSqFt(unitType) {
             console.error("Invalid unit type.");
             return 'N/A';
     }
-    let affordableunitsize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;    
+    affordableunitsize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;    
     return (affordableunitsize === 0) ? 'N/A' : (affordablerent / affordableunitsize).toFixed(2);
 }
 
