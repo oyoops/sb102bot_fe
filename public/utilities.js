@@ -9,7 +9,7 @@
 // Get max density of a municipality
 async function getMaxDensity(county, city) {
   try {
-    const response = await fetch(`/api/get-max-density?county=${county}&city=${city}`);
+    const response = await fetch(`https://www.oyoops.com/api/get_max_density?county=${county}&city=${city}`);
     const data = await response.json();
     if (data.error) {
       console.error(data.error);
