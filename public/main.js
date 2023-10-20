@@ -289,18 +289,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Second explainer part (max density limit)
-                eligibilityDiv.innerHTML += `</br></br><i>But wait- There's more!</i>
-                    
-                    </br></br><b>In addition, the Act allows you to match the municipality's highest multifamily density. <i>Woah!!</i></b>
-                    </br>According to my data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>.
+                eligibilityDiv.innerHTML += `</br>
+                    </br><b>Oh, and the Act also lets you to match the municipality's highest multifamily density. 👀 <i>Woah!!</i></b>
+                    </br>According to my non-official data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>.
                     
                     </br></br>So... with ${acres.toFixed(2)} gross acres at ${maxMuniDensity} units/ac., you're looking
-                    </br>at a maximum yield of <b>${maxCapacity} units</b>* via the Live Local pathway.`;
+                    </br>at a maximum yield of <b>${maxCapacity} units</b> via the Live Local pathway.`;
             } else {
                 eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
-                    </br></br>I demand LIVE LOCAL SITES! Not your ineligible trash!
-                    </br></br>Honestly, I'm getting pretty sick of being fed mediocre, ineligible sites all day.
-                    </br>So, yeah, if you could bring me a better site tomorrow... that'd be great.`;
+                    </br></br>I require LIVE LOCAL SITES -- Not ineligible garbage.
+                    </br></br>Actually, I'm getting pretty sick of being fed mediocre sites all day!!!
+                    </br>So, next time, if you could bring me a better site... That'd be great.`;
                 eligibilityDiv.innerHTML += `</br>`;
             }
 
