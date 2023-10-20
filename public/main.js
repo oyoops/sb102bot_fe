@@ -9,6 +9,7 @@ let cityData;
 let parcelData;
 let acres;
 let maxMuniDensity;
+let maxCapacity = 0;
 
 let totalUnits;
 let affordableUnits;
@@ -180,6 +181,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (buildingHeight >= 100) {
                     eligibilityDiv.innerHTML += `<br><i>Wow, that's a lot of feet!</i> 👣👣👣👀`;
                 }
+                maxCapacity = maxMuniDensity * acreageValue;
+                eligibilityDiv.innerHTML += `<br>Since the max. allowed density in ${cityData.cityName} ${countyData.county_name} is ${maxMuniDensity} units/acre, you can match that and build up to <b>${maxCapacity.toFixed(0)} units</b> here.`;
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "20px";
             } else {
