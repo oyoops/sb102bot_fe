@@ -89,8 +89,15 @@ const abatementTableBody = document.getElementById('abatementTableBody');
 // Recalculate abatement table [called by calculateMaximumUnits()]
 function calculateAbatement() {
     // Update abatement
-    if (affordablePct >= 0.40) {    
-        abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assumes all affordable units are 120% AMI
+    if (affordablePct >= 0.40) {
+        if (affordableUnits >= 70) {
+            if (totalUnits == 0) {
+                totalUnits += 1; // ??jic
+            }
+            abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assumes all affordable units are 120% AMI
+        } else {
+            abatementValue = 0;
+        }
     } else {
         abatementValue = 0;
     }
@@ -98,8 +105,8 @@ function calculateAbatement() {
     abatementEstimate = abatementEstimate.toFixed(0);
     abatementTableBody.innerHTML = `
         <tr>
-            <td>${abatementValue}% net</td>
-            <td>$${abatementEstimate} per unit/mo.</td>
+            <td>${abatementValue}% savings*</td>
+            <td>$${abatementEstimate} /unit /month</td>
         </tr>
     `;
 }
@@ -108,7 +115,7 @@ function calculateAbatement() {
 function calculateMaximumUnits() {
     // Acreage, density, and affordable percentage inputs
     acreageValue = parseFloat(acreageInputDisplay.value);
-    densityValue = parseFloat(densityInputDisplay.value) || 50; // default density = 50 units/ac.
+    densityValue = parseFloat(densityInputDisplay.value) || 15; // default density = 15 units/ac. (??dont think this ever goes anywhere)
     affordablePct = parseFloat(affordablePctSliderDisplay.value) / 100;
 
     // Calculate unit counts
