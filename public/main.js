@@ -162,8 +162,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Populate the municipal data table
             const countyRow = `
                 <tr>
-                    <td>${countyNameProper}</td>
                     <td>${cityNameProper}</td>
+                    <td>${countyNameProper}</td>
                     <td>$${parseFloat(countyData.county_amis_income).toFixed(0)}</td>
                     <td>${parseFloat(fakeMillage).toFixed(4)}</td>
                 </tr>
@@ -213,9 +213,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Populate parcel data table
             const parcelDataRow = `
                 <tr>
+                    <td>${parcelData.own_name}</td>
                     <td>${parcelData.parcel_id}</td>
                     <td>${acres.toFixed(2)}</td>
-                    <td>${parcelData.own_name}</td>
                     <td>${useCodeLookup[parcelData.dor_uc] || parcelData.dor_uc}</td>
                 </tr>
             `;
