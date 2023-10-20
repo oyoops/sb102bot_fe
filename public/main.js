@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<b>The property looks <u>ELIGIBLE</u> for Live Local development. Congrats!</b> 
 
-                    </br></br><b>That means you can build as high as the tallest building within a 1-mile radius.</b>
+                    </br></br><b>First, that means you can build as high as the tallest building within a 1-mile radius.</b>
                     </br>Here, the ceiling would be... <b>${buildingHeight.toFixed(0)} feet</b> tall.`
                 if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += `<br><i><b>Wow!</b> That's a lot of feet... 👣👣👀👣👣</i>`;
@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Second explainer part (max density limit)
                 eligibilityDiv.innerHTML += `</br></br><i>But wait- There's more!</i>
                     
-                    </br></br><b>Live Local also lets you match the highest density allowed within the municipality.</b>
+                    </br></br><b>In addition, the Act allows you to match the municipality's highest multifamily density. <i>Woah!!</i></b>
                     </br>According to my data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>.
                     
                     </br></br>So... with ${acres.toFixed(2)} gross acres at ${maxMuniDensity} units/ac., you're looking
