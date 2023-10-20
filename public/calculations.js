@@ -1,6 +1,6 @@
 // calculations.js - contains the functions for recalculating the proforma math live.
 
-const MILLAGE_ADJUSTMENT = 9.9999;
+const MILLAGE_ADJUSTMENT = 9.999;
 
 /* GLOBALS */
 let acreageValue;
@@ -21,6 +21,10 @@ let maxRent0bd;
 let maxRent1bd;
 let maxRent2bd;
 let maxRent3bd;
+let affordablerent;
+let affordableunitsize;
+let mktrent;
+let mktunitsize;
 // cost inputs
 let landCostPerUnit;
 let totalHCPerUnit;
@@ -85,8 +89,15 @@ const abatementTableBody = document.getElementById('abatementTableBody');
 // Recalculate abatement table [called by calculateMaximumUnits()]
 function calculateAbatement() {
     // Update abatement
-    if (affordablePct >= 0.40) {    
-        abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assumes all affordable units are 120% AMI
+    if (affordablePct >= 0.40) {
+        if (affordableUnits >= 70) {
+            if (totalUnits == 0) {
+                totalUnits += 1; // ??jic
+            }
+            abatementValue = Math.round(0.75 * (affordableUnits / totalUnits) * 100); // assumes all affordable units are 120% AMI
+        } else {
+            abatementValue = 0;
+        }
     } else {
         abatementValue = 0;
     }
@@ -94,8 +105,8 @@ function calculateAbatement() {
     abatementEstimate = abatementEstimate.toFixed(0);
     abatementTableBody.innerHTML = `
         <tr>
-            <td>${abatementValue}% net</td>
-            <td>$${abatementEstimate} per unit/mo.</td>
+            <td>${abatementValue}% savings*</td>
+            <td>$${abatementEstimate} /unit /month</td>
         </tr>
     `;
 }
@@ -104,7 +115,7 @@ function calculateAbatement() {
 function calculateMaximumUnits() {
     // Acreage, density, and affordable percentage inputs
     acreageValue = parseFloat(acreageInputDisplay.value);
-    densityValue = parseFloat(densityInputDisplay.value) || 50; // default density = 50 units/ac.
+    densityValue = parseFloat(densityInputDisplay.value) || 15; // default density = 15 units/ac. (??dont think this ever goes anywhere)
     affordablePct = parseFloat(affordablePctSliderDisplay.value) / 100;
 
     // Calculate unit counts
@@ -184,8 +195,12 @@ function calculateWeightedAverageSizes() {
 
 // (get by unit type) market-rate rent per sq. ft.
 function getMarketRatePerSqFt(unitType) {
-    const mktrent = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
-    const mktunitsize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
+    // reset globals (such a poor implementation...)
+    mktrent = 0;
+    mktunitsize = 0;
+    // set market-rate avg. rents and unit sizes
+    mktrent = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
+    mktunitsize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
     return (mktunitsize === 0) ? 'N/A' : (mktrent / mktunitsize).toFixed(2);
 }
 // (get by unit type) calculate affordable rents per Sq. Ft.
@@ -193,9 +208,11 @@ function getAffordableRatePerSqFt(unitType) {
     if (typeof countyData === 'undefined') {
         console.log("Error! County data not yet available.");
         return 'N/A';
-    }  
-    let affordablerent = 0;
-    // convert max rent strings to floats
+    }
+    // reset globals (such a poor implementation...)
+    affordablerent = 0;
+    affordableunitsize = 0;
+    // set affordable avg. rents and unit sizes
     maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami);
     maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami);
     maxRent2bd = parseFloat(countyData.max_rent_2bd_120ami);
@@ -218,7 +235,7 @@ function getAffordableRatePerSqFt(unitType) {
             console.error("Invalid unit type.");
             return 'N/A';
     }
-    let affordableunitsize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;    
+    affordableunitsize = parseFloat(document.getElementById(`affordable${unitType}Size`).value) || 0;    
     return (affordableunitsize === 0) ? 'N/A' : (affordablerent / affordableunitsize).toFixed(2);
 }
 
