@@ -10,13 +10,15 @@ let cityData;
 let parcelData;
 let acres;
 let fakeMillage;
+
 let maxMuniDensity;
 let maxCapacity = 0;
 
 let totalUnits;
 let affordableUnits;
 let marketUnits;
-let affordablePct;
+
+let affordablePct = 0.40; // match the default slider value (40%)
 
 // after page is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
