@@ -186,22 +186,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML += `<b>This site is <u>ALMOST DEFINITELY NOT ELIGIBLE</u> for Live Local development.</b> <br>To qualify, it can't <b>already</b> be apartments.`;
+                eligibilityDiv.innerHTML += `<b>The property is <u>ALMOST DEFINITELY NOT ELIGIBLE</u> for Live Local development.</b> <br>To qualify, it can't <b>already</b> be apartments.`;
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<b>This site seems to be <u>ELIGIBLE</u> for Live Local development. Congrats!</b> 
-                    </br></br>That means you can build as high as the tallest building within a 1-mile radius.
-                    </br>Here, the ceiling would be <b>${buildingHeight.toFixed(0)} feet</b> tall.`
+                eligibilityDiv.innerHTML += `<b>The property looks <u>ELIGIBLE</u> for Live Local development. Congrats!</b> 
+
+                    </br></br><b>That means you can build as high as the tallest building within a 1-mile radius.</b>
+                    </br>Here, the ceiling would be... <b>${buildingHeight.toFixed(0)} feet</b> tall.`
                 if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += `<br><i>(<b>Wow!</b> That's a lot of frickin' feet... 👣👀👣)</i>`;
                 }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<b>This site is <u>NOT ELIGIBLE</u> for Live Local development.</b> <br>To qualify, it must currently be <b>commercial</b> or <b>industrial</b>. <br>I could be wrong about this parcel, though, so verify its zoning.`;
+                eligibilityDiv.innerHTML += `<b>The property is <u>NOT ELIGIBLE</u> for Live Local development.</b> <br>To qualify, it must currently be <b>commercial</b> or <b>industrial</b>. <br>I could be wrong about this parcel, though, so verify its zoning.`;
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
@@ -287,15 +288,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             // Second explainer part (max density limit)
-            eligibilityDiv.innerHTML += `</br></br><b><i>But wait- There's more!</i></b>
+            eligibilityDiv.innerHTML += `</br></br><i>But wait- There's more!</i>
                 
-                </br></br>Live Local also lets you match the highest density allowed within the municipality.
+                </br></br><b>Live Local also lets you match the highest density allowed within the municipality.</b>
                 </br>According to my data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>.
                 
                 </br></br>So, with ${acreageValue} gross ac. at ${maxMuniDensity} units per acre,
                 </br>you're looking at a maximum total yield of <b>${maxCapacity} units</b>*.
-                
-                </br></br><i>* - The greater of 70 <u>or</u> 40% of units must be 'Affordable'; refer to Affordable Rent Limits Table.</i>`;
+                </br>* - Must set aside <i>the greater of</i> 40% or 70 units as 'Affordable'. See affordable rent limits below.`;
 
 
 
