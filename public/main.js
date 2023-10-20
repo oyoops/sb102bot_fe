@@ -300,9 +300,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
                     </br></br>I demand LIVE LOCAL SITES! Not your ineligible trash!
                     </br></br>Honestly, I'm getting pretty sick of being fed mediocre, ineligible sites all day.
-                    </br>So, yeah, if you could bring me a better site tomorrow... that'd be great.
-                    </br>Knowing you, I won't get my hopes up, though. You suck! Sigh... `;
-                eligibilityDiv.innerHTML += `</br>...`;
+                    </br>So, yeah, if you could bring me a better site tomorrow... that'd be great.`;
+                eligibilityDiv.innerHTML += `</br>`;
             }
 
             // ...
