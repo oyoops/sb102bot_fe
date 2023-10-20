@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // MILLAGE MANUAL ADJUSTMENT
             fakeMillage = parseFloat(countyData.county_millage) + parseFloat(MILLAGE_ADJUSTMENT); // "rough estimate" using known county mills + a constant manual adjustment to approximate state (and perhaps local...) portion of grand total millage
-            fakeMillage.toFixed(4);
+            fakeMillage = parseFloat(fakeMillage).toFixed(4);
 
 
             // ...
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${countyNameProper}</td>
                     <td>${cityNameProper}</td>
                     <td>$${parseFloat(countyData.county_amis_income).toFixed(0)}</td>
-                    <td>${fakeMillage}</td>
+                    <td>${parseFloat(fakeMillage).toFixed(4)}</td>
                 </tr>
             `;
             countyTableBody.innerHTML = countyRow;
