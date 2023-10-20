@@ -5,7 +5,7 @@ const MILLAGE_ADJUSTMENT = 9.9999;
 /* GLOBALS */
 let acreageValue;
 let densityValue;
-let abatementValue;
+let abatementValue = 0;
 let marketStudioSize;
 let market1BDSize;
 let market2BDSize;
@@ -31,7 +31,7 @@ let totalLandAndTotalHc;
 let totalLandAndTotalHcPerUnit;  
 let totalLandAndTotalHcPerSqFt;
 // abatement outputs
-let abatementEstimate;
+let abatementEstimate = 0;
 /* MAP GLOBALS */
 // tallest building details (may break if tallestBuilding array >1)
 let buildingLat;
