@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<b>The property looks <u>ELIGIBLE</u> for Live Local development. Nice!</b> 
+                eligibilityDiv.innerHTML += `<b>The property looks <u>ELIGIBLE</u> for Live Local development. <i>Nice!!</i></b> 
 
                     </br></br><b>First, that means you can build as high as the tallest building within a 1-mile radius.</b>
                     </br>This site's max. height would be <b>${buildingHeight.toFixed(0)} feet tall</b>.`
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<b>The property looks <u>INELIGIBLE</u> for Live Local development.</b> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
+                eligibilityDiv.innerHTML += `<b>The property seems <u>INELIGIBLE</u> for Live Local development.</b> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
@@ -241,24 +241,14 @@ document.addEventListener('DOMContentLoaded', function() {
             landAndTotalHcInputSection.style.display = 'block';
             landAndTotalHcOutputSection.style.display = 'block';
             // ...
+
             
 
-
-
-            // ...
-            
+            // ACREAGE AUTO/MANUAL INPUT:
             // set acreage input placeholder
             acreageInput.value = acres.toFixed(2);
 
-            // ...
-        
-            
-            
-
-
-
-
-            // DENSITY TESTING!
+            // DENSITY AUTO/MANUAL INPUT:
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             if (maxDensity !== null) {
                 console.log ("Maximum municipal density found for", countyData.county_name, cityData.cityName, ":", maxDensity);
@@ -274,7 +264,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 densityInput.value = maxMuniDensity.toFixed(0);
             }
 
-
             // get a Proper Case Municipality Name            
             if (cityNameProper.toLowerCase() === "unincorporated") {
                 displayMuniName = "unincorporated " + countyNameProper + " County";
@@ -282,12 +271,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 displayMuniName = cityNameProper;
             }
 
-
             // calculate "max capacity" value
             // MC = max. muni. density * acreage
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
-
 
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Second explainer part (max density limit)
