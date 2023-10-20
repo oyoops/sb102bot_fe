@@ -4,6 +4,7 @@
 let address;
 let lat;
 let lng;
+let displayMuniName;
 let countyData;
 let cityData;
 let parcelData;
@@ -182,22 +183,26 @@ document.addEventListener('DOMContentLoaded', function() {
             rentsTableBody.innerHTML = rentsRow;
             document.getElementById('countyMaxRentsTable').style.display = 'table'; // Unhide
 
-            // Display eligibility
+
+            // Eligibility precursor
+            eligibilityDiv.innerHTML = `<b>The Live Local Act allows you to match the height of the tallest building within a 1-mile radius.</b></br></br>`
+            
+            // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML = `This site is <b>VERY UNLIKELY</b> to be eligible for Live Local Act development. <br>To qualify, it can't <b>already</b> be apartments.`;
+                eligibilityDiv.innerHTML += `This site is <b>VERY UNLIKELY</b> to be eligible for Live Local Act development. <br>To qualify, it can't <b>already</b> be apartments.`;
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "20px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML = `This site is <b>ELIGIBLE</b> for Live Local Act development. <br>You could build up to <b>${buildingHeight.toFixed(0)} feet</b> tall here. `;
+                eligibilityDiv.innerHTML += `This site is <b>ELIGIBLE</b> for Live Local Act development. <br>You could build up to <b>${buildingHeight.toFixed(0)} feet</b> tall here. `;
                 if (buildingHeight >= 100) {
                     eligibilityDiv.innerHTML += `<br><i>Wow, that's a lot of feet!</i> 👣👣👣👀`;
                 }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "20px";
             } else {
-                eligibilityDiv.innerHTML = `This site is <b>NOT ELIGIBLE</b> for Live Local Act development. <br>To qualify, it must currently be <b>commercial</b> or <b>industrial</b>. <br>I could be wrong about this parcel, though, so verify its zoning.`;
+                eligibilityDiv.innerHTML += `This site is <b>NOT ELIGIBLE</b> for Live Local Act development. <br>To qualify, it must currently be <b>commercial</b> or <b>industrial</b>. <br>I could be wrong about this parcel, though, so verify its zoning.`;
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "20px";
             }
@@ -264,16 +269,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
 
+            // get a Proper Case Municipality Name            
+            if (cityNameProper.toLowerCase() === "unincorporated") {
+                displayMuniName = "unincorporated " + countyNameProper + " County";
+            } else {
+                displayMuniName = cityNameProper;
+            }
+
+
             // calculate "max capacity" value
             // MC = max. muni. density * acreage
             maxCapacity = maxMuniDensity * acreageValue;
-            eligibilityDiv.innerHTML += `<br>Since the highest multifamily density allowed in <u>${cityNameProper} ${countyNameProper} County</u> is ${maxMuniDensity} units/acre,</br> you can match that and build up to <b>${maxCapacity.toFixed(0)} units</b> on this parcel.`;
-            
-
-
-
-
-
+            eligibilityDiv.innerHTML += `<br><br><b>Live Local <i>also</i> lets you match the max. density anywhere in the municipality.</b>
+                </br>Here in ${displayMuniName}, that means up to <b>${maxMuniDensity} units/ac.</b> times ${acreageValue.toFixed(2)} gross acres.
+                </br>yielding a maximum of <b>${maxCapacity.toFixed(0)} units</b>*.
+                </br><i>* - the greater of 70 <u>or</u> 40% of units must be <i>Affordable</i>; see Rent Limits table.</i>`;
 
 
 
