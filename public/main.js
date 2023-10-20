@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td>${countyNameProper}</td>
                     <td>${cityNameProper}</td>
-                    <td>$${countyData.county_amis_income.toFixed(0)}</td>
+                    <td>$${parseFloat(countyData.county_amis_income).toFixed(0)}</td>
                     <td>${fakeMillage}</td>
                 </tr>
             `;
