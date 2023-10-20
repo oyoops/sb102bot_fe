@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(`Address is within city: ${cityData.cityName}`);
             } else {
                 console.log('Address is unincorporated.');
-                cityData.cityName = 'Unincorporated';
+                cityData.cityName = 'unincorporated';
             }
             
             // fetch the county data for the address (Lat,Lng = CountyData)
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML += `<b>The property is <u>ALMOST DEFINITELY NOT ELIGIBLE</u> for Live Local development.</b> <br>To qualify, it can't <b>already</b> be apartments.`;
+                eligibilityDiv.innerHTML += `<b>The property is almost <u>CERTAINLY INELIGIBLE</u> for Live Local development.</b> <br>To qualify, it can't <b>already</b> be apartments.`;
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
