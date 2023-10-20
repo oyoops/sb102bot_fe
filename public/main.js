@@ -288,8 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
                     </br></br>Actually, I'm getting pretty sick of being fed mediocre sites all day!!!`;
                 */
-                eligibilityDiv.innerHTML += `</br></br>
-                    <b><i>Bring me a commercial or industrial property next time.</i>  
+                eligibilityDiv.innerHTML += `</br><b><i>Bring me a commercial or industrial property next time.</i>  
                       :'-( </b>
                     </br>`;
             }
