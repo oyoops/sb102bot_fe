@@ -6,6 +6,22 @@
 //  main.js  //
 //===========*/
 
+// Get max density of a municipality
+async function getMaxDensity(county, city) {
+  try {
+    const response = await fetch(`/api/get-max-density?county=${county}&city=${city}`);
+    const data = await response.json();
+    if (data.error) {
+      console.error(data.error);
+      return null;
+    }
+    return data.max_density;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}
+
 // Fetch tallest building within a 1-mile radius of the address
 async function fetchTallestBuilding(lat, lng, radius) {
     try {
