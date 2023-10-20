@@ -149,8 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             
             // MILLAGE MANUAL ADJUSTMENT
-            fakeMillage = parseFloat(countyData.county_millage) + MILLAGE_ADJUSTMENT; // "rough estimate" using known county mills + a constant manual adjustment to approximate state (and perhaps local...) portion of grand total millage
-            
+            fakeMillage = parseFloat(countyData.county_millage) + parseFloat(MILLAGE_ADJUSTMENT); // "rough estimate" using known county mills + a constant manual adjustment to approximate state (and perhaps local...) portion of grand total millage
+            fakeMillage.toFixed(4);
 
 
             // ...
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tr>
                     <td>${countyNameProper}</td>
                     <td>${cityNameProper}</td>
-                    <td>$${countyData.county_amis_income}</td>
+                    <td>$${countyData.county_amis_income.toFixed(0)}</td>
                     <td>${fakeMillage}</td>
                 </tr>
             `;
@@ -174,10 +174,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Populate the max rents table
             const rentsRow = `
                 <tr>
-                    <td>$${countyData.max_rent_0bd_120ami}</td>
-                    <td>$${countyData.max_rent_1bd_120ami}</td>
-                    <td>$${countyData.max_rent_2bd_120ami}</td>
-                    <td>$${countyData.max_rent_3bd_120ami}</td>
+                    <td>$${parseFloat(countyData.max_rent_0bd_120ami).toFixed(0)}</td>
+                    <td>$${parseFloat(countyData.max_rent_1bd_120ami).toFixed(0)}</td>
+                    <td>$${parseFloat(countyData.max_rent_2bd_120ami).toFixed(0)}</td>
+                    <td>$${parseFloat(countyData.max_rent_3bd_120ami).toFixed(0)}</td>
                 </tr>
             `;
             rentsTableBody.innerHTML = rentsRow;
@@ -195,9 +195,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.innerHTML += `<b>The property looks <u>ELIGIBLE</u> for Live Local development. Congrats!</b> 
 
                     </br></br><b>First, that means you can build as high as the tallest building within a 1-mile radius.</b>
-                    </br>Here, the ceiling would be... <b>${buildingHeight.toFixed(0)} feet</b> tall.`
+                    </br>On this site, the ceiling would be <b>${buildingHeight.toFixed(0)} feet tall</b>.`
                 if (buildingHeight >= 200) {
-                    eligibilityDiv.innerHTML += ` <i><b>Ohh yeah,</b> that's a lot of juicy feet! 👣👣👀👣👣</i>`;
+                    eligibilityDiv.innerHTML += ` <i><b>Ohh yeah,</b> that's a lot of juicy feet 👣👣👀👣</i>`;
                 }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
