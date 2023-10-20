@@ -98,9 +98,9 @@
         <thead>
             <tr>
                 <th>County</th>
-                <th>Municipality</th>
+                <th>City</th>
                 <th>Area Median Income</th>
-                <th>County Millage</th>
+                <th>Millage (estimate)</th>
             </tr>
         </thead>
         <tbody>
@@ -135,8 +135,8 @@
         
         <!-- Density Input (Max. units/ac. allowed) -->
         <br>
-        <h4>What is the highest density allowed in the municipality?</h4>
-        <input type="number" id="densityInput" placeholder="Units/ac." value="50" step="5">  <i><u>Not</u> automatic!</i>
+        <h4>What is the maximum unit density allowed in this municipality?</h4>
+        <input type="number" id="densityInput" placeholder="Units/ac." value="50" step="5">      <i>Automatic!</i>   <u><b>NEW!!</b></u>
 
         <br><br>
         <h2><u>Unit Mix</u></h2>
@@ -169,7 +169,7 @@
         <div id="warningContainer" style="display: none"></div>
 
         <!-- Unit Size Inputs Section (Table + checkbox) -->
-        <h3>Average Sizes</h3>
+        <h3>Unit Sizes</h3>
         <label><input type="checkbox" id="matchAffordableSizes"> Match market-rate and affordable unit sizes?</label>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
             <thead>
@@ -212,7 +212,7 @@
         <!-- Market Rate Rents Input Section -->
         <br>
         <section id="marketRateInputSection" style="display: none;">
-            <h2><u>Revenue</u></h2>
+            <h2><u>Revenues</u></h2>
             <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
                 <thead>
                     <tr>
@@ -249,8 +249,8 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Market Rent/SF</th>
-                        <th>Affordable Rent/SF</th>
+                        <th>Market Rent/sq. ft.</th>
+                        <th>Affordable Rent/sq. ft.</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -281,12 +281,12 @@
         <!-- Land + Total HC Inputs -->
         <br>
         <section id="landAndTotalHcInputSection" style="display: none;">
-            <h2><u>Development Costs</u></h2>
+            <h2><u>Total Development Costs</u></h2>
             <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
                 <thead>
                     <tr>
                         <th>Land Price /unit</th>
-                        <th>Hard Costs /unit</th>
+                        <th>Cxn. Cost /unit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -305,7 +305,7 @@
                 <thead>
                     <tr>
                         <th>Land</th>
-                        <th>Hard Costs</th>
+                        <th>Cxn. Cost</th>
                         <th>Total</th>
                     </tr>
                 </thead>
@@ -318,11 +318,11 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="2">Land + Hard Costs per unit</th>
+                        <th colspan="2">Land + Cxn. Cost /unit</th>
                         <th id="totalLandAndTotalHcPerUnit">-</th>
                     </tr>
                     <tr>
-                        <th colspan="2">Land + Hard Costs per sq. ft.</th>
+                        <th colspan="2">Land + Cxn. Cost /sq. ft.</th>
                         <th id="totalLandAndTotalHcPerSqFt">-</th>
                     </tr>
                 </tfoot>
@@ -336,10 +336,10 @@
             <thead>
                 <tr>
                     <th>
-                        % Tax Savings
+                        % Tax savings
                     </th>
                     <th>
-                        Δ$ Rent Equivalent
+                        Δ$ Rent equiv.
                     </th>
                 </tr>
             </thead>
@@ -348,14 +348,14 @@
             </tbody>
         </table>
         <p>
-            <b>Δ$ Rent Equivalent</b>: Rent discount that would offset tax savings.
+            <b>Δ$ Rent Equiv.</b>: Rent discount that would offset tax savings.
             <br><br><i>The 30-year abatement is for ad valorem property taxes only.
-            <br>i.e., excludes fire/waste and CDD assessments</i>
+            <br>i.e., Excludes fire/waste and CDD assessments</i>
         </p>
 
         <!-- New Search ('Try Again') Button -->
         <br><br>
-        <button id="tryAgainButton" style="display: none;">Try another property</button>    
+        <button id="tryAgainButton" style="display: none;">New Search</button>    
         
         <!-- AI IC Memo Output -->
         <!-- <br> -->
@@ -381,7 +381,7 @@
     <!-- Footer -->
     <footer>
         <p>
-            <br>Last update: Oct. 10, 2023
+            <br>Last update: Oct. 19, 2023
             <br>Created by <a href="https://www.twitter.com/oyoops" target="_blank"><u>@oyoops</u></a> | <a href="https://www.cresunshine.com/" target="_blank"><u>CRE☀️</u></a> | <a href="https://www.github.com/oyoops/sb102bot_fe"><u>GitHub</u></a>
         </p>
     </footer>

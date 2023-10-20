@@ -138,14 +138,19 @@ document.addEventListener('DOMContentLoaded', function() {
             
             
             // ...
-                        
+            
+            
+            
+            // MILLAGE MANUAL ADJUSTMENT
+            const fakeMillage = countyData.county_millage + 9.9999; // fake millage, a.k.a. "a rough estimate"  
+            
             // Populate the municipal data table
             const countyRow = `
                 <tr>
                     <td>${countyData.county_name}</td>
                     <td>${cityData.cityName}</td>
                     <td>$${countyData.county_amis_income}</td>
-                    <td>${countyData.county_millage}</td>
+                    <td>${fakeMillage}</td>
                 </tr>
             `;
             countyTableBody.innerHTML = countyRow;
