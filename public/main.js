@@ -128,6 +128,12 @@ document.addEventListener('DOMContentLoaded', function() {
             parcelData = await parcelDataResponse.json(); // global
             console.log("Parcel Data Received:", parcelData);
 
+
+            // Convert city and county to proper case
+            const cityNameProper = toProperCase(cityData.cityName);
+            const countyNameProper = specialCountyFormatting(countyData.county_name);
+
+                        
             // hide loading indicator
             document.querySelector('.loading').style.display = 'none';
             
@@ -148,8 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Populate the municipal data table
             const countyRow = `
                 <tr>
-                    <td>${countyData.county_name}</td>
-                    <td>${cityData.cityName}</td>
+                    <td>${countyNameProper}</td>
+                    <td>${cityNameProper}</td>
                     <td>$${countyData.county_amis_income}</td>
                     <td>${fakeMillage}</td>
                 </tr>
@@ -250,8 +256,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 densityInput.value = maxMuniDensity.toFixed(0);
             }
 
+
+            // calculate "max capacity" value
+            // MC = max. muni. density * acreage
             maxCapacity = maxMuniDensity * acreageValue;
-            eligibilityDiv.innerHTML += `<br>Since the highest multifamily density allowed in <i>${cityData.cityName} ${countyData.county_name} county</i> is ${maxMuniDensity} units/acre,</br> you can match that and build up to <b>${maxCapacity.toFixed(0)} units</b> here.`;
+            eligibilityDiv.innerHTML += `<br>Since the highest multifamily density allowed in <u>${cityNameProper} ${countyNameProper} County</u> is ${maxMuniDensity} units/acre,</br> you can match that and build up to <b>${maxCapacity.toFixed(0)} units</b> on this parcel.`;
             
 
 

@@ -47,3 +47,19 @@ async function runAISection() {
     console.log("IC Memo Received:", icMemo);
     aiContainer.innerHTML = icMemo;
 }
+
+// Function to convert city and county names to proper case
+function toProperCase(str) {
+  return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+}
+
+function specialCountyFormatting(county) {
+  const specialCases = {
+      'miamidade': 'Miami-Dade',
+      'stjohns': "St. John's",
+      'stlucie': 'St. Lucie',
+      'palmbeach': 'Palm Beach'
+  };
+
+  return specialCases[county] || toProperCase(county);
+}
