@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </br></br><b>That means you can build as high as the tallest building within a 1-mile radius.</b>
                     </br>Here, the ceiling would be... <b>${buildingHeight.toFixed(0)} feet</b> tall.`
                 if (buildingHeight >= 200) {
-                    eligibilityDiv.innerHTML += `<br><i>(<b>Wow!</b> That's a lot of frickin' feet... 👣👀👣)</i>`;
+                    eligibilityDiv.innerHTML += `<br><i><b>Wow!</b> That's a lot of feet... 👣👣👀👣👣</i>`;
                 }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
