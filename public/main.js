@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // calculate "max capacity" value
             // MC = max. muni. density * acreage
-            maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acreageValue);
+            maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
 
 
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </br></br><b>Live Local also lets you match the highest density allowed within the municipality.</b>
                 </br>According to my data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>.
                 
-                </br></br>So, with ${acreageValue} gross ac. at ${maxMuniDensity} units per acre,
+                </br></br>So, with ${acres} gross ac. at ${maxMuniDensity} units per acre,
                 </br>you're looking at a maximum total yield of <b>${maxCapacity} units</b>*.
                 </br>* - Must set aside <i>the greater of</i> 40% or 70 units as 'Affordable'. See affordable rent limits below.`;
 
