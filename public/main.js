@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Second explainer part (max density limit)
                 eligibilityDiv.innerHTML += `</br>
-                    </br><b>Oh, and the Act also lets you to match the municipality's highest multifamily density. 👀 <i>Woah!!</i></b>
+                    </br><b>Oh, and the Act also lets you match the municipality's highest multifamily density. 👀 <i>Woah!!</i></b>
                     </br>According to my non-official data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>.
                     
                     </br></br>So... with ${acres.toFixed(2)} gross acres at ${maxMuniDensity} units/ac., you're looking
