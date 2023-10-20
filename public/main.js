@@ -258,6 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // DENSITY TESTING!
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             if (maxDensity !== null) {
+                console.log ("Maximum municipal density found for", countyData.county_name, cityData.cityName, ":", maxDensity);
                 // set global
                 maxMuniDensity = maxDensity;
                 // set input placeholder
@@ -281,10 +282,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // calculate "max capacity" value
             // MC = max. muni. density * acreage
-            maxCapacity = maxMuniDensity * acreageValue;
-            maxCapacity = maxCapacity.toFixed(0)
+            maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acreageValue);
+            maxCapacity = maxCapacity.toFixed(0);
 
-            // 
+
+            // Second explainer part (max density limit)
             eligibilityDiv.innerHTML += `</br></br><b><i>But wait- There's more!</i></b>
                 
                 </br></br>Live Local also lets you match the highest density allowed within the municipality.
