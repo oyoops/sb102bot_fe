@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </br><b>Oh, and the Act also lets you match the municipality's highest multifamily density. </b>
                     </br>According to my unofficial data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>. <i>Woah!</i> 👀
                     </br>Therefore, with ${acres.toFixed(2)} gross acres at ${maxMuniDensity} units/ac., you're looking at
-                    </br>a maximum yield of <b>${maxCapacity} total units</b> via the Live Local approval pathway.</b>`;
+                    </br>a maximum yield of <b>${maxCapacity} units</b> via the Live Local approval pathway.</b>`;
             } else {
                 /*
                 eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
