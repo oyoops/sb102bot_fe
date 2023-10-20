@@ -342,9 +342,9 @@ input:disabled {
 /* Added styles for Google Map container */
 #map {
     width: 90%;
-    max-width: 1200px;
-    height: 350px;
-    border-radius: 30px;
+    max-width: 1500px;
+    height: 400px;
+    border-radius: 20px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
     display: none;
     position: relative;
