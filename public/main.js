@@ -183,28 +183,27 @@ document.addEventListener('DOMContentLoaded', function() {
             rentsTableBody.innerHTML = rentsRow;
             document.getElementById('countyMaxRentsTable').style.display = 'table'; // Unhide
 
-
-            // Eligibility precursor
-            eligibilityDiv.innerHTML = `<b>The Live Local Act allows you to match the height of the tallest building within a 1-mile radius.</b></br></br>`
-            
+    
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML += `This site is <b>VERY UNLIKELY</b> to be eligible for Live Local Act development. <br>To qualify, it can't <b>already</b> be apartments.`;
+                eligibilityDiv.innerHTML += `<b>This site is <u>ALMOST DEFINITELY NOT ELIGIBLE</u> for Live Local development.</b> <br>To qualify, it can't <b>already</b> be apartments.`;
                 eligibilityDiv.style.color = "orange";
-                eligibilityDiv.style.fontSize = "20px";
+                eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `This site is <b>ELIGIBLE</b> for Live Local Act development. <br>You could build up to <b>${buildingHeight.toFixed(0)} feet</b> tall here. `;
-                if (buildingHeight >= 100) {
-                    eligibilityDiv.innerHTML += `<br><i>Wow, that's a lot of feet!</i> 👣👣👣👀`;
+                eligibilityDiv.innerHTML += `<b>This site seems to be <u>ELIGIBLE</u> for Live Local development. Congrats!</b> 
+                    </br></br>That means you can build as high as the tallest building within a 1-mile radius.
+                    </br>Here, the ceiling would be <b>${buildingHeight.toFixed(0)} feet</b> tall.`
+                if (buildingHeight >= 200) {
+                    eligibilityDiv.innerHTML += `<br><i>(<b>Wow!</b> That's a lot of frickin' feet... 👣👀👣)</i>`;
                 }
                 eligibilityDiv.style.color = "green";
-                eligibilityDiv.style.fontSize = "20px";
+                eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `This site is <b>NOT ELIGIBLE</b> for Live Local Act development. <br>To qualify, it must currently be <b>commercial</b> or <b>industrial</b>. <br>I could be wrong about this parcel, though, so verify its zoning.`;
+                eligibilityDiv.innerHTML += `<b>This site is <u>NOT ELIGIBLE</u> for Live Local development.</b> <br>To qualify, it must currently be <b>commercial</b> or <b>industrial</b>. <br>I could be wrong about this parcel, though, so verify its zoning.`;
                 eligibilityDiv.style.color = "red";
-                eligibilityDiv.style.fontSize = "20px";
+                eligibilityDiv.style.fontSize = "18px";
             }
 
             // convert land sq. ft. to acres
@@ -249,6 +248,9 @@ document.addEventListener('DOMContentLoaded', function() {
             acreageInput.value = acres.toFixed(2);
 
             // ...
+        
+            
+            
 
 
 
@@ -280,10 +282,17 @@ document.addEventListener('DOMContentLoaded', function() {
             // calculate "max capacity" value
             // MC = max. muni. density * acreage
             maxCapacity = maxMuniDensity * acreageValue;
-            eligibilityDiv.innerHTML += `<br><br><b>Live Local <i>also</i> lets you match the max. density anywhere in the municipality.</b>
-                </br>Here in ${displayMuniName}, that means up to <b>${maxMuniDensity} units/ac.</b> times ${acreageValue.toFixed(2)} gross acres.
-                </br>yielding a maximum of <b>${maxCapacity.toFixed(0)} units</b>*.
-                </br><i>* - the greater of 70 <u>or</u> 40% of units must be <i>Affordable</i>; see Rent Limits table.</i>`;
+
+            // 
+            eligibilityDiv.innerHTML += `</br></br><b><i>But wait- There's more!</i></b>
+                
+                </br></br>Live Local also lets you match the highest density allowed within the municipality.
+                </br>According to my data, that's <b>${maxMuniDensity} units per acre</b> in ${displayMuniName}.
+                
+                </br></br>So, with ${acreageValue.toFixed(2)} gross ac. at ${maxMuniDensity} units/ac.,
+                </br>you're looking at a maximum total yield of <b>${maxCapacity.toFixed(0)} units</b>*.
+                
+                </br></br><i>* - The greater of 70 <u>or</u> 40% of units must be 'Affordable'; refer to Affordable Rent Limits Table.</i>`;
 
 
 
