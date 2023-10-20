@@ -282,15 +282,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // calculate "max capacity" value
             // MC = max. muni. density * acreage
             maxCapacity = maxMuniDensity * acreageValue;
+            maxCapacity = maxCapacity.toFixed(0)
 
             // 
             eligibilityDiv.innerHTML += `</br></br><b><i>But wait- There's more!</i></b>
                 
                 </br></br>Live Local also lets you match the highest density allowed within the municipality.
-                </br>According to my data, that's <b>${maxMuniDensity} units per acre</b> in ${displayMuniName}.
+                </br>According to my data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>.
                 
-                </br></br>So, with ${acreageValue.toFixed(2)} gross ac. at ${maxMuniDensity} units/ac.,
-                </br>you're looking at a maximum total yield of <b>${maxCapacity.toFixed(0)} units</b>*.
+                </br></br>So, with ${acreageValue} gross ac. at ${maxMuniDensity} units per acre,
+                </br>you're looking at a maximum total yield of <b>${maxCapacity} units</b>*.
                 
                 </br></br><i>* - The greater of 70 <u>or</u> 40% of units must be 'Affordable'; refer to Affordable Rent Limits Table.</i>`;
 
