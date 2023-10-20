@@ -181,8 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (buildingHeight >= 100) {
                     eligibilityDiv.innerHTML += `<br><i>Wow, that's a lot of feet!</i> 👣👣👣👀`;
                 }
-                maxCapacity = maxMuniDensity * acreageValue;
-                eligibilityDiv.innerHTML += `<br>Since the max. allowed density in ${cityData.cityName} ${countyData.county_name} is ${maxMuniDensity} units/acre, you can match that and build up to <b>${maxCapacity.toFixed(0)} units</b> here.`;
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "20px";
             } else {
@@ -251,6 +249,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // set input placeholder
                 densityInput.value = maxMuniDensity.toFixed(0);
             }
+
+            maxCapacity = maxMuniDensity * acreageValue;
+            eligibilityDiv.innerHTML += `<br>Since the highest multifamily density allowed in <i>${cityData.cityName} ${countyData.county_name} county</i> is ${maxMuniDensity} units/acre,</br> you can match that and build up to <b>${maxCapacity.toFixed(0)} units</b> here.`;
+            
+
+
+
+
 
 
 
