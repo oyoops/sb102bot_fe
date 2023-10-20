@@ -292,15 +292,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.innerHTML += `</br>
                     </br><b>Oh, and the Act also lets you match the municipality's highest multifamily density. 👀 <i>Woah!!</i></b>
                     </br>According to my non-official data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>.
-                    
-                    </br></br>So... with your ${acres.toFixed(2)} gross acres at ${maxMuniDensity} units/ac., you're looking
-                    </br>at a maximum yield of <b>${maxCapacity} units</b> via the Live Local pathway.`;
+                    </br>Therefore, with ${acres.toFixed(2)} gross acres at ${maxMuniDensity} units/ac., you're looking at
+                    </br>a maximum yield of <b>${maxCapacity} total units</b> via the Live Local approval pathway.</b>`;
             } else {
+                /*
                 eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
                     </br></br>I require LIVE LOCAL SITES -- Not ineligible garbage.
                     </br></br>Actually, I'm getting pretty sick of being fed mediocre sites all day!!!
                     </br>So, next time, if you could bring me a better site... That'd be great.`;
-                eligibilityDiv.innerHTML += `</br>`;
+                */
+                eligibilityDiv.innerHTML += `</br></br>
+                    <b><i>Bring me a commercial or industrial property next time.</i>
+                    </br> :'-( </b>
+                    </br>`;
             }
 
             // ...
