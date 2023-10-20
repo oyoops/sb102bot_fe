@@ -188,8 +188,10 @@ function calculateWeightedAverageSizes() {
 
 // (get by unit type) market-rate rent per sq. ft.
 function getMarketRatePerSqFt(unitType) {
+    // reset globals (such a poor implementation...)
     mktrent = 0;
     mktunitsize = 0;
+    // set market-rate avg. rents and unit sizes
     mktrent = parseFloat(document.getElementById(`marketRate${unitType}`).value) || 0;
     mktunitsize = parseFloat(document.getElementById(`market${unitType}Size`).value) || 0;
     return (mktunitsize === 0) ? 'N/A' : (mktrent / mktunitsize).toFixed(2);
@@ -199,9 +201,11 @@ function getAffordableRatePerSqFt(unitType) {
     if (typeof countyData === 'undefined') {
         console.log("Error! County data not yet available.");
         return 'N/A';
-    }  
+    }
+    // reset globals (such a poor implementation...)
     affordablerent = 0;
-    // convert max rent strings to floats
+    affordableunitsize = 0;
+    // set affordable avg. rents and unit sizes
     maxRent0bd = parseFloat(countyData.max_rent_0bd_120ami);
     maxRent1bd = parseFloat(countyData.max_rent_1bd_120ami);
     maxRent2bd = parseFloat(countyData.max_rent_2bd_120ami);
