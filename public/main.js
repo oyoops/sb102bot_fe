@@ -405,6 +405,7 @@ document.addEventListener('DOMContentLoaded', function() {
             calculateWeightedAverageSizes();
             updateRentPerSqFtTable();
             updateTotalCosts();
+            calculateAbatement();
             
             /* USER INPUTS SECTION END. */
 
