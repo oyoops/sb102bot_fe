@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3>The property looks <u>ELIGIBLE</u> for Live Local Act development.</h3> 
-                    </br>This means, among many other benefits, that you can <b>build as high as the tallest building</b> within a one-mile radius.</b>
+                    </br>That means -- among many other benefits -- you can <b>build as high as the tallest building</b> within a one-mile radius.</b>
                     </br>On this particular piece of dirt, your buildings could rise <b>up to ${buildingHeight.toFixed(0)} feet</b> in height!`
                 if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
