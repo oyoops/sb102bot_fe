@@ -200,14 +200,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML += `<h3>This property is LIKELY <u>NOT ELIGIBLE</u> for Live Local development.</h3> <br>Properties that are <u>already</u> residential do not qualify.`;
-                eligibilityDiv.style.color = "orange";
+                eligibilityDiv.innerHTML += `<h3>This property is probably <u>NOT ELIGIBLE</u> for Live Local development.</h3> <br>It can't <i>already</i> be a residential/multifamily property to qualify.`;
+                eligibilityDiv.style.color = "Orange";
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<h3>This property appears to be <u>ELIGIBLE</u> for Live Local Act development!</h3> 
-                    </br>This means, among other benefits, that you can <b>build as high as the tallest building</b> within a one-mile radius.</b>
+                eligibilityDiv.innerHTML += `<h3>This property looks <u>ELIGIBLE</u> for Live Local Act development.</h3> 
+                    </br>This means, among many other benefits, that you can <b>build as high as the tallest building</b> within a one-mile radius.</b>
                     </br>On this particular piece of dirt, your buildings could rise <b>up to ${buildingHeight.toFixed(0)} feet</b> in height!`
                 if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<h3>This property appears <u>INELIGIBLE</u> for Live Local development.</h3> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
+                eligibilityDiv.innerHTML += `<h3>This property looks <u>INELIGIBLE</u> for Live Local development.</h3> <br>It must be <b>commercial</b> or <b>industrial</b> <i>already</i> to qualify.`;
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
@@ -409,11 +409,11 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);
-                alert('There was an error with the server. Please try again later.');
+                alert('There was an error with the server. Darn! Please try again later.');
             } else {
                 console.error('Error:', error);
                 // to-do: significantly improve error handling.
-                alert('Whoops, something bad happened and I broke.\nEither try again or give up. The choice is yours!');
+                alert('Whoops, something bad happened and I failed...\nTry again, because the server was probably just hella busy for a hot minute.');
             }
         }
     });
