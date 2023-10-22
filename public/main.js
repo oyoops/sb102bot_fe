@@ -423,7 +423,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.error('Error:', error);
                 // to-do: significantly improve error handling.
-                alert('Whoops, something bad happened and I failed...\nTry again, because the server was probably just hella busy for a hot minute.');
+                alert('Whoops, something bad happened and I failed...\nTry again, I was probably just hella busy for a minute.');
             }
         }
     });
