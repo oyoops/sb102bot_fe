@@ -96,29 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 cityData.cityName = 'unincorporated';
             }
             
-            /*
-            // fetch the county data for the address (Lat,Lng = CountyData)
-            const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
-            const countyDataResponse = await fetch(countyDataEndpoint);
-            countyData = await countyDataResponse.json(); // global
-            console.log("County Data Received:", countyData);
-            if (!countyData.county_name) {
-                throw new Error('No county data available for the address.');
-            }
-            
-            // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
-            const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
-            const parcelDataResponse = await fetch(parcelDataEndpoint);
-            parcelData = await parcelDataResponse.json(); // global
-            console.log("Parcel Data Received:", parcelData);
 
-            // Now fetch the AI enhancements for the parcel data
-            const enhancements = await fetchAiEnhancements(parcelData);
-            console.log("AI Enhancements Received:", enhancements);
-
-            displayAiEnhancements(enhancements);
-            */
-
+            /* API blocks: */
 
             // API block #1 of 3
             try {
@@ -163,17 +142,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 // fetch the AI responses to the set of prompts concerning the parcel data
                 if (!parcelData || Object.keys(parcelData).length === 0) {
                     console.log(`Skipping AI analysis module due to the parcel's ineligibility`);
-                    return;
+                    throw new Error('Sorry, this property is ineligible for Live Local Act development.');
+                    //return;
                 }
                 aiEnhancements = await fetchAiEnhancements(parcelData);
                 if (!aiEnhancements || aiEnhancements.length === 0) {
-                    throw new Error('No response received from AI server');
+                    throw new Error('No response received from AI server.');
                 }
                 console.log("AI Enhancements Received:", aiEnhancements);
                 displayAiEnhancements(aiEnhancements);
             } catch (error) {
-                console.error("Error fetching AI enhancements:\n", error);
-                alert("Hmm, I think I need a coffee... ☕ \nI failed to analyze your parcel. \nMaybe try again later?");
+                console.error("Error fetching AI enhancements.\nEncountered in API Block #3:\n", error);
+                ////alert("Hmm, I think I need a coffee... ☕ \nI failed to analyze your parcel. \nMaybe try again later?");
                 return;  // Exit early (?)
             }
 
@@ -182,18 +162,16 @@ document.addEventListener('DOMContentLoaded', function() {
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
             // show Try Again button
-            document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
+            document.querySelector('#tryAgainButton').style.display = 'block';
             // hide loading indicator
             document.querySelector('.loading-container').style.display = 'none';            
             
-            // ...
             // ...
 
             // MILLAGE MANUAL ADJUSTMENT
             fakeMillage = parseFloat(countyData.county_millage) + parseFloat(MILLAGE_ADJUSTMENT); // "rough estimate" using known county mills + a constant manual adjustment to approximate state (and perhaps local...) portion of grand total millage
             fakeMillage = parseFloat(fakeMillage).toFixed(4);
 
-            // ...
             // ...
 
             // Populate the municipal data table
@@ -220,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function() {
             rentsTableBody.innerHTML = rentsRow;
             document.getElementById('countyMaxRentsTable').style.display = 'table'; // Unhide
 
-    
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
                 eligibilityDiv.innerHTML += `<h3>This property is LIKELY <u>NOT ELIGIBLE</u> for Live Local development.</h3> <br>Properties that are <u>already</u> residential do not qualify.`;
@@ -276,37 +253,31 @@ document.addEventListener('DOMContentLoaded', function() {
             landAndTotalHcOutputSection.style.display = 'block';
             // ...
 
-            
 
-            // ACREAGE AUTO/MANUAL INPUT:
             // set acreage input placeholder
-            acreageInput.value = acres.toFixed(2);
+            acreageInput.value = acres.toFixed(2); // ACREAGE AUTO/MANUAL INPUT
 
-            // DENSITY AUTO/MANUAL INPUT:
+            // set density input placeholder
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             if (maxDensity !== null) {
                 console.log ("Maximum municipal density found for", countyData.county_name, cityData.cityName, ":", maxDensity);
                 // set global
                 maxMuniDensity = maxDensity;
-                // set input placeholder
-                densityInput.value = maxDensity.toFixed(0);
             } else {
                 console.log ("WARNING: Maximum municipal density was not found!")
                 // set global
                 maxMuniDensity = 0;
-                // set input placeholder
-                densityInput.value = maxMuniDensity.toFixed(0);
             }
+            densityInput.value = maxMuniDensity.toFixed(0); // DENSITY AUTO/MANUAL INPUT
 
-            // get a Proper Case Municipality Name            
+            // get Municipality Name in Proper Case for cleaner display      
             if (cityNameProper.toLowerCase() === "unincorporated") {
                 displayMuniName = "unincorporated " + countyNameProper + " County";
             } else {
                 displayMuniName = cityNameProper;
             }
 
-            // calculate "max capacity" value
-            // MC = max. muni. density * acreage
+            // calculate the parcel's absolute max unit capacity
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
 
@@ -430,26 +401,6 @@ document.addEventListener('DOMContentLoaded', function() {
             calculateAbatement();
             
             /* USER INPUTS SECTION END. */
-
-            
-            /*
-            // AI SECTION START            
-            const runAIButton = document.getElementById("runAIButton");
-            runAIButton.addEventListener('click', runAISection);
-               ENDPOINT PARAMS:
-                    ASK_AI: 
-                        address, 
-                        county, 
-                        acreage, 
-                        totalUnits, 
-                        affordablePct,
-                        affStudio,
-                        aff1BD,
-                        aff2BD,
-                        aff3BD,
-                        textModifier
-            // AI SECTION END
-            */
             
             // scroll to top x2
             googlemap.scrollIntoView();
