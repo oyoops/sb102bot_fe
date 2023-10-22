@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error;
                 }
             } catch (error) {
-                console.error("Error fetching county data:", error);
+                console.error("Error fetching county data:\n", error);
                 alert("Looks like we hit a roadblock on County Road! 🛣️\nCouldn't fetch the county data.");
                 return;  // Exit early since we can't proceed without county data
             }
@@ -175,14 +175,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('Missing or empty parcel data');
                 }            
             } catch (error) {
-                console.error("Error fetching parcel data:", error);
+                console.error("Error fetching parcel data:\n", error);
                 alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
                 return;  // Exit early since we can't proceed without parcel data
             }
 
             // #3 of 3
             try {
-                // fetch the AI enhancements for the parcel data
+                // fetch the AI responses to the set of prompts concerning the parcel data
                 aiEnhancements = await fetchAiEnhancements(parcelData);
                 if (!aiEnhancements || aiEnhancements.length === 0) {
                     throw new Error('No response received from AI server');
@@ -190,11 +190,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("AI Enhancements Received:", aiEnhancements);
                 displayAiEnhancements(aiEnhancements);
             } catch (error) {
-                console.error("Error fetching AI enhancements:", error);
+                console.error("Error fetching AI enhancements:\n", error);
                 alert("Sorry, I might need a coffee or two... ☕ \nBecause my AI failed to analyze the parcel data.");
             }
-
-
 
 
             // convert [CITY] and [county] to Proper Case for cleaner display

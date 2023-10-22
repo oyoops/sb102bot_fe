@@ -10,7 +10,7 @@
 
 /* IN TESTING */
 
-/* AI-related functions */
+/* AI-related functions: */
 
 // fetch AI response set
 async function fetchAiEnhancements(row) {
@@ -95,6 +95,8 @@ async function fetchTallestBuilding(lat, lng, radius) {
     }
 }
 
+
+/*
 // Fetch the AI 'memo' by adding all relevant global vars as endpoint parameters
 async function runAISection() {
     const textMod = ` Make it good. `;
@@ -108,8 +110,9 @@ async function runAISection() {
     console.log("IC Memo Received:", icMemo);
     aiContainer.innerHTML = icMemo;
 }
+*/
 
-// Function to convert city and county names to proper case
+// Function to convert city and county names to Proper Case
 function toProperCase(str) {
   return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1).toLowerCase()).join(' ');
 }
