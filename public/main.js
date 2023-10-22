@@ -265,15 +265,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
-            // show detailed eligibility section
-            eligibilityDiv.style.display = 'block';
-
-            // add AI summary below eligibility section (not a great place for it, but w/e...)
-            const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
-            eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + aiSummaryHtml;
-
-            // fade text in quickly to simulate the AI 'speaking' to the user
-            animateTextFadeIn(eligibilityDiv);
 
             // convert land sq. ft. to acres
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
@@ -349,6 +340,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     </br>According to my unofficial data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>. <i>Woah!</i> 👀
                     </br>Therefore, with ${acres.toFixed(2)} gross acres at ${maxMuniDensity} units/ac., you're looking at
                     </br>a maximum yield of <b>${maxCapacity} units</b> via the Live Local approval pathway.</b>`;
+
+                // add AI summary below eligibility section (not a great place for it, but w/e...)
+                const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
+                eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + aiSummaryHtml;
             } else {
                 /*
                 eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
@@ -358,9 +353,12 @@ document.addEventListener('DOMContentLoaded', function() {
                       :'-( </b>
                     </br>`;
             }
+            // show detailed eligibility section
+            eligibilityDiv.style.display = 'block';
+            // fade its text in quickly to simulate the AI 'speaking' to the user
+            animateTextFadeIn(eligibilityDiv);
 
-            // ...
-
+            
             // affordable percentage slider
             affordablePercentageSlider.value = 40; // 0.40; // default = 40% affordable units
             affordablePercentageSlider.oninput = function() {
