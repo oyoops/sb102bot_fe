@@ -134,9 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early since we can't proceed without parcel data
             }
 
-            // (initialize the map just a litttttle bit before the last API block is finished...)
-            initializeMap(lat, lng);
-
             // API block #3 of 3
             try {
                 // fetch the AI responses to the set of prompts concerning the parcel data
@@ -160,6 +157,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // convert [CITY] and [county] to Proper Case for cleaner display
             cityNameProper = toProperCase(cityData.cityName);
             countyNameProper = specialCountyFormatting(countyData.county_name);
+
+            // initialize the map
+            initializeMap(lat, lng);
 
             // show Try Again button
             document.querySelector('#tryAgainButton').style.display = 'block';
