@@ -385,6 +385,7 @@ input:disabled {
 }
 */
 #eligibilityStatus {
+    display: none;
     width: 80%;
     max-width: 1200px;
     margin: 2% auto;
