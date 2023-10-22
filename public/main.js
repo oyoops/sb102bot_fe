@@ -161,6 +161,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // API block #3 of 3
             try {
                 // fetch the AI responses to the set of prompts concerning the parcel data
+                if (!parcelData || Object.keys(parcelData).length === 0) {
+                    console.log(`Skipping AI analysis module due to the parcel's ineligibility`);
+                    return;
+                }
                 aiEnhancements = await fetchAiEnhancements(parcelData);
                 if (!aiEnhancements || aiEnhancements.length === 0) {
                     throw new Error('No response received from AI server');
