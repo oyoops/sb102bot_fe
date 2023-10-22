@@ -212,8 +212,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">The property looks <u>ELIGIBLE</u> for Live Local development!</h3> 
-                    </br>That means, among other benefits, you can <b>build as high as the tallest building</b> within a one-mile radius.</b>
-                    </br>On this particular piece of dirt, your buildings could rise <b>up to ${buildingHeight.toFixed(0)} feet</b> in height!`
+                    </br>Coolio 😎👍 That means, among other benefits, you can <b>build as high as the tallest building</b> within a one-mile radius.</b>
+                    </br>Here, that'd be <b>${buildingHeight.toFixed(0)} feet</b> in height! I've added the tallest building to the map below.`
                 if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
                 }
