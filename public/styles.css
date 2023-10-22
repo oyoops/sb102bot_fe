@@ -434,6 +434,7 @@ input:disabled {
 }
 
 .loading-text {
+    font-size: 1.5em;
     font-weight: 500;
     color: #007BFF;
     margin-bottom: 10px;
