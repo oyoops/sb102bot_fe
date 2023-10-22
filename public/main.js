@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Second explainer part (max density limit)
                 eligibilityDiv.innerHTML += `
                     </br></br><b>The Act also allows you to match the highest density allowed anywhere in the municipality. <i>Radical!</i></b>
-                    </br>The highest density of all ${displayMuniName} multifamily projects that exist today is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but amazing) data.
+                    </br>The highest density among existing apartments in ${displayMuniName} is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but great) data.
                     </br></br>Assuming you'll use all ${acres.toFixed(2)} acres for multifamily, you're looking at a maximum 'Live Local' yield of <b>${maxCapacity} units</b>.`;
 
                 // add AI summary below eligibility section (not a great place for it, but w/e...)
