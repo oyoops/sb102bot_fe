@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add AI summary to the existing eligibility content
                 //////summaryContent += displayAiEnhancements(aiEnhancements);
                 //summaryContent += aiEnhancements;
-                //summaryContent = displayAiEnhancements(summaryContent);
+                summaryContent += displayAiEnhancements(summaryContent);
             } else {
                 /*
                 summaryContent += `</br>You must bring me commercial and industrial properties ONLY!
@@ -311,7 +311,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ////document.getElementById('map').scrollIntoView();
 
             // Generate and display text content
-            summaryContent = displayAiEnhancements(summaryContent);
             eligibilityDiv.innerHTML = summaryContent; // reset all div content
             eligibilityDiv.style.display = 'block'; // unhide div
             animateTextFadeIn(eligibilityDiv); // fade in div content to simulate AI 'talking'
