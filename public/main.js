@@ -294,10 +294,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 summaryContent += `</br></br>The Act also allows you to match the <b>highest density allowed anywhere in the municipality.</b> <i>Radical! </i>
                     The highest density in ${displayMuniName} among existing apartments is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but great) data.
                     </br></br>Assuming all ${acres.toFixed(2)} acres are for apartments, the maximum-achievable yield would be <u><b>${maxCapacity} units</b></u>.`;                
-                // Add AI summary to the existing eligibility content
-                //////summaryContent += displayAiEnhancements(aiEnhancements);
-                //summaryContent += aiEnhancements;
-                summaryContent += displayAiEnhancements(summaryContent);
+                // Add AI summary to the existing eligibility content (*)
+                summaryContent += displayAiEnhancements(aiEnhancements);
             } else {
                 /*
                 summaryContent += `</br>You must bring me commercial and industrial properties ONLY!
@@ -311,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ////document.getElementById('map').scrollIntoView();
 
             // Generate and display text content
-            eligibilityDiv.innerHTML = summaryContent; // reset all div content
+            eligibilityDiv.innerHTML = summaryContent; // reset entire div content
             eligibilityDiv.style.display = 'block'; // unhide div
             animateTextFadeIn(eligibilityDiv); // fade in div content to simulate AI 'talking'
 
