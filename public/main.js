@@ -314,10 +314,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Second explainer part (max density limit)
                 eligibilityDiv.innerHTML += `</br>
-                    </br><b>Oh, and the Act also lets you match the municipality's highest multifamily density. </b>
-                    </br>According to my unofficial data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>. <i>Tubular!</i>
-                    </br>Therefore, with ${acres.toFixed(2)} gross acres at ${maxMuniDensity} units/ac., you're looking at
-                    </br>a maximum yield of <b>${maxCapacity} units</b> via the Live Local pathway.</b>`;
+                    </br><b>The Act also lets you match the highest density anywhere in the municipality.</b>
+                    </br>According to my unofficial data, that's <b>${maxMuniDensity} units per acre in ${displayMuniName}</b>. <i>Tubular!</i>
+                    </br></br>Assuming all ${acres.toFixed(2)} acres will be residential at ${maxMuniDensity} units/ac. you're looking at
+                    </br>a maximum yield <b>${maxCapacity} units</b> via the Live Local pathway.</b>`;
 
                 // add AI summary below eligibility section (not a great place for it, but w/e...)
                 const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
@@ -327,9 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
                     </br></br>Actually, I'm getting pretty sick of being fed mediocre sites all day!!!`;
                 */
-                eligibilityDiv.innerHTML += `</br><h3><i>Bring me a commercial or industrial property next time.</i>  
-                      :'-( </h3>
-                    </br>`;
+                eligibilityDiv.innerHTML += `</br><h4><i>Bring me a commercial/industrial property next time.</i></h4>`;
             }
             // show detailed eligibility section
             eligibilityDiv.style.display = 'block';
