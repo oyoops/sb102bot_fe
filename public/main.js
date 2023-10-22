@@ -246,22 +246,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML += `<b>The property is almost <u>CERTAINLY INELIGIBLE</u> for Live Local development.</b> <br>Properties that are <u>already</u> residential don't qualify!`;
+                eligibilityDiv.innerHTML += `<h3>The property is <u>VERY LIKELY INELIGIBLE</u> for Live Local development.</h3> <br>Properties that are <u>already</u> residential do not qualify.`;
                 eligibilityDiv.style.color = "orange";
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<b>The property looks <u>ELIGIBLE</u> for Live Local development. <i>Nice!!</i></b> 
+                eligibilityDiv.innerHTML += `<h3>The property looks <u>ELIGIBLE</u> for Live Local development. <i>Coolio!</i></h3> 
                     </br></br><b>Among other benefits, this means you can build as high as the tallest building within a 1-mile radius.</b>
                     </br>The max. height here would be <b>${buildingHeight.toFixed(0)} feet tall</b>.`
                 if (buildingHeight >= 200) {
-                    eligibilityDiv.innerHTML += ` <i><b>Ohh yeah...</b> That's a lot of juicy feet 👣👣👀👣</i>`;
+                    eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣👣</i>`;
                 }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<b>The property looks <u>INELIGIBLE</u> for Live Local development.</b> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
+                eligibilityDiv.innerHTML += `<h3>The property looks <u>INELIGIBLE</u> for Live Local development.</h3> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
@@ -337,9 +337,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Second explainer part (max density limit)
                 eligibilityDiv.innerHTML += `</br>
                     </br><b>Oh, and the Act also lets you match the municipality's highest multifamily density. </b>
-                    </br>According to my unofficial data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>. <i>Woah!</i> 👀
+                    </br>According to my unofficial data, that's <b>${maxMuniDensity} units/ac. in ${displayMuniName}</b>. <i>Tubular!</i>
                     </br>Therefore, with ${acres.toFixed(2)} gross acres at ${maxMuniDensity} units/ac., you're looking at
-                    </br>a maximum yield of <b>${maxCapacity} units</b> via the Live Local approval pathway.</b>`;
+                    </br>a maximum yield of <b>${maxCapacity} units</b> via the Live Local pathway.</b>`;
 
                 // add AI summary below eligibility section (not a great place for it, but w/e...)
                 const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
@@ -349,8 +349,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
                     </br></br>Actually, I'm getting pretty sick of being fed mediocre sites all day!!!`;
                 */
-                eligibilityDiv.innerHTML += `</br><b><i>Bring me a commercial or industrial property next time.</i>  
-                      :'-( </b>
+                eligibilityDiv.innerHTML += `</br><h3><i>Bring me a commercial or industrial property next time.</i>  
+                      :'-( </h3>
                     </br>`;
             }
             // show detailed eligibility section
@@ -358,7 +358,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // fade its text in quickly to simulate the AI 'speaking' to the user
             animateTextFadeIn(eligibilityDiv);
 
-            
+
             // affordable percentage slider
             affordablePercentageSlider.value = 40; // 0.40; // default = 40% affordable units
             affordablePercentageSlider.oninput = function() {
