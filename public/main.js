@@ -230,16 +230,16 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<h3>This property looks <u>ELIGIBLE</u> for Live Local development.</h3> 
-                    </br><b>That means, among other benefits, you could build as high as the tallest building within a mile.</b>
-                    </br>Here, that would be <b>${buildingHeight.toFixed(0)} feet tall</b>.`
+                eligibilityDiv.innerHTML += `<h3>This property appears <u>ELIGIBLE</u> for Live Local Act development!</h3> 
+                    </br><b>This means, among other benefits, that you can build as high as the tallest building within a mile.</b>
+                    </br>Here, that ceiling would be <b>${buildingHeight.toFixed(0)} feet tall.</b>`
                 if (buildingHeight >= 200) {
-                    eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣👣</i>`;
+                    eligibilityDiv.innerHTML += ` <i><b>(Wow!</b> That's a lot of juicy feet 👀👣)</i>`;
                 }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<h3>This property appears <u>INELIGIBLE</u> for Live Local development.</h3> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
+                eligibilityDiv.innerHTML += `<h3>This property seems to be <u>INELIGIBLE</u> for Live Local development.</h3> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
