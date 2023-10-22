@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
             */
 
 
-            // #1 of 3
+            // API block #1 of 3
             try {
                 // fetch the county data for the address (Lat,Lng = CountyData)
                 const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early since we can't proceed without county data
             }
 
-            // #2 of 3
+            // API block #2 of 3
             try {
                 // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
                 const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
@@ -155,7 +155,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early since we can't proceed without parcel data
             }
 
-            // #3 of 3
+            // (initialize the map just a litttttle bit before the last API block is finished...)
+            initializeMap(lat, lng);
+
+            // API block #3 of 3
             try {
                 // fetch the AI responses to the set of prompts concerning the parcel data
                 aiEnhancements = await fetchAiEnhancements(parcelData);
@@ -166,15 +169,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 displayAiEnhancements(aiEnhancements);
             } catch (error) {
                 console.error("Error fetching AI enhancements:\n", error);
-                alert("Sorry, I might need a coffee or two... ☕ \nBecause my AI failed to analyze the parcel data.");
+                alert("Hmm, I might need a coffee or two... ☕ \nSorry, I failed to analyze your parcel. \nMaybe try again later?");
+                return;  // Exit early (?)
             }
 
             // convert [CITY] and [county] to Proper Case for cleaner display
             cityNameProper = toProperCase(cityData.cityName);
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
-            // show map with placemarks: (1) input address at center of map; (2) the tallest bldg. within 1-mi. radius
-            initializeMap(lat, lng);
             // show Try Again button
             document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
             // hide loading indicator
