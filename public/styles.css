@@ -434,7 +434,7 @@ input:disabled {
 .loading-container {
     display: none;
     text-align: center;
-    font-family: 'Pacifico', cursive; /* or any other fancy font */
+    font-family: 'Orbitron', sans-serif;
 }
 
 .spinner {
