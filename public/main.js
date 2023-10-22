@@ -225,14 +225,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3>This property appears to be <u>ELIGIBLE</u> for Live Local Act development!</h3> 
                     </br><b>This means, among other benefits, that you can build as high as the tallest building within a mile.</b>
-                    </br>Here, that ceiling would be <b>${buildingHeight.toFixed(0)} feet tall.</b>`
+                    </br>Here, that would be <b>${buildingHeight.toFixed(0)} feet tall.</b>`
                 if (buildingHeight >= 200) {
-                    eligibilityDiv.innerHTML += ` <i><b>(Wow!</b> That's a lot of juicy feet 👀👣)</i>`;
+                    eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
                 }
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<h3>This property seems to be <u>INELIGIBLE</u> for Live Local development.</h3> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
+                eligibilityDiv.innerHTML += `<h3>This property appears <u>INELIGIBLE</u> for Live Local development.</h3> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
@@ -306,11 +306,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Second explainer part (max density limit)
-                eligibilityDiv.innerHTML += `</br>
-                    </br><b>The Act also lets you match the highest density anywhere in the municipality.</b>
-                    </br>According to my unofficial data, that's <b>${maxMuniDensity} units per acre in ${displayMuniName}</b>. <i>Tubular!</i>
-                    </br></br>Assuming all ${acres.toFixed(2)} acres will be residential at ${maxMuniDensity} units/ac. you're looking at
-                    </br>a maximum yield <b>${maxCapacity} units</b> via the Live Local pathway.</b>`;
+                eligibilityDiv.innerHTML += `
+                    </br><b>Live Local <i>also</i> lets you match the highest density allowed anywhere within the municipality. <i>Radical!</i></b>
+                    </br>Here in ${displayMuniName}, the highest density of existing multifamily projects is <b>${maxMuniDensity} units per acre</b>, according to my (unofficial) data.
+                    </br>Assuming that all ${acres.toFixed(2)} acres are to be used for multifamily at ${maxMuniDensity} units/acre, you're looking at a maximum yield of <b>${maxCapacity} units</b> via the Live Local pathway.`;
 
                 // add AI summary below eligibility section (not a great place for it, but w/e...)
                 const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
@@ -319,12 +318,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 /*
                 eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
                     </br></br>Actually, I'm getting pretty sick of being fed mediocre sites all day!!!`;
-                */
                 eligibilityDiv.innerHTML += `</br><h4><i>Bring me a commercial/industrial property next time.</i></h4>`;
+                */
             }
             // show detailed eligibility section
             eligibilityDiv.style.display = 'block';
-            // fade its text in quickly to simulate the AI 'speaking' to the user
+            // fade its text in quickly to simulate the AI 'talking' to the user
             animateTextFadeIn(eligibilityDiv);
 
 

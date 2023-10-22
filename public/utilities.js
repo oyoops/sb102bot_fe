@@ -82,7 +82,7 @@ function animateTextFadeIn(element) {
       if (current === nodes.length) {
           clearInterval(interval);
       }
-  }, 50);  // Adjust this interval time to speed up or slow down the animation
+  }, 100);  // Adjust this interval time to change the animation speed
 }
 
 /* Faux-loading indicator updater */
