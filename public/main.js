@@ -205,23 +205,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML += `<h3 align="center">The property is probably <u>NOT</u> ELIGIBLE for Live Local development...</h3> <br>It can't <i>already</i> be a residential/multifamily property to qualify.`;
-                eligibilityDiv.style.color = "Orange";
+                eligibilityDiv.innerHTML += `<h3 style="color:orange;" align="center">The property is probably <u>NOT</u> ELIGIBLE for Live Local development...</h3> <br>It can't <i>already</i> be a residential/multifamily property to qualify.`;
+                //eligibilityDiv.style.color = "Orange";
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<h3 align="center">The property looks <u>ELIGIBLE</u> for Live Local development!</h3> 
+                eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">The property looks <u>ELIGIBLE</u> for Live Local development!</h3> 
                     </br>That means, among other benefits, you can <b>build as high as the tallest building</b> within a one-mile radius.</b>
                     </br>On this particular piece of dirt, your buildings could rise <b>up to ${buildingHeight.toFixed(0)} feet</b> in height!`
                 if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
                 }
-                eligibilityDiv.style.color = "green";
+                //eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<h3 align="center">The property is probably <u>NOT</u> ELIGIBLE for Live Local development...</h3> <br>It must be <b>commercial</b> or <b>industrial</b> <i>already</i> to qualify.`;
-                eligibilityDiv.style.color = "red";
+                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">The property is probably <u>NOT</u> ELIGIBLE for Live Local development...</h3> <br>It must be <b>commercial</b> or <b>industrial</b> <i>already</i> to qualify.`;
+                //eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
 
