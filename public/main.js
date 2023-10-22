@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const matchAffordableSizesCheckbox = document.getElementById('matchAffordableSizes');
     const rentPerSqFtTableSection = document.getElementById('rentPerSqFtTableSection');
     
+    const countyDataTable = document.getElementById('countyDataTable');
+    const countyMaxRentsTable = document.getElementById('countyMaxRentsTable');
+    
     const landAndTotalHcInputSection = document.getElementById('landAndTotalHcInputSection');
     const landCostPerUnit = document.getElementById('landCostPerUnitInput');
     const totalHCPerUnit = document.getElementById('totalHCPerUnitInput');
@@ -186,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
             countyTableBody.innerHTML = countyRow;
-            document.getElementById('countyDataTable').style.display = 'table'; // Unhide
+            countyDataTable.style.display = 'table'; // show the county (and city*) data table
             
             // Populate the max rents table
             const rentsRow = `
@@ -198,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
             rentsTableBody.innerHTML = rentsRow;
-            document.getElementById('countyMaxRentsTable').style.display = 'table'; // Unhide
+            countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
 
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
