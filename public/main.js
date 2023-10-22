@@ -96,7 +96,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 cityData.cityName = 'unincorporated';
             }
             
+            // initialize the map (kind of early...)
+            initializeMap(lat, lng);
 
+            
             /* API blocks: */
 
             // API block #1 of 3
@@ -157,9 +160,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // convert [CITY] and [county] to Proper Case for cleaner display
             cityNameProper = toProperCase(cityData.cityName);
             countyNameProper = specialCountyFormatting(countyData.county_name);
-
-            // initialize the map
-            initializeMap(lat, lng);
 
             // show Try Again button
             document.querySelector('#tryAgainButton').style.display = 'block';
