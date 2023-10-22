@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<h3>This property appears <u>ELIGIBLE</u> for Live Local Act development!</h3> 
+                eligibilityDiv.innerHTML += `<h3>This property appears to be <u>ELIGIBLE</u> for Live Local Act development!</h3> 
                     </br><b>This means, among other benefits, that you can build as high as the tallest building within a mile.</b>
                     </br>Here, that ceiling would be <b>${buildingHeight.toFixed(0)} feet tall.</b>`
                 if (buildingHeight >= 200) {
