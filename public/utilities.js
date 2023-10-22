@@ -7,11 +7,9 @@
 //===========*/
 
 
+/* AI-Related Functions: */
 
-/* IN TESTING */
-/* AI-related functions: */
-
-// fetch AI response set
+// fetch the set of AI responses
 async function fetchAiEnhancements(row) {
   // Define the endpoints
   const endpoints = [
@@ -47,7 +45,7 @@ async function fetchAiEnhancements(row) {
   }
 }
 
-// display AI response set
+// display AI responses
 function displayAiEnhancements(enhancements) {
   // Log the received enhancements for debugging
   console.log("Received AI Summary");
@@ -68,6 +66,7 @@ function displayAiEnhancements(enhancements) {
   return summaryMessage;
 }
 
+// fade in AI response and eligibility section
 function animateTextFadeIn(element) {
   // Clone the original element
   const original = element.cloneNode(true);
@@ -83,11 +82,10 @@ function animateTextFadeIn(element) {
       if (current === nodes.length) {
           clearInterval(interval);
       }
-  }, 5);  // Adjust this interval time to speed up or slow down the animation
+  }, 50);  // Adjust this interval time to speed up or slow down the animation
 }
 
-
-/* Fake loading indicator updater */
+/* Faux-loading indicator updater */
 function updateLoadingBar() {
   const loadingFill = document.querySelector('.loading-fill');
   const loadingPercentage = document.querySelector('.loading-percentage');
@@ -109,7 +107,7 @@ function updateLoadingBar() {
 
 
 
-/* VERIFIED */
+/* Non-AI Related Functions: */
 
 // Get max density of a municipality
 async function getMaxDensity(county, city) {

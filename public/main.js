@@ -1,28 +1,6 @@
 // main.js - the primary script for SB102bot web app.
 
-// Global variables
-/*
-let address;
-let geocodeData;
-let countyData;
-let parcelData;
-let cityData;
-let lat;
-let lng;
-let acres;
-let fakeMillage;
-let maxMuniDensity;
-let cityNameProper;
-let countyNameProper;
-let displayMuniName;
-let totalUnits;
-let marketUnits;
-let affordableUnits;
-let maxCapacity = 0;
-let affordablePct = 0.40; // match the affordable slider default value (=40%)
-*/
-
-// after page is fully loaded
+/* once the page is fully loaded */
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
 

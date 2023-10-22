@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
                 SELECT ST_SetSRID(ST_MakePoint($1, $2), 4326) AS geom
             )
                         
-            -- Find the closest parcel in Broward County and join with data_master
+            -- Find the closest parcel and join with data_master
             SELECT pm.*, dm.*
             FROM input_point AS ip, parcels_master AS pm
             INNER JOIN data_master AS dm ON pm.parcelno = dm.PARCEL_ID

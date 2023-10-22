@@ -1,8 +1,8 @@
 // globals.js - Centralized global variable declarations for SB102bot web app.
 
 /* GLOBAL VARIABLES FROM main.js */
-let intervalTimeLoading = 500; // fake loading indicator time (ms) until 99%
-let percentageLoading = 0; // fake loading indicator % value
+let intervalTimeLoading = 250; // loading indicator - estimated time to reach 99%
+let percentageLoading = 0; // loading indicator - % value text
 let address;
 let geocodeData;
 let countyData;
@@ -21,8 +21,6 @@ let marketUnits;
 let affordableUnits;
 let maxCapacity = 0;
 let affordablePct = 0.40; // match the affordable slider default value (=40%)
-
-
 
 /* GLOBAL VARIABLES FROM calculations.js */
 const MILLAGE_ADJUSTMENT = 9.999;
