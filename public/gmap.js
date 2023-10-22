@@ -129,9 +129,11 @@ async function initializeMap(lat, lng) {
         console.error("An error occurred during map initialization:", error);
     }
 
+    /*
     // Show the Google Map
     document.getElementById('map').style.display = 'block';
     document.getElementById('map').scrollIntoView();
+    */
 }
 
 // Create a text marker (transparent placemark with a label)

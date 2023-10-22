@@ -303,12 +303,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 summaryContent += `</br><h4><i>Bring me a commercial/industrial property next time.</i></h4>`;
                 */
             }
+
+            // Show the already-initialized Google Map
+            document.getElementById('map').style.display = 'block';
+            document.getElementById('map').scrollIntoView();
+
+            // Generate, display text content
             eligibilityDiv.innerHTML = summaryContent; // reset div content
             eligibilityDiv.style.display = 'block'; // unhide div
             animateTextFadeIn(eligibilityDiv); // fade in div content to simulate AI 'talking'
 
 
-
+            /* User Inputs: */
+            
             // affordable percentage slider
             affordablePercentageSlider.value = 40; // 0.40; // default = 40% affordable units
             affordablePercentageSlider.oninput = function() {
