@@ -52,7 +52,7 @@ function displayAiEnhancements(enhancements) {
 
   // Create and populate the summary message
   let summaryMessage = `</br></br>
-    <h3>First, let's review some intel:</h3>
+    <ul><h3>First, let's review some intel I've gathered...</h3></ul>
     <ul>`;
   enhancements.forEach((enhancement, index) => {
     summaryMessage += `<li>${enhancement}</li>`;
@@ -60,7 +60,7 @@ function displayAiEnhancements(enhancements) {
   summaryMessage += "</ul>";
 
   // Log the summary for debugging purposes
-  console.log("AI Summary:\n" + summaryMessage);
+  console.log("AI Property Summary:\n" + summaryMessage);
 
   // Return the summary message
   return summaryMessage;
@@ -82,7 +82,7 @@ function animateTextFadeIn(element) {
       if (current === nodes.length) {
           clearInterval(interval);
       }
-  }, 100);  // Adjust this interval time to change the animation speed
+  }, 200);  // Adjust this interval time to change the animation speed
 }
 
 /* Faux-loading indicator updater */
