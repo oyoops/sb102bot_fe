@@ -10,19 +10,9 @@
 
 /* IN TESTING */
 
-/*
-async function fetchDataAndEnhancements() {
-  try {
-      const row = await queryDatabase();
-      const enhancements = await fetchAiEnhancements(row);
-      displayAiEnhancements(enhancements);
-  } catch (error) {
-      console.error("There was an error:", error);
-      // Handle error, e.g., show error message
-  }
-}
-*/
+/* AI-related functions */
 
+// fetch AI response set
 async function fetchAiEnhancements(row) {
   // Define the endpoints
   const endpoints = [
@@ -61,7 +51,7 @@ async function fetchAiEnhancements(row) {
   }
 }
 
-
+// display AI response set
 function displayAiEnhancements(enhancements) {
   // Log the received enhancements for debugging
   console.log("Received AI Enhancements:", enhancements);
@@ -73,9 +63,6 @@ function displayAiEnhancements(enhancements) {
   // Alert the user with the summary
   alert(summaryMessage);
 }
-
-
-
 
 
 /* VERIFIED */
