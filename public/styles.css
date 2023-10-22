@@ -243,6 +243,8 @@ footer a:hover {
     display: none;
     font-weight: 700;
     color: #007BFF;
+    position: relative;
+    padding-left: 50px; /* Space for the spinner */
 }
 
 @keyframes spin {
@@ -250,9 +252,29 @@ footer a:hover {
     100% { transform: rotate(360deg); }
 }
 
+.loading::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    margin-top: -15px; /* Half of height */
+    border: 4px solid rgba(0, 123, 255, 0.2);
+    border-top-color: #007BFF;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
 .loading::after {
-    content: ' ...';
-    animation: spin 1s infinite;
+    content: '...';
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
 }
 
 #tryAgainButton {

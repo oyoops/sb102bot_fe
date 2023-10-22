@@ -67,19 +67,23 @@ function displayAiEnhancements(enhancements) {
 }
 
 function animateTextFadeIn(element) {
-  const textContent = element.textContent; // This will get the plain text without HTML tags
-  let contentArray = textContent.split('');
+  // Clone the original element
+  const original = element.cloneNode(true);
+  element.innerHTML = '';  // Clear current content
+
+  // Split the nodes (text and HTML elements) into an array
+  let nodes = [...original.childNodes];
   let current = 0;
-  element.textContent = ''; // Clear the current content
+
   let interval = setInterval(() => {
-      element.textContent += contentArray[current];
+      element.appendChild(nodes[current].cloneNode(true));  // Append the current node to the element
       current++;
-      if (current === contentArray.length) {
+      if (current === nodes.length) {
           clearInterval(interval);
-          element.innerHTML = element.textContent; // Restore the HTML formatting
       }
-  }, 50); // Adjust this interval time to speed up or slow down the animation
+  }, 5);  // Adjust this interval time to speed up or slow down the animation
 }
+
 
 
 

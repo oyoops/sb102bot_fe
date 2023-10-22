@@ -106,6 +106,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // show map with placemarks: (1) input address at center of map; (2) the tallest bldg. within 1-mi. radius
             initializeMap(lat, lng);
+            /*
+            ^ This is very early, long before the AI responses are ready, so it's awkward. 
+            Need to at least make the loading indicator more robust...
+            */
 
             // fetch the city of the address (Lat,Lng = CityData || CityName = Unincorporated if not in a city)
             const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
