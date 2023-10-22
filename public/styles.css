@@ -434,7 +434,7 @@ input:disabled {
 }
 
 .loading-text {
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: 500;
     color: #007BFF;
     margin-bottom: 10px;
@@ -452,7 +452,7 @@ input:disabled {
 .loading-fill {
     height: 100%;
     width: 0%; /* will be modified by JavaScript */
-    background-color: #002fff;
+    background-color: #637be7;
     border-radius: 15px;
 }
 

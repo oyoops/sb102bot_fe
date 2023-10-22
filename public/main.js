@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('No response received from AI server.');
                 }
                 console.log("AI Enhancements Received:", aiEnhancements);
-                displayAiEnhancements(aiEnhancements);
+                displayAiEnhancements(aiEnhancements); ///////////////////////////////////////////////////////////////////////////////////////////////////
             } catch (error) {
                 console.error("Error fetching AI enhancements.\nEncountered in API Block #3:\n", error);
                 ////alert("Hmm, I think I need a coffee... ☕ \nI failed to analyze your parcel. \nMaybe try again later?");
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </br></br>Assuming you'll use all ${acres.toFixed(2)} acres for multifamily, you're looking at a maximum 'Live Local' yield of <b>${maxCapacity} units</b>.`;
 
                 // add AI summary below eligibility section (not a great place for it, but w/e...)
-                const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
+                const aiSummaryHtml = displayAiEnhancements(aiEnhancements); ///////////////////////////////////////////////////////////////////////////////////////////////////
                 eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + aiSummaryHtml;
             } else {
                 /*
