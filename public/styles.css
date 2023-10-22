@@ -361,3 +361,33 @@ input:disabled {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
+
+/* General styling for the eligibilityStatus div */
+#eligibilityStatus {
+    max-width: 80%; /* Control the width of the div */
+    margin: 20px auto; /* Center the div on the page */
+    padding: 20px; /* Space inside the div */
+    border: 1px solid #d1d1d1; /* A simple border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* A subtle shadow */
+    background-color: #f9f9f9; /* A light background color */
+    font-family: Arial, sans-serif; /* A neutral font */
+}
+
+/* Styling for the title inside the eligibilityStatus div */
+#eligibilityStatus h3 {
+    text-align: center; /* Center-align the title */
+    color: #333; /* Dark text color */
+    margin-top: 0; /* Remove top margin for better spacing */
+}
+
+/* Styling for the list inside the eligibilityStatus div */
+#eligibilityStatus ul {
+    list-style-type: disc; /* Bullet points */
+    padding-left: 40px; /* Indentation for the list */
+}
+
+#eligibilityStatus li {
+    color: #555; /* Slightly darker text color for list items */
+    margin-bottom: 10px; /* Space between list items */
+}
