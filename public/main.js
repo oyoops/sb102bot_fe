@@ -286,27 +286,32 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
 
+            let summaryContent = "";
+
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Second explainer part (max density limit)
-                eligibilityDiv.innerHTML += `
-                    </br></br><b>The Act also allows you to match the highest density allowed anywhere in the municipality. <i>Radical!</i></b>
+                
+                // First, build the entire content for eligibilityDiv
+                ////eligibilityDiv.innerHTML += `
+                summaryContent += `</br></br><b>The Act also allows you to match the highest density allowed anywhere in the municipality. <i>Radical!</i></b>
                     </br>The highest density among existing apartments in ${displayMuniName} is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but great) data.
                     </br></br>Assuming you'll use all ${acres.toFixed(2)} acres for multifamily, you're looking at a maximum 'Live Local' yield of <b>${maxCapacity} units</b>.`;
-
-                // add AI summary below eligibility section (not a great place for it, but w/e...)
-                const aiSummaryHtml = displayAiEnhancements(aiEnhancements); ///////////////////////////////////////////////////////////////////////////////////////////////////
-                eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + aiSummaryHtml;
+                
+                // Add AI summary to the existing eligibilityDiv content
+                ////eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + aiSummaryHtml;
+                ////const aiSummaryHtml = displayAiEnhancements(aiEnhancements); ///////////////////////////////////////////////////////////////////////////////////////////////////
+                summaryContent += displayAiEnhancements(aiEnhancements);
             } else {
                 /*
-                eligibilityDiv.innerHTML += `</br>You must bring me commercial and industrial properties ONLY!
+                summaryContent += `</br>You must bring me commercial and industrial properties ONLY!
                     </br></br>Actually, I'm getting pretty sick of being fed mediocre sites all day!!!`;
-                eligibilityDiv.innerHTML += `</br><h4><i>Bring me a commercial/industrial property next time.</i></h4>`;
+                summaryContent += `</br><h4><i>Bring me a commercial/industrial property next time.</i></h4>`;
                 */
             }
-            // show detailed eligibility section
-            eligibilityDiv.style.display = 'block';
-            // fade its text in quickly to simulate the AI 'talking' to the user
-            animateTextFadeIn(eligibilityDiv);
+            eligibilityDiv.innerHTML = content; // set div content
+            eligibilityDiv.style.display = 'block'; // show div
+            animateTextFadeIn(eligibilityDiv); // fade in div content to simulate AI 'talking'
+
 
 
             // affordable percentage slider
