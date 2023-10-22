@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Show the already-initialized Google Map
             document.getElementById('map').style.display = 'block';
-            document.getElementById('map').scrollIntoView();
+            ////document.getElementById('map').scrollIntoView();
 
             // Generate and display text content
             summaryContent = displayAiEnhancements(summaryContent);
