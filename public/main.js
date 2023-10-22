@@ -230,8 +230,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3>This property appears to be <u>ELIGIBLE</u> for Live Local Act development!</h3> 
-                    </br><b>This means, among other benefits, that you can build as high as the tallest building within a mile.</b>
-                    </br>Here, that would be <b>${buildingHeight.toFixed(0)} feet tall.</b>`
+                    </br>This means, among other benefits, that you can <b>build as high as the tallest building</b> within a one-mile radius.</b>
+                    </br>On this particular piece of dirt, your buildings could rise <b>up to ${buildingHeight.toFixed(0)} feet</b> in height!`
                 if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
                 }
@@ -313,9 +313,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Second explainer part (max density limit)
                 eligibilityDiv.innerHTML += `
-                    </br><b>Live Local <i>also</i> lets you match the highest density allowed anywhere within the municipality. <i>Radical!</i></b>
-                    </br>Here in ${displayMuniName}, the highest density of existing multifamily projects is <b>${maxMuniDensity} units per acre</b>, according to my (unofficial) data.
-                    </br>Assuming that all ${acres.toFixed(2)} acres are to be used for multifamily at ${maxMuniDensity} units/acre, you're looking at a maximum yield of <b>${maxCapacity} units</b> via the Live Local pathway.`;
+                    </br></br><b>The Act also allows you to match the highest density allowed anywhere in the municipality. <i>Radical!</i></b>
+                    </br>The highest density of all ${displayMuniName} multifamily projects that exist today is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but amazing) data.
+                    </br></br>Assuming you'll use all ${acres.toFixed(2)} acres for multifamily, you're looking at a maximum 'Live Local' yield of <b>${maxCapacity} units</b>.`;
 
                 // add AI summary below eligibility section (not a great place for it, but w/e...)
                 const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
