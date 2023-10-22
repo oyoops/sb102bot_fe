@@ -68,7 +68,7 @@ form {
 
 /* Generic table styling */
 table {
-    width: 80%;
+    width: auto;
     max-width: 1000px;
     margin-left: 10px;
     margin-right: 10px;
@@ -89,10 +89,11 @@ th {
 tbody tr:hover {
     background-color: #f2f4f7;    /* Hover effect for table rows */
 }
-/* Responsive design: If the screen width is 600px or less, make the tables full width */
+/* Responsive design: If the screen width is 600px or less, make the tables 95% width */
 @media (max-width: 600px) {
     table {
-        width: 100%;
+        font-size: 0.8em;
+        width: 95%;
     }
 }
 
