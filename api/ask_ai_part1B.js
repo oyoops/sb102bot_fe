@@ -7,10 +7,19 @@ module.exports = async (req, res) => {
 
     const messages = [{
         "role": "system",
-        "content": "Analyze the parcel's physical characteristics, including its age, size, and construction. Provide insights into its condition, potential wear and tear, and any historical significance."
+        "content": `
+        INSTRUCTIONS:
+        - The style and format of the response must be, generally, an outline (you may take artistic liberties on this rule alone).  
+        - Use HTML to format your response as necessary, particularly with the style, color, etc. of the text. Line breaks must be in HTML. 
+        - DO NOT WRITE ANY boilerplate, worthless, zero-information phrases such as "More analysis is required," and do not suggest that I "do additional research," etc.  Your job is to provide valuable inferences that you CAN make based on the provided data, not write prose about things you CAN'T do.
+        = In fact, all filler sentences, worthless zero-info introductory sentences, and boring concluding sentences are also forbidden!
+        - Speak with confidence and present the analysis like a seasoned professional. Your audience is an investor/developer of large multifamily apartment projects. They don't need to have their hands held!
+        
+    Evaluate the parcel's physical attributes, including its age, size, and construction. Deduce its condition, potential wear and tear, and any historical significance.
+        `
     }, {
         "role": "user",
-        "content": `The parcel at ${phy_addr1}, ${phy_addr2}, ${phy_city} was built in ${act_yr_blt} with an effective year of ${eff_yr_blt}. It has a total living area of ${tot_lvg_ar} sq. ft. Can you provide insights about this parcel's physical characteristics?`
+        "content": `The parcel at ${phy_addr1}, ${phy_addr2}, ${phy_city} was built in ${act_yr_blt} with an effective year of ${eff_yr_blt}. It has a total living area of ${tot_lvg_ar} sq. ft. What insights can you provide about this parcel's physical attributes?`
     }];
 
     try {

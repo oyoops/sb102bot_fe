@@ -7,10 +7,19 @@ module.exports = async (req, res) => {
 
     const messages = [{
         "role": "system",
-        "content": "Evaluate the parcel's provided valuations. Provide an overview of its value, potential tax implications, and insights into the value distribution between the land and any structures on it."
+        "content": `
+        INSTRUCTIONS:
+        - The style and format of the response must be, generally, an outline (you may take artistic liberties on this rule alone).  
+        - Use HTML to format your response as necessary, particularly with the style, color, etc. of the text. Line breaks must be in HTML. 
+        - DO NOT WRITE ANY boilerplate, worthless, zero-information phrases such as "More analysis is required," and do not suggest that I "do additional research," etc.  Your job is to provide valuable inferences that you CAN make based on the provided data, not write prose about things you CAN'T do.
+        = In fact, all filler sentences, worthless zero-info introductory sentences, and boring concluding sentences are also forbidden!
+        - Speak with confidence and present the analysis like a seasoned professional. Your audience is an investor/developer of large multifamily apartment projects. They don't need to have their hands held!
+            
+    Assess the parcel's provided valuations. Give a detailed overview of its value, potential tax implications, and insights into the value distribution between the land and any structures on it.
+        `
     }, {
         "role": "user",
-        "content": `The parcel has a just value of ${jv}, assessed values of ${av_sd} (school district) and ${av_nsd} (non-school district), taxable values of ${tv_sd} (school district) and ${tv_nsd} (non-school district), and a land value of ${lnd_val}. Can you evaluate these valuations?`
+        "content": `The parcel has a just value of ${jv}, assessed values of ${av_sd} (school district) and ${av_nsd} (non-school district), taxable values of ${tv_sd} (school district) and ${tv_nsd} (non-school district), and a land value of ${lnd_val}. How would you assess these valuations?`
     }];
 
     try {
