@@ -58,12 +58,12 @@
     <!-- Loading Indicator -->
     <br>
     <div class="loading-container">
-        <div class="loading-text"><b>Please wait,</b> doing due diligence</div>
+        <div class="spinner"></div>
+        <div class="loading-text"><b>Doing due diligence.</b> Please wait...</div>
         <div class="loading-bar">
             <div class="loading-fill"></div>
             <div class="loading-percentage">0%</div>
         </div>
-        <!-- <div class="spinner"></div> -->
     </div>
     
     <!-- Map -->
@@ -79,6 +79,9 @@
     <table id="parcelDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
+                <th colspan="4">Property Info</th>
+            </tr>
+            <tr>
                 <th>Owner</th>
                 <th>Parcel ID</th>
                 <th>Acreage</th>
@@ -93,6 +96,9 @@
     <!-- County data table -->
     <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
+            <tr>
+                <th colspan="4">Municipal Info</th>
+            </tr>
             <tr>
                 <th>City</th>
                 <th>County</th>
@@ -144,7 +150,7 @@
         <!-- Affordable Units Percentage Slider -->
         <label for="affordablePctSlider">
             <h3>
-                Affordable units (<span id="affordablePctDisplay">40%</span> of total)
+                Affordable Units: <span id="affordablePctDisplay">40%</span>
             </h3>
         </label>
         <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
@@ -155,9 +161,12 @@
         <table id="unitCalculationTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
                 <tr>
+                    <th colspan="3">Unit Counts</th>
+                </tr>
+                <tr>
                     <th>Affordable</th>
                     <th>Market</th>
-                    <th>Total Units</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody id="unitCalculationTableBody">
@@ -173,6 +182,9 @@
         <label><input type="checkbox" id="matchAffordableSizes"> Match market-rate and affordable unit sizes?</label>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
             <thead>
+                <tr>
+                    <th colspan="3">Avg. Unit Sizes</th>
+                </tr>
                 <tr>
                     <th></th>
                     <th>Market</th>
@@ -200,11 +212,16 @@
                     <td><input type="number" class="sizeInput marketSizeInput" id="market3BDSize" placeholder="Size" value="1250" step="25"></td>
                     <td><input type="number" class="sizeInput affordableSizeInput" id="affordable3BDSize" placeholder="Size" value="1250" step="25"></td>
                 </tr>
+                <!-- <tr> -->
+                    <!-- <td><b>Avgs.</b></td> -->
+                    <!-- <td><b><span id="weightedAvgMarketSize">0</span> sq. ft.</b></td> -->
+                    <!-- <td><b><span id="weightedAvgAffordableSize">0</span> sq. ft.</b></td> -->
+                <!-- </tr> -->
             </tbody>
         </table>
 
-        <!-- Weighted Average Unit Size Outputs -->
-        <h4>Weighted Averages:</h4>
+        <!-- Weighted Avg Unit Size Outputs -->
+        <h4>Weighted average sizes:</h4>
         <p>Market:  <span id="avgMarketSizeDisplay">0</span> sq. ft.</p>
         <p>Affordable:  <span id="avgAffordableSizeDisplay">0</span> sq. ft.</p>
         <p><b>Blended:  <span id="avgBlendedSizeDisplay">0</span> sq. ft.</b></p>
@@ -216,8 +233,11 @@
             <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
                 <thead>
                     <tr>
+                        <th colspan="2">Market Rents</th>
+                    </tr>
+                    <tr>
                         <th></th>
-                        <th>Market Rent</th>
+                        <th>Rent Check (all-in)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -248,9 +268,12 @@
             <table id="rentPerSqFtTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
                 <thead>
                     <tr>
+                        <th colspan="3">Rents/Sq. Ft.</th>
+                    </tr>
+                    <tr>
                         <th></th>
-                        <th>Market Rent/sq. ft.</th>
-                        <th>Affordable Rent/sq. ft.</th>
+                        <th>Market</th>
+                        <th>Affordable</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -285,8 +308,11 @@
             <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
                 <thead>
                     <tr>
-                        <th>Land Price /unit</th>
-                        <th>Cxn. Cost /unit</th>
+                        <th colspan="2">Hard Costs (per unit)</th>
+                    </tr>
+                    <tr>
+                        <th>Land</th>
+                        <th>Construction</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -303,10 +329,10 @@
             <table id="totalLandAndTotalHcTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse:
             collapse; width: 100%;">
                 <thead>
-                    <tr>
+                <tr>
                         <th>Land</th>
-                        <th>Cxn. Cost</th>
-                        <th>Total</th>
+                        <th>Construction</th>
+                        <th><b>Total</b></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -318,11 +344,11 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="2">Land + Cxn. Cost /unit</th>
+                        <th colspan="2">Per unit</th>
                         <th id="totalLandAndTotalHcPerUnit">-</th>
                     </tr>
                     <tr>
-                        <th colspan="2">Land + Cxn. Cost /sq. ft.</th>
+                        <th colspan="2">Per sq. ft.</th>
                         <th id="totalLandAndTotalHcPerSqFt">-</th>
                     </tr>
                 </tfoot>
@@ -335,11 +361,14 @@
         <table id="abatementTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
                 <tr>
+                    <th colspan="2">Abatement Calculations</th>
+                </tr>
+                <tr>
                     <th>
-                        % Tax savings
+                        Savings (net)
                     </th>
                     <th>
-                        Δ$ Rent equiv.
+                        Δ Rent Equivalent
                     </th>
                 </tr>
             </thead>
@@ -348,9 +377,10 @@
             </tbody>
         </table>
         <p>
-            <b>Δ$ Rent Equiv.</b>: Rent discount that would offset tax savings.
-            <br><br><i>The 30-year abatement is for ad valorem property taxes only.
-            <br>i.e., Excludes fire/waste and CDD assessments</i>
+            Live Local's tax abatement would contribute as much to Project NOI as a rent increase of <i>$<b>[Δ Rent Equivalent]</b></i>.
+            </br></br>Deed restriction carries a 30-year term and applies only to ad valorem property taxes.
+            </br>(i.e., excludes fire/waste and CDD assessments, if any) 
+            </br>According to the capital markets folks I trust, raising exit cap by +15 bps should be sufficient to mitigate the restrictions.
         </p>
 
         <!-- New Search ('Try Again') Button -->
