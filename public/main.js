@@ -211,13 +211,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
-                console.log("HEIGHT:", buildingHeight, "feet");
+                console.log("MAX HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">The property looks <u>ELIGIBLE</u> for Live Local development!</h3> 
-                    </br>Coolio 😎👍 That means, among other benefits, you can <b>build as high as the tallest building</b> within a one-mile radius.</b>
-                    </br>Here, that'd be <b>${buildingHeight.toFixed(0)} feet</b> in height! I've added the tallest building to the map below.`
-                if (buildingHeight >= 200) {
+                    </br>Coolio 😎👍 That means, among many other benefits, you can build <b>as high as the tallest building</b> within a one-mile radius. 
+                    Here, that'd mean up to <b>${buildingHeight.toFixed(0)} feet</b> in height! I've added the tallest building to the map along with its distance fron your site.`
+                /*if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
-                }
+                }*/
                 //eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
@@ -291,9 +291,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // if parcel is eligible, then finish composing the eligibility and AI summary
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Second explainer part (max density limit)                
-                summaryContent += `</br></br><b>The Act also allows you to match the highest density allowed anywhere in the municipality. <i>Radical!</i></b>
-                    </br>The highest density among existing apartments in ${displayMuniName} is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but great) data.
-                    </br></br>Assuming you'll use all ${acres.toFixed(2)} acres for multifamily, you're looking at a maximum 'Live Local' yield of <b>${maxCapacity} units</b>.`;                
+                summaryContent += `</br></br><b>The Act also allows you to match the highest density allowed anywhere in the municipality. <i>Radical! </i></b>
+                    The highest density among existing apartments in ${displayMuniName} is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but great) data.
+                    </br></br>Assuming you'd use all ${acres.toFixed(2)} acres for apartments, the maximum-achievable yield here would be <b>${maxCapacity} units</b>.`;                
                 // Add AI summary to the existing eligibility content
                 summaryContent += displayAiEnhancements(aiEnhancements);
             } else {
