@@ -23,15 +23,12 @@ async function fetchAiEnhancements(row) {
       '/api/ask_ai_part1E'
   ];
 
+  // Convert row object to query string
+  const queryString = new URLSearchParams(row).toString();
+
   // Create an array of fetch promises
   const fetchPromises = endpoints.map(endpoint => {
-      return fetch(endpoint, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(row) // send row data as request body
-      })
+      return fetch(`${endpoint}?${queryString}`) // append query string to endpoint
       .then(response => {
           if (!response.ok) {
               // If HTTP-status is 4xx or 5xx, throw error
