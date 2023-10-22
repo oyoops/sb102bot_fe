@@ -81,12 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
             initialContent.style.display = 'none';  // hide the rest of initial content
             
             // show loading indicator
+            updateLoadingBar();
             document.querySelector('.loading').style.display = 'block';
             
             // geocode the input address
             const geocodeEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
             const geocodeResponse = await fetch(geocodeEndpoint);
-            // check success
             if (!geocodeResponse.ok) {
                 console.log('ERROR: Geocode failed!');
                 throw new Error(`Server responded with ${geocodeResponse.status}: ${await geocodeResponse.text()}`);

@@ -85,6 +85,27 @@ function animateTextFadeIn(element) {
 }
 
 
+/* Fake loading indicator */
+let percentageLoading = 0;
+let intervalTimeLoading = 1500; // 1500 = 15 seconds
+  function updateLoadingBar() {
+  const loadingFill = document.querySelector('.loading-fill');
+  const loadingPercentage = document.querySelector('.loading-percentage');
+
+  percentageLoading = percentageLoading + (1 - percentageLoading / 100) * 2; // This makes it slow down as it approaches 100
+
+  if (percentageLoading >= 99) {
+    percentageLoading = 99;
+  }
+
+  loadingFill.style.width = percentageLoading + '%';
+  loadingPercentage.textContent = Math.round(percentageLoading) + '%';
+
+  if (percentageLoading < 99) {
+      setTimeout(updateLoadingBar, intervalTimeLoading);
+  }
+}
+
 
 
 
