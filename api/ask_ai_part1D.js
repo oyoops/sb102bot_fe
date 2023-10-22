@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
             model: 'gpt-4',
             messages: messages,
             max_tokens: 500,
-            temperature: 0.7,
+            temperature: 0.5,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
         }, {
