@@ -66,7 +66,7 @@ form {
     max-width: 600px; /* New addition: set a maximum width */
 }
 
-/* Table styling */
+/* Generic table styling */
 table {
     width: 80%;
     max-width: 1000px;
@@ -76,24 +76,19 @@ table {
     background-color: #ffffff;      /* White background for tables */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);  /* A subtle shadow around the tables */
 }
-
-
 th, td {
     border: 1px solid #e0e0e0;     /* Lighter border color */
     padding: 12px 15px;            /* Increased padding for cells */
     text-align: left;
 }
-
 th {
     background-color: #f7f9fc;     /* Light background for table header */
     color: #333;
     font-weight: 600;              /* Bold font for table header */
 }
-
 tbody tr:hover {
     background-color: #f2f4f7;    /* Hover effect for table rows */
 }
-
 /* Responsive design: If the screen width is 600px or less, make the tables full width */
 @media (max-width: 600px) {
     table {
@@ -114,7 +109,6 @@ tbody tr:hover {
     color: black; 
     opacity: 1; 
 }
-
 /* Responsive styles for smaller screen widths */
 @media (max-width: 800px) {
     form {
@@ -125,28 +119,23 @@ tbody tr:hover {
         padding-left: 10px;
         padding-right: 10px;
     }
-
     #addressInput {
         font-size: 14px; 
     }
 }
-
 /* Responsive design: If the screen width is 600px or less, adjust styles for mobile */
 @media (max-width: 600px) {
     h1 {
         font-size: 1.8em; /* Adjust font size for headers */
     }
-
     p {
         font-size: 0.85em; /* Adjust font size for paragraphs */
-    }
-    
+    }    
     /* Add some margins around the text to make it look better */
     p, h1, table {
         margin-left: 5px;
         margin-right: 5px;
     }
-
     #addressInput {
         font-size: 0.9em; /* Adjust font size for the input field */
         width: 100%;
@@ -170,7 +159,6 @@ button {
     text-align: center;
     transition: background-color 0.3s;
 }
-
 button:hover {
     background-color: #044b98;
 }
@@ -189,16 +177,17 @@ button:hover {
     z-index: 1000;
 }
 
+/* UNUSED (?): */
 #menuBar a:first-child {
     margin-left: 20px;
     cursor: pointer;
 }
-
 #menuBar a:last-child {
     margin-right: 20px;
     cursor: pointer;
 }
 
+/* UNUSED: */
 #sunIcon {
     display: inline-block;
     background-color: #2b18b8;
@@ -207,7 +196,6 @@ button:hover {
     height: 50px;
     position: relative;
 }
-
 #sunIcon::before {
     content: "☀️";
     font-size: 2.0em;
@@ -229,29 +217,26 @@ footer {
     font-weight: 200;
     font-size: 0.6em;
 }
-
 footer a {
     color: #044b98;
     text-decoration: none;
 }
-
 footer a:hover {
     text-decoration: underline;
 }
 
+/* UNUSED: */
 .loading {
     display: none;
     font-weight: 700;
     color: #007BFF;
     position: relative;
-    padding-left: 50px; /* Space for the spinner */
+    padding-left: 50px;
 }
-
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
 .loading::before {
     content: '';
     position: absolute;
@@ -265,12 +250,10 @@ footer a:hover {
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
-
 .loading::after {
     content: '...';
     animation: blinker 1s linear infinite;
 }
-
 @keyframes blinker {
     0% { opacity: 0.2; }
     50% { opacity: 1; }
@@ -278,21 +261,22 @@ footer a:hover {
 }
 
 #tryAgainButton {
+    /* margin-top: 10px; */
+    /* margin-bottom: 10px; */
+    width: 300px;
+    padding: 5px 10px;
     font-weight: 500;
     background-color: #163f85;
     color: #ffffff;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 300px;
-    padding: 5px 10px;
+    opacity: 1;
     border-radius: 5px;
     display: inline-block;
     justify-content: center;
     align-items: center;
     text-align: center;
-    opacity: 1; /* Made it fully visible */
 }
 
+/* UNUSED: */
 #runAIButton {
     font-weight: 500;
     background-color: #163f85;
@@ -316,8 +300,8 @@ footer a:hover {
 
 /* Slider styling */
 .slider {
-    width: 100%;
-    max-width: 500px;
+    width: 70%;
+    max-width: 400px;
     height: 25px;
     background: #d3d3d3;
     outline: none;
@@ -363,20 +347,21 @@ input:disabled {
 
 /* Added styles for Google Map container */
 #map {
-    width: 70%;
-    max-width: 1500px;
-    height: 400px;
+    width: 80%;
+    max-width: 1200px;
+    height: 500px;
     border-radius: 20px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
     display: none;
     position: relative;
-    transform: translateY(20px);
+    transform: translateY(30px);
     transition: opacity 1s, transform 1s;
 }
 
+/* UNUSED: */
 #aiContainer {
     display: none;
-    max-width: 70%;
+    max-width: 80%;
     font-family: 'Roboto', serif;
     margin-left: auto;
     margin-right: auto;
@@ -385,37 +370,38 @@ input:disabled {
 }
 
 /* General styling for the eligibilityStatus div */
+/* DUPLICATE?? 
 #eligibilityStatus {
-    display: none; /* initially hidden */
+    display: none;
     width: 70%;
     max-width: 1500px;
-    margin: 20px auto; /* Center the div on the page */
-    padding: 20px; /* Space inside the div */
-    border: 1px solid #d1d1d1; /* A simple border */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* A subtle shadow */
-    background-color: #f9f9f9; /* A light background color */
-    font-family: Arial, sans-serif; /* A neutral font */
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    background-color: #f9f9f9;
+    font-family: 'Verdana', sans-serif;
 }
-
-/* Styling for the title inside the eligibilityStatus div */
+*/
 #eligibilityStatus {
-    width: 70%;
-    max-width: 1500px;
+    width: 80%;
+    max-width: 1200px;
     margin: 2% auto;
     padding: 1em 2em;
     background-color: #f2f2f2;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
+    font-family: 'Verdana', sans-serif;
+    color: black;
     font-size: 1em;
-    line-height: 1.5;
-    text-align: left; /* Changed this to left for a better look */
+    line-height: 1.2;
+    text-align: left;
 }
 
 #eligibilityStatus ul {
     list-style-type: none; /* Removes bullet points */
-    padding-left: 0; /* Removes the default padding */
+    padding-left: 0; /* Removes default padding */
 }
 
 .char {
@@ -424,7 +410,6 @@ input:disabled {
     transform: translateY(1em);
     transition: all 0.3s;
 }
-
 
 #eligibilityStatus li {
     color: #555; /* Slightly darker text color for list items */
@@ -442,13 +427,13 @@ input:disabled {
     height: 30px;
     margin: 0 auto 10px; /* centering and giving space below */
     border: 4px solid rgba(0, 123, 255, 0.2);
-    border-top-color: #007BFF;
+    border-top-color: #0077ff;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
 
 .loading-text {
-    font-weight: 700;
+    font-weight: 500;
     color: #007BFF;
     margin-bottom: 10px;
 }
@@ -465,7 +450,7 @@ input:disabled {
 .loading-fill {
     height: 100%;
     width: 0%; /* will be modified by JavaScript */
-    background-color: #007BFF;
+    background-color: #002fff;
     border-radius: 15px;
 }
 
