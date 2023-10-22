@@ -169,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
             // hide loading indicator
+            loadingContainer.scrollIntoView;
             loadingContainer.style.display = 'none';            
             // show Try Again button
             tryAgainButton.style.display = 'block';
