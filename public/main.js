@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
             // hide the loading indicator
-            document.querySelector('.loading').style.display = 'none';
+            document.querySelector('.loading-container').style.display = 'none';
             
             // show the New Search button
             document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
