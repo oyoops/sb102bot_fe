@@ -288,20 +288,13 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
 
-
-
+            // if parcel is eligible, then finish composing the eligibility and AI summary
             if (eligibleCodes.includes(parcelData.dor_uc)) {
-                // Second explainer part (max density limit)
-                
-                // First, build the entire content for eligibilityDiv
-                ////eligibilityDiv.innerHTML += `
+                // Second explainer part (max density limit)                
                 summaryContent += `</br></br><b>The Act also allows you to match the highest density allowed anywhere in the municipality. <i>Radical!</i></b>
                     </br>The highest density among existing apartments in ${displayMuniName} is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but great) data.
-                    </br></br>Assuming you'll use all ${acres.toFixed(2)} acres for multifamily, you're looking at a maximum 'Live Local' yield of <b>${maxCapacity} units</b>.`;
-                
-                // Add AI summary to the existing eligibilityDiv content
-                ////eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + aiSummaryHtml;
-                ////const aiSummaryHtml = displayAiEnhancements(aiEnhancements); ///////////////////////////////////////////////////////////////////////////////////////////////////
+                    </br></br>Assuming you'll use all ${acres.toFixed(2)} acres for multifamily, you're looking at a maximum 'Live Local' yield of <b>${maxCapacity} units</b>.`;                
+                // Add AI summary to the existing eligibility content
                 summaryContent += displayAiEnhancements(aiEnhancements);
             } else {
                 /*
@@ -310,8 +303,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 summaryContent += `</br><h4><i>Bring me a commercial/industrial property next time.</i></h4>`;
                 */
             }
-            eligibilityDiv.innerHTML = summaryContent; // set div content
-            eligibilityDiv.style.display = 'block'; // show div
+            eligibilityDiv.innerHTML = summaryContent; // reset div content
+            eligibilityDiv.style.display = 'block'; // unhide div
             animateTextFadeIn(eligibilityDiv); // fade in div content to simulate AI 'talking'
 
 
