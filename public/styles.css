@@ -376,17 +376,24 @@ input:disabled {
 }
 
 /* Styling for the title inside the eligibilityStatus div */
-#eligibilityStatus h3 {
-    text-align: center; /* Center-align the title */
-    color: #333; /* Dark text color */
-    margin-top: 0; /* Remove top margin for better spacing */
+#eligibilityStatus {
+    width: 70%;
+    margin: 2% auto;
+    padding: 1em 2em;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    font-size: 1em;
+    line-height: 1.5;
+    text-align: left; /* Changed this to left for a better look */
 }
 
-/* Styling for the list inside the eligibilityStatus div */
 #eligibilityStatus ul {
     list-style-type: none; /* Removes bullet points */
-    padding-left: 0; /* Removes indentation for the list */
+    padding-left: 0; /* Removes the default padding */
 }
+
 .char {
     display: inline-block;
     opacity: 0;

@@ -67,22 +67,20 @@ function displayAiEnhancements(enhancements) {
 }
 
 function animateTextFadeIn(element) {
-  let text = element.innerHTML;
-  element.innerHTML = '';
-  for (let i = 0; i < text.length; i++) {
-      let span = document.createElement('span');
-      span.className = 'char';
-      span.innerHTML = text[i];
-      element.appendChild(span);
-  }
-  let chars = document.querySelectorAll('.char');
-  chars.forEach((char, index) => {
-      setTimeout(() => {
-          char.style.opacity = '1';
-          char.style.transform = 'translateY(0)';
-      }, 5 * index); // This will fade in each character with a 5ms delay between each.
-  });
+  const textContent = element.textContent; // This will get the plain text without HTML tags
+  let contentArray = textContent.split('');
+  let current = 0;
+  element.textContent = ''; // Clear the current content
+  let interval = setInterval(() => {
+      element.textContent += contentArray[current];
+      current++;
+      if (current === contentArray.length) {
+          clearInterval(interval);
+          element.innerHTML = element.textContent; // Restore the HTML formatting
+      }
+  }, 50); // Adjust this interval time to speed up or slow down the animation
 }
+
 
 
 
