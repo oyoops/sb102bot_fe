@@ -80,10 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {
             mainHeader.style.display = 'none';  // hide main header
             initialContent.style.display = 'none';  // hide the rest of initial content
             
-            // show loading indicator
+            // show loading indicators
             updateLoadingBar();
-            document.querySelector('.loading').style.display = 'block';
-            
+            document.querySelector('.loading-container').style.display = 'block';
+
             // geocode the input address
             const geocodeEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
             const geocodeResponse = await fetch(geocodeEndpoint);
