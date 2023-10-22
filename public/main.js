@@ -261,19 +261,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<b>The property seems <u>INELIGIBLE</u> for Live Local development.</b> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
+                eligibilityDiv.innerHTML += `<b>The property looks <u>INELIGIBLE</u> for Live Local development.</b> <br>The property must <u>already</u> be <b>commercial</b> or <b>industrial</b> to qualify!`;
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
             // show detailed eligibility section
             eligibilityDiv.style.display = 'block';
 
-            // add AI summary of the parcel under LLA eligibility sectio
-            // (using a poor shortcut: appending AI response to eligibility response. LOOKS VERY UGLY!!)
+            // add AI summary below eligibility section (not a great place for it, but w/e...)
             const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
-            eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + "\n\n<i><u>Some thoughts on the property:</u></i>\n" + aiSummaryHtml;
+            eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + aiSummaryHtml;
 
-            // fade text in quickly, simulating AI speech
+            // fade text in quickly to simulate the AI 'speaking' to the user
             animateTextFadeIn(eligibilityDiv);
 
             // convert land sq. ft. to acres

@@ -53,9 +53,11 @@ function displayAiEnhancements(enhancements) {
   console.log("Received AI Summary");
 
   // Create and populate the summary message
-  let summaryMessage = "</br><h2><b><u>Some thoughts about this property:</u></b> says:</h2><ul>";
+  let summaryMessage = `</br></br>
+    <h2><b><u>First, let's gather some more intel.</u></b></h2>
+    <ul>`;
   enhancements.forEach((enhancement, index) => {
-      summaryMessage += `<li>${enhancement}</li>`;
+    summaryMessage += `<li>${enhancement}</li>`;
   });
   summaryMessage += "</ul>";
 
