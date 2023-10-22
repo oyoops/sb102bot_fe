@@ -76,7 +76,8 @@ function animateTextFadeIn(element) {
 
   // Create a queue to handle nodes
   let queue = [{ node: original, parent: element }];
-  
+  let childQueue = [];  // Queue for child nodes
+
   let interval = setInterval(() => {
       if (queue.length > 0) {
           const { node, parent } = queue.shift();
@@ -84,12 +85,18 @@ function animateTextFadeIn(element) {
           if (node.nodeName !== "#text" || node.textContent.trim() !== "") {
               const appendedNode = parent.appendChild(node.cloneNode(false));
               
-              // If the current node has children, enqueue them to be processed next
+              // If the current node has children, enqueue them to be processed after current level
               if (node.childNodes.length > 0) {
                   Array.from(node.childNodes).forEach(child => {
-                      queue.push({ node: child, parent: appendedNode });
+                      childQueue.push({ node: child, parent: appendedNode });
                   });
               }
+          }
+
+          // If the current queue is empty, switch to the child queue
+          if (queue.length === 0) {
+              queue = childQueue;
+              childQueue = [];
           }
       } else {
           clearInterval(interval);
