@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 displayAiEnhancements(aiEnhancements);
             } catch (error) {
                 console.error("Error fetching AI enhancements:\n", error);
-                alert("Hmm, I might need a coffee or two... ☕ \nSorry, I failed to analyze your parcel. \nMaybe try again later?");
+                alert("Hmm, I think I need a coffee... ☕ \nI failed to analyze your parcel. \nMaybe try again later?");
                 return;  // Exit early (?)
             }
 
