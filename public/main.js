@@ -79,15 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
             /* Geocode was successful */
             
             // extract coordinates from response
-            lat = geocodeData.results[0].geometry.location.lat; // global
-            lng = geocodeData.results[0].geometry.location.lng; // global
-
-            // show map with placemarks: (1) input address at center of map; (2) the tallest bldg. within 1-mi. radius
-            initializeMap(lat, lng);
-            /*
-            ^ This is very early, long before the AI responses are ready, so it's awkward. 
-            Need to at least make the loading indicator more robust...
-            */
+            lat = geocodeData.results[0].geometry.location.lat;
+            lng = geocodeData.results[0].geometry.location.lng;
 
             // fetch the city of the address (Lat,Lng = CityData || CityName = Unincorporated if not in a city)
             const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
@@ -176,16 +169,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert("Sorry, I might need a coffee or two... ☕ \nBecause my AI failed to analyze the parcel data.");
             }
 
-
             // convert [CITY] and [county] to Proper Case for cleaner display
             cityNameProper = toProperCase(cityData.cityName);
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
-            // hide the loading indicator
-            document.querySelector('.loading-container').style.display = 'none';
-            
-            // show the New Search button
+            // show map with placemarks: (1) input address at center of map; (2) the tallest bldg. within 1-mi. radius
+            initializeMap(lat, lng);
+            // show Try Again button
             document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
+            // hide loading indicator
+            document.querySelector('.loading-container').style.display = 'none';            
             
             // ...
             // ...
