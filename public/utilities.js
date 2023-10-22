@@ -94,7 +94,7 @@ function animateTextFadeIn(element) {
       } else {
           clearInterval(interval);
       }
-  }, 200);  // Adjust this interval time to change the animation speed
+  }, 75);  // Adjust this interval time to change the animation speed
 }
 
 
