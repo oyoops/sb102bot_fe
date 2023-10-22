@@ -52,7 +52,9 @@ function displayAiEnhancements(enhancements) {
 
   // Create and populate the summary message
   let summaryMessage = `</br></br>
-    <ul><h3 style="color:black;" align="center">First, let's review some intel I've gathered...</h3></ul>
+    <ul><h3 style="color:black;" align="center">
+      I've gathered some preliminary intel for you:
+    </h3></ul>
     <ul>`;
   enhancements.forEach((enhancement, index) => {
     summaryMessage += `<li>${enhancement}</li>`;
