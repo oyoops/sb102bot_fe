@@ -77,7 +77,7 @@
     <table id="parcelDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
-                <th colspan="4">Property Info</th>
+                <th colspan="4">Property</th>
             </tr>
             <tr>
                 <th>Owner</th>
@@ -95,7 +95,7 @@
     <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
-                <th colspan="4">Municipal Info</th>
+                <th colspan="4">Municipality</th>
             </tr>
             <tr>
                 <th>City</th>
@@ -113,7 +113,7 @@
     <table id="countyMaxRentsTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
         <thead>
             <tr>
-                <th colspan="4">Affordable Rent Limits (120% AMI)</th>
+                <th colspan="4">Affordable Rent Limits (2023; 120% AMI)</th>
             </tr>
             <tr>
                 <th>Studio</th>
@@ -130,22 +130,23 @@
     <!-- START: PART 2 -- DEVELOPMENT PROGRAM I/O -->
     <div id="developmentProgramInputSection" style="display: none;">
 
-        <br>
-        <h2><u>Property</u></h2>
+        <!-- <br> -->
+        <!-- <h2><u>Property</u></h2> -->
         
         <!-- Acreage Input -->
-        <h4>How many acres will be used for multifamily?</h4>
+        <br>
+        <h4>How many acres will you use for multifamily?</h4>
         <input type="number" id="acreageInput" placeholder="Acreage" value="10" step="0.25">      <i>Override</i> | <b>Automatic</b>
         
         <!-- Density Input (Max. units/ac. allowed) -->
         <br>
-        <h4>What is the maximum unit density allowed in this municipality?</h4>
+        <h4>What is the maximum unit density allowed by the municipality?</h4>
         <input type="number" id="densityInput" placeholder="Units/ac." value="50" step="5">      <i>Override</i> | <b>Automatic</b>
 
-        <br><br>
-        <h2><u>Development Program</u></h2>
+        <!-- <br><br><h2><u>Development Program</u></h2> -->
         
         <!-- Affordable Units Percentage Slider -->
+        <br>
         <label for="affordablePctSlider">
             <h3>
                 Affordable Units: <span id="affordablePctDisplay">40%</span>
@@ -180,9 +181,7 @@
         <label><input type="checkbox" id="matchAffordableSizes"> Match market-rate and affordable unit sizes?</label>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
             <thead>
-                <tr>
-                    <th colspan="3">Avg. Unit Sizes</th>
-                </tr>
+                <!-- <tr><th colspan="3">Avg. Unit Sizes</th></tr> -->
                 <tr>
                     <th></th>
                     <th>Market</th>
@@ -227,15 +226,13 @@
         <!-- Market Rate Rents Input Section -->
         <br>
         <section id="marketRateInputSection" style="display: none;">
-            <h2><u>Revenues</u></h2>
+            <h2><u>Revenue</u></h2>
             <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
                 <thead>
-                    <tr>
-                        <th colspan="2">Market Rents</th>
-                    </tr>
+                    <!-- <tr><th colspan="2"></th></tr> -->
                     <tr>
                         <th></th>
-                        <th>Rent Check (all-in)</th>
+                        <th>Market Rents (all-in)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -266,7 +263,7 @@
             <table id="rentPerSqFtTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
                 <thead>
                     <tr>
-                        <th colspan="3">Rents/Sq. Ft.</th>
+                        <th colspan="3">Rents (per Sq. Ft.)</th>
                     </tr>
                     <tr>
                         <th></th>
@@ -355,7 +352,7 @@
 
         <!-- Property Tax Abatement Outputs -->
         <br>
-        <h2><u>Tax Abatement</u></h2>
+        <h2><u>Property Tax Abatement</u></h2>
         <table id="abatementTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
             <thead>
                 <tr>
@@ -375,9 +372,9 @@
             </tbody>
         </table>
         <p>
-            The tax abatement contributes as much to Project NOI as a rent increase of <i>$<b>[Δ Rent Equivalent]</b></i>.
-            </br></br>It runs for the same 30-year term as the rent-cap deed restriction and applies to ad valorem taxes only (i.e., excludes fire/waste/CDD assessments, if any). 
-            </br>Raising exit cap by 15-25 bps should be sufficient to mitigate the restrictions according to my capital markets homies.
+            The tax abatement contributes as much to Project NOI as a rent increase of <i><b>$Δ Rent Equivalent</b></i>.
+            </br>It runs for the same 30-year term as the deed restriction; applies to ad valorem taxes only (i.e., excludes any fire/waste/CDD assessments). 
+            </br>Raising exit cap +15-25 bps should be sufficient to mitigate the restrictions, per my capital markets homies.
         </p>
 
         <!-- New Search ('Try Again') Button -->
