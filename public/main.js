@@ -261,17 +261,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
-            // show detailed eligibility
+            // show detailed eligibility section
             eligibilityDiv.style.display = 'block';
 
-            // display AI summary (shortcut: append it to eligibilityDiv. VERY UGLY)
+            // add AI summary of the parcel under LLA eligibility sectio
+            // (using a poor shortcut: appending AI response to eligibility response. LOOKS VERY UGLY!!)
             const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
             eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + "\n\n<i><u>Some thoughts on the property:</u></i>\n" + aiSummaryHtml;
+
+            // fade text in quickly, simulating AI speech
+            animateTextFadeIn(eligibilityDiv);
 
             // convert land sq. ft. to acres
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
             
-            // Populate parcel data table
+            // populate parcel data table
             const parcelDataRow = `
                 <tr>
                     <td>${parcelData.own_name}</td>

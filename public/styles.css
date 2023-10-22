@@ -384,9 +384,16 @@ input:disabled {
 
 /* Styling for the list inside the eligibilityStatus div */
 #eligibilityStatus ul {
-    list-style-type: disc; /* Bullet points */
-    padding-left: 40px; /* Indentation for the list */
+    list-style-type: none; /* Removes bullet points */
+    padding-left: 0; /* Removes indentation for the list */
 }
+.char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(1em);
+    transition: all 0.3s;
+}
+
 
 #eligibilityStatus li {
     color: #555; /* Slightly darker text color for list items */

@@ -9,7 +9,6 @@
 
 
 /* IN TESTING */
-
 /* AI-related functions: */
 
 // fetch AI response set
@@ -65,6 +64,24 @@ function displayAiEnhancements(enhancements) {
 
   // Return the summary message
   return summaryMessage;
+}
+
+function animateTextFadeIn(element) {
+  let text = element.innerHTML;
+  element.innerHTML = '';
+  for (let i = 0; i < text.length; i++) {
+      let span = document.createElement('span');
+      span.className = 'char';
+      span.innerHTML = text[i];
+      element.appendChild(span);
+  }
+  let chars = document.querySelectorAll('.char');
+  chars.forEach((char, index) => {
+      setTimeout(() => {
+          char.style.opacity = '1';
+          char.style.transform = 'translateY(0)';
+      }, 5 * index); // This will fade in each character with a 5ms delay between each.
+  });
 }
 
 
