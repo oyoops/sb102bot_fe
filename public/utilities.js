@@ -6,6 +6,80 @@
 //  main.js  //
 //===========*/
 
+
+
+/* IN TESTING */
+
+/*
+async function fetchDataAndEnhancements() {
+  try {
+      const row = await queryDatabase();
+      const enhancements = await fetchAiEnhancements(row);
+      displayAiEnhancements(enhancements);
+  } catch (error) {
+      console.error("There was an error:", error);
+      // Handle error, e.g., show error message
+  }
+}
+*/
+
+async function fetchAiEnhancements(row) {
+  // Define the endpoints
+  const endpoints = [
+      '/api/ask_ai_part1A',
+      '/api/ask_ai_part1B',
+      '/api/ask_ai_part1C',
+      '/api/ask_ai_part1D',
+      '/api/ask_ai_part1E'
+  ];
+
+  // Create an array of fetch promises
+  const fetchPromises = endpoints.map(endpoint => {
+      return fetch(endpoint, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(row) // send row data as request body
+      })
+      .then(response => {
+          if (!response.ok) {
+              // If HTTP-status is 4xx or 5xx, throw error
+              throw new Error(`Failed to fetch from ${endpoint}: ${response.statusText}`);
+          }
+          return response.json();
+      });
+  });
+
+  try {
+      // Wait for all fetches to complete
+      const results = await Promise.all(fetchPromises);
+      return results;
+  } catch (error) {
+      console.error("Error fetching AI enhancements:", error);
+      throw error;
+  }
+}
+
+
+function displayAiEnhancements(enhancements) {
+  // Log the received enhancements for debugging
+  console.log("Received AI Enhancements:", enhancements);
+  // For simplicity, just write a summary message
+  let summaryMessage = "Received AI Enhancements:\n\n";
+  enhancements.forEach((enhancement, index) => {
+      summaryMessage += `Endpoint ${index + 1}: ${enhancement}\n`;
+  });
+  // Alert the user with the summary
+  alert(summaryMessage);
+}
+
+
+
+
+
+/* VERIFIED */
+
 // Get max density of a municipality
 async function getMaxDensity(county, city) {
   try {

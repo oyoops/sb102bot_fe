@@ -1,8 +1,11 @@
 // calculations.js - contains the functions for recalculating the proforma math live.
 
+/*
 const MILLAGE_ADJUSTMENT = 9.999;
+*/
 
 /* GLOBALS */
+/*
 let acreageValue;
 let densityValue;
 let abatementValue = 0;
@@ -36,14 +39,16 @@ let totalLandAndTotalHcPerUnit;
 let totalLandAndTotalHcPerSqFt;
 // abatement outputs
 let abatementEstimate = 0;
+*/
 /* MAP GLOBALS */
 // tallest building details (may break if tallestBuilding array >1)
+/*
 let buildingLat;
 let buildingLng;
 let buildingHeight;
 let buildingName; // may not work
 let buildingAddress; // may not work
-
+*/
 /* DOM */
 // map
 const mapDisplay = document.getElementById('map');

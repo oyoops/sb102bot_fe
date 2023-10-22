@@ -1,24 +1,26 @@
 // main.js - the primary script for SB102bot web app.
 
 // Global variables
+/*
 let address;
+let geocodeData;
+let countyData;
+let parcelData;
+let cityData;
 let lat;
 let lng;
-let displayMuniName;
-let countyData;
-let cityData;
-let parcelData;
 let acres;
 let fakeMillage;
-
 let maxMuniDensity;
-let maxCapacity = 0;
-
+let cityNameProper;
+let countyNameProper;
+let displayMuniName;
 let totalUnits;
-let affordableUnits;
 let marketUnits;
-
-let affordablePct = 0.40; // match the default slider value (40%)
+let affordableUnits;
+let maxCapacity = 0;
+let affordablePct = 0.40; // match the affordable slider default value (=40%)
+*/
 
 // after page is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -52,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const landAndTotalHcInputSection = document.getElementById('landAndTotalHcInputSection');
     const landCostPerUnit = document.getElementById('landCostPerUnitInput');
     const totalHCPerUnit = document.getElementById('totalHCPerUnitInput');
-    
+
     const landAndTotalHcOutputSection = document.getElementById('totalLandAndTotalHcOutputSection');
     
     const abatementTable = document.getElementById('abatementTable');
@@ -89,25 +91,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('ERROR: Geocode failed!');
                 throw new Error(`Server responded with ${geocodeResponse.status}: ${await geocodeResponse.text()}`);
             }
-            const geocodeData = await geocodeResponse.json();
+            
+            geocodeData = await geocodeResponse.json();
+            console.log("Geocode Data Received:", geocodeData);
+            
             if (!geocodeData.results || geocodeData.results.length === 0) {
                 throw new Error(`Whoops... That address isn't in my coverage area.\nI only know about Florida (and only the good counties at that).`);
             }
-
             /* Geocode was successful */
             
-            // get coordinates from results
+            // extract coordinates from response
             lat = geocodeData.results[0].geometry.location.lat; // global
             lng = geocodeData.results[0].geometry.location.lng; // global
 
-            // show map with placemarks: (1) input address at center of map; (2,3,4) the tallest three bldgs. within a ~1-mi radius
+            // show map with placemarks: (1) input address at center of map; (2) the tallest bldg. within 1-mi. radius
             initializeMap(lat, lng);
 
             // fetch the city of the address (Lat,Lng = CityData || CityName = Unincorporated if not in a city)
             const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
             const cityCheckResponse = await fetch(cityCheckEndpoint);
+
             cityData = await cityCheckResponse.json(); // global
             console.log("City Data Received:", cityData);
+            
             if (cityData.isInCity) {
                 console.log(`Address is within city: ${cityData.cityName}`);
             } else {
@@ -115,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 cityData.cityName = 'unincorporated';
             }
             
+            /*
             // fetch the county data for the address (Lat,Lng = CountyData)
             const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
             const countyDataResponse = await fetch(countyDataEndpoint);
@@ -123,42 +130,91 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!countyData.county_name) {
                 throw new Error('No county data available for the address.');
             }
-
-            /* PostgreSQL match found */
-
+            
             // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
             const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
             const parcelDataResponse = await fetch(parcelDataEndpoint);
             parcelData = await parcelDataResponse.json(); // global
             console.log("Parcel Data Received:", parcelData);
 
-            // get City and County in Proper Case for display purposes
-            const cityNameProper = toProperCase(cityData.cityName);
-            const countyNameProper = specialCountyFormatting(countyData.county_name);
+            // Now fetch the AI enhancements for the parcel data
+            const enhancements = await fetchAiEnhancements(parcelData);
+            console.log("AI Enhancements Received:", enhancements);
 
-            // hide loading indicator
+            displayAiEnhancements(enhancements);
+            */
+
+
+            // #1 of 3
+            try {
+                // fetch the county data for the address (Lat,Lng = CountyData)
+                const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
+                const countyDataResponse = await fetch(countyDataEndpoint);
+                
+                countyData = await countyDataResponse.json();
+                console.log("County Data Received:", countyData);
+                
+                if (!countyData.county_name) {
+                    throw new Error;
+                }
+            } catch (error) {
+                console.error("Error fetching county data:", error);
+                alert("Looks like we hit a roadblock on County Road! 🛣️\nCouldn't fetch the county data.");
+                return;  // Exit early since we can't proceed without county data
+            }
+
+            // #2 of 3
+            try {
+                // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
+                const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
+                const parcelDataResponse = await fetch(parcelDataEndpoint);
+                
+                parcelData = await parcelDataResponse.json();
+                console.log("Parcel Data Received:", parcelData);
+                if (!parcelData || Object.keys(parcelData).length === 0) {
+                    throw new Error('Missing or empty parcel data');
+                }            
+            } catch (error) {
+                console.error("Error fetching parcel data:", error);
+                alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
+                return;  // Exit early since we can't proceed without parcel data
+            }
+
+            // #3 of 3
+            try {
+                // fetch the AI enhancements for the parcel data
+                aiEnhancements = await fetchAiEnhancements(parcelData);
+                if (!aiEnhancements || aiEnhancements.length === 0) {
+                    throw new Error('No response received from AI server');
+                }
+                console.log("AI Enhancements Received:", aiEnhancements);
+                displayAiEnhancements(aiEnhancements);
+            } catch (error) {
+                console.error("Error fetching AI enhancements:", error);
+                alert("Sorry, I might need a coffee or two... ☕ \nBecause my AI failed to analyze the parcel data.");
+            }
+
+
+
+
+            // convert [CITY] and [county] to Proper Case for cleaner display
+            cityNameProper = toProperCase(cityData.cityName);
+            countyNameProper = specialCountyFormatting(countyData.county_name);
+
+            // hide the loading indicator
             document.querySelector('.loading').style.display = 'none';
             
-            // show try again button
+            // show the New Search button
             document.querySelector('#tryAgainButton').style.display = 'block';  // show try again button
             
             // ...
-
-            
-            
             // ...
-            
-            
-            
+
             // MILLAGE MANUAL ADJUSTMENT
             fakeMillage = parseFloat(countyData.county_millage) + parseFloat(MILLAGE_ADJUSTMENT); // "rough estimate" using known county mills + a constant manual adjustment to approximate state (and perhaps local...) portion of grand total millage
             fakeMillage = parseFloat(fakeMillage).toFixed(4);
 
-
             // ...
-
-
-
             // ...
 
             // Populate the municipal data table
