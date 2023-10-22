@@ -74,18 +74,28 @@ function animateTextFadeIn(element) {
   const original = element.cloneNode(true);
   element.innerHTML = '';  // Clear current content
 
-  // Split the nodes (text and HTML elements) into an array
-  let nodes = [...original.childNodes];
+  // Flatten the nodes (text and HTML elements) into an array
+  const flattenNodes = (node) => {
+      if (node.childNodes.length === 0) {
+          return [node];
+      } else {
+          return Array.from(node.childNodes).flatMap(flattenNodes);
+      }
+  };
+  let nodes = flattenNodes(original);
   let current = 0;
 
   let interval = setInterval(() => {
-      element.appendChild(nodes[current].cloneNode(true));  // Append the current node to the element
+      if (nodes[current].nodeName !== "#text" || nodes[current].textContent.trim() !== "") {
+          element.appendChild(nodes[current].cloneNode(true));  // Append the current node to the element
+      }
       current++;
       if (current === nodes.length) {
           clearInterval(interval);
       }
   }, 200);  // Adjust this interval time to change the animation speed
 }
+
 
 /* Faux-loading indicator updater */
 function updateLoadingBar() {
