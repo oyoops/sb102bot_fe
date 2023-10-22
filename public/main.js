@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
 
     // DOM
+    const loadingContainer = document.querySelector('.loading-container');
     const mainHeader = document.getElementById("mainHeader");
     const initialContent = document.querySelector('#initialContent');
     const form = document.querySelector('#searchForm');
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // show loading indicators
             updateLoadingBar();
-            document.querySelector('.loading-container').style.display = 'block';
+            loadingContainer.style.display = 'block';
 
             // geocode the input address
             const geocodeEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
@@ -99,7 +100,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // initialize the map (kind of early...)
             initializeMap(lat, lng);
 
-            
+            // scroll to top of page
+            loadingContainer.scrollIntoView;
+
+
             /* API blocks: */
 
             // API block #1 of 3
@@ -161,10 +165,10 @@ document.addEventListener('DOMContentLoaded', function() {
             cityNameProper = toProperCase(cityData.cityName);
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
-            // show Try Again button
-            document.querySelector('#tryAgainButton').style.display = 'block';
             // hide loading indicator
-            document.querySelector('.loading-container').style.display = 'none';            
+            loadingContainer.style.display = 'none';            
+            // show Try Again button
+            tryAgainButton.style.display = 'block';
             
             // ...
             // MILLAGE MANUAL ADJUSTMENT
