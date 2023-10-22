@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("MAX HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">The property looks <u>ELIGIBLE</u> for Live Local development!</h3> 
-                    </br>Coolio 😎👍 That means, among many other benefits, you can build <b>as high as the tallest building</b> within a one-mile radius. 
+                    </br><b><i>Coolio 😎👍</b></i> That means, among other benefits, you can build <b>as high as the tallest building</b> within a one-mile radius. 
                     Here, that'd mean up to <b>${buildingHeight.toFixed(0)} feet</b> in height! I've added the tallest building to the map along with its distance fron your site.`
                 /*if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
@@ -291,11 +291,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // if parcel is eligible, then finish composing the eligibility and AI summary
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Second explainer part (max density limit)                
-                summaryContent += `</br></br><b>The Act also allows you to match the highest density allowed anywhere in the municipality. <i>Radical! </i></b>
-                    The highest density among existing apartments in ${displayMuniName} is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but great) data.
-                    </br></br>Assuming you'd use all ${acres.toFixed(2)} acres for apartments, the maximum-achievable yield here would be <b>${maxCapacity} units</b>.`;                
+                summaryContent += `</br></br>The Act also allows you to match the <b>highest density allowed anywhere in the municipality.</b> <i>Radical! </i>
+                    The highest density in ${displayMuniName} among existing apartments is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but great) data.
+                    </br></br>Assuming all ${acres.toFixed(2)} acres are for apartments, the maximum-achievable yield would be <u><b>${maxCapacity} units</b></u>.`;                
                 // Add AI summary to the existing eligibility content
-                summaryContent += displayAiEnhancements(aiEnhancements);
+                //////summaryContent += displayAiEnhancements(aiEnhancements);
+                //summaryContent += aiEnhancements;
+                //summaryContent = displayAiEnhancements(summaryContent);
             } else {
                 /*
                 summaryContent += `</br>You must bring me commercial and industrial properties ONLY!
@@ -308,14 +310,15 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('map').style.display = 'block';
             document.getElementById('map').scrollIntoView();
 
-            // Generate, display text content
-            eligibilityDiv.innerHTML = summaryContent; // reset div content
+            // Generate and display text content
+            summaryContent = displayAiEnhancements(summaryContent);
+            eligibilityDiv.innerHTML = summaryContent; // reset all div content
             eligibilityDiv.style.display = 'block'; // unhide div
             animateTextFadeIn(eligibilityDiv); // fade in div content to simulate AI 'talking'
 
 
             /* User Inputs: */
-            
+
             // affordable percentage slider
             affordablePercentageSlider.value = 40; // 0.40; // default = 40% affordable units
             affordablePercentageSlider.oninput = function() {
