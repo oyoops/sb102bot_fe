@@ -252,9 +252,9 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<h3>The property looks <u>ELIGIBLE</u> for Live Local development. <i>Coolio!</i></h3> 
-                    </br></br><b>Among other benefits, this means you can build as high as the tallest building within a 1-mile radius.</b>
-                    </br>The max. height here would be <b>${buildingHeight.toFixed(0)} feet tall</b>.`
+                eligibilityDiv.innerHTML += `<h2>The property appears to be <u>ELIGIBLE</u> for Live Local development!</h2> 
+                    </br><b>That means, among other benefits, you could build as high as the tallest building within a mile.</b>
+                    </br>Here, that would be <b>${buildingHeight.toFixed(0)} feet tall</b>.`
                 if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣👣</i>`;
                 }
