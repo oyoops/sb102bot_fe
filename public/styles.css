@@ -330,6 +330,7 @@ label {
 
 /* Style for the unit size input tables */
 table {
+    width: auto;
     margin-top: 20px;
 }
 
