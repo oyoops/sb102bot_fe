@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 summaryContent += `</br><h4><i>Bring me a commercial/industrial property next time.</i></h4>`;
                 */
             }
-            eligibilityDiv.innerHTML = content; // set div content
+            eligibilityDiv.innerHTML = summaryContent; // set div content
             eligibilityDiv.style.display = 'block'; // show div
             animateTextFadeIn(eligibilityDiv); // fade in div content to simulate AI 'talking'
 
