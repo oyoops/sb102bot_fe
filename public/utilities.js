@@ -53,25 +53,20 @@ function displayAiEnhancements(enhancements) {
   // Log the received enhancements for debugging
   console.log("Received AI Summary");
 
-  // Create a container to hold the AI responses
-  const responseContainer = document.createElement('div');
-  responseContainer.className = "ai-response-container"; // in case you want to style it
-  
   // Create and populate the summary message
   let summaryMessage = "<h3><b>Financial AI-nalyst</b> says:</h3><ul>";
   enhancements.forEach((enhancement, index) => {
-    summaryMessage += `<li><strong>Part #${index + 1}:</strong> ${enhancement}</li>`;
+      summaryMessage += `<li><strong>Part #${index + 1}:</strong> ${enhancement}</li>`;
   });
   summaryMessage += "</ul>";
 
-  // Display the summary
+  // Log the summary for debugging purposes
   console.log("AI Summary:\n" + summaryMessage);
-  ////alert(summaryMessage);
-  // Set the container's innerHTML to the summary message
-  responseContainer.innerHTML = summaryMessage;
-  // Prepend the container to eligibilityDiv
-  eligibilityDiv.insertBefore(responseContainer, eligibilityDiv.firstChild);
+
+  // Return the summary message
+  return summaryMessage;
 }
+
 
 
 /* VERIFIED */
