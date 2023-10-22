@@ -249,9 +249,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<b>The property looks <u>ELIGIBLE</u> for Live Local development. <i>Nice!!</i></b> 
-
-                    </br></br><b>First, that means you can build as high as the tallest building within a 1-mile radius.</b>
-                    </br>This site's max. height would be <b>${buildingHeight.toFixed(0)} feet tall</b>.`
+                    </br></br><b>Among other benefits, this means you can build as high as the tallest building within a 1-mile radius.</b>
+                    </br>The max. height here would be <b>${buildingHeight.toFixed(0)} feet tall</b>.`
                 if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Ohh yeah...</b> That's a lot of juicy feet 👣👣👀👣</i>`;
                 }
@@ -262,8 +261,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
+            // show detailed eligibility
+            eligibilityDiv.style.display = 'block';
 
-            // display the AI summary (shortcut: append it to eligibilityDiv. VERY UGLY)
+            // display AI summary (shortcut: append it to eligibilityDiv. VERY UGLY)
             const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
             eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + "\n\n<i><u>Some thoughts on the property:</u></i>\n" + aiSummaryHtml;
 

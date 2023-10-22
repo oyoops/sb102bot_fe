@@ -364,6 +364,7 @@ input:disabled {
 
 /* General styling for the eligibilityStatus div */
 #eligibilityStatus {
+    display: none; /* initially hidden */
     max-width: 80%; /* Control the width of the div */
     margin: 20px auto; /* Center the div on the page */
     padding: 20px; /* Space inside the div */
