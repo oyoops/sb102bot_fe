@@ -224,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 //eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
+            summaryContent = eligibilityDiv.innerHTML;
 
             // convert land sq. ft. to acres
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
@@ -286,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
 
-            let summaryContent = "";
+
 
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Second explainer part (max density limit)

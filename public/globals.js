@@ -21,6 +21,7 @@ let marketUnits;
 let affordableUnits;
 let maxCapacity = 0;
 let affordablePct = 0.40; // match the affordable slider default value (=40%)
+let summaryContent = "";
 
 /* GLOBAL VARIABLES FROM calculations.js */
 const MILLAGE_ADJUSTMENT = 9.999;
