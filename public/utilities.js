@@ -85,10 +85,8 @@ function animateTextFadeIn(element) {
 }
 
 
-/* Fake loading indicator */
-let percentageLoading = 0;
-let intervalTimeLoading = 1500; // 1500 = 15 seconds
-  function updateLoadingBar() {
+/* Fake loading indicator updater */
+function updateLoadingBar() {
   const loadingFill = document.querySelector('.loading-fill');
   const loadingPercentage = document.querySelector('.loading-percentage');
 

@@ -1,6 +1,8 @@
 // globals.js - Centralized global variable declarations for SB102bot web app.
 
 /* GLOBAL VARIABLES FROM main.js */
+let intervalTimeLoading = 500; // fake loading indicator time (ms) until 99%
+let percentageLoading = 0; // fake loading indicator % value
 let address;
 let geocodeData;
 let countyData;
