@@ -263,11 +263,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.fontSize = "18px";
             }
 
-
-            // display the AI summary (appending it to eligibilityDiv as a shortcut)
-            const aiSummaryHtml = displayAiEnhancements(enhancements);
+            // display the AI summary (shortcut: append it to eligibilityDiv. VERY UGLY)
+            const aiSummaryHtml = displayAiEnhancements(aiEnhancements);
             eligibilityDiv.innerHTML = eligibilityDiv.innerHTML + "\n\n<i><u>Some thoughts on the property:</u></i>\n" + aiSummaryHtml;
-
 
             // convert land sq. ft. to acres
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
