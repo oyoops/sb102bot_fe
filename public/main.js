@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 //eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">The property is probably <u>NOT</u> ELIGIBLE for Live Local development...</h3> <br>It must be <b>commercial</b> or <b>industrial</b> <i>already</i> to qualify.`;
+                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">The property is probably <u>NOT</u> ELIGIBLE for Live Local development... </h3> <br> It must be <b>commercial</b> or <b>industrial</b> <i>already</i> to qualify.`;
                 //eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
