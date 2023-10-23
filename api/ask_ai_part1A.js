@@ -33,9 +33,9 @@ module.exports = async (req, res) => {
 
     try {
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-            model: 'gpt-4',
+            model: process.env.AI_MODEL_PRIMARY_ANALYSES,
             messages: messages,
-            max_tokens: 500,
+            max_tokens: parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
             temperature: 0.6,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
