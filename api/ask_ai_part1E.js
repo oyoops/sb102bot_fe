@@ -47,17 +47,17 @@ module.exports = async (req, res) => {
         const responseData = response.data;
 
         // Log prompt and response
-        const aiPromptSystem = responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
-        const aiPromptUser = responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
+        const aiPromptSystem = messages[0]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
+        const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
         const aiResponseText = responseData?.choices[0]?.message?.content.trim();
         if (aiPromptSystem) {
-            console.log("System Prompt: ", aiPromptUser);
+            console.log("System Prompt: \n", aiPromptUser);
         }
         if (aiPromptUser) {
-            console.log("User Prompt:   ", aiPromptUser);
+            console.log("User Prompt:   \n", aiPromptUser);
         }
         if (aiResponseText) {
-            console.log("AI Response:   ", aiResponseText);
+            console.log("AI Response:   \n", aiResponseText);
         }
 
         // Log # tokens used
@@ -65,17 +65,17 @@ module.exports = async (req, res) => {
         const promptTokens = responseData?.usage?.prompt_tokens;
         const completionTokens = responseData?.usage?.completion_tokens;
         if (tokensUsed) {
-            console.log("# tokens / Total:    ", tokensUsed);
+            console.log("# Total Tkns:    ", tokensUsed);
         }
         if (promptTokens) {
-            console.log("# tokens / Prompt:   ", promptTokens);
+            console.log("# Prompt Tkns:   ", promptTokens);
         }
         if (completionTokens) {
-            console.log("# tokens / Response: ", completionTokens);
+            console.log("# Response Tkns: ", completionTokens);
         }
         
         // Send AI response to client
-        const enhancedData = responseData.choices[0].message.content.trim();
+        const enhancedData = aiResponseText;
         res.status(200).json(enhancedData);
     
     } catch (error) {
