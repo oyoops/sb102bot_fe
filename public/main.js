@@ -152,6 +152,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('Sorry, this property is ineligible for Live Local Act development.');
                     //return;
                 }
+                
+                // NEW EXAMPLE USAGE
+                generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', parcelData).then(summary => {
+                    console.log(summary);
+                });
+                
                 aiEnhancements = await fetchAiEnhancements(parcelData);
                 if (!aiEnhancements || aiEnhancements.length === 0) {
                     throw new Error('No response received from AI server.');
@@ -221,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 //eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">The property is probably <u>NOT</u> ELIGIBLE for Live Local development...</h3> <br>It must be <b>commercial</b> or <b>industrial</b> <i>already</i> to qualify.`;
+                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">The property is probably <u>NOT</u> ELIGIBLE for Live Local development... </h3> <br> It must be <b>commercial</b> or <b>industrial</b> <i>already</i> to qualify.`;
                 //eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
