@@ -152,6 +152,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('Sorry, this property is ineligible for Live Local Act development.');
                     //return;
                 }
+                
+                // NEW EXAMPLE USAGE
+                generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', parcelData).then(summary => {
+                    console.log(summary);
+                });
+                
                 aiEnhancements = await fetchAiEnhancements(parcelData);
                 if (!aiEnhancements || aiEnhancements.length === 0) {
                     throw new Error('No response received from AI server.');
