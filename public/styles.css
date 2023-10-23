@@ -466,3 +466,14 @@ input:disabled {
     color: white;
     font-weight: bold;
 }
+
+.slide-in {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.slide-in.active {
+    opacity: 1;
+    transform: translateX(0);
+}
