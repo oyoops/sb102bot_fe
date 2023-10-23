@@ -44,12 +44,27 @@ module.exports = async (req, res) => {
                 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
             }
         });
+
+        // Log prompt and response
+        const aiPromptSystem = response?.choices[0]?.message?.role === 'system' ? response?.choices[0]?.message?.content : null;
+        const aiPromptUser = response?.choices[0]?.message?.role === 'user' ? response?.choices[0]?.message?.content : null;
+        const aiResponseText = response?.choices[1]?.message?.content;
+        if (aiPromptSystem) {
+            console.log("System Prompt: ", aiPromptUser);
+        }
+        if (aiPromptUser) {
+            console.log("User Prompt:   ", aiPromptUser);
+        }
+        if (aiResponseText) {
+            console.log("AI Response:   ", aiResponseText);
+        }
+
         // Log # tokens used
-        const tokensUsed = openAiResponse?.usage?.total_tokens;
-        const promptTokens = openAiResponse?.usage?.prompt_tokens;
-        const completionTokens = openAiResponse?.usage?.completion_tokens;
+        const tokensUsed = response?.usage?.total_tokens;
+        const promptTokens = response?.usage?.prompt_tokens;
+        const completionTokens = response?.usage?.completion_tokens;
         if (tokensUsed) {
-            console.log("# tokens / TOTAL:    ", tokensUsed);
+            console.log("# tokens / Total:    ", tokensUsed);
         }
         if (promptTokens) {
             console.log("# tokens / Prompt:   ", promptTokens);
@@ -57,6 +72,7 @@ module.exports = async (req, res) => {
         if (completionTokens) {
             console.log("# tokens / Response: ", completionTokens);
         }
+
         // Send AI response to client
         const enhancedData = response.data.choices[0].message.content.trim();
         res.status(200).json(enhancedData);
