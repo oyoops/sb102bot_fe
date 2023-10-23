@@ -15,7 +15,7 @@ async function fetchColumnFromPublicSheet(sheetPublicCSVUrl, columnLetter) {
     return values.join('\n');
 }
 
-async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter) {
+async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter, parcelData) {
     const combinedResponses = await fetchColumnFromPublicSheet(sheetPublicCSVUrl, columnLetter);
 
     // Construct a prompt for the AI to refine the combined responses
@@ -24,16 +24,14 @@ async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter) {
         "${combinedResponses}"
     `;
 
-    // Use your AI API call method here. I'm using a placeholder function call as an example.
-    const refinedSummaryResponse = await fetchAI(prompt);
+    // Attach this prompt to parcelData and call fetchAiEnhancements
+    parcelData.prompt = prompt;
+    const refinedSummaryResponses = await fetchAiEnhancements(parcelData);
 
-    // Check if the AI response is valid
-    if (refinedSummaryResponse && refinedSummaryResponse.data) {
-        return refinedSummaryResponse.data;
-    } else {
-        console.error("Failed to generate refined summary");
-        return "";
-    }
+    // Assuming the AI responses are in a plain text format, join them together for a refined summary
+    const refinedSummary = refinedSummaryResponses.join(' ');
+
+    return refinedSummary;
 }
 
 // Placeholder function for the AI API call
@@ -45,8 +43,3 @@ async function fetchAI(prompt) {
     };
 }
 
-// Example usage
-// You'd replace 'YOUR_SHEET_ID' with your actual Google Sheet's ID and 'A' with the column letter you're interested in.
-generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A').then(summary => {
-    console.log(summary);
-});
