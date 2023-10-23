@@ -35,12 +35,19 @@ async function fetchAiEnhancements(row) {
       });
   });
 
+  // Wait for all fetch promises to resolve
   try {
-      // Wait for all fetches to complete
       const results = await Promise.all(fetchPromises);
+      // Log the AI responses and token usage for debugging purposes
+      results.forEach(result => {
+          console.log('OpenAI Prompt:', result.choices[0].message.content);
+          console.log('OpenAI Response:', result.choices[0].message.content);
+          console.log('Total Tokens Used:', result.usage.total_tokens);
+      });
       return results;
   } catch (error) {
-      console.error("Error fetching AI enhancements:", error);
+      // Log the error content from OpenAI instead of the entire JSON
+      console.error("Error fetching AI enhancements:", error.data.error);
       throw error;
   }
 }
