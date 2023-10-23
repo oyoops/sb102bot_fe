@@ -70,23 +70,6 @@ function displayAiEnhancements(enhancements) {
 
 // fade in AI response and eligibility section
 function animateTextFadeIn(element) {
-    // Get all child nodes
-    const items = Array.from(element.childNodes);
-
-    // Apply initial animation class
-    items.forEach(item => {
-        item.classList.add('slide-in');
-    });
-
-    // Sequentially add 'active' class to animate
-    items.forEach((item, index) => {
-        setTimeout(() => {
-            item.classList.add('active');
-        }, index * 100); // Adjust this time for delay between items
-    });
-}
-/*
-function animateTextFadeIn(element) {
   // Clone the original element
   const original = element.cloneNode(true);
   element.innerHTML = '';  // Clear current content
@@ -120,7 +103,7 @@ function animateTextFadeIn(element) {
       }
   }, 75);  // Adjust this interval time to change the animation speed
 }
-*/
+
 
 
 /* Faux-loading indicator updater */
