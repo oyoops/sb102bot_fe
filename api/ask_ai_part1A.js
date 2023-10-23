@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
         // Log prompt and response
         const aiPromptSystem = responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
         const aiPromptUser = responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
-        const aiResponseText = responseData?.choices[1]?.message?.content;
+        const aiResponseText = responseData?.choices[0]?.message?.content.trim();
         if (aiPromptSystem) {
             console.log("System Prompt: ", aiPromptUser);
         }
