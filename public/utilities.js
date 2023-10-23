@@ -38,16 +38,19 @@ async function fetchAiEnhancements(row) {
   // Wait for all fetch promises to resolve
   try {
       const results = await Promise.all(fetchPromises);
+      
       // Log the AI responses and token usage for debugging purposes
       results.forEach(result => {
           console.log('OpenAI Prompt:', result.choices[0].message.content);
           console.log('OpenAI Response:', result.choices[0].message.content);
           console.log('Total Tokens Used:', result.usage.total_tokens);
       });
+
       return results;
   } catch (error) {
-      // Log the error content from OpenAI instead of the entire JSON
-      console.error("Error fetching AI enhancements:", error.data.error);
+      // Extract the specific error message and log it
+      const errorMessage = error?.data?.error?.message || "Unknown error occurred";
+      console.error("Error fetching AI enhancements:", errorMessage);
       throw error;
   }
 }
