@@ -50,7 +50,7 @@ async function fetchAiEnhancements(row) {
   } catch (error) {
       // Extract the specific error message and log it
       const errorMessage = error?.data?.error?.message || "Unknown error occurred";
-      console.error("Error fetching AI enhancements:", errorMessage);
+      console.error("Error fetching AI responses:", errorMessage);
       throw error;
   }
 }

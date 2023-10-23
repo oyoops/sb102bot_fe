@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
             2. There are a minimum of 70 affordable units.
             3. All non-density/height/zoning/land use municipal regulations are met.
         The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
-        
+
         Given the parcel's valuations:
         1. Summarize its current value in relation to potential multifamily development.
         2. Highlight any discrepancies or unusual values that could indicate underlying issues or opportunities.
@@ -45,11 +45,26 @@ module.exports = async (req, res) => {
                 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
             }
         });
-
+        // Log # tokens used
+        const tokensUsed = openAiResponse?.usage?.total_tokens;
+        const promptTokens = openAiResponse?.usage?.prompt_tokens;
+        const completionTokens = openAiResponse?.usage?.completion_tokens;
+        if (tokensUsed) {
+            console.log("# tokens / TOTAL:    ", tokensUsed);
+        }
+        if (promptTokens) {
+            console.log("# tokens / Prompt:   ", promptTokens);
+        }
+        if (completionTokens) {
+            console.log("# tokens / Response: ", completionTokens);
+        }
+        // Send AI response to client
         const enhancedData = response.data.choices[0].message.content.trim();
         res.status(200).json(enhancedData);
     } catch (error) {
-        console.error(error);
-        res.status(500).json('Error processing the request.');
+        // Extract the specific error message and log it
+        const errorMessage = error?.data?.error?.message || "Unknown OpenAI API error occurred";
+        console.error("Error from OpenAI:", errorMessage);
+        res.status(500).send(errorMessage); // Send the specific error message as the response
     }
 };
