@@ -11,7 +11,6 @@
 
 // fetch the set of AI responses
 async function fetchAiEnhancements(row) {
-  // Define the endpoints
   const endpoints = [
       '/api/ask_ai_part1A',
       '/api/ask_ai_part1B',
@@ -20,35 +19,34 @@ async function fetchAiEnhancements(row) {
       '/api/ask_ai_part1E'
   ];
 
-  // Convert row object to query string
   const queryString = new URLSearchParams(row).toString();
 
-  // Create an array of fetch promises
   const fetchPromises = endpoints.map(endpoint => {
-      return fetch(`${endpoint}?${queryString}`) // append query string to endpoint
+      return fetch(`${endpoint}?${queryString}`)
       .then(response => {
           if (!response.ok) {
-              // If HTTP-status is 4xx or 5xx, throw error
+              console.error(`Failed at endpoint ${endpoint} with status: ${response.statusText}`);
               throw new Error(`Failed to fetch from ${endpoint}: ${response.statusText}`);
           }
           return response.json();
+      })
+      .catch(err => {
+          console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
+          throw err;
       });
   });
 
-  // Wait for all fetch promises to resolve
   try {
       const results = await Promise.all(fetchPromises);
-      
-      // Log the AI responses and token usage for debugging purposes
+
       results.forEach(result => {
-          console.log('OpenAI Prompt:', result.choices[0].message.content);
-          console.log('OpenAI Response:', result.choices[0].message.content);
-          console.log('Total Tokens Used:', result.usage.total_tokens);
+          console.log('OpenAI Prompt:', result?.choices?.[0]?.message?.content);
+          console.log('OpenAI Response:', result?.choices?.[1]?.message?.content);
+          console.log('Total Tokens Used:', result?.usage?.total_tokens);
       });
 
       return results;
   } catch (error) {
-      // Extract the specific error message and log it
       const errorMessage = error?.data?.error?.message || "Unknown error occurred";
       console.error("Error fetching AI responses:", errorMessage);
       throw error;
@@ -57,36 +55,41 @@ async function fetchAiEnhancements(row) {
 
 // display AI responses
 function displayAiEnhancements(enhancements) {
-  // Log the received enhancements for debugging
+  if (!enhancements || enhancements.length === 0) {
+      console.error("No enhancements received");
+      return;
+  }
+
   console.log("Received AI Summary");
 
-  // Create and populate the summary message
-  let summaryMessage = `</br>
-    <h3 style="color:black;" align="center">
-      </br>First, let's review some preliminary intel:
-    </h3>
-    <ul>`;
-  enhancements.forEach((enhancement, index) => {
-    summaryMessage += `<li>${enhancement}</li>`;
-  });
-  summaryMessage += "</ul>";
+  let summaryParts = [
+      `</br><h3 style="color:black;" align="center"></br>First, let's review some preliminary intel:</h3><ul>`
+  ];
 
-  // Log the summary for debugging purposes
+  enhancements.forEach((enhancement, index) => {
+      summaryParts.push(`<li>${enhancement}</li>`);
+  });
+
+  summaryParts.push("</ul>");
+
+  const summaryMessage = summaryParts.join('');
   console.log("AI Property Summary:\n" + summaryMessage);
 
-  // Return the summary message
   return summaryMessage;
 }
 
 // fade in AI response and eligibility section
 function animateTextFadeIn(element) {
-  // Clone the original element
-  const original = element.cloneNode(true);
-  element.innerHTML = '';  // Clear current content
+  if (!element) {
+      console.error("No element provided for animation.");
+      return;
+  }
 
-  // Create a queue to handle nodes
+  const original = element.cloneNode(true);
+  element.innerHTML = '';
+
   let queue = [{ node: original, parent: element }];
-  let childQueue = [];  // Queue for child nodes
+  let childQueue = [];
 
   let interval = setInterval(() => {
       if (queue.length > 0) {
@@ -94,8 +97,7 @@ function animateTextFadeIn(element) {
 
           if (node.nodeName !== "#text" || node.textContent.trim() !== "") {
               const appendedNode = parent.appendChild(node.cloneNode(false));
-              
-              // If the current node has children, enqueue them to be processed after current level
+
               if (node.childNodes.length > 0) {
                   Array.from(node.childNodes).forEach(child => {
                       childQueue.push({ node: child, parent: appendedNode });
@@ -103,7 +105,6 @@ function animateTextFadeIn(element) {
               }
           }
 
-          // If the current queue is empty, switch to the child queue
           if (queue.length === 0) {
               queue = childQueue;
               childQueue = [];
@@ -111,8 +112,10 @@ function animateTextFadeIn(element) {
       } else {
           clearInterval(interval);
       }
-  }, 75);  // Adjust this interval time to change the animation speed
+  }, 75);
 }
+
+
 
 
 
