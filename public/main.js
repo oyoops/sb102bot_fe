@@ -250,8 +250,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("MAX HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">The property looks <u>ELIGIBLE</u> for Live Local development!</h3> 
-                    </br><b><i>Coolio 😎👍</b></i> That means, among other benefits, you can build <b>as high as the tallest building</b> within a one-mile radius. 
-                    Here, that'd mean up to <b>${buildingHeight.toFixed(0)} feet</b> in height! I've added it to the map of the subject. They're ${distanceInMilesToTallestBldg.toFixed(2)} miles apart.`
+                    </br><b><i>Coolio 😎👍</b></i> Here's why you should grab this land by the dirt and try Living Local here:
+                    </br>First, you're allowed to build <b>as high as the tallest building</b> within a one-mile radius. 
+                    Here, that means up to <b>${buildingHeight.toFixed(0)} feet</b> in height! I've added it to the map of the subject. They're ${distanceInMilesToTallestBldg.toFixed(2)} miles apart.`
                 /*if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
                 }*/
@@ -328,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // if parcel is LLA eligible, then finish composing the eligibility and AI summary
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // LLA density limit explainer section
-                summaryContent += `</br></br>The Act also allows developers to match the <b>highest density allowed anywhere in the municipality. </b> <i>Radical! </i>
+                summaryContent += `</br></br>Second, the Act allows developers to match the <b>highest density allowed anywhere in the municipality. </b> <i>Radical! </i>
                     The highest density in ${displayMuniName} among existing apartments is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but awesome) data.`;                
 
                 // if max unit capacity is excessive/unrealistic for multifamily, add a small note acknowledging that
