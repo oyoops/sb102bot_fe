@@ -62,7 +62,7 @@ function composeAiResponsesCombined(aiResponses) {
   console.log("Received AI Summary");
 
   let summaryParts = [
-      `</br><h3 style="color:black;" align="center"></br>First, let's review some preliminary intel:</h3><ul>`
+      `</br><h3 style="color:black;" align="center"></br>First, let's review some preliminary intel...</h3><ul>`
   ];
 
   aiResponses.forEach((aiResponse, index) => {

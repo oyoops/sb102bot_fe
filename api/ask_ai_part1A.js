@@ -3,7 +3,7 @@
 const axios = require('axios');
 
 module.exports = async (req, res) => {
-    const { own_name, own_addr1, own_addr2, own_city, own_state } = req.query;
+    const { own_name, address, cityNameProper, countyNameProper, own_addr1, own_addr2, own_city, own_state } = req.query;
 
     const messages = [{
         "role": "system",
@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
         `
     }, {
         "role": "user",
-        "content": `The parcel's owner is listed as ${own_name}, and the listed address is ${own_addr1}, ${own_addr2}, ${own_city}, ${own_state}. What insights can you offer, and how should one approach negotiations with the intent to buy the property, redevelop it, and then construct a large apartment complex under the Live Local Act's provisions?`
+        "content": `The owner of the parcel at ${address}, ${cityNameProper} in ${countyNameProper} County, FL is listed as ${own_name} whose listed address is ${own_addr1}, ${own_addr2}, ${own_city}, ${own_state}. What insights can you offer, and how should one approach negotiations with the intent to buy the property, redevelop it, and then construct a large apartment complex under the Live Local Act's provisions?`
     }];    
 
     try {
