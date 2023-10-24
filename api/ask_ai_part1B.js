@@ -29,7 +29,8 @@ module.exports = async (req, res) => {
         `
     }, {
         "role": "user",
-        "content": `The parcel located at ${phy_addr1}, ${phy_addr2}, ${phy_city}, built in ${act_yr_blt} has an effective year of ${eff_yr_blt}. It spans a total living area of ${tot_lvg_ar} sq. ft. What insights can you provide about this parcel's physical characteristics and its surrounding context?`
+        "content": `The structure(s) at ${phy_addr1}, ${phy_addr2}, ${phy_city} built in ${act_yr_blt}, has ${tot_lvg_ar} SF/AC.
+        What insights can you provide about this parcel's physical characteristics and its surrounding context?`
     }];
 
     try {
