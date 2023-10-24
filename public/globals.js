@@ -59,8 +59,14 @@ let totalLandAndTotalHcPerUnit;
 let totalLandAndTotalHcPerSqFt;
 // abatement outputs
 let abatementEstimate = 0;
+
+
 /* MAP GLOBALS */
-// tallest building details (may break if tallestBuilding array >1)
+const LIVE_LOCAL_BLDG_RADIUS_MILES = 1.02;
+
+// related to tallest building details (*** May break if tallestBuilding array size >1! ***)
+let tallestBuildingsData;
+let distanceInMilesToTallestBldg;
 let buildingLat;
 let buildingLng;
 let buildingHeight;

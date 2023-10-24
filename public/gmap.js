@@ -52,12 +52,13 @@ async function initializeMap(lat, lng) {
         userInfowindow.open(map, userMarker);
     });
 
-    const radius = 1.02; 
-    const tallestBuildingsData = await fetchTallestBuilding(lat, lng, radius);
-
     const bounds = new google.maps.LatLngBounds();
     bounds.extend(new google.maps.LatLng(lat, lng));
 
+    // Fetch data on tallest buildings within radius
+    tallestBuildingsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
+
+    // Parse buildings and add to map
     (tallestBuildingsData || []).forEach((buildingData, index) => {
         try {
             if (!buildingData.lat || !buildingData.lng) {
@@ -65,14 +66,15 @@ async function initializeMap(lat, lng) {
                 return;
             }
 
-            const buildingLat = parseFloat(buildingData.lat);
-            const buildingLng = parseFloat(buildingData.lng);
-            const buildingHeight = buildingData.height || "Uncertain";
-            const buildingName = buildingData.name || `#${index + 1} Tallest Bldg. < 1mi.`;
-            const buildingAddress = buildingData.address || "-";
+            buildingLat = parseFloat(buildingData.lat);
+            buildingLng = parseFloat(buildingData.lng);
+            buildingHeight = buildingData.height || "Uncertain";
+            buildingName = buildingData.name || `#${index + 1} Tallest Bldg. < 1mi.`;
+            buildingAddress = buildingData.address || "-";
 
             const buildingMarker = new google.maps.Marker({
                 position: { lat: buildingLat, lng: buildingLng },
+                color: "yellow",
                 map: map,
             });
 
@@ -107,14 +109,14 @@ async function initializeMap(lat, lng) {
                 new google.maps.LatLng(lat, lng),
                 new google.maps.LatLng(buildingLat, buildingLng)
             );
-            const distanceInMiles = distanceInMeters * 0.000621371;
+            distanceInMilesToTallestBldg = distanceInMeters * 0.000621371;
 
             const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
-            createStyledMarker(lineLabelPos, map, `${distanceInMiles.toFixed(2)} mi.`);
+            createStyledMarker(lineLabelPos, map, `${distanceInMilesToTallestBldg.toFixed(2)} mi. from subject`);
 
             bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));
         } catch (error) {
-            console.error(`Error processing building #${index}:`, error);
+            console.error(`Error processing tallest building #${index}:`, error);
         }
     });
 
