@@ -144,25 +144,52 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early since we can't proceed without parcel data
             }
 
+            // verify that parcelData exists
+            if (!parcelData || Object.keys(parcelData).length === 0) {
+                console.log(`Skipping AI analysis module...`);
+                throw new Error('Sorry... This property is not eligible, buddy.');
+            }
+
             // API block #3 of 3
             try {
-                // fetch the AI responses to the set of prompts concerning the parcel data
+                // make copy of parcelData for enhancing
+                aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
 
-                // verify that the required supplemental data variable exists
-                if (!parcelData || Object.keys(parcelData).length === 0) {
-                    console.log(`Skipping AI analysis module; missing parcelData or parcel is simply ineligible for the Live Local Act.`);
-                    throw new Error('Sorry, this property is ineligible for the Live Local Act.');
-                }
+                // add primitive values directly
+                aiSupplementalData.address = address;
+                aiSupplementalData.lat = lat;
+                aiSupplementalData.lng = lng;
+                aiSupplementalData.acres = acres;
+                aiSupplementalData.cityNameProper = cityNameProper;
+                aiSupplementalData.countyNameProper = countyNameProper;
+                aiSupplementalData.displayMuniName = displayMuniName;
+                aiSupplementalData.totalUnits = totalUnits;
+                aiSupplementalData.marketUnits = marketUnits;
+                aiSupplementalData.affordableUnits = affordableUnits;
+                aiSupplementalData.maxCapacity = maxCapacity;
                 
+                // decompose JSONs and add their values
+                if (countyData) {
+                    // countyData *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
+                    for (const [key, value] of Object.entries(countyData)) {
+                        aiSupplementalData[`county_${key}`] = value;  // Prefixing with "county_" to ensure uniqueness
+                    }
+                }
+                if (cityData) {
+                    // cityData *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
+                    for (const [key, value] of Object.entries(cityData)) {
+                        aiSupplementalData[`city_${key}`] = value;  // Prefixing with "city_" to ensure uniqueness
+                    }
+                }
+
+                // send enriched supplemental data to AI server
+                aiResponses = await fetchAiResponsesCombined(aiSupplementalData);
 
                 // NEW WAY TO GET PROMPTS! (EXAMPLE)
                 generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', parcelData).then(summary => {
-                    console.log("PROMPT_SOURCE V2 data: \n" + summary);
+                    console.log("PROMPT_SOURCE_V2 Data: \n" + summary);
                 });
-                
-                
                 aiResponses = await fetchAiResponsesCombined(parcelData);
-                
                 // verify and log
                 if (!aiResponses || aiResponses.length === 0) {
                     throw new Error('[CRITICAL ERROR] No responses were received from the AI!');
