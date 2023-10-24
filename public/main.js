@@ -477,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Dynamically load the Google Maps API
+    // Dynamically load the Google Maps and Places APIs
     loadGoogleMapsAPI();
 
 });
