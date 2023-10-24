@@ -99,7 +99,7 @@ async function initializeMap(lat, lng) {
             distanceInMilesToTallestBldg = distanceInMeters * 0.000621371;
             // distance line label
             const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
-            createStyledMarker(lineLabelPos, map, `<u>${buildingHeight.toFixed(0)} feet tall</u> </br>${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
+            createStyledMarker(lineLabelPos, map, `${buildingHeight.toFixed(0)} feet tall\n${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
 
             bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));
         } catch (error) {
@@ -112,27 +112,6 @@ async function initializeMap(lat, lng) {
     }
 }
 
-function createStyledMarker(position, map, label) {
-    const marker = new google.maps.Marker({
-        position: position,
-        map: map,
-        icon: {
-            labelOrigin: new google.maps.Point(11, 50),
-            url: 'data:image/svg+xml;charset=utf-8,' +
-                encodeURIComponent('<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg"></svg>'),
-            size: new google.maps.Size(22, 22),
-        },
-        label: {
-            text: label,
-            color: "blue",
-            fontWeight: "bold",
-            fontSize: "24px"
-        }
-    });
-    return marker;
-}
-
-
 // Create a text marker (transparent placemark with a label)
 function createStyledMarker(position, map, label) {
     const marker = new google.maps.Marker({
@@ -141,14 +120,14 @@ function createStyledMarker(position, map, label) {
         icon: {
             labelOrigin: new google.maps.Point(11, 50),
             url: 'data:image/svg+xml;charset=utf-8,' +
-                encodeURIComponent('<svg width="18" height="18" xmlns="http://www.w3.org/2000/svg"></svg>'),
-            size: new google.maps.Size(18, 18),
+                encodeURIComponent('<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"></svg>'),
+            size: new google.maps.Size(20, 20),
         },
         label: {
             text: label,
-            color: "white",
+            color: "yellow",
             fontWeight: "bold",
-            fontSize: "24px"
+            fontSize: "20px"
         }
     });
     return marker;
