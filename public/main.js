@@ -243,23 +243,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML += `<h3 style="color:orange;" align="center">The property is probably <u>NOT</u> ELIGIBLE for Live Local development...</h3> <br>It can't qualify if it's <i>already</i> residential, believe it or not...`;
+                eligibilityDiv.innerHTML += `<h3 style="color:orange;" align="center">Your site is probably <u>NOT ELIGIBLE</u> for Live Local development.</h3> <br>It can't qualify if it's <i>already</i> residential, believe it or not...`;
                 //eligibilityDiv.style.color = "Orange";
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("MAX HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">The property looks <u>ELIGIBLE</u> for Live Local development!</h3> 
-                    </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and start <b><i>Living Local up in this bitch!</i></b>
-                    </br></br>First, you're allowed to build as high as the <b>tallest building within a mile</b> radius. Crazy right!? 
-                    </br>Here, that's <i>up to <b><u>${buildingHeight.toFixed(0)} feet</u></b> in height</i>! I've added it to the map <u>${distanceInMilesToTallestBldg.toFixed(2)} miles</u> from the subject.`
+                eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">Your site is <u>ELIGIBLE</u> for Live Local development!</h3> 
+                    </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and start <b><i>Living Local on that bitch!</i></b>
+                    </br></br>First, you can build <i>up to the height of the <b>tallest building within a mile</b> radius</i>. 
+                    </br></br>That would allow <i>up to <b><u>${buildingHeight.toFixed(0)} feet</u></b> here</i>. <b><i>Oh my! 😮</b></i>`
                 /*if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
                 }*/
                 //eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
-                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">The property is likely <u>NOT</u> ELIGIBLE for Live Local development... </h3> <br> It needs to <i>already</i> be <b>commercial</b> or <b>industrial</b> to qualify.`;
+                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">Your site is likely <u>NOT ELIGIBLE</u> for Live Local development. </h3> <br> It needs to <i>already</i> be <b>commercial</b> or <b>industrial</b> to qualify.`;
                 //eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
@@ -329,16 +329,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // if parcel is LLA eligible, then finish composing the eligibility and AI summary
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // LLA density limit explainer section
-                summaryContent += `</br></br>The Act also allows you to match the <b>highest density</b> allowed <b>anywhere</b> in the municipality.  <i>OMG. Radical!! </i>
-                    </br>And the highest density in ${displayMuniName} of all existing properties is </i><u><b>${maxMuniDensity} units</b></u> per acre</i> (source: trust me bro).
-                    </br><i>Note: In some municipalities, maximum density is ambiguous. Also, note: I'm giving you max density of <i>existing multifamily</i>. It's <b>not</b> being informed by zoning or land use.
-                    This is a pretty effective alternative to me having to research every maximum density throughout the state. Sorry bitch, I'm not Christopher Columbus. `;                
+                summaryContent += `</br></br>The Act also allows you to match the <i><b>highest density</b> allowed <b>anywhere</b> in the municipality</i>.  <b><i>Radical!</i></b>
+                    </br>And the highest density in ${displayMuniName} of all existing properties is </i><u><b>${maxMuniDensity} units/acre</b></u></i>.*
+                    </br></br><i>* Note: This is the max. density of <i>existing multifamily</i>; <b>not</b> based on actual zoning math.
+                    This is a highly effective alternative to me having to gather data for 100+ hours. `;                
 
                 // if max unit capacity is excessive/unrealistic for multifamily, add a small note acknowledging that
                 if (maxCapacity >= 1000) {
-                    summaryContent += `</br></br>The maximum-achievable yield is <b><u>${maxCapacity} units</b></u> here, but that's <b><i>a lot</i></b> of units. It's probably unrealistic for a multifamily development to feasibly and/or physically achieve such density on ${acres.toFixed(2)} acres... But, hey; shoot for the moon! I'm just here to give you the numbers.`;
+                    summaryContent += `</br></br>The maximum-achievable yield here is <b><u>${maxCapacity} units</b></u>, but that's <b><i>a lot</i></b> of units. It's probably unrealistic for a multifamily development to feasibly and/or physically achieve such density on ${acres.toFixed(2)} acres... But, hey; shoot for the moon! I'm just here to give you the numbers.`;
                 } else {
-                    summaryContent += `</br></br>The maximum-achievable yield is <u><b>${maxCapacity} units</b></u> here.`;// ${acres.toFixed(2)}-acre parcel.`;
+                    summaryContent += `</br></br>The maximum-achievable yield here is <u><b>${maxCapacity} units</b></u>.`;// ${acres.toFixed(2)}-acre parcel.`;
                 }
 
                 // Add the combined AI summary to bottom of the eligibility text
