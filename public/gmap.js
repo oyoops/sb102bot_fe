@@ -1,18 +1,6 @@
 // gmap.js - Functions for the Google Map
 
 
-/* MAP GLOBALS */
-/*
-// tallest building details (may break if tallestBuilding array >1)
-let buildingLat;
-let buildingLng;
-let buildingHeight;
-let buildingName; // may not work
-let buildingAddress; // may not work
-// DOM:
-const mapDisplay = document.getElementById('map');
-*/
-
 /* FUNCTIONS */
 
 // url callback (?)
@@ -37,7 +25,7 @@ async function initializeMap(lat, lng) {
     };
 
     const map = new google.maps.Map(mapDisplay, mapOptions);
-    console.log('Map generated.');
+    console.log('Map generated!');
 
     const userMarker = new google.maps.Marker({
         position: { lat: lat, lng: lng },
@@ -65,23 +53,21 @@ async function initializeMap(lat, lng) {
                 console.warn(`Building #${index} missing valid lat/lng. Skipping...`);
                 return;
             }
-
             buildingLat = parseFloat(buildingData.lat);
             buildingLng = parseFloat(buildingData.lng);
             buildingHeight = buildingData.height || "Uncertain";
-            buildingName = buildingData.name || `#${index + 1} Tallest Bldg. < 1mi.`;
+            buildingName = buildingData.name || `#${index + 1} tallest building`;
             buildingAddress = buildingData.address || "-";
 
             const buildingMarker = new google.maps.Marker({
                 position: { lat: buildingLat, lng: buildingLng },
-                color: "yellow",
                 map: map,
             });
 
             const buildingInfoContent = `
                 <div style="text-align:center;">
-                    <strong>${buildingName}</strong><br>
-                    ${buildingHeight.toFixed(0)} feet tall<br>
+                    ${buildingName}</br>
+                    ${buildingHeight.toFixed(0)} feet tall</br>
                     ${buildingAddress}
                 </div>
             `;
@@ -105,14 +91,15 @@ async function initializeMap(lat, lng) {
                 map: map
             });
 
+            // distance between subject-building
+            distanceInMilesToTallestBldg = distanceInMeters * 0.000621371;
             const distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(
                 new google.maps.LatLng(lat, lng),
                 new google.maps.LatLng(buildingLat, buildingLng)
             );
-            distanceInMilesToTallestBldg = distanceInMeters * 0.000621371;
-
+            // distance line label
             const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
-            createStyledMarker(lineLabelPos, map, `${distanceInMilesToTallestBldg.toFixed(2)} mi. from subject`);
+            createStyledMarker(lineLabelPos, map, `<u>${buildingHeight.toFixed(0)} feet tall</u> </br>${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
 
             bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));
         } catch (error) {
@@ -137,9 +124,9 @@ function createStyledMarker(position, map, label) {
         },
         label: {
             text: label,
-            color: "yellow",
+            color: "blue",
             fontWeight: "bold",
-            fontSize: "20px"
+            fontSize: "24px"
         }
     });
     return marker;
@@ -154,14 +141,14 @@ function createStyledMarker(position, map, label) {
         icon: {
             labelOrigin: new google.maps.Point(11, 50),
             url: 'data:image/svg+xml;charset=utf-8,' +
-                encodeURIComponent('<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg"></svg>'),
-            size: new google.maps.Size(22, 22),
+                encodeURIComponent('<svg width="18" height="18" xmlns="http://www.w3.org/2000/svg"></svg>'),
+            size: new google.maps.Size(18, 18),
         },
         label: {
             text: label,
-            color: "yellow",
+            color: "green",
             fontWeight: "bold",
-            fontSize: "20px"
+            fontSize: "18px"
         }
     });
     return marker;

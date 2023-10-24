@@ -59,7 +59,6 @@ function composeAiResponsesCombined(aiResponses) {
       console.error("No AI responses received");
       return;
   }
-
   console.log("Received AI Summary");
 
   let summaryParts = [
@@ -69,7 +68,6 @@ function composeAiResponsesCombined(aiResponses) {
   aiResponses.forEach((aiResponse, index) => {
       summaryParts.push(`<li>${aiResponse}</li>`);
   });
-
   summaryParts.push("</ul>");
 
   const summaryMessage = summaryParts.join('');
