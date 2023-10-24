@@ -479,6 +479,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Dynamically load the Google Maps and Places APIs
     loadGoogleMapsAPI();
+    
+    // Dynamically load the Google Places API
+    //loadGooglePlacesAPI();
 
 });
 

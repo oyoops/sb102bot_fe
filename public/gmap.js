@@ -3,7 +3,7 @@
 
 /* FUNCTIONS */
 
-// url callback (?)
+// Load the Google Maps API dynamically
 function initMap() {
     // Maps and Places APIs are now loaded and can be used.
 }
@@ -14,6 +14,23 @@ function loadGoogleMapsAPI() {
     script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&libraries=places,geometry&callback=initMap";
     document.body.appendChild(script);
 }
+
+/*
+// For address autocomplete (not really map, per se...)
+// Load the Google Places API dynamically
+function loadGooglePlacesAPI() {
+    const script = document.createElement('script');
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&libraries=geometry&callback=initPlaces";
+    document.body.appendChild(script);
+    // Places API is now loaded and can be used.
+    console.log("Ring-ring... Places API called back for you on Line 2!");
+}
+function initPlaces() {
+    const script = document.createElement('script');
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&libraries=geometry&callback=initPlaces";
+    document.body.appendChild(script);
+}
+*/
 
 // Initialize the Google Map
 async function initializeMap(lat, lng) {
