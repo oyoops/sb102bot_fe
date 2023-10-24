@@ -1,6 +1,5 @@
 // main.js - the primary script for SB102bot web app.
 
-
 // get all DOM objects
 import {
     loadingContainer, initialContent, eligibilityDiv, developmentProgramInputSection,
@@ -15,55 +14,10 @@ import {
 } from './domElements.js';
 
 
-/* once the page is fully loaded */
+/* once the page is fully loaded... */
 document.addEventListener('DOMContentLoaded', function() {
-    window.scrollTo(0, 0); // scroll to top
     //initAutocomplete(); // prepare Places API
-
-    /*
-    // set up DOM
-    const loadingContainer = document.querySelector('.loading-container');
-    const mainHeader = document.getElementById("mainHeader");
-    const initialContent = document.querySelector('#initialContent');
-    const form = document.querySelector('#searchForm');
-    const addressInput = document.querySelector('#addressInput');
-    const googlemap = document.getElementById('map');
-    const countyTableBody = document.querySelector('#countyDataTable tbody');
-    const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');
-    const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');
-    const eligibilityDiv = document.getElementById("eligibilityStatus");
-    const parcelDataTable = document.getElementById('parcelDataTable');
-    const developmentProgramInputSection = document.getElementById('developmentProgramInputSection');
-    const affordablePercentageSlider = document.getElementById("affordablePctSlider");
-    const affordablePctDisplay = document.getElementById('affordablePctDisplay');
-    const unitCalculationTable = document.getElementById('unitCalculationTable');
-    const sizeInputs = document.querySelectorAll('.sizeInput');
-    const marketInputs = document.querySelectorAll('.marketSizeInput');
-    const affordableSizeInputs = document.querySelectorAll('.affordableSizeInput');
-    const marketRateInputSection = document.getElementById('marketRateInputSection');
-    const marketRateInputs = document.querySelectorAll('.marketRateInput');
-    const acreageInput = document.getElementById("acreageInput");
-    const densityInput = document.getElementById('densityInput');
-    const matchAffordableSizesCheckbox = document.getElementById('matchAffordableSizes');
-    const rentPerSqFtTableSection = document.getElementById('rentPerSqFtTableSection');
-    
-    const countyDataTable = document.getElementById('countyDataTable');
-    const countyMaxRentsTable = document.getElementById('countyMaxRentsTable');
-    
-    const landAndTotalHcInputSection = document.getElementById('landAndTotalHcInputSection');
-    const landCostPerUnit = document.getElementById('landCostPerUnitInput');
-    const totalHCPerUnit = document.getElementById('totalHCPerUnitInput');
-
-    const landAndTotalHcOutputSection = document.getElementById('totalLandAndTotalHcOutputSection');
-    
-    const abatementTable = document.getElementById('abatementTable');
-    const tryAgainButton = document.getElementById("tryAgainButton");
-    */
-
-    // on New Search button click:
-    tryAgainButton.addEventListener("click", function() {
-        location.reload();
-    });
+    window.scrollTo(0, 0); // scroll to top
     
     // on form submit:
     form.addEventListener('submit', async (e) => {
@@ -71,16 +25,16 @@ document.addEventListener('DOMContentLoaded', function() {
         address = addressInput.value;
 
         if (!address) {
-            alert('You might want to enter an address first... <br>Just a suggestion, though!');
+            alert('Ummm, you might want to try typing an address first? </br>Just a suggestion, though...');
             return;
         }
 
         try {
-            // hide initial content
-            mainHeader.style.display = 'none';  // hide main header
-            initialContent.style.display = 'none';  // hide the rest of initial content
+            // hide header and initial content
+            mainHeader.style.display = 'none';
+            initialContent.style.display = 'none';
             
-            // show loading indicators
+            // display fake loading progress bar
             updateLoadingBar();
             loadingContainer.style.display = 'block';
 
@@ -96,11 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Geocode Data Received:", geocodeData);
             
             if (!geocodeData.results || geocodeData.results.length === 0) {
-                throw new Error(`Whoops... That address isn't in my coverage area.\nI only know about Florida (and only the good counties at that).`);
+                throw new Error(`Whoops... That address isn't in my domain.\nI only know about Florida (and only the good counties at that).`);
             }
             /* Geocode was successful */
             
-            // extract coordinates from response
+            // extract coordinates from geo data
             lat = geocodeData.results[0].geometry.location.lat;
             lng = geocodeData.results[0].geometry.location.lng;
 
@@ -109,25 +63,26 @@ document.addEventListener('DOMContentLoaded', function() {
             const cityCheckResponse = await fetch(cityCheckEndpoint);
 
             cityData = await cityCheckResponse.json(); // global
-            console.log("City Data Received:", cityData);
             
             if (cityData.isInCity) {
-                console.log(`Address is within city: ${cityData.cityName}`);
+                console.log(`Address is in city: ${cityData.cityName}`);
             } else {
                 console.log('Address is unincorporated.');
                 cityData.cityName = 'unincorporated';
             }
             
-            // initialize the map (kind of early...)
+            // initialize the map (early?)
             initializeMap(lat, lng);
 
-            // scroll to top of page
+            // scroll to top again
             loadingContainer.scrollIntoView;
+
 
 
             /* API blocks: */
 
-            // API block #1 of 3
+
+            // API block #1 of 3: COUNTY DATA
             try {
                 // fetch the county data for the address (Lat,Lng = CountyData)
                 const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
@@ -145,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early since we can't proceed without county data
             }
 
-            // API block #2 of 3
+            // API block #2 of 3: CITY DATA
             try {
                 // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
                 const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
@@ -159,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (error) {
                 console.error("Error fetching parcel data:\n", error);
                 alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
-                return;  // Exit early since we can't proceed without parcel data
+                return;  // Exit early (can't proceed without parcel data)
             }
 
             // verify that parcelData exists
@@ -168,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error('Sorry... This property is not eligible, buddy.');
             }
 
-            // API block #3 of 3
+            // API block #3 of 3: AI RESPONSES
             try {
                 // make copy of parcelData for enhancing
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
@@ -202,23 +157,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // send enriched supplemental data to AI server
                 aiResponses = await fetchAiResponsesCombined(aiSupplementalData);
+                ////////////aiResponses = await fetchAiResponsesCombined(parcelData);
 
                 // NEW WAY TO GET PROMPTS! (EXAMPLE)
                 generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', parcelData).then(summary => {
                     console.log("PROMPT_SOURCE_V2 Data: \n" + summary);
                 });
-                aiResponses = await fetchAiResponsesCombined(parcelData);
+
                 // verify and log
                 if (!aiResponses || aiResponses.length === 0) {
-                    throw new Error('[CRITICAL ERROR] No responses were received from the AI!');
+                    throw new Error('[CRITICAL ERROR] No responses received from the AI.');
                 }
                 console.log("AI Responses:", aiResponses);
             } catch (error) {
-                console.error("[CRITICAL ERROR] Unknown error while trying to fetch AI responses.", error);
+                console.error("[CRITICAL ERROR] Unknown error while fetching AI responses.", error);
                 return;
             }
 
-            // convert [CITY] and [county] to Proper Case for cleaner display
+            // convert city & county names to Proper Case for a cleaner look
             cityNameProper = toProperCase(cityData.cityName);
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
@@ -268,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("MAX HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">Your site is <u>ELIGIBLE</u> for Live Local development!</h3> 
-                    </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and start <b><i>Living Local on that bitch!</i></b>
+                    </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and start <b><i>Living Local on the bitch!</i></b>
                     </br></br>First, you can build <i>up to the height of the <b>tallest building within a mile</b> radius</i>. 
                     </br></br>That would allow <i>up to <b><u>${buildingHeight.toFixed(0)} feet</u></b> here</i>. <b><i>Oh my! 😮</b></i>`
                 /*if (buildingHeight >= 200) {
@@ -347,49 +303,66 @@ document.addEventListener('DOMContentLoaded', function() {
             // if parcel is LLA eligible, then finish composing the eligibility and AI summary
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // LLA density limit explainer section
-                summaryContent += `</br></br>The Act also allows you to match the <i><b>highest density</b> allowed <b>anywhere</b> in the municipality</i>.  <b><i>Radical!</i></b>
-                    </br>And the highest density in ${displayMuniName} of all existing properties is </i><u><b>${maxMuniDensity} units/acre</b></u></i>.*
-                    </br></br><i>* Note: This is the max. density of <i>existing multifamily</i>; <b>not</b> based on actual zoning math.
-                    This is a highly effective alternative to me having to gather data for 100+ hours. `;                
+                summaryContent += `
+                    </br></br>
+                    The Act also allows you to match the <i><b>highest density</b> allowed <b>anywhere</b> in the municipality</i>.  <b><i>Radical!</i></b>
+                    </br>And the highest density among all existing multifamily in ${displayMuniName} is </i><b>${maxMuniDensity} units/acre</b></i>.
+                    `;
 
                 // if max unit capacity is excessive/unrealistic for multifamily, add a small note acknowledging that
                 if (maxCapacity >= 1000) {
-                    summaryContent += `</br></br>The maximum-achievable yield here is <b><u>${maxCapacity} units</b></u>, but that's <b><i>a lot</i></b> of units. It's probably unrealistic for a multifamily development to feasibly and/or physically achieve such density on ${acres.toFixed(2)} acres... But, hey; shoot for the moon! I'm just here to give you the numbers.`;
+                    summaryContent += `
+                    </br></br>
+                    The maximum-achievable yield here is <b><u>${maxCapacity} units</b></u>... but that's <b><i>a lot</i></b> of units. 
+                    It might be unrealistic for a multifamily development to physically and feasibly achieve that kind of density on ${acres.toFixed(2)} acres... 
+                    </br>But, hey, shoot for the moon! I'm only here to shove numbers up your ass.
+                    `;
                 } else {
-                    summaryContent += `</br></br>The maximum-achievable yield here is <u><b>${maxCapacity} units</b></u>.`;// ${acres.toFixed(2)}-acre parcel.`;
+                    summaryContent += `
+                    </br></br>
+                    The maximum achievable yield here is <u><b>${maxCapacity} units</b></u>.
+                    `;
                 }
 
-                // Add the combined AI summary to bottom of the eligibility text
+                // Add the combined AI summary to bottom of the ultimate eligibility text
                 summaryContent += composeAiResponsesCombined(aiResponses);
 
             } else {
-                // DON'T add the LLA density limit-explainer since this parcel isn't LLA-qualified.
+                // DON'T add the LLA density limit explanation since this parcel isn't LLA-qualified.
             }
 
-            // Show Google Map we initialized earlier
-            document.getElementById('map').style.display = 'block';
-
-            // Set div content and display
-            //   (Div content = Eligibility text + Combined AI summary)
-            eligibilityDiv.innerHTML = summaryContent; // reset div content
+            // Reset content of AI+Eligibility div
+            eligibilityDiv.innerHTML = summaryContent;
+            
+            // Display AI+Eligibility div
             eligibilityDiv.style.display = 'block';
 
-            // Fade the div content in slowly
-            animateTextFadeIn(eligibilityDiv); // fade text in to simulate AI talking
+            // Display Google Map
+            googlemap.style.display = 'block';
+            
+            // Slowly fade in content of AI+Eligibility div
+            animateTextFadeIn(eligibilityDiv);
 
 
-            /* Land Development Inputs Section */
 
-            // affordable percentage slider
-            affordablePercentageSlider.value = 40; // 0.40; // default = 40% affordable units
+            /* Land Development Input/Output Section */
+
+
+            /* Event Listeners (mostly): */
+
+            // on New Search button click:
+            tryAgainButton.addEventListener("click", function() {
+                location.reload();
+            });
+
+            // on sliding the affordable percentage slider
             affordablePercentageSlider.oninput = function() {
                 // recalculate unit sizes and revenues on slider change
                 calculateWeightedAverageSizes();
                 updateRentPerSqFtTable();
-                
             }
-
-            /* Event Listeners: */
+            // affordable percentage slider
+            affordablePercentageSlider.value = 40; // 0.40; // default = 40% affordable units
 
             // on acreage [A ac.] input:
             acreageInput.addEventListener('input', function() {
@@ -469,16 +442,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // (more event listeners...)
             
             
-            // run initial calculations using loaded & default values
+            // Run initial calculations using loaded & default values
             calculateMaximumUnits();
             calculateWeightedAverageSizes();
             updateRentPerSqFtTable();
             updateTotalCosts();
             calculateAbatement();
             
-            /* USER INPUTS SECTION END. */
+            /* DEVELOPMENT I/O SECTION END. */
             
-            // scroll to top x2
+            // scroll to top again
             googlemap.scrollIntoView();
             window.scrollTo(0, 0);
             
@@ -489,16 +462,13 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.error('Error:', error);
                 // to-do: significantly improve error handling.
-                alert('Whoops, something bad happened and I failed...\nTry again, I was probably just hella busy for a minute.');
+                alert('Whoops, something bad happened and I failed...\nTry again. I was probably just hella busy for a minute.');
             }
         }
     });
 
-    // Dynamically load the Google Maps and Places APIs
+    // Dynamically load the Google Maps & Places APIs
     loadGoogleMapsAPI();
-    
-    // Dynamically load the Google Places API
-    //loadGooglePlacesAPI();
 
 });
 
