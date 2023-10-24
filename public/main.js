@@ -3,8 +3,9 @@
 /* once the page is fully loaded */
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
+    initAutocomplete(); // prepare Places API
 
-    // DOM
+    // set up DOM
     const loadingContainer = document.querySelector('.loading-container');
     const mainHeader = document.getElementById("mainHeader");
     const initialContent = document.querySelector('#initialContent');

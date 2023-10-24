@@ -200,18 +200,32 @@ function specialCountyFormatting(county) {
 }
 
 function initAutocomplete() {
-    const input = document.getElementById('place-input');
+    const input = document.getElementById('#addressInput');
     const autocomplete = new google.maps.places.Autocomplete(input);
   
     // If you want to get details once a place is selected
     autocomplete.addListener('place_changed', function() {
       const place = autocomplete.getPlace();
       if (!place.geometry) {
-        console.log("Returned place contains no geometry");
-        return;
+          console.log("Returned place contains no geometry");
+          return;
       }
-      // You can extract more details here, like:
-      // place.geometry.location.lat() and place.geometry.location.lng()
-    });
-  }
+      
+      // Extract latitude and longitude
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+  
+      console.log("Latitude: " + lat);
+      console.log("Longitude: " + lng);
+  
+      // Extract name and address
+      const name = place.name;
+      const address = place.formatted_address;
+  
+      console.log("Name: " + name);
+      console.log("Address: " + address);
+  
+      // If you wish, you can display these details on your webpage, store them, or use them in other functions.
+  });
+}
   
