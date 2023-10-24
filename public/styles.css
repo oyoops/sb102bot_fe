@@ -364,14 +364,17 @@ input:disabled {
  
 #eligibilityStatus {
     display: none;
-    width: auto;
-    max-width: 1500px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #d1d1d1;
+    width: 80%;
+    max-width: 1200px;
+    margin: 2% auto;
+    padding: 1em 2em;
+    background-color: #f2f2f2;
     border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: rgb(14, 9, 88);
+    font-size: 1em;
+    line-height: 1.2;
+    text-align: left;
     font-family: 'Arial', sans-serif;
 }
 
