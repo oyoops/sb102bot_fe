@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("MAX HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">The property looks <u>ELIGIBLE</u> for Live Local development!</h3> 
                     </br><b><i>Coolio 😎👍</b></i> That means, among other benefits, you can build <b>as high as the tallest building</b> within a one-mile radius. 
-                    Here, that'd mean up to <b>${buildingHeight.toFixed(0)} feet</b> in height! I've added the tallest building to the map along with its distance from your site.`
+                    Here, that'd mean up to <b>${buildingHeight.toFixed(0)} feet</b> in height! I've added it to the map of the subject. They're ${distanceInMilesToTallestBldg.toFixed(2)} miles apart.`
                 /*if (buildingHeight >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
                 }*/
