@@ -37,7 +37,7 @@ async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter, parcelDat
             The AI's writing and parcel data are imperfect, but YOU are the editor; the last line of defense between me and distributing unprofessional mediocre content to my critical audience.            
             
         RULES:
-            - Must be in HTML format. Use fun, artistic HTML text styles and colors to emphasize key info, and use </br> for line breaks.
+            - Must be in HTML format. Use fun, artistic HTML text styles and colors to emphasize key info, and use </br> for line breaks. Headings must be centered.
             - Include plenty of emojis for emphasis throughout.  
             - Remove all references to unavailable or incomplete information.
             - Remove everything that isn't substantive or valuable.
