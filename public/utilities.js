@@ -39,47 +39,51 @@ async function fetchAiResponsesCombined(row) {
   try {
       const results = await Promise.all(fetchPromises);
 
+      /*
       results.forEach(result => {
           console.log('OpenAI Prompt:', result?.choices?.[0]?.message?.content);
           console.log('OpenAI Response:', result?.choices?.[1]?.message?.content);
           console.log('Total Tokens Used:', result?.usage?.total_tokens);
       });
+      */
 
       return results;
   } catch (error) {
-      const errorMessage = error?.data?.error?.message || "Unknown error occurred";
-      console.error("Error fetching AI responses:", errorMessage);
+      const errorMessage = error?.data?.error?.message || "An unknown error occurred while fetching AI responses.";
+      console.error("Error while fetching AI responses:", errorMessage);
       throw error;
   }
 }
 
-// compose AI responses
+// combine the multiple AI responses
 function composeAiResponsesCombined(aiResponses) {
   if (!aiResponses || aiResponses.length === 0) {
       console.error("No AI responses received");
       return;
   }
-  console.log("Received AI Summary");
+  console.log("Received set of AI responses.");
 
-  let summaryParts = [
-      `</br><h3 style="color:black;" align="center"></br>First, let's review some preliminary intel.</h3><ul>`
-  ];
+  let aiCombinationParts = [
+      `</br></br>
+      <h3 style="color:black;" align="center">
+      First, let's review some preliminary intel.
+      </h3>
+      <ul>`
+  ];  // (the HTML intro really belongs somewhere else...)
 
   aiResponses.forEach((aiResponse, index) => {
-      summaryParts.push(`<li>${aiResponse}</li>`);
+    aiCombinationParts.push(`<li>${aiResponse}</li>`);
   });
-  summaryParts.push("</ul>");
+  aiCombinationParts.push("</ul>");
 
-  const summaryMessage = summaryParts.join('');
-  console.log("AI Property Summary:\n" + summaryMessage);
-
-  return summaryMessage;
+  const combinedResponses = aiCombinationParts.join('');
+  return combinedResponses;
 }
 
-// fade in AI section
+// fade in the AI response text
 function animateTextFadeIn(element) {
   if (!element) {
-      console.error("No element provided for animation.");
+      console.error("Invalid animation.");
       return;
   }
 
@@ -110,11 +114,10 @@ function animateTextFadeIn(element) {
       } else {
           clearInterval(interval);
       }
-  }, 75);
+  }, 75); //   <---- increase/decrease to change text fading speed
 }
 
-
-/* Faux-loading indicator updater */
+/* Update the fake loading progress bar */
 function updateLoadingBar() {
   const loadingFill = document.querySelector('.loading-fill');
   const loadingPercentage = document.querySelector('.loading-percentage');
@@ -134,9 +137,7 @@ function updateLoadingBar() {
 }
 
 
-
-
-/* Non-AI Related Functions: */
+/* Non-AI Functions: */
 
 // Get max density of a municipality
 async function getMaxDensity(county, city) {
@@ -166,28 +167,12 @@ async function fetchTallestBuilding(lat, lng, radius) {
     }
 }
 
-
-/*
-// Fetch the AI 'memo' by adding all relevant global vars as endpoint parameters
-async function runAISection() {
-    const textMod = ` Make it good. `;
-
-    const aiContainer = document.getElementById('aiContainer');
-    aiContainer.style.display = 'block';
-    aiContainer.innerHTML = `<i><p>Drafting your memo, please be patient...<p></i>`;
-    const icMemoEndpoint = `/api/ask_ai?address=${encodeURIComponent(address)}&county=${countyData.county_name}&acreage=${acreageInput.value}&totalUnits=${totalUnits}&affordablePct=${affordablePct}&affStudio=${countyData.max_rent_0bd_120ami}&aff1BD=${countyData.max_rent_1bd_120ami}&aff2BD=${countyData.max_rent_2bd_120ami}&aff3BD=${countyData.max_rent_3bd_120ami}&textModifier=${encodeURIComponent(textMod)}`;
-    const icMemoResponse = await fetch(icMemoEndpoint);
-    const icMemo = await icMemoResponse.text();
-    console.log("IC Memo Received:", icMemo);
-    aiContainer.innerHTML = icMemo;
-}
-*/
-
 // Function to convert city and county names to Proper Case
 function toProperCase(str) {
   return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1).toLowerCase()).join(' ');
 }
 
+// Function to format county names that contain special characters
 function specialCountyFormatting(county) {
   const specialCases = {
       'miamidade': 'Miami-Dade',
@@ -195,7 +180,6 @@ function specialCountyFormatting(county) {
       'stlucie': 'St. Lucie',
       'palmbeach': 'Palm Beach'
   };
-
   return specialCases[county] || toProperCase(county);
 }
 
