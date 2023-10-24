@@ -199,6 +199,7 @@ function specialCountyFormatting(county) {
   return specialCases[county] || toProperCase(county);
 }
 
+/*
 function initAutocomplete() {
     const input = document.getElementById('addressInput');
     const autocomplete = new google.maps.places.Autocomplete(input);
@@ -228,4 +229,5 @@ function initAutocomplete() {
       // If you wish, you can display these details on your webpage, store them, or use them in other functions.
   });
 }
+*/
   

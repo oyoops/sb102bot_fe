@@ -3,7 +3,7 @@
 /* once the page is fully loaded */
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
-    initAutocomplete(); // prepare Places API
+    //initAutocomplete(); // prepare Places API
 
     // set up DOM
     const loadingContainer = document.querySelector('.loading-container');
