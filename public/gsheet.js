@@ -52,7 +52,7 @@ async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter, parcelDat
         "${combinedResponses}"
     `;
     
-    // Attach this prompt to parcelData and call fetchAiEnhancements
+    // Attach this prompt to parcelData and call fetchAiResponsesCombined
     parcelData.prompt = prompt;
     const refinedSummaryResponses = await fetchAiResponsesCombined(parcelData); // <<<<<<<<<<<<<<<<<<<<<<<<------------------------------------------
     // Assuming the AI responses are in a plain text format, join them together for a refined summary
