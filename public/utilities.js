@@ -10,7 +10,7 @@
 /* AI-Related Functions: */
 
 // fetch the set of AI responses
-async function fetchAiEnhancements(row) {
+async function fetchAiResponsesCombined(row) {
   const endpoints = [
       '/api/ask_ai_part1A',
       '/api/ask_ai_part1B',
@@ -53,10 +53,10 @@ async function fetchAiEnhancements(row) {
   }
 }
 
-// display AI responses
-function displayAiEnhancements(enhancements) {
-  if (!enhancements || enhancements.length === 0) {
-      console.error("No enhancements received");
+// compose AI responses
+function composeAiResponsesCombined(aiResponses) {
+  if (!aiResponses || aiResponses.length === 0) {
+      console.error("No AI responses received");
       return;
   }
 
@@ -66,8 +66,8 @@ function displayAiEnhancements(enhancements) {
       `</br><h3 style="color:black;" align="center"></br>First, let's review some preliminary intel:</h3><ul>`
   ];
 
-  enhancements.forEach((enhancement, index) => {
-      summaryParts.push(`<li>${enhancement}</li>`);
+  aiResponses.forEach((aiResponse, index) => {
+      summaryParts.push(`<li>${aiResponse}</li>`);
   });
 
   summaryParts.push("</ul>");
@@ -78,7 +78,7 @@ function displayAiEnhancements(enhancements) {
   return summaryMessage;
 }
 
-// fade in AI response and eligibility section
+// fade in AI section
 function animateTextFadeIn(element) {
   if (!element) {
       console.error("No element provided for animation.");
@@ -114,9 +114,6 @@ function animateTextFadeIn(element) {
       }
   }, 75);
 }
-
-
-
 
 
 /* Faux-loading indicator updater */

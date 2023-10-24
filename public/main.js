@@ -147,27 +147,30 @@ document.addEventListener('DOMContentLoaded', function() {
             // API block #3 of 3
             try {
                 // fetch the AI responses to the set of prompts concerning the parcel data
+
+                // verify that the required supplemental data variable exists
                 if (!parcelData || Object.keys(parcelData).length === 0) {
-                    console.log(`Skipping AI analysis module due to the parcel's ineligibility`);
-                    throw new Error('Sorry, this property is ineligible for Live Local Act development.');
-                    //return;
+                    console.log(`Skipping AI analysis module; missing parcelData or parcel is simply ineligible for the Live Local Act.`);
+                    throw new Error('Sorry, this property is ineligible for the Live Local Act.');
                 }
                 
-                // NEW EXAMPLE USAGE
+
+                // NEW WAY TO GET PROMPTS! (EXAMPLE)
                 generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', parcelData).then(summary => {
-                    console.log(summary);
+                    console.log("PROMPT_SOURCE V2 data: \n" + summary);
                 });
                 
-                aiEnhancements = await fetchAiEnhancements(parcelData);
-                if (!aiEnhancements || aiEnhancements.length === 0) {
-                    throw new Error('No response received from AI server.');
+                
+                aiResponses = await fetchAiResponsesCombined(parcelData);
+                
+                // verify and log
+                if (!aiResponses || aiResponses.length === 0) {
+                    throw new Error('[CRITICAL ERROR] No responses were received from the AI!');
                 }
-                console.log("AI Enhancements Received:", aiEnhancements);
-                displayAiEnhancements(aiEnhancements); ///////////////////////////////////////////////////////////////////////////////////////////////////
+                console.log("AI Responses:", aiResponses);
             } catch (error) {
-                console.error("Error fetching AI enhancements.\nEncountered in API Block #3:\n", error);
-                ////alert("Hmm, I think I need a coffee... ☕ \nI failed to analyze your parcel. \nMaybe try again later?");
-                return;  // Exit early (?)
+                console.error("[CRITICAL ERROR] Unknown error while trying to fetch AI responses.", error);
+                return;
             }
 
             // convert [CITY] and [county] to Proper Case for cleaner display
@@ -177,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // hide loading indicator
             loadingContainer.scrollIntoView;
             loadingContainer.style.display = 'none';            
+
             // show Try Again button
             tryAgainButton.style.display = 'block';
             
@@ -294,38 +298,44 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
 
-            // if parcel is eligible, then finish composing the eligibility and AI summary
+            // if parcel is LLA eligible, then finish composing the eligibility and AI summary
             if (eligibleCodes.includes(parcelData.dor_uc)) {
-                // Second explainer part (max density limit)                
-                summaryContent += `</br></br>The Act also allows you to match the <b>highest density allowed anywhere in the municipality. </b> <i>Radical! </i>
-                    The highest density in ${displayMuniName} among existing apartments is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but awesome) data.
-                    </br></br>Assuming all ${acres.toFixed(2)} acres are for apartments, the maximum-achievable yield would be <u><b>${maxCapacity} units</b></u>.`;                
-                // Add AI summary to the existing eligibility content (*)
-                summaryContent += displayAiEnhancements(aiEnhancements);
+                // LLA density limit explainer section
+                summaryContent += `</br></br>The Act also allows developers to match the <b>highest density allowed anywhere in the municipality. </b> <i>Radical! </i>
+                    The highest density in ${displayMuniName} among existing apartments is <b>${maxMuniDensity} units per acre</b>, per my unofficial (but awesome) data.`;                
+
+                // if max unit capacity is excessive/unrealistic for multifamily, add a small note acknowledging that
+                if (maxCapacity >= 1000) {
+                    summaryContent += `</br></br>The maximum-achievable yield is <b><u>${maxCapacity} units</b></u> here, but that's <b><i>a lot</i></b> of units. It's probably unrealistic for a multifamily development to feasibly and/or physically achieve such density on ${acres.toFixed(2)} acres... But, hey; shoot for the moon! I'm just here to give you the numbers.`;
+                } else {
+                    summaryContent += `</br></br>The maximum-achievable yield is <u><b>${maxCapacity} units</b></u> here.`;// ${acres.toFixed(2)}-acre parcel.`;
+                }
+
+                // Add the combined AI summary to bottom of the eligibility text
+                summaryContent += composeAiResponsesCombined(aiResponses);
+
             } else {
-                /*
-                summaryContent += `</br>You must bring me commercial and industrial properties ONLY!
-                    </br></br>Actually, I'm getting pretty sick of being fed mediocre sites all day!!!`;
-                summaryContent += `</br><h4><i>Bring me a commercial/industrial property next time.</i></h4>`;
-                */
+                // DON'T add the LLA density limit-explainer since this parcel isn't LLA-qualified.
             }
 
-            // Show the already-initialized Google Map
+            // Show Google Map we initialized earlier
             document.getElementById('map').style.display = 'block';
-            ////document.getElementById('map').scrollIntoView();
 
-            // Generate and display text content
-            eligibilityDiv.innerHTML = summaryContent; // reset entire div content
-            eligibilityDiv.style.display = 'block'; // unhide div
-            animateTextFadeIn(eligibilityDiv); // fade in div content to simulate AI 'talking'
+            // Set div content and display
+            //   (Div content = Eligibility text + Combined AI summary)
+            eligibilityDiv.innerHTML = summaryContent; // reset div content
+            eligibilityDiv.style.display = 'block';
+
+            // Fade the div content in slowly
+            animateTextFadeIn(eligibilityDiv); // fade text in to simulate AI talking
 
 
-            /* User Inputs: */
+            /* Land Development Inputs Section */
 
             // affordable percentage slider
             affordablePercentageSlider.value = 40; // 0.40; // default = 40% affordable units
             affordablePercentageSlider.oninput = function() {
-                // Recalculate unit sizes and revenues on slider change
+                // recalculate unit sizes and revenues on slider change
                 calculateWeightedAverageSizes();
                 updateRentPerSqFtTable();
                 
