@@ -1,10 +1,26 @@
 // main.js - the primary script for SB102bot web app.
 
+
+// get all DOM objects
+import {
+    loadingContainer, initialContent, eligibilityDiv, developmentProgramInputSection,
+    marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
+    mainHeader,
+    parcelDataTable, parcelDataTableBody, countyDataTable, countyTableBody, countyMaxRentsTable, rentsTableBody,
+    unitCalculationTable, abatementTable,
+    form, addressInput, affordablePercentageSlider, affordablePctDisplay, acreageInput, densityInput,
+    landCostPerUnit, totalHCPerUnit, matchAffordableSizesCheckbox,
+    sizeInputs, marketInputs, affordableSizeInputs, marketRateInputs,
+    googlemap, tryAgainButton
+} from './domElements.js';
+
+
 /* once the page is fully loaded */
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
     //initAutocomplete(); // prepare Places API
 
+    /*
     // set up DOM
     const loadingContainer = document.querySelector('.loading-container');
     const mainHeader = document.getElementById("mainHeader");
@@ -42,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const abatementTable = document.getElementById('abatementTable');
     const tryAgainButton = document.getElementById("tryAgainButton");
+    */
 
     // on New Search button click:
     tryAgainButton.addEventListener("click", function() {
