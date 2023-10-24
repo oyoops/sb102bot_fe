@@ -146,9 +146,9 @@ function createStyledMarker(position, map, label) {
         },
         label: {
             text: label,
-            color: "green",
+            color: "white",
             fontWeight: "bold",
-            fontSize: "18px"
+            fontSize: "24px"
         }
     });
     return marker;
