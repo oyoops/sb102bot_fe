@@ -364,7 +364,7 @@ input:disabled {
  
 #eligibilityStatus {
     display: none;
-    width: 70%;
+    width: auto;
     max-width: 1500px;
     margin: 20px auto;
     padding: 20px;
