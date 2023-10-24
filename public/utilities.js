@@ -200,7 +200,7 @@ function specialCountyFormatting(county) {
 }
 
 function initAutocomplete() {
-    const input = document.getElementById('#addressInput');
+    const input = document.getElementById('addressInput');
     const autocomplete = new google.maps.places.Autocomplete(input);
   
     // If you want to get details once a place is selected
