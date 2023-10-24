@@ -198,3 +198,20 @@ function specialCountyFormatting(county) {
 
   return specialCases[county] || toProperCase(county);
 }
+
+function initAutocomplete() {
+    const input = document.getElementById('place-input');
+    const autocomplete = new google.maps.places.Autocomplete(input);
+  
+    // If you want to get details once a place is selected
+    autocomplete.addListener('place_changed', function() {
+      const place = autocomplete.getPlace();
+      if (!place.geometry) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+      // You can extract more details here, like:
+      // place.geometry.location.lat() and place.geometry.location.lng()
+    });
+  }
+  
