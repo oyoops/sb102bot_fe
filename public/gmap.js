@@ -92,11 +92,11 @@ async function initializeMap(lat, lng) {
             });
 
             // distance between subject-building
-            distanceInMilesToTallestBldg = distanceInMeters * 0.000621371;
             const distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(
                 new google.maps.LatLng(lat, lng),
                 new google.maps.LatLng(buildingLat, buildingLng)
             );
+            distanceInMilesToTallestBldg = distanceInMeters * 0.000621371;
             // distance line label
             const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
             createStyledMarker(lineLabelPos, map, `<u>${buildingHeight.toFixed(0)} feet tall</u> </br>${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
