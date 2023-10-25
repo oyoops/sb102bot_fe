@@ -138,66 +138,58 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('Sorry, this property is not eligible, buddy.');
                 }
 
-                // make copy of parcelData for enhancing
+                // make a copy of parcelData for enhancement
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
-                
-                console.log("PRE-DATA:\n" + JSON.stringify(aiSupplementalData, null, 2));
+                //console.log("copy of parcelData:\n" + JSON.stringify(aiSupplementalData, null, 2));
 
-                // add primitive values directly
-                /*
-                aiSupplementalData.address = address;
-                aiSupplementalData.lat = lat;
-                aiSupplementalData.lng = lng;
-                aiSupplementalData.acres = acres;
-                aiSupplementalData.cityNameProper = cityNameProper;
-                aiSupplementalData.countyNameProper = countyNameProper;
-                aiSupplementalData.displayMuniName = displayMuniName;
-                aiSupplementalData.totalUnits = totalUnits;
-                aiSupplementalData.marketUnits = marketUnits;
-                aiSupplementalData.affordableUnits = affordableUnits;
-                aiSupplementalData.maxCapacity = maxCapacity;
-                */
-               
-                // decompose both JSONs and add their values
+                // decompose available JSONs and add their values
                 if (countyData) {
-                    // countyData *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
+                    // *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
                     for (const [key, value] of Object.entries(countyData)) {
                         aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
                     }
                 }
                 if (cityData) {
-                    // cityData *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
+                    // *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
                     for (const [key, value] of Object.entries(cityData)) {
                         aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
                     }
                 }
 
-                console.log("POST-DATA:\n" + JSON.stringify(aiSupplementalData, null, 2));
+                // Log dataset PRE-transformation
+                console.log("\n<----[PRE-TRANSFORMATION:]----->");
+                console.log(JSON.stringify(aiSupplementalData, null, 2));
 
-                /* Enhanced data is now prepared! */
+                // Add all global variables to dataset and apply final super-enhancements
+                cleanData = refineData(aiSupplementalData);
 
-                /*
-                // NEW WAY TO GET PROMPTS! (EXAMPLE)
-                let hmmm;
+                // Log dataset POST-transformation
+                console.log("\n<----[POST-TRANSFORMATION:]---->");
+                console.log(JSON.stringify(cleanData, null, 2));
+
+
+                /* Enhanced dataset is now fully prepared! */
+
+
+                /* NEW WAY TO GET PROMPTS! (EXAMPLE)
                 generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', aiSupplementalData).then(summary => {
                     hmmm = summary;
                     console.log("Hmmm = " + hmmm);
-                });
-                */
+                });*/
 
-                // send enriched supplemental data to AI server
-                aiResponses = await fetchAiResponsesCombined(aiSupplementalData);
-                if (!aiResponses || aiResponses.length === 0) {
-                    throw new Error('[CRITICAL ERROR] No AI responses received!');
+                // send enriched supplemental data to the primary prompts dispatcher endpoint
+                aiGeneratedHTML = await fetchAiResponsesCombined(aiSupplementalData);
+                if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
+                    throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
 
-                console.log("AI Responses:", aiResponses);
+                console.log("\n*** FINAL ANALYSIS: *** \n", aiGeneratedHTML);
             } catch (error) {
-                console.error("[CRITICAL ERROR] Unknown error while fetching AI responses.", error);
+                console.error("[CRITICAL] Error while collecting AI responses: \n", error);
                 return;
             }
 
-            // convert city & county names to Proper Case for a cleaner look
+            // convert city and county names to Proper Case for clean
             cityNameProper = toProperCase(cityData.cityName);
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
@@ -209,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tryAgainButton.style.display = 'block';
             
             // ...
-            // MILLAGE MANUAL ADJUSTMENT
+            // MANUAL MILLAGE ADJUSTMENT:
             fakeMillage = parseFloat(countyData.county_millage) + parseFloat(MILLAGE_ADJUSTMENT); // "rough estimate" using known county mills + a constant manual adjustment to approximate state (and perhaps local...) portion of grand total millage
             fakeMillage = parseFloat(fakeMillage).toFixed(4);
             // ...

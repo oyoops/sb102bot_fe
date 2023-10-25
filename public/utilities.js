@@ -219,6 +219,37 @@ function composeAiResponsesCombined(aiResponses) {
 }
 */
 
+function refineData(rawData) {
+    let refinedData = {};
+
+    // Rename columns
+    for (let [key, value] of Object.entries(rawData)) {
+        if (renameMap[key]) {
+            refinedData[renameMap[key]] = value;
+        } else {
+            refinedData[key] = value; // Keeping columns not in the renameMap as-is
+        }
+    }
+
+    // Remove unwanted columns
+    for (let unwantedColumn of unwantedColumns) {
+        if (refinedData[renameMap[unwantedColumn]]) {
+            delete refinedData[renameMap[unwantedColumn]];
+        }
+    }
+
+    // Remove null values and convert zero values
+    for (let [key, value] of Object.entries(refinedData)) {
+        if (value === null) {
+            delete refinedData[key];
+        } else if (value === "0.00000") {
+            refinedData[key] = 0;
+        }
+    }
+
+    return refinedData;
+}
+
 /*
 async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter, parcelData) {
   ////const combinedResponses = await fetchColumnFromPublicSheet(sheetPublicCSVUrl, columnLetter);
