@@ -108,12 +108,13 @@ module.exports = async (req, res) => {
     
     } catch (error) {
         // Log the OpenAI error
+        console.log(error);
         const errorMessage = error.response?.data?.message || JSON.stringify(error);
 
-        console.log(`\nOpenAI Error:\n\t${errorMessage}`);
-        console.error(`Error from OpenAI: ${errorMessage}`);
-        console.log(error);
-        console.log(errorMessage);
+        //console.log(`\nOpenAI Error:\n\t${errorMessage}`);
+        //console.error(`Error from OpenAI: ${errorMessage}`);
+        //console.log(error);
+        //console.log(errorMessage);
         res.status(500).send(errorMessage);
     }
 };
