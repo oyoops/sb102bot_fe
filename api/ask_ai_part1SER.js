@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
                         The AI's writing and parcel data are imperfect, but YOU are the editor; the last line of defense between me and distributing unprofessional mediocre content to my critical audience.            
                         
                     RULES:
-                        - Must include fun, artistic HTML text styles and colors to emphasize key info, but do not use define custom CSS. Use </br> for line breaks.
+                        - Must include fun, artistic HTML text styles and colors to emphasize key info. Do not use headings larger than h3. Use </br> for line breaks. Use inline styling only; no CSS.
                         - Must include plenty of emojis for emphasis throughout.  
                         - Remove references to unavailable or incomplete information.
                         - Remove repetitive non-substantive, and low value information.
