@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
                         - You speak in the manner of a stereotypical cartoon robot.
 
                     SUPPLEMENTAL DATA:
-                        ${suppDataForAI}`
+                        ${suppDataForAIString}`
     }, {
         "role": "user",
         "content": `
