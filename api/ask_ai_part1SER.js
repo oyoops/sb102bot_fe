@@ -74,7 +74,8 @@ module.exports = async (req, res) => {
             }
         });
         const responseData = response.data;
-        console.log("[SER] Refined AI response received!\n");
+        
+        console.log("[SER]\n");
 
         // Log token usage
         const tokensUsed = responseData?.usage?.total_tokens;
@@ -94,18 +95,21 @@ module.exports = async (req, res) => {
         const aiPromptSystem = messages[0]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
         const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
         if (aiPromptSystem) {
-            console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
+            ////console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
         }
         if (aiPromptUser) {
-            console.log("\n[USER Prompt]\n" + aiPromptUser);
+            ////console.log("\n[USER Prompt]\n" + aiPromptUser);
         }
 
         // Log the response
         const aiResponseText = responseData?.choices[0]?.message?.content.trim();
         if (aiResponseText) {
-            console.log("\n[AI Response]\n" + aiResponseText);
+            ////console.log("\n[AI Response]\n" + aiResponseText);
         }
         
+        // Log all supplemental data available
+        console.log(suppDataForAIString);
+
         // Send AI response to client
         res.status(200).json(aiResponseText);
     

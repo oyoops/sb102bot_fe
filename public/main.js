@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("MAX HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">Your site is <u>ELIGIBLE</u> for Live Local development!</h3> 
-                    </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and start <b><i>Living Local</i></b> on the b*tch!
+                    </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and <b><i>Live Local</i></b> on it:
                     </br></br>First, you can build <i>up to the height of the <b>tallest building within a mile</b> radius</i>. 
                     </br></br>That would allow <i>up to <b><u>${buildingHeight.toFixed(0)} feet</u></b> here</i>. <b><i>Oh my! 😮</b></i>`
                 /*if (buildingHeight >= 200) {
@@ -290,7 +290,6 @@ document.addEventListener('DOMContentLoaded', function() {
             landAndTotalHcOutputSection.style.display = 'block';
             // ...
 
-
             // set acreage input placeholder
             acreageInput.value = acres.toFixed(2); // ACREAGE AUTO/MANUAL INPUT
 
@@ -314,17 +313,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 displayMuniName = cityNameProper;
             }
 
-            // calculate the parcel's absolute max unit capacity
+            // calculate the parcel's absolute maximum unit capacity
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
 
-            // if parcel is LLA eligible, then finish composing the eligibility and AI summary
+            // if parcel is LLA eligible, then finish composing the eligibility + AI summary
             if (eligibleCodes.includes(parcelData.dor_uc)) {
-                // LLA density limit explainer section
+                // add LLA density limit explainer section
                 summaryContent += `
                     </br></br>
-                    The Act also allows you to match the <i><b>highest density</b> allowed <b>anywhere</b> in the municipality</i>.  <b><i>Radical!</i></b>
-                    </br>And the highest density among all existing multifamily in ${displayMuniName} is </i><b>${maxMuniDensity} units/acre</b></i>.
+                    The Act also allows you to match the <i><b>highest density</b> allowed <b>anywhere</b> in ${displayMuniName}</i>.  <b><i>Radical!</i></b>
+                    </br></br>And the highest density is </i><b>${maxMuniDensity} units/acre</b></i> among all existing multifamily in ${displayMuniName}.
                     `;
 
                 // if max unit capacity is excessive/unrealistic for multifamily, add a small note acknowledging that
@@ -333,12 +332,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     </br></br>
                     The maximum-achievable yield here is <b><u>${maxCapacity} units</b></u>... but that's <b><i>a lot</i></b> of units. 
                     It might be unrealistic for a multifamily development to physically and feasibly achieve that kind of density on ${acres.toFixed(2)} acres... 
-                    </br>But, hey, shoot for the moon! I'm only here to shove numbers up your ass.
+                    </br></br>But, hey, what do I know? <b><i>Go shoot for the moon!</i></b>.
                     `;
                 } else {
                     summaryContent += `
                     </br></br>
-                    The maximum achievable yield here is <u><b>${maxCapacity} units</b></u>.
+                    The max. achievable yield on this ${acres.toFixed(2)}-acre parcel would be <i><u><b>${maxCapacity} units</b></u></i> if approved through Live Local.
                     `;
                 }
 
@@ -362,19 +361,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 // since this parcel is not LLA-qualified //
             }
 
-            // Reset content of AI+Eligibility div
-            eligibilityDiv.innerHTML = summaryContent;
-            
-            // Display AI+Eligibility div
+            // set AI+Eligibility div content
+            eligibilityDiv.innerHTML = summaryContent;            
+            // display
             eligibilityDiv.style.display = 'block';
-            
-            // Slowly fade in content of AI+Eligibility div
+            // fade in
             animateTextFadeIn(eligibilityDiv);
 
 
-
-
-
+            
             /* Start -- Land Development Input/Output Section */
             
             // Run initial calculations using loaded & default values
