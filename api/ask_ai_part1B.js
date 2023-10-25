@@ -48,44 +48,47 @@ module.exports = async (req, res) => {
             }
         });
         const responseData = response.data;
-        console.log("[B] AI response received!\n");
 
-        // Log token usage
+        // Get token usage
         const tokensUsed = responseData?.usage?.total_tokens;
         const promptTokens = responseData?.usage?.prompt_tokens;
         const completionTokens = responseData?.usage?.completion_tokens;
+
+        // Log token usage
         if (tokensUsed) {
-            console.log("    # Total Tkns. =", tokensUsed);
+            console.log(" # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
-            console.log("   # Prompt Tkns. =", promptTokens);
+            console.log("# Prompt Tkns. =", promptTokens);
         }
         if (completionTokens) {
-            console.log("    # Resp. Tkns. =", completionTokens);
+            console.log(" # Resp. Tkns. =", completionTokens);
         }
 
-        // Log the prompt
+        // Extract prompt components and response
         const aiPromptSystem = messages[0]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
         const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
+        const aiResponseText = responseData?.choices[0]?.message?.content.trim();
+        
+        /*
+        // Log prompt components and response
         if (aiPromptSystem) {
             console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
         }
         if (aiPromptUser) {
             console.log("\n[USER Prompt]\n" + aiPromptUser);
         }
-
-        // Log the response
-        const aiResponseText = responseData?.choices[0]?.message?.content.trim();
         if (aiResponseText) {
             console.log("\n[AI Response]\n" + aiResponseText);
         }
-        
-        // Send AI response to client
+        */
+
+        // Send response to client
+        console.log("[B] Done!\n");
         res.status(200).json(aiResponseText);
-    
     } catch (error) {
-        // Log the actual OpenAI error message
-        const errorMessage = error?.data?.error || "[CRITICAL ERROR] Unknown error while fetching the AI response.";
+        // Log OpenAI error message
+        const errorMessage = error?.data?.error || "[CRITICAL] Encountered a fatal OpenAI error!";
         console.error("Error from OpenAI:", errorMessage);
         res.status(500).send(errorMessage);
     }
