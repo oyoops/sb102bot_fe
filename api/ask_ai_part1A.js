@@ -5,6 +5,8 @@ const axios = require('axios');
 module.exports = async (req, res) => {
     const { own_name, address, cityNameProper, countyNameProper, own_addr1, own_addr2, own_city, own_state } = req.query;
 
+    console.log(req.query);
+    
     const messages = [{
         "role": "system",
         "content": `
