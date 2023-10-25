@@ -5,8 +5,9 @@ const axios = require('axios');
 module.exports = async (req, res) => {
     const { own_name, address, cityNameProper, countyNameProper, own_addr1, own_addr2, own_city, own_state } = req.query;
 
+    // Log all supplemental data available
     console.log(req.query);
-    
+
     const messages = [{
         "role": "system",
         "content": `
@@ -34,6 +35,7 @@ module.exports = async (req, res) => {
     }];    
 
     try {
+        // Send fetch request from server to OpenAI API
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             model: process.env.AI_MODEL_PRIMARY_ANALYSES,
             messages: messages,
@@ -48,43 +50,43 @@ module.exports = async (req, res) => {
         });
         const responseData = response.data;
 
-        // Log prompt and response
+        // Log the prompt
         const aiPromptSystem = messages[0]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
         const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
-        const aiResponseText = responseData?.choices[0]?.message?.content.trim();
         if (aiPromptSystem) {
-            console.log("System Prompt: \n", aiPromptUser);
+            console.log("\n[Prompt: SYSTEM]\n\t" + aiPromptSystem);
         }
         if (aiPromptUser) {
-            console.log("User Prompt:   \n", aiPromptUser);
-        }
-        if (aiResponseText) {
-            console.log("AI Response:   \n", aiResponseText);
+            console.log("\n[Prompt: USER]\n\t" + aiPromptUser);
         }
 
-        // Log # tokens used
+        // Log the response
+        const aiResponseText = responseData?.choices[0]?.message?.content.trim();
+        if (aiResponseText) {
+            console.log("\n[Response: AI]\n\t" + aiResponseText);
+        }
+
+        // Log how many tokens were used
         const tokensUsed = responseData?.usage?.total_tokens;
         const promptTokens = responseData?.usage?.prompt_tokens;
         const completionTokens = responseData?.usage?.completion_tokens;
         if (tokensUsed) {
-            console.log("# Total Tkns:    ", tokensUsed);
+            console.log("\n    # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
-            console.log("# Prompt Tkns:   ", promptTokens);
+            console.log("   # Prompt Tkns. =", promptTokens);
         }
         if (completionTokens) {
-            console.log("# Response Tkns: ", completionTokens);
+            console.log("    # Resp. Tkns. =", completionTokens);
         }
         
         // Send AI response to client
-        const enhancedData = aiResponseText;
-        res.status(200).json(enhancedData);
+        res.status(200).json(aiResponseText);
     
     } catch (error) {
-        // Extract the specific error message and log it
+        // Log the actual OpenAI error message
         const errorMessage = error?.data?.error || "[CRITICAL ERROR] Unknown error while fetching the AI response.";
-        console.error("FULL ERROR:", error);
         console.error("Error from OpenAI:", errorMessage);
-        res.status(500).send(errorMessage); // Send the specific error message as the response
+        res.status(500).send(errorMessage);
     }
 };
