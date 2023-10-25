@@ -109,13 +109,14 @@ module.exports = async (req, res) => {
     
     } catch (error) {
         // Log the OpenAI error
-        console.log(error);
+        console.error("Full error object:", error);
+    
+        // Check if the error response contains detailed error information
+        if (error.response && error.response.data && error.response.data.error) {
+            console.error("Detailed OpenAI error:", error.response.data.error);
+        }
+    
         const errorMessage = error.response?.data?.message || JSON.stringify(error);
-
-        //console.log(`\nOpenAI Error:\n\t${errorMessage}`);
-        //console.error(`Error from OpenAI: ${errorMessage}`);
-        //console.log(error);
-        //console.log(errorMessage);
         res.status(500).send(errorMessage);
     }
 };
