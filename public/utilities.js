@@ -11,21 +11,15 @@
 
 
 
-// fetch the set of AI responses
+// fetch the set of AI responses + supplemental data
 async function fetchAiResponsesCombined(row) {
-  const endpoints = [
-      '/api/ask_ai_part1A',
-      '/api/ask_ai_part1B',
-      '/api/ask_ai_part1C',
-      '/api/ask_ai_part1D',
-      '/api/ask_ai_part1E'
-  ];
 
-  // Incorporate all global variables
+  /* START STAGE 1: COMBINE AI RESPONSES */
+
+  // Add important global var values to the supplemental data set
   row = {
     // Display Data
     summaryContent: summaryContent,
-    displayMuniName: displayMuniName,
 
     // Location Data
     address: address,
@@ -37,6 +31,7 @@ async function fetchAiResponsesCombined(row) {
     cityData: cityData,
     cityNameProper: cityNameProper,
     countyNameProper: countyNameProper,
+    displayMuniName: displayMuniName,
 
     // Housing and Unit Data
     acres: acres,
@@ -99,11 +94,20 @@ async function fetchAiResponsesCombined(row) {
     buildingName: buildingName,
     buildingAddress: buildingAddress,
 
-    // Parcel, County, and City Data (+ summarize-edit-refine prompt)
+    // Parcel, County, and City Data
     ...row
   };
 
-  // map prompts to endpoints, then fetch all simultaneously
+  // Define primary endpoints
+  const endpoints = [
+      '/api/ask_ai_part1A',
+      '/api/ask_ai_part1B',
+      '/api/ask_ai_part1C',
+      '/api/ask_ai_part1D',
+      '/api/ask_ai_part1E'
+  ];
+
+  // Map primary prompts to endpoints, then fetch all simultaneously
   const queryString = new URLSearchParams(row).toString();
   const fetchPromises = endpoints.map(endpoint => {
       return fetch(`${endpoint}?${queryString}`)
@@ -120,18 +124,35 @@ async function fetchAiResponsesCombined(row) {
       });
   });
 
-  // Wait until all prompts receive their responses to return the combined version
+  // Wait for all primary prompts to receive responses before continuing with combined responses
   try {
       const results = await Promise.all(fetchPromises);
-      return results;
+      console.log("\n[STAGE #1 COMPLETE]\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
+
+      /* START STAGE 2: SER */
+      
+      // SER the combined responses
+      const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(row)}`;
+      const serResponse = await fetch(serEndpoint);
+      if (!serResponse.ok) {
+          console.log('ERROR: SER failed!');
+          throw new Error(`Server responded with ${serResponse.status}: ${await serResponse.text()}`);
+      }
+      serData = await serResponse.json();
+
+      /* SER was successful! */
+
+      console.log("\n[STAGE #2 COMPLETE]\n--- SER Response ---\n" + serData + "\n--------------------\n");
+
+      return serData;
   } catch (error) {
-      const errorMessage = error?.data?.error?.message || "Unknown error occurred while fetching AI response.";
-      console.error("Error while fetching AI response:", errorMessage);
+      const errorMessage = error?.data?.error?.message || "Unknown error occurred while fetching AI SER response.";
+      console.error("Error while fetching AI SER response:", errorMessage);
       throw error;
   }
 }
 
-// Combine all AI responses
+// Combine all primary AI responses
 function composeAiResponsesCombined(aiResponses) {
   console.log("  *** Received raw AI response collection! ***  :-D");
   if (!aiResponses || aiResponses.length === 0) {
@@ -139,7 +160,7 @@ function composeAiResponsesCombined(aiResponses) {
       return;
   }
   
-  // preface final AI content with a custom introduction (may belong somewhere else...)
+  // Preface final AI content with a custom introduction (may belong somewhere else...)
   let aiCombinationParts = [
       `</br></br>
       <h3 style="color:black;" align="center">
@@ -155,7 +176,7 @@ function composeAiResponsesCombined(aiResponses) {
   });
   aiCombinationParts.push("</ul>");
 
-  // return the AI response combination
+  // Return the combined responses
   const combinedResponses = aiCombinationParts.join('');
   return combinedResponses;
 }
@@ -213,7 +234,7 @@ async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter, parcelDat
 }
 */
 
-// fade in the AI response text
+// Fade in the AI response text
 function animateTextFadeIn(element) {
   if (!element) {
       console.error("Invalid animation.");

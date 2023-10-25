@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
                 
                 // add primitive values directly
+                /*
                 aiSupplementalData.address = address;
                 aiSupplementalData.lat = lat;
                 aiSupplementalData.lng = lng;
@@ -153,8 +154,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 aiSupplementalData.marketUnits = marketUnits;
                 aiSupplementalData.affordableUnits = affordableUnits;
                 aiSupplementalData.maxCapacity = maxCapacity;
-                
-                // decompose JSONs and add their values
+                */
+               
+                // decompose both JSONs and add their values
                 if (countyData) {
                     // countyData *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
                     for (const [key, value] of Object.entries(countyData)) {
