@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!aiResponses || aiResponses.length === 0) {
                     throw new Error('[CRITICAL ERROR] No AI responses received!');
                 }
-                
+
                 console.log("AI Responses:", aiResponses);
             } catch (error) {
                 console.error("[CRITICAL ERROR] Unknown error while fetching AI responses.", error);
@@ -240,14 +240,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML += `<h3 style="color:orange;" align="center">Your site is probably <u>NOT ELIGIBLE</u> for Live Local development.</h3> <br>It can't qualify if it's <i>already</i> residential, believe it or not...`;
+                eligibilityDiv.innerHTML += `<h3 style="color:orange;" align="center">Your site is probably <u>NOT ELIGIBLE</u> for Live Local development.</h3> 
+                </br>Believe it or not, a property can't qualify if it's <i>already</i> residential...`;
                 //eligibilityDiv.style.color = "Orange";
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("MAX HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">Your site is <u>ELIGIBLE</u> for Live Local development!</h3> 
-                    </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and start <b><i>Living Local on the bitch!</i></b>
+                    </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and start <b><i>Living Local</i></b> on the b*tch!
                     </br></br>First, you can build <i>up to the height of the <b>tallest building within a mile</b> radius</i>. 
                     </br></br>That would allow <i>up to <b><u>${buildingHeight.toFixed(0)} feet</u></b> here</i>. <b><i>Oh my! 😮</b></i>`
                 /*if (buildingHeight >= 200) {
