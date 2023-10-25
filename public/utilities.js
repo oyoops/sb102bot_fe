@@ -70,8 +70,90 @@ async function fetchAiResponsesCombined(row) {
       '/api/ask_ai_part1E'
   ];
 
-  const queryString = new URLSearchParams(row).toString();
+  // Incorporate all global variables
+  row = {
+    // Display Data
+    summaryContent: summaryContent,
+    displayMuniName: displayMuniName,
 
+    // Location Data
+    address: address,
+    lat: lat,
+    lng: lng,
+    geocodeData: geocodeData,
+    countyData: countyData,
+    parcelData: parcelData,
+    cityData: cityData,
+    cityNameProper: cityNameProper,
+    countyNameProper: countyNameProper,
+
+    // Housing and Unit Data
+    acres: acres,
+    fakeMillage: fakeMillage,
+    maxMuniDensity: maxMuniDensity,
+    totalUnits: totalUnits,
+    marketUnits: marketUnits,
+    affordableUnits: affordableUnits,
+    maxCapacity: maxCapacity,
+    affordablePct: affordablePct,
+
+    // AI Data
+    aiSupplementalData: aiSupplementalData,
+    aiResponses: aiResponses,
+
+    // Cost Data
+    MILLAGE_ADJUSTMENT: MILLAGE_ADJUSTMENT,
+    landCostPerUnit: landCostPerUnit,
+    totalHCPerUnit: totalHCPerUnit,
+    totalLandCost: totalLandCost,
+    totalHcCost: totalHcCost,
+    totalLandAndTotalHc: totalLandAndTotalHc,
+    totalLandAndTotalHcPerUnit: totalLandAndTotalHcPerUnit,
+    totalLandAndTotalHcPerSqFt: totalLandAndTotalHcPerSqFt,
+
+    // Housing Unit Sizes & Rents
+    marketStudioSize: marketStudioSize,
+    market1BDSize: market1BDSize,
+    market2BDSize: market2BDSize,
+    market3BDSize: market3BDSize,
+    affordableStudioSize: affordableStudioSize,
+    affordable1BDSize: affordable1BDSize,
+    affordable2BDSize: affordable2BDSize,
+    affordable3BDSize: affordable3BDSize,
+    avgMarketSize: avgMarketSize,
+    avgAffordableSize: avgAffordableSize,
+    avgBlendedSize: avgBlendedSize,
+    maxRent0bd: maxRent0bd,
+    maxRent1bd: maxRent1bd,
+    maxRent2bd: maxRent2bd,
+    maxRent3bd: maxRent3bd,
+    affordablerent: affordablerent,
+    affordableunitsize: affordableunitsize,
+    mktrent: mktrent,
+    mktunitsize: mktunitsize,
+
+    // Abatement Data
+    acreageValue: acreageValue,
+    densityValue: densityValue,
+    abatementValue: abatementValue,
+    abatementEstimate: abatementEstimate,
+
+    // Map and Building Data
+    LIVE_LOCAL_BLDG_RADIUS_MILES: LIVE_LOCAL_BLDG_RADIUS_MILES,
+    tallestBuildingsData: tallestBuildingsData,
+    distanceInMilesToTallestBldg: distanceInMilesToTallestBldg,
+    buildingLat: buildingLat,
+    buildingLng: buildingLng,
+    buildingHeight: buildingHeight,
+    buildingName: buildingName,
+    buildingAddress: buildingAddress,
+
+    // Parcel, County, and City Data (+ summarize-edit-refine prompt)
+    ...row
+  };
+
+  // map prompts to their endpoints then fetch all simultaneously
+  const queryString = new URLSearchParams(row).toString(); // convert to string
   const fetchPromises = endpoints.map(endpoint => {
       return fetch(`${endpoint}?${queryString}`)
       .then(response => {
@@ -88,32 +170,25 @@ async function fetchAiResponsesCombined(row) {
   });
 
   try {
+      // Wait for all prompts to receive responses
       const results = await Promise.all(fetchPromises);
-
-      /*
-      results.forEach(result => {
-          console.log('OpenAI Prompt:', result?.choices?.[0]?.message?.content);
-          console.log('OpenAI Response:', result?.choices?.[1]?.message?.content);
-          console.log('Total Tokens Used:', result?.usage?.total_tokens);
-      });
-      */
-
       return results;
   } catch (error) {
-      const errorMessage = error?.data?.error?.message || "An unknown error occurred while fetching AI responses.";
-      console.error("Error while fetching AI responses:", errorMessage);
+      // Error while fetching an AI response
+      const errorMessage = error?.data?.error?.message || "An unknown error occurred while fetching an AI response.";
+      console.error("Error while fetching an AI response:", errorMessage);
       throw error;
   }
 }
 
 // combine the multiple AI responses
 function composeAiResponsesCombined(aiResponses) {
+  console.log("  *** Received AI responses! ***  :-D");
   if (!aiResponses || aiResponses.length === 0) {
-      console.error("No AI responses received");
+      console.error("Error: No AI responses were received!");
       return;
   }
-  console.log("Received set of AI responses.");
-
+  
   let aiCombinationParts = [
       `</br></br>
       <h3 style="color:black;" align="center">
@@ -122,11 +197,13 @@ function composeAiResponsesCombined(aiResponses) {
       <ul>`
   ];  // (the HTML intro really belongs somewhere else...)
 
+  // Combine all AI responses by pushing each into one long string [HTML-formatted? maybe] 
   aiResponses.forEach((aiResponse, index) => {
     aiCombinationParts.push(`<li>${aiResponse}</li>`);
   });
   aiCombinationParts.push("</ul>");
 
+  // return the AI response combination
   const combinedResponses = aiCombinationParts.join('');
   return combinedResponses;
 }
@@ -137,13 +214,12 @@ function animateTextFadeIn(element) {
       console.error("Invalid animation.");
       return;
   }
-
+  
   const original = element.cloneNode(true);
   element.innerHTML = '';
 
   let queue = [{ node: original, parent: element }];
   let childQueue = [];
-
   let interval = setInterval(() => {
       if (queue.length > 0) {
           const { node, parent } = queue.shift();
