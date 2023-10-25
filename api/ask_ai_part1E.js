@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
             }
         });
         const responseData = response.data;
-        console.log("[A] AI response received!\n");
+        console.log("[E] AI response received!\n");
 
         // Log token usage
         const tokensUsed = responseData?.usage?.total_tokens;
