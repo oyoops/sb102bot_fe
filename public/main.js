@@ -73,13 +73,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
 
 
-            // initialize the map (early?)
+            // initialize the map (is this too early?)
             initializeMap(lat, lng);
 
 
-            
-            // scroll to top again
-            loadingContainer.scrollIntoView;
+
+            // scroll to top
+            //loadingContainer.scrollIntoView;
 
 
 
@@ -104,6 +104,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early since we can't proceed without county data
             }
 
+
+
+
+
             // API block #2 of 3: CITY DATA
             try {
                 // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
@@ -121,17 +125,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early (can't proceed without parcel data)
             }
 
-            // verify that parcelData exists
-            if (!parcelData || Object.keys(parcelData).length === 0) {
-                console.log(`Skipping AI analysis module...`);
-                throw new Error('Sorry... This property is not eligible, buddy.');
-            }
+
+
+
+
 
             // API block #3 of 3: AI RESPONSES
             try {
+                // verify parcelData exists
+                if (!parcelData || Object.keys(parcelData).length === 0) {
+                    console.log(`Skipping AI analysis module.`);
+                    throw new Error('Sorry, this property is not eligible, buddy.');
+                }
+
                 // make copy of parcelData for enhancing
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
-
+                
                 // add primitive values directly
                 aiSupplementalData.address = address;
                 aiSupplementalData.lat = lat;
@@ -159,14 +168,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
+                /* Enhanced data is now prepared! */
+
+
+
+                // NEW WAY TO GET PROMPTS! (EXAMPLE)
+                let hmmm;
+                generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', aiSupplementalData).then(summary => {
+                    hmmm = summary;
+                    console.log("Hmmm = " + hmmm);
+                });
+                
+
+
                 // send enriched supplemental data to AI server
                 aiResponses = await fetchAiResponsesCombined(aiSupplementalData);
                 ////////////aiResponses = await fetchAiResponsesCombined(parcelData);
 
-                // NEW WAY TO GET PROMPTS! (EXAMPLE)
-                generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', parcelData).then(summary => {
-                    console.log("PROMPT_SOURCE_V2 Data: \n" + summary);
-                });
+
 
                 // verify and log
                 if (!aiResponses || aiResponses.length === 0) {
