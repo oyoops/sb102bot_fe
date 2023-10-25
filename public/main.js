@@ -171,14 +171,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 /* Enhanced data is now prepared! */
 
 
-
+                /*
                 // NEW WAY TO GET PROMPTS! (EXAMPLE)
                 let hmmm;
                 generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', aiSupplementalData).then(summary => {
                     hmmm = summary;
                     console.log("Hmmm = " + hmmm);
                 });
-                
+                */
 
 
                 // send enriched supplemental data to AI server
