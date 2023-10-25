@@ -1,6 +1,8 @@
-// main.js - the primary script for SB102bot web app.
+// main.js - primary script for the sb102bot web app
 
-// get all DOM objects
+// get event listeners
+import './eventListeners.js';
+// get DOM elements
 import {
     loadingContainer, initialContent, eligibilityDiv, developmentProgramInputSection,
     marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
@@ -14,10 +16,10 @@ import {
 } from './domElements.js';
 
 
-/* once the page is fully loaded... */
+/* once DOM is fully loaded: */
 document.addEventListener('DOMContentLoaded', function() {
-    //initAutocomplete(); // prepare Places API
     window.scrollTo(0, 0); // scroll to top
+    //initAutocomplete(); // prepare Places API
     
     // on form submit:
     form.addEventListener('submit', async (e) => {
@@ -35,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // hide header and initial content
             mainHeader.style.display = 'none';
             initialContent.style.display = 'none';
-            
             // display fake loading progress bar
             updateLoadingBar();
             loadingContainer.style.display = 'block';
@@ -47,13 +48,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('ERROR: Geocode failed!');
                 throw new Error(`Server responded with ${geocodeResponse.status}: ${await geocodeResponse.text()}`);
             }
-            
             geocodeData = await geocodeResponse.json();
             console.log("Geocode Data Received:", geocodeData);
-            
             if (!geocodeData.results || geocodeData.results.length === 0) {
                 throw new Error(`Whoops... That address isn't in my domain.\nI only know about Florida (and only the good counties at that).`);
             }
+
             /* Geocode was successful */
             
             // extract coordinates from geo data
@@ -63,9 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // fetch the city of the address (Lat,Lng = CityData || CityName = Unincorporated if not in a city)
             const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
             const cityCheckResponse = await fetch(cityCheckEndpoint);
-
             cityData = await cityCheckResponse.json(); // global
-            
             if (cityData.isInCity) {
                 console.log(`Address is in city: ${cityData.cityName}`);
             } else {
@@ -73,9 +71,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 cityData.cityName = 'unincorporated';
             }
             
+
+
             // initialize the map (early?)
             initializeMap(lat, lng);
 
+
+            
             // scroll to top again
             loadingContainer.scrollIntoView;
 
@@ -330,7 +332,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 summaryContent += composeAiResponsesCombined(aiResponses);
 
             } else {
-                // DON'T add the LLA density limit explanation since this parcel isn't LLA-qualified.
+                //           CHANGE THIS!!!               //
+                // -------------------------------------- //
+                // No LLA density limit explanation added //
+                // since this parcel is not LLA-qualified //
             }
 
             // Reset content of AI+Eligibility div
@@ -346,103 +351,12 @@ document.addEventListener('DOMContentLoaded', function() {
             animateTextFadeIn(eligibilityDiv);
 
 
-
-            /* Land Development Input/Output Section */
-
-
-            /* Event Listeners (mostly): */
-
-            // on New Search button click:
-            tryAgainButton.addEventListener("click", function() {
-                location.reload();
-            });
-
-            // on sliding the affordable percentage slider
-            affordablePercentageSlider.oninput = function() {
-                // recalculate unit sizes and revenues on slider change
-                calculateWeightedAverageSizes();
-                updateRentPerSqFtTable();
-            }
-            // affordable percentage slider
-            affordablePercentageSlider.value = 40; // 0.40; // default = 40% affordable units
-
-            // on acreage [A ac.] input:
-            acreageInput.addEventListener('input', function() {
-                // Recalculate unit counts and revenues
-                calculateMaximumUnits();
-                updateRentPerSqFtTable();
-                
-            });
-            // on density [D units/ac.] input:
-            densityInput.addEventListener('input', function() {
-                // Recalculate unit counts and revenues
-                calculateMaximumUnits();
-                updateRentPerSqFtTable();
-                
-            });
-            // on affordable % slider [%aff] change:
-            affordablePercentageSlider.addEventListener('input', function() {
-                affordablePctDisplay.innerText = `${this.value}%`;
-                // Recalculate unit counts and revenues
-                calculateMaximumUnits();
-                updateRentPerSqFtTable();
-                
-            });
-            // on all SqFt/unit [s SqFt] inputs:
-            sizeInputs.forEach(input => {
-                input.addEventListener('input', () => {
-                    // Recalculate unit counts, unit sizes, and revenues
-                    calculateMaximumUnits(); // unnecessary?
-                    calculateWeightedAverageSizes();
-                    updateRentPerSqFtTable();
-                    
-                });
-            });
-            // on market-rate SqFt/unit [s SqFt(mkt)] inputs: (if checkbox = checked)
-            marketInputs.forEach((input, index) => {
-                input.addEventListener('input', () => {
-                    if (matchAffordableSizesCheckbox.checked) {
-                        affordableSizeInputs[index].value = input.value;
-                        // Recalculate unit sizes
-                        calculateWeightedAverageSizes();
-                    }
-                });
-            });
-            // on market-rate rent per unit [$ Rent(mkt)] inputs:
-            marketRateInputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    // Recalculate revenues
-                    updateRentPerSqFtTable();
-                    
-                });
-            });
-            // on checkbox change:
-            matchAffordableSizesCheckbox.addEventListener('change', function() {
-                const affordableInputs = affordableSizeInputs;    
-                //      Checked   = Lock affordable avg. size inputs; keep them matched to corresponding market-rate sizes.
-                //      Unchecked = Unlock affordable avg. size inputs; allow affordable units to have different avg. sizes.
-                if (this.checked) {
-                    // checkbox = checked
-                    affordableInputs.forEach((input, index) => {
-                        input.value = marketInputs[index].value;
-                        input.disabled = true;
-                    });
-                } else {
-                    // checkbox = unchecked
-                    affordableInputs.forEach(input => input.disabled = false);
-                }
-                // Recalculate unit counts, unit sizes, and revenues
-                calculateMaximumUnits();
-                calculateWeightedAverageSizes();
-                updateRentPerSqFtTable();
-                
-            });
-            // on cost inputs change:
-            landCostPerUnit.addEventListener('input', updateTotalCosts);
-            totalHCPerUnit.addEventListener('input', updateTotalCosts);
-
-            // (more event listeners...)
             
+
+
+
+
+            /* Start -- Land Development Input/Output Section */
             
             // Run initial calculations using loaded & default values
             calculateMaximumUnits();
@@ -451,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateTotalCosts();
             calculateAbatement();
             
-            /* DEVELOPMENT I/O SECTION END. */
+            /* End -- Land Development Input/Output Section */            
             
             // scroll to top again
             googlemap.scrollIntoView();
