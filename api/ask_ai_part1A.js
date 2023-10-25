@@ -49,35 +49,36 @@ module.exports = async (req, res) => {
             }
         });
         const responseData = response.data;
+        console.log("[A] AI response received!\n");
 
-        // Log the prompt
-        const aiPromptSystem = messages[0]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
-        const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
-        if (aiPromptSystem) {
-            console.log("\n[Prompt: SYSTEM]\n\t" + aiPromptSystem);
-        }
-        if (aiPromptUser) {
-            console.log("\n[Prompt: USER]\n\t" + aiPromptUser);
-        }
-
-        // Log the response
-        const aiResponseText = responseData?.choices[0]?.message?.content.trim();
-        if (aiResponseText) {
-            console.log("\n[Response: AI]\n\t" + aiResponseText);
-        }
-
-        // Log how many tokens were used
+        // Log token usage
         const tokensUsed = responseData?.usage?.total_tokens;
         const promptTokens = responseData?.usage?.prompt_tokens;
         const completionTokens = responseData?.usage?.completion_tokens;
         if (tokensUsed) {
-            console.log("\n    # Total Tkns. =", tokensUsed);
+            console.log("    # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
             console.log("   # Prompt Tkns. =", promptTokens);
         }
         if (completionTokens) {
             console.log("    # Resp. Tkns. =", completionTokens);
+        }
+
+        // Log the prompt
+        const aiPromptSystem = messages[0]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
+        const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
+        if (aiPromptSystem) {
+            console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
+        }
+        if (aiPromptUser) {
+            console.log("\n[USER Prompt]\n" + aiPromptUser);
+        }
+
+        // Log the response
+        const aiResponseText = responseData?.choices[0]?.message?.content.trim();
+        if (aiResponseText) {
+            console.log("\n[AI Response]\n" + aiResponseText);
         }
         
         // Send AI response to client
