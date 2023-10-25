@@ -160,6 +160,7 @@ function composeAiResponsesCombined(aiResponses) {
   return combinedResponses;
 }
 
+/*
 async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter, parcelData) {
   ////const combinedResponses = await fetchColumnFromPublicSheet(sheetPublicCSVUrl, columnLetter);
   ////console.log("X: " + combinedResponses);
@@ -210,6 +211,7 @@ async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter, parcelDat
 
   return refinedSummary;
 }
+*/
 
 // fade in the AI response text
 function animateTextFadeIn(element) {
