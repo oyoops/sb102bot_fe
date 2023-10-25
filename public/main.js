@@ -141,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // make copy of parcelData for enhancing
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
                 
+                console.log("PRE-DATA:\n" + aiSupplementalData);
+
                 // add primitive values directly
                 /*
                 aiSupplementalData.address = address;
@@ -169,6 +171,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         aiSupplementalData[`city_${key}`] = value;  // Prefixing with "city_" to ensure uniqueness
                     }
                 }
+
+                console.log("POST-DATA:\n" + aiSupplementalData);
 
                 /* Enhanced data is now prepared! */
 
