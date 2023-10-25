@@ -207,7 +207,7 @@ const renameMap = {
     "SPC_CIR_TXT": "SpecialCircumstancesText"
 };
 
-// Exclude these irrelevant columns which, if provided, would only serve to confuse the AI.
+// Exclude these irrelevant columns which, if provided, would only serve to confuse the AI
 const unwantedColumns = ["JV_HMSTD", "AV_HMSTD"];
 // ADD MORE
 // ..... & MORE
@@ -216,7 +216,7 @@ const unwantedColumns = ["JV_HMSTD", "AV_HMSTD"];
 // ............... & MORE
 // .................. & MORE
 
-// These globals will CERTAINLY be unavailable until AFTER the data refinement process.
+// These globals will certainly NOT be available until after the data refinement process
 let refinedDataset;
 let cleanData;
 let aiGeneratedHTML;

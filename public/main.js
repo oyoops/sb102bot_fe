@@ -176,13 +176,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("Hmmm = " + hmmm);
                 });*/
 
-                // send enriched supplemental data to the primary prompts dispatcher endpoint
-                aiGeneratedHTML = await fetchAiResponsesCombined(aiSupplementalData);
+
+                /*
+                // Generate the SER response in its ultimate form
+                aiGeneratedHTML = await fetchAiResponsesCombined(cleanData); // get final product by sending enriched supplemental data to the primary prompts dispatcher endpoint
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
-
                 console.log("\n*** FINAL ANALYSIS: *** \n", aiGeneratedHTML);
+                */
             } catch (error) {
                 console.error("[CRITICAL] Error while collecting AI responses: \n", error);
                 return;
@@ -339,11 +341,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                 }
 
-                // Add the combined AI summary to bottom of the ultimate eligibility text
-                summaryContent += composeAiResponsesCombined(aiResponses);
+                /* Generate the combined AI summary */
+
+                // Generate SER response in its perfect form
+                aiGeneratedHTML = await fetchAiResponsesCombined(cleanData); // get final product by sending enriched supplemental data to the primary prompts dispatcher endpoint
+                if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
+                    throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
+                }
+                console.log("\n\n**** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
+
+                // Add the AI summary to text to be faded in
+                summaryContent += composeAiResponsesCombined(aiGeneratedHTML);
 
             } else {
-                //           CHANGE THIS!!!               //
+                // -------------------------------------- //
+                //         *** CHANGE THIS! ***           //
                 // -------------------------------------- //
                 // No LLA density limit explanation added //
                 // since this parcel is not LLA-qualified //
