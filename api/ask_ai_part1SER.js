@@ -13,6 +13,8 @@ module.exports = async (req, res) => {
     } else {
         console.log("\n** WARNING! **\nNo geometry found in suppDataForAI. \nWhile not a problem necessarily, it is extremely concerning. \nYou should expect imminent failure.");
     }
+    
+    suppDataForAI = JSON.stringify(suppDataForAI);
 
     const messages = [{
         "role": "system",
@@ -43,7 +45,7 @@ module.exports = async (req, res) => {
                         - You speak in the manner of a stereotypical cartoon robot.
 
                     SUPPLEMENTAL DATA:
-                        ${JSON.stringify(suppDataForAI)}`
+                        ${suppDataForAI}`
     }, {
         "role": "user",
         "content": `
