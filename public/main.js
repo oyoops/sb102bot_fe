@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // make copy of parcelData for enhancing
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
                 
-                console.log("PRE-DATA:\n" + aiSupplementalData);
+                console.log("PRE-DATA:\n" + JSON.stringify(aiSupplementalData, null, 2));
 
                 // add primitive values directly
                 /*
@@ -172,10 +172,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-                console.log("POST-DATA:\n" + aiSupplementalData);
+                console.log("POST-DATA:\n" + JSON.stringify(aiSupplementalData, null, 2));
 
                 /* Enhanced data is now prepared! */
-
 
                 /*
                 // NEW WAY TO GET PROMPTS! (EXAMPLE)
@@ -186,17 +185,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 */
 
-
                 // send enriched supplemental data to AI server
                 aiResponses = await fetchAiResponsesCombined(aiSupplementalData);
-                ////////////aiResponses = await fetchAiResponsesCombined(parcelData);
-
-
-
-                // verify and log
                 if (!aiResponses || aiResponses.length === 0) {
-                    throw new Error('[CRITICAL ERROR] No responses received from the AI.');
+                    throw new Error('[CRITICAL ERROR] No AI responses received!');
                 }
+                
                 console.log("AI Responses:", aiResponses);
             } catch (error) {
                 console.error("[CRITICAL ERROR] Unknown error while fetching AI responses.", error);
