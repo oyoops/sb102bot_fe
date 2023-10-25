@@ -18,34 +18,37 @@ async function fetchAiResponsesCombined(row) {
   // Add important global var values to the supplemental data set
   row = {
     // Display Data
-    summaryContent: summaryContent,
+    descriptionOfLiveLocalEligibility: summaryContent,
 
     // Location Data
     address: address,
     lat: lat,
     lng: lng,
-    geocodeData: geocodeData,
-    countyData: countyData,
-    parcelData: parcelData,
-    cityData: cityData,
+    ////////geocodeData: geocodeData,
+    ////////countyData: countyData,
+    ////////parcelData: parcelData,
+    ////////cityData: cityData,
     cityNameProper: cityNameProper,
     countyNameProper: countyNameProper,
     displayMuniName: displayMuniName,
 
     // Housing and Unit Data
     acres: acres,
-    fakeMillage: fakeMillage,
+    ////////fakeMillage: fakeMillage,
     maxMuniDensity: maxMuniDensity,
-    totalUnits: totalUnits,
-    marketUnits: marketUnits,
-    affordableUnits: affordableUnits,
+    ////////totalUnits: totalUnits,
+    ////////marketUnits: marketUnits,
+    ////////affordableUnits: affordableUnits,
     maxCapacity: maxCapacity,
-    affordablePct: affordablePct,
+    ////////affordablePct: affordablePct,
 
+    /*
     // AI Data
     aiSupplementalData: aiSupplementalData,
     aiResponses: aiResponses,
+    */
 
+    /*
     // Cost Data
     MILLAGE_ADJUSTMENT: MILLAGE_ADJUSTMENT,
     landCostPerUnit: landCostPerUnit,
@@ -55,8 +58,11 @@ async function fetchAiResponsesCombined(row) {
     totalLandAndTotalHc: totalLandAndTotalHc,
     totalLandAndTotalHcPerUnit: totalLandAndTotalHcPerUnit,
     totalLandAndTotalHcPerSqFt: totalLandAndTotalHcPerSqFt,
+    */
 
+    
     // Housing Unit Sizes & Rents
+    /*
     marketStudioSize: marketStudioSize,
     market1BDSize: market1BDSize,
     market2BDSize: market2BDSize,
@@ -76,28 +82,29 @@ async function fetchAiResponsesCombined(row) {
     affordableunitsize: affordableunitsize,
     mktrent: mktrent,
     mktunitsize: mktunitsize,
+    */
 
     // Abatement Data
     acreageValue: acreageValue,
     densityValue: densityValue,
-    abatementValue: abatementValue,
-    abatementEstimate: abatementEstimate,
+    ////////abatementValue: abatementValue,
+    ////////abatementEstimate: abatementEstimate,
 
-    // Map and Building Data
-    LIVE_LOCAL_BLDG_RADIUS_MILES: LIVE_LOCAL_BLDG_RADIUS_MILES,
-    tallestBuildingsData: tallestBuildingsData,
+    // Map & Building Data
+    ////////LIVE_LOCAL_BLDG_RADIUS_MILES: LIVE_LOCAL_BLDG_RADIUS_MILES,
+    ////////tallestBuildingsData: tallestBuildingsData,
     distanceInMilesToTallestBldg: distanceInMilesToTallestBldg,
-    buildingLat: buildingLat,
-    buildingLng: buildingLng,
-    buildingHeight: buildingHeight,
-    buildingName: buildingName,
-    buildingAddress: buildingAddress,
+    ////////tallestBuildingLat: buildingLat,
+    ////////tallestBuildingLng: buildingLng,
+    tallestBuildingHeight: buildingHeight,
+    tallestBuildingName: buildingName,
+    tallestBuildingAddress: buildingAddress,
 
-    // Parcel, County, and City Data
+    // (existing) Parcel/County/City Data
     ...row
   };
 
-  // Define primary endpoints
+  // Define primary prompt endpoints
   const endpoints = [
       '/api/ask_ai_part1A',
       '/api/ask_ai_part1B',
