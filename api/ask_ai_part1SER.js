@@ -14,7 +14,8 @@ module.exports = async (req, res) => {
         console.log("\n** WARNING! **\nNo geometry found in suppDataForAI. \nWhile not a problem necessarily, it is extremely concerning. \nYou should expect imminent failure.");
     }
     
-    suppDataForAI = JSON.stringify(suppDataForAI);
+    // Stringify and escape
+    let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
 
     const messages = [{
         "role": "system",
