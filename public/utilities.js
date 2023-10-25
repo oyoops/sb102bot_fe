@@ -10,7 +10,6 @@
 /* AI-Related Functions: */
 
 
-
 // fetch the set of AI responses + supplemental data
 async function fetchAiResponsesCombined(row) {
 
@@ -150,7 +149,7 @@ async function fetchAiResponsesCombined(row) {
       return serData;
   } catch (error) {
       const errorMessage = error?.data?.error?.message || "Unknown error occurred while fetching AI SER response.";
-      console.error("Error while fetching AI SER response:", errorMessage);
+      console.error("Error while compiling primary responses or fetching SER response:", errorMessage);
       throw error;
   }
 }
