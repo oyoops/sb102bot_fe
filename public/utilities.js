@@ -152,7 +152,30 @@ async function fetchAiResponsesCombined(row) {
   }
 }
 
-// Combine all primary AI responses
+
+// Combine all primary AI responses (misnomer)
+function composeAiResponsesCombined(aiResponse) {
+    console.log("  *** Received raw AI response! ***  :-D");
+
+    if (!aiResponse || typeof aiResponse !== 'string') {
+        console.error("Error: Invalid or no AI response received!");
+        return;
+    }
+    
+    // Preface final AI content with a custom introduction
+    let combinedResponse = `
+        </br></br>
+        <h3 style="color:black;" align="center">
+        First, let's review some preliminary intel.
+        </h3>
+        <ul>
+            ${aiResponse}
+        </ul>
+    `;
+
+    return combinedResponse;
+}
+/*
 function composeAiResponsesCombined(aiResponses) {
   console.log("  *** Received raw AI response collection! ***  :-D");
   if (!aiResponses || aiResponses.length === 0) {
@@ -186,6 +209,7 @@ function composeAiResponsesCombined(aiResponses) {
   const combinedResponses = aiCombinationParts.join('');
   return combinedResponses;
 }
+*/
 
 /*
 async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter, parcelData) {
