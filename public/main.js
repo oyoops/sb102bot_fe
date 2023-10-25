@@ -162,13 +162,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (countyData) {
                     // countyData *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
                     for (const [key, value] of Object.entries(countyData)) {
-                        aiSupplementalData[`county_${key}`] = value;  // Prefixing with "county_" to ensure uniqueness
+                        aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
                     }
                 }
                 if (cityData) {
                     // cityData *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
                     for (const [key, value] of Object.entries(cityData)) {
-                        aiSupplementalData[`city_${key}`] = value;  // Prefixing with "city_" to ensure uniqueness
+                        aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
                     }
                 }
 
