@@ -4,7 +4,7 @@ const axios = require('axios');
 
 module.exports = async (req, res) => {
     //const { dataForAI } = req.query;
-    const { aiCombinedResponses, suppDataForAI } = req.query;
+    let { aiCombinedResponses, suppDataForAI } = req.query;
 
     // Remove geometry because it can break the API if too long
     if (suppDataForAI && suppDataForAI.geom) {
