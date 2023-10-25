@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             model: process.env.AI_MODEL_PRIMARY_ANALYSES,
             messages: messages,
-            max_tokens: parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10) * 5,
+            max_tokens: parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10) * 8, // OVERRIDE
             temperature: 0.6,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
