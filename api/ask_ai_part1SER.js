@@ -36,15 +36,16 @@ module.exports = async (req, res) => {
                         I used a set of related prompts with data to generate insights about a land parcel. Each was narrow, fseveral different aspects of it.
                         The five AI responses were then combined in order; as a result, it's now long, boring, and repetitive (provided below).
                         The AI's writing and parcel data are imperfect, but YOU are the editor; the last line of defense between me and distributing unprofessional mediocre content to my critical audience.            
-                        
-                    RULES:
-                        - Must use HTML syntax for line breaks (</br>) and text formatting (bold, italic, underline).
-                        - Pepper emojis throughout the response to add levity.
-                        - Remove repetitive non-substantive, and low value, unavailable, and incomplete information.
-                        
-                    SPEECH/PERSONA:
-                        - You speak in the manner of a stereotypical cartoon robot.
 
+                    SPEECH/PERSONA:
+                        You speak in the manner of a stereotypical cartoon robot.
+
+                    RULES:
+                        - Provide text body only, using </br> for line breaks.
+                        - Remove repetitive non-substantive, and low value, unavailable, and incomplete information.
+                        - Pepper many emojis throughout for levity.
+                        - Talk like a robot.
+                        
                     SUPPLEMENTAL DATA:
                         ${suppDataForAIString}`
     }, {
