@@ -14,7 +14,7 @@
 // fetch the set of AI responses + supplemental data
 async function fetchAiResponsesCombined(row) {
 
-  /* START STAGE 1: COMBINE AI RESPONSES */
+  /* START STAGE 1: ENRICH, GET, COMBINE */
 
   // Add important global var values to the supplemental data set
   row = {
@@ -123,11 +123,13 @@ async function fetchAiResponsesCombined(row) {
           throw err;
       });
   });
+  /* END STAGE 1: ENRICH, GET, COMBINE */
 
-  // Wait for all primary prompts to receive responses before continuing with combined responses
+  // Once results are available from all primary prompts, continue to combine
   try {
       const results = await Promise.all(fetchPromises);
-      console.log("\n[STAGE #1 COMPLETE]\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
+      console.log("\n[STAGE #1 COMPLETE]");
+      ////console.log("\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
 
       /* START STAGE 2: SER */
       
@@ -142,7 +144,8 @@ async function fetchAiResponsesCombined(row) {
 
       /* SER was successful! */
 
-      console.log("\n[STAGE #2 COMPLETE]\n--- SER Response ---\n" + serData + "\n--------------------\n");
+      ////console.log("\n--- SER Response ---\n" + serData + "\n--------------------\n");
+      console.log("\n[STAGE #2 COMPLETE]");
 
       return serData;
   } catch (error) {
@@ -154,7 +157,7 @@ async function fetchAiResponsesCombined(row) {
 
 // Combine all primary AI responses* (misnomer)
 function composeAiResponsesCombined(aiResponse) {
-    console.log("  *** Received raw AI response! ***  :-D");
+    //console.log("  *** Received raw AI response! ***  :-D");
 
     if (!aiResponse || typeof aiResponse !== 'string') {
         console.error("Error: Invalid or no AI response received!");
@@ -296,7 +299,7 @@ function animateTextFadeIn(element) {
       } else {
           clearInterval(interval);
       }
-  }, 75); //   <---- increase/decrease to change text fading speed
+  }, 150); //   <---- increase/decrease to change text fading speed
 }
 
 /* Update the fake loading progress bar */
