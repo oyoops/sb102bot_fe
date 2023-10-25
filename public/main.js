@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get user input (dirty address) 
         address = addressInput.value;
         if (!address) {
-            alert('Ummm, you might want to try typing an address first? </br>Just a suggestion, though...');
+            alert('Ummm, you might want to try typing an address first? Just a suggestion, though...');
             return;
         }
 
