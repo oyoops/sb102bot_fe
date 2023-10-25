@@ -6,13 +6,17 @@ module.exports = async (req, res) => {
     //const { dataForAI } = req.query;
     let { aiCombinedResponses, suppDataForAI } = req.query;
 
+    console.log("[SER]\n");
+
     // Remove geometry because it can break the API if too long
     if (suppDataForAI && suppDataForAI.geom) {
         delete suppDataForAI.geom;
-        console.log("[START] S-E-R MODULE");
     } else {
         console.log("\n** WARNING! **\nNo geometry found in suppDataForAI. \nWhile not a problem necessarily, it is extremely concerning. \nYou should expect imminent failure.");
     }
+
+    console.log(suppDataForAI);
+    console.log(suppDataForAIString);    
     
     // Stringify and escape
     let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
