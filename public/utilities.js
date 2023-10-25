@@ -10,99 +10,16 @@
 /* AI-Related Functions: */
 
 
-// fetch the set of AI responses + supplemental data
+// fetch set of AI responses given a supplemental dataset
 async function fetchAiResponsesCombined(row) {
 
   /* START STAGE 1: ENRICH, GET, COMBINE */
 
-  // Add important global var values to the supplemental data set
-  row = {
-    // Display Data
-    descriptionOfLiveLocalEligibility: summaryContent,
-
-    // Location Data
-    address: address,
-    lat: lat,
-    lng: lng,
-    ////////geocodeData: geocodeData,
-    ////////countyData: countyData,
-    ////////parcelData: parcelData,
-    ////////cityData: cityData,
-    cityNameProper: cityNameProper,
-    countyNameProper: countyNameProper,
-    displayMuniName: displayMuniName,
-
-    // Housing and Unit Data
-    acres: acres,
-    ////////fakeMillage: fakeMillage,
-    maxMuniDensity: maxMuniDensity,
-    ////////totalUnits: totalUnits,
-    ////////marketUnits: marketUnits,
-    ////////affordableUnits: affordableUnits,
-    maxCapacity: maxCapacity,
-    ////////affordablePct: affordablePct,
-
-    /*
-    // AI Data
-    aiSupplementalData: aiSupplementalData,
-    aiResponses: aiResponses,
-    */
-
-    /*
-    // Cost Data
-    MILLAGE_ADJUSTMENT: MILLAGE_ADJUSTMENT,
-    landCostPerUnit: landCostPerUnit,
-    totalHCPerUnit: totalHCPerUnit,
-    totalLandCost: totalLandCost,
-    totalHcCost: totalHcCost,
-    totalLandAndTotalHc: totalLandAndTotalHc,
-    totalLandAndTotalHcPerUnit: totalLandAndTotalHcPerUnit,
-    totalLandAndTotalHcPerSqFt: totalLandAndTotalHcPerSqFt,
-    */
-
-    
-    // Housing Unit Sizes & Rents
-    /*
-    marketStudioSize: marketStudioSize,
-    market1BDSize: market1BDSize,
-    market2BDSize: market2BDSize,
-    market3BDSize: market3BDSize,
-    affordableStudioSize: affordableStudioSize,
-    affordable1BDSize: affordable1BDSize,
-    affordable2BDSize: affordable2BDSize,
-    affordable3BDSize: affordable3BDSize,
-    avgMarketSize: avgMarketSize,
-    avgAffordableSize: avgAffordableSize,
-    avgBlendedSize: avgBlendedSize,
-    maxRent0bd: maxRent0bd,
-    maxRent1bd: maxRent1bd,
-    maxRent2bd: maxRent2bd,
-    maxRent3bd: maxRent3bd,
-    affordablerent: affordablerent,
-    affordableunitsize: affordableunitsize,
-    mktrent: mktrent,
-    mktunitsize: mktunitsize,
-    */
-
-    // Abatement Data
-    acreageValue: acreageValue,
-    densityValue: densityValue,
-    ////////abatementValue: abatementValue,
-    ////////abatementEstimate: abatementEstimate,
-
-    // Map & Building Data
-    ////////LIVE_LOCAL_BLDG_RADIUS_MILES: LIVE_LOCAL_BLDG_RADIUS_MILES,
-    ////////tallestBuildingsData: tallestBuildingsData,
-    distanceInMilesToTallestBldg: distanceInMilesToTallestBldg,
-    ////////tallestBuildingLat: buildingLat,
-    ////////tallestBuildingLng: buildingLng,
-    tallestBuildingHeight: buildingHeight,
-    tallestBuildingName: buildingName,
-    tallestBuildingAddress: buildingAddress,
-
-    // (existing) Parcel/County/City Data
-    ...row
-  };
+  // Add key globals to the dataset and apply final super-enhancements
+  cleanData = refineData(row);
+  // Log dataset POST-transformation
+  console.log("\n<----[POST-TRANSFORMATION:]---->");
+  console.log(JSON.stringify(cleanData, null, 2));
 
   // Define primary prompt endpoints
   const endpoints = [
@@ -139,13 +56,11 @@ async function fetchAiResponsesCombined(row) {
   // Once results to all primary prompts available, then continue to combine
   try {
       const results = await Promise.all(fetchPromises);
+      //console.log("\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
       console.log("\n[STAGE #1 COMPLETE]");
-      ////console.log("\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
-      
       /* END STAGE 1: ENRICH, GET, COMBINE */
-
+  
       /* START STAGE 2: SER */
-      
       // SER the combined responses
       const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(row)}`;
       const serResponse = await fetch(serEndpoint);
@@ -153,30 +68,25 @@ async function fetchAiResponsesCombined(row) {
           console.log('ERROR: SER failed!');
           throw new Error(`Server responded with ${serResponse.status}: ${await serResponse.text()}`);
       }
-      serData = await serResponse.json();
-
-      /* SER was successful! */
-
-      ////console.log("\n--- SER Response ---\n" + serData + "\n--------------------\n");
+      const serData = await serResponse.json();
+      //console.log("\n--- SER Response ---\n" + serData + "\n--------------------\n");
       console.log("\n[STAGE #2 COMPLETE]");
+      /* END STAGE 2: SER */
 
       return serData;
   } catch (error) {
-      const errorMessage = error?.data?.error?.message || "Unknown error occurred while fetching AI SER response.";
+      const errorMessage = error?.data?.error?.message || "[CRITICAL] An unknown error occurred while fetching the Stage 2 (SER) AI response.";
       console.error("Error while compiling primary responses or fetching SER response:", errorMessage);
       throw error;
   }
 }
 
-// Combine all primary AI responses* (misnomer)
+// Compose final output by prepending it with a stupid intro and calling it a day
 function composeAiResponsesCombined(aiResponse) {
-    //console.log("  *** Received raw AI response! ***  :-D");
-
     if (!aiResponse || typeof aiResponse !== 'string') {
         console.error("Error: Invalid or no AI response received!");
         return;
     }
-    
     // Preface final AI content with a custom introduction
     let combinedResponse = `
         </br></br>
@@ -187,49 +97,100 @@ function composeAiResponsesCombined(aiResponse) {
             ${aiResponse}
         </ul>
     `;
-
     return combinedResponse;
 }
-/*
-function composeAiResponsesCombined(aiResponses) {
-  console.log("  *** Received raw AI response collection! ***  :-D");
-  if (!aiResponses || aiResponses.length === 0) {
-      console.error("Error: No AI responses were received!");
-      return;
-  }
-  
-  // Preface final AI content with a custom introduction (may belong somewhere else...)
-  let aiCombinationParts = [
-      `</br></br>
-      <h3 style="color:black;" align="center">
-      First, let's review some preliminary intel.
-      </h3>`
-  ];
 
-  // check if aiResponses is an Array
-  if (!Array.isArray(aiResponses)) {
-    console.error("Error: aiResponses is not an array!\naiResponses content:", aiResponses);
-    return;
-  }
-
-  // Combine all AI responses by pushing each into one long [HTML-formatted?] string 
-  aiCombinationParts.push("<ul>");
-  aiResponses.forEach((aiResponse, index) => {
-    ////aiCombinationParts.push(`<li>${aiResponse}</li>`);
-    aiCombinationParts.push(`${aiResponse}`);
-  });
-  aiCombinationParts.push("</ul>");
-
-  // Return the combined responses
-  const combinedResponses = aiCombinationParts.join('');
-  return combinedResponses;
-}
-*/
-
+// Add globals to dataset and apply final super-enhancements
 function refineData(rawData) {
     let refinedData = {};
+    // Attach key globals to dataset
+    rawData = {
+        // Display Data
+        descriptionOfLiveLocalEligibility: summaryContent,
 
-    // Rename columns
+        // Location Data
+        address: address,
+        lat: lat,
+        lng: lng,
+        ////////geocodeData: geocodeData,
+        ////////countyData: countyData,
+        ////////parcelData: parcelData,
+        ////////cityData: cityData,
+        cityNameProper: cityNameProper,
+        countyNameProper: countyNameProper,
+        displayMuniName: displayMuniName,
+
+        // Housing and Unit Data
+        acres: acres,
+        ////////fakeMillage: fakeMillage,
+        maxMuniDensity: maxMuniDensity,
+        ////////totalUnits: totalUnits,
+        ////////marketUnits: marketUnits,
+        ////////affordableUnits: affordableUnits,
+        maxCapacity: maxCapacity,
+        ////////affordablePct: affordablePct,
+
+        /*
+        // AI Data
+        aiSupplementalData: aiSupplementalData,
+        aiResponses: aiResponses,
+        */
+
+        /*
+        // Cost Data
+        MILLAGE_ADJUSTMENT: MILLAGE_ADJUSTMENT,
+        landCostPerUnit: landCostPerUnit,
+        totalHCPerUnit: totalHCPerUnit,
+        totalLandCost: totalLandCost,
+        totalHcCost: totalHcCost,
+        totalLandAndTotalHc: totalLandAndTotalHc,
+        totalLandAndTotalHcPerUnit: totalLandAndTotalHcPerUnit,
+        totalLandAndTotalHcPerSqFt: totalLandAndTotalHcPerSqFt,
+        */
+        
+        // Housing Unit Sizes & Rents
+        /*
+        marketStudioSize: marketStudioSize,
+        market1BDSize: market1BDSize,
+        market2BDSize: market2BDSize,
+        market3BDSize: market3BDSize,
+        affordableStudioSize: affordableStudioSize,
+        affordable1BDSize: affordable1BDSize,
+        affordable2BDSize: affordable2BDSize,
+        affordable3BDSize: affordable3BDSize,
+        avgMarketSize: avgMarketSize,
+        avgAffordableSize: avgAffordableSize,
+        avgBlendedSize: avgBlendedSize,
+        maxRent0bd: maxRent0bd,
+        maxRent1bd: maxRent1bd,
+        maxRent2bd: maxRent2bd,
+        maxRent3bd: maxRent3bd,
+        affordablerent: affordablerent,
+        affordableunitsize: affordableunitsize,
+        mktrent: mktrent,
+        mktunitsize: mktunitsize,
+        */
+
+        // Abatement Data
+        acreageValue: acreageValue,
+        densityValue: densityValue,
+        ////////abatementValue: abatementValue,
+        ////////abatementEstimate: abatementEstimate,
+
+        // Map & Building Data
+        ////////LIVE_LOCAL_BLDG_RADIUS_MILES: LIVE_LOCAL_BLDG_RADIUS_MILES,
+        ////////tallestBuildingsData: tallestBuildingsData,
+        distanceInMilesToTallestBldg: distanceInMilesToTallestBldg,
+        ////////tallestBuildingLat: buildingLat,
+        ////////tallestBuildingLng: buildingLng,
+        tallestBuildingHeight: buildingHeight,
+        tallestBuildingName: buildingName,
+        tallestBuildingAddress: buildingAddress,
+
+        // (existing) Parcel/County/City Data
+        ...rawData
+    };
+    // Rename most columns
     for (let [key, value] of Object.entries(rawData)) {
         if (renameMap[key]) {
             refinedData[renameMap[key]] = value;
@@ -237,15 +198,13 @@ function refineData(rawData) {
             refinedData[key] = value; // Keeping columns not in the renameMap as-is
         }
     }
-
     // Remove unwanted columns
     for (let unwantedColumn of unwantedColumns) {
         if (refinedData[renameMap[unwantedColumn]]) {
             delete refinedData[renameMap[unwantedColumn]];
         }
     }
-
-    // Remove null values and convert zero values
+    // Remove null values; convert zero values
     for (let [key, value] of Object.entries(refinedData)) {
         if (value === null) {
             delete refinedData[key];
@@ -253,7 +212,6 @@ function refineData(rawData) {
             refinedData[key] = 0;
         }
     }
-
     return refinedData;
 }
 

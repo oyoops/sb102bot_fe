@@ -76,7 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // initialize the map (is this too early?)
             initializeMap(lat, lng);
 
-
+            // Display Google Map
+            googlemap.style.display = 'block';
 
             // scroll to top
             //loadingContainer.scrollIntoView;
@@ -160,18 +161,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("\n<----[PRE-TRANSFORMATION:]----->");
                 console.log(JSON.stringify(aiSupplementalData, null, 2));
 
+                /*
                 // Add all global variables to dataset and apply final super-enhancements
                 cleanData = refineData(aiSupplementalData);
 
                 // Log dataset POST-transformation
                 console.log("\n<----[POST-TRANSFORMATION:]---->");
                 console.log(JSON.stringify(cleanData, null, 2));
+                */
 
                 /* Enhanced dataset is now fully prepared! */
 
 
-                /* NEW WAY TO GET PROMPTS! (EXAMPLE)
-                generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', aiSupplementalData).then(summary => {
+                /* ALTERNATE WAY TO PULL PRIMARY PROMPTS (FROM GOOGLE SHEETS):
+                // (maybe wrong formula name, IDK)
+                // (example usage)
+                generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', cleanData).then(summary => {
                     hmmm = summary;
                     console.log("Hmmm = " + hmmm);
                 });*/
@@ -192,11 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // convert city and county names to Proper Case for clean
             cityNameProper = toProperCase(cityData.cityName);
-            countyNameProper = specialCountyFormatting(countyData.county_name);
-
-            // hide loading indicator
-            loadingContainer.scrollIntoView;
-            loadingContainer.style.display = 'none';            
+            countyNameProper = specialCountyFormatting(countyData.county_name);     
 
             // show Try Again button
             tryAgainButton.style.display = 'block';
@@ -341,16 +342,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                 }
 
-                /* Generate the combined AI summary */
+                /* Generate the final AI summary */
 
-                // Generate SER response in its perfect form
+                // Generate SER response in perfect form
                 aiGeneratedHTML = await fetchAiResponsesCombined(cleanData); // get final product by sending enriched supplemental data to the primary prompts dispatcher endpoint
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
-                console.log("\n\n**** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
+                console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
 
-                // Add the AI summary to text to be faded in
+                // Add the AI summary to text to fade in
                 summaryContent += composeAiResponsesCombined(aiGeneratedHTML);
 
             } else {
@@ -366,15 +367,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Display AI+Eligibility div
             eligibilityDiv.style.display = 'block';
-
-            // Display Google Map
-            googlemap.style.display = 'block';
             
             // Slowly fade in content of AI+Eligibility div
             animateTextFadeIn(eligibilityDiv);
 
-
-            
 
 
 
@@ -388,8 +384,15 @@ document.addEventListener('DOMContentLoaded', function() {
             updateTotalCosts();
             calculateAbatement();
             
-            /* End -- Land Development Input/Output Section */            
-            
+            /* End -- Land Development Input/Output Section */
+
+
+
+
+            // hide loading indicator
+            loadingContainer.scrollIntoView;
+            loadingContainer.style.display = 'none';       
+
             // scroll to top again
             googlemap.scrollIntoView();
             window.scrollTo(0, 0);

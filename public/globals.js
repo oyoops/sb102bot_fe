@@ -208,7 +208,7 @@ const renameMap = {
 };
 
 // Exclude these irrelevant columns which, if provided, would only serve to confuse the AI
-const unwantedColumns = ["JV_HMSTD", "AV_HMSTD"];
+const unwantedColumns = ["geom", "descriptionOfLiveLocalEligibility", "JV_HMSTD", "AV_HMSTD"];
 // ADD MORE
 // ..... & MORE
 // ......... & MORE
