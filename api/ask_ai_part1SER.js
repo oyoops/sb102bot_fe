@@ -97,9 +97,10 @@ module.exports = async (req, res) => {
         res.status(200).json(aiResponseText);
     
     } catch (error) {
-        // Log the actual OpenAI error message
-        const errorMessage = error?.data?.error || "[CRITICAL ERROR] Unknown error while fetching the AI response.";
-        console.error("Error from OpenAI:", errorMessage);
+        // Log the OpenAI error
+        const errorMessage = JSON.stringify(error); // error; // error?.data?.error || "[CRITICAL ERROR] Unknown error while fetching the AI response.";
+        console.log(`\nOpenAI Error:\n\t${errorMessage}`);
+        console.error(`Error from OpenAI: ${errorMessage}`);
         res.status(500).send(errorMessage);
     }
 };
