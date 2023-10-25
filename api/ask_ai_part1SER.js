@@ -11,15 +11,16 @@ module.exports = async (req, res) => {
     // Remove geometry because it can break the API if too long
     if (suppDataForAI && suppDataForAI.geom) {
         delete suppDataForAI.geom;
+    } else if (suppDataForAI) {
+        console.log("There is no geometry in the supplemental data, which is fine; just be aware!\n")
     } else {
-        console.log("\n** WARNING! **\nNo geometry found in suppDataForAI. \nWhile not a problem necessarily, it is extremely concerning. \nYou should expect imminent failure.");
+        console.log("\n** WARNING! **\n There is no suppDataForAI!");
     }
-
     console.log(suppDataForAI);
-    console.log(suppDataForAIString);    
     
     // Stringify and escape
     let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
+    console.log(suppDataForAIString);    
 
     const messages = [{
         "role": "system",
@@ -45,7 +46,7 @@ module.exports = async (req, res) => {
                         You are a real estate development genius giving an astute evaluation of a potential multifamily development site.
 
                     RULES:
-                        - Must be in faux-HTML; in other words, the only HTML you should use is </br> for ALL line breaks and <b> and <i> to add emphasis. Do not use headings!
+                        - Must be in faux-HTML; you MUST use </br> for ALL line breaks. Use <b> and <i> to add emphasis. Do not use paragraph or heading tags!
                         - Remove repetitive non-substantive, and low value, unavailable, and incomplete information.
                         - Pepper many emojis throughout for levity.
                         
