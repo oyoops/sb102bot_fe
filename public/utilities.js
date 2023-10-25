@@ -109,26 +109,33 @@ async function fetchAiResponsesCombined(row) {
   // Map primary prompts to endpoints, then fetch all simultaneously
   const queryString = new URLSearchParams(row).toString();
   const fetchPromises = endpoints.map(endpoint => {
-      return fetch(`${endpoint}?${queryString}`)
-      .then(response => {
-          if (!response.ok) {
-              console.error(`Failed at endpoint ${endpoint} with status: ${response.statusText}`);
-              throw new Error(`Failed to fetch from ${endpoint}: ${response.statusText}`);
-          }
-          return response.json();
-      })
-      .catch(err => {
-          console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
-          throw err;
-      });
+    return Promise.race([
+        fetch(`${endpoint}?${queryString}`)
+        .then(response => {
+            if (!response.ok) {
+                console.error(`Failed at endpoint ${endpoint} with status: ${response.statusText}`);
+                throw new Error(`Failed to fetch from ${endpoint}: ${response.statusText}`);
+            }
+            return response.json();
+        }),
+        timeout(25000) // 25 seconds
+    ])
+    .catch(err => {
+        console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
+        if (err.message === 'Request took too long!') {
+            alert(`Endpoint ${endpoint} took too long to respond.`);
+        }
+        throw err;
+    });
   });
-  /* END STAGE 1: ENRICH, GET, COMBINE */
 
-  // Once results are available from all primary prompts, continue to combine
+  // Once results to all primary prompts available, then continue to combine
   try {
       const results = await Promise.all(fetchPromises);
       console.log("\n[STAGE #1 COMPLETE]");
       ////console.log("\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
+      
+      /* END STAGE 1: ENRICH, GET, COMBINE */
 
       /* START STAGE 2: SER */
       
@@ -299,6 +306,13 @@ function animateTextFadeIn(element) {
           clearInterval(interval);
       }
   }, 150); //   <---- increase/decrease to change text fading speed
+}
+
+// Create a timeout (puts a time limit on the AI endpoints)
+function timeout(ms) {
+    return new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Took too long... It happens! If you simply try again, it will usually work.')), ms)
+    );
 }
 
 /* Update the fake loading progress bar */
