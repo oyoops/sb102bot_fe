@@ -168,6 +168,12 @@ function composeAiResponsesCombined(aiResponses) {
       </h3>`
   ];
 
+  // check if aiResponses is an Array
+  if (!Array.isArray(aiResponses)) {
+    console.error("Error: aiResponses is not an array!\naiResponses content:", aiResponses);
+    return;
+  }
+
   // Combine all AI responses by pushing each into one long [HTML-formatted?] string 
   aiCombinationParts.push("<ul>");
   aiResponses.forEach((aiResponse, index) => {
