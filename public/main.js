@@ -22,13 +22,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // on form submit:
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        address = addressInput.value;
 
+        // Get user input (dirty address) 
+        address = addressInput.value;
         if (!address) {
             alert('Ummm, you might want to try typing an address first? </br>Just a suggestion, though...');
             return;
         }
 
+        // ONE HUGE TRY BLOCK
         try {
             // hide header and initial content
             mainHeader.style.display = 'none';
