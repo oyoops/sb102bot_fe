@@ -330,8 +330,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (maxCapacity >= 1000) {
                     summaryContent += `
                     </br></br>
-                    The maximum-achievable yield here is <b><u>${maxCapacity} units</b></u>... but that's <b><i>a lot</i></b> of units. 
-                    It might be unrealistic for a multifamily development to physically and feasibly achieve that kind of density on ${acres.toFixed(2)} acres... 
+                    The maximum-achievable yield here is <b><u><i>${maxCapacity} units</i></u></b>... but that's <b><i>a lot</i></b> of units. 
+                    It might be unrealistic for a multifamily development to physically and/or feasibly achieve that on just ${acres.toFixed(2)} acres... 
                     </br></br>But, hey, what do I know? <b><i>Go shoot for the moon!</i></b>.
                     `;
                 } else {
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 /* Generate the final AI summary */
 
                 // Generate SER response in perfect form
-                aiGeneratedHTML = await fetchAiResponsesCombined(cleanData); // get final product by sending enriched supplemental data to the primary prompts dispatcher endpoint
+                aiGeneratedHTML = await fetchAiResponsesCombined(cleanData); // send enriched supplemental data to the primary prompts dispatcher endpoint to get final product
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
             animateTextFadeIn(eligibilityDiv);
 
 
-            
+
             /* Start -- Land Development Input/Output Section */
             
             // Run initial calculations using loaded & default values
