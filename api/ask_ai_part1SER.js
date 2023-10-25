@@ -60,9 +60,9 @@ module.exports = async (req, res) => {
     try {
         // Send fetch request from server to OpenAI API
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-            model: process.env.AI_MODEL_PRIMARY_ANALYSES,
+            model: process.env.AI_MODEL_SER_MODULE,
             messages: messages,
-            max_tokens: parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10) * 8, // OVERRIDE
+            max_tokens: parseInt(process.env.AI_MAX_TOKENS_SER_MODULE, 10), // (gpt-3.5-turbo) I've set SER max output to 1596 (because I'm OCD) so max input space = 2500 tokens {= 4096 total limit - 1596 response}
             temperature: 0.6,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
