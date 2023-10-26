@@ -22,7 +22,7 @@ async function fetchAiResponsesCombined(cleanData) {
   // Log dataset POST-transformation
   console.log("\n<----[POST-TRANSFORMATION:]---->");
   //console.log(JSON.stringify(cleanData, null, 2));
-  console.log(cleanData); // test
+  console.log(JSON.stringify(cleanData, null, 2)); // test
   
   // Define primary prompt endpoints
   const endpoints = [
@@ -65,7 +65,7 @@ async function fetchAiResponsesCombined(cleanData) {
   
       /* START STAGE 2: SER */
       // SER the combined responses
-      console.log(cleanData);
+      console.log(JSON.stringify(cleanData, null, 2)); // test 2
       const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(cleanData)}`;
       const serResponse = await fetch(serEndpoint);
       if (!serResponse.ok) {
