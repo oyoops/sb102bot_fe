@@ -156,16 +156,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
                     }
                 }
+                // Preserve dirtyData
+                const dirtyData = JSON.stringify(aiSupplementalData, null, 2); 
 
-                // Log dataset PRE-transformation
+                // Log dataset PRE-transformation (dirtyData)
                 console.log("\n<----[PRE-TRANSFORMATION:]----->");
-                console.log(JSON.stringify(aiSupplementalData, null, 2));
+                console.log(dirtyData);
 
                 /*
                 // Add all global variables to dataset and apply final super-enhancements
                 cleanData = refineData(aiSupplementalData);
 
-                // Log dataset POST-transformation
+                // Log dataset POST-transformation (cleanData)
                 console.log("\n<----[POST-TRANSFORMATION:]---->");
                 console.log(JSON.stringify(cleanData, null, 2));
                 */
@@ -348,10 +350,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("\nSummary Content 2:\n", summaryContent);
 
 
+
+
                 /* Generate the final AI summary */
 
-                // Generate SER response in perfect form
-                aiGeneratedHTML = await fetchAiResponsesCombined(cleanData); // send enriched supplemental data to the primary prompts dispatcher endpoint to get final product
+                // clean the data
+                const cleanerData = refineData(dirtyData);
+
+                // (Master prompt dispatcher) Collects globals, sends primary prompts, compiles responses, then gets & returns SER response
+                aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData); // send perfect supplemental data to the master dispatcher to inform all prompts
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
@@ -367,6 +374,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // No LLA density limit explanation added //
                 // since this parcel is not LLA-qualified //
             }
+
+
+
+
 
             // scroll to top
             loadingContainer.scrollIntoView;
