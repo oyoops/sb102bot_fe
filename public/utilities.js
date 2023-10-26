@@ -66,7 +66,7 @@ async function fetchAiResponsesCombined(cleanData) {
       /* START STAGE 2: SER */
       // SER the combined responses
       console.log(JSON.stringify(cleanData, null, 2)); // test 2
-      const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData, null, 2))}`;
+      const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(cleanData)}`;
       const serResponse = await fetch(serEndpoint);
       if (!serResponse.ok) {
           console.log('ERROR: SER failed!');
