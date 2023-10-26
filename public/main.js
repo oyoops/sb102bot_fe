@@ -348,27 +348,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     The max. achievable yield on this ${acres.toFixed(2)}-acre parcel would be <i><u><b>${maxCapacity} units</b></u></i> if approved through Live Local.
                     `;
                 }
-                console.log("\nSummary Content 2:\n", summaryContent);
+                ////console.log("\nSummary Content 2:\n", summaryContent);
 
 
 
 
                 /* Generate the final AI summary */
 
-                // refine the data
+                // Prepare and refine the supplemental data
                 const cleanerData = refineData(dirtyData);
                 console.log("cleaner data: \n", cleanerData);
-                // (Master prompt dispatcher) Collects globals, sends primary prompts, compiles responses, then gets & returns SER response
+                
+                // (Master prompt dispatcher) 
+                // Sends primary prompts, compiles responses, then gets and returns SER response
                 aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData); // send perfect supplemental data to the master dispatcher to inform all prompts
-                // check results
+
+                // check SER response
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
-                //////////////////////console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
+
+                // log it
+                console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
 
                 // format the AI summary and add to div
                 summaryContent += composeAiResponsesCombined(aiGeneratedHTML);
-                console.log("\nSummary Content 3:\n", summaryContent);
+                ////console.log("\nSummary Content 3:\n", summaryContent);
             } else {
                 // -------------------------------------- //
                 //         *** CHANGE THIS! ***           //
