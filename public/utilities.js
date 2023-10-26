@@ -26,7 +26,7 @@ async function fetchAiResponsesCombined(cleanData) {
   
   // Define primary prompt endpoints
   const endpoints = [
-      '/api/ask_ai_part1A',
+      '/api/ask_ai_part1AA',
       '/api/ask_ai_part1B',
       '/api/ask_ai_part1C',
       '/api/ask_ai_part1D',
