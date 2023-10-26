@@ -17,10 +17,11 @@ module.exports = async (req, res) => {
         console.log("\n** HUGE WARNING! **\n There is no suppDataForAI!");
     }
     
+    let suppDataForAIString;
     if (typeof suppDataForAI === "string") {
-        let suppDataForAIString = suppDataForAI;
+        suppDataForAIString = suppDataForAI;
     } else {
-        let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
+        suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
     }
     
     // Stringify and escape
