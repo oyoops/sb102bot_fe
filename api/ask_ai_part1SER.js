@@ -26,7 +26,8 @@ module.exports = async (req, res) => {
     
     // Stringify and escape
     //let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
-    console.log(suppDataForAIString);    
+    console.log(suppDataForAIString);
+    console.log(typeof suppDataForAI);
 
     const messages = [{
         "role": "system",
