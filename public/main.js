@@ -232,30 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
             rentsTableBody.innerHTML = rentsRow;
             countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
 
-            // Get detailed eligibility
-            if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                eligibilityDiv.innerHTML += `<h3 style="color:orange;" align="center">Your site is probably <u>NOT ELIGIBLE</u> for Live Local development.</h3> 
-                </br>Believe it or not, a property can't qualify if it's <i>already</i> residential...`;
-                //eligibilityDiv.style.color = "Orange";
-                eligibilityDiv.style.fontSize = "18px";
-            } else if (eligibleCodes.includes(parcelData.dor_uc)) {
-                buildingHeight = parseFloat(buildingHeight);
-                console.log("MAX HEIGHT:", buildingHeight, "feet");
-                eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">Your site is <u>ELIGIBLE</u> for Live Local development!</h3> 
-                    </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and <b><i>Live Local</i></b> on it:
-                    </br></br>First, you can build <i>up to the height of the <b>tallest building within a mile</b> radius</i>. 
-                    </br></br>That would allow <i>up to <b><u>${buildingHeight.toFixed(0)} feet</u></b> here</i>. <b><i>Oh my! 😮</b></i>`
-                /*if (buildingHeight >= 200) {
-                    eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
-                }*/
-                //eligibilityDiv.style.color = "green";
-                eligibilityDiv.style.fontSize = "18px";
-            } else {
-                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">Your site is likely <u>NOT ELIGIBLE</u> for Live Local development. </h3> <br> It needs to <i>already</i> be <b>commercial</b> or <b>industrial</b> to qualify.`;
-                //eligibilityDiv.style.color = "red";
-                eligibilityDiv.style.fontSize = "18px";
-            }
-            summaryContent = eligibilityDiv.innerHTML;
+
 
             // convert land sq. ft. to acres
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
@@ -317,6 +294,34 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
 
+            // div
+
+            // Get detailed eligibility
+            if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
+                eligibilityDiv.innerHTML += `<h3 style="color:orange;" align="center">Your site is probably <u>NOT ELIGIBLE</u> for Live Local development.</h3> 
+                </br>Believe it or not, a property can't qualify if it's <i>already</i> residential...`;
+                //eligibilityDiv.style.color = "Orange";
+                eligibilityDiv.style.fontSize = "18px";
+            } else if (eligibleCodes.includes(parcelData.dor_uc)) {
+                buildingHeight = parseFloat(buildingHeight);
+                console.log("MAX HEIGHT:", buildingHeight, "feet");
+                eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">Your site is <u>ELIGIBLE</u> for Live Local development!</h3> 
+                    </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and <b><i>Live Local</i></b> on it:
+                    </br></br>First, you can build <i>up to the height of the <b>tallest building within a mile</b> radius</i>. 
+                    </br></br>That would allow <i>up to <b><u>${buildingHeight.toFixed(0)} feet</u></b> here</i>. <b><i>Oh my! 😮</b></i>`
+                /*if (buildingHeight >= 200) {
+                    eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
+                }*/
+                //eligibilityDiv.style.color = "green";
+                eligibilityDiv.style.fontSize = "18px";
+            } else {
+                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">Your site is likely <u>NOT ELIGIBLE</u> for Live Local development. </h3> <br> It needs to <i>already</i> be <b>commercial</b> or <b>industrial</b> to qualify.`;
+                //eligibilityDiv.style.color = "red";
+                eligibilityDiv.style.fontSize = "18px";
+            }
+            summaryContent = eligibilityDiv.innerHTML;
+            console.log("\nSummary Content 1:\n", summaryContent);
+
             // if parcel is LLA eligible, then finish composing the eligibility + AI summary
             if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // add LLA density limit explainer section
@@ -340,6 +345,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     The max. achievable yield on this ${acres.toFixed(2)}-acre parcel would be <i><u><b>${maxCapacity} units</b></u></i> if approved through Live Local.
                     `;
                 }
+                console.log("\nSummary Content 2:\n", summaryContent);
+
 
                 /* Generate the final AI summary */
 
@@ -350,9 +357,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
 
-                // Add the AI summary to text to fade in
+                // format the AI summary and add to div
                 summaryContent += composeAiResponsesCombined(aiGeneratedHTML);
-
+                console.log("\nSummary Content 3:\n", summaryContent);
             } else {
                 // -------------------------------------- //
                 //         *** CHANGE THIS! ***           //
@@ -380,7 +387,6 @@ document.addEventListener('DOMContentLoaded', function() {
             calculateAbatement();
             
             /* End -- Land Development Input/Output Section */
-
 
 
 

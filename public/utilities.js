@@ -62,6 +62,7 @@ async function fetchAiResponsesCombined(row) {
   
       /* START STAGE 2: SER */
       // SER the combined responses
+      console.log(row);
       const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(row)}`;
       const serResponse = await fetch(serEndpoint);
       if (!serResponse.ok) {
@@ -190,6 +191,7 @@ function refineData(rawData) {
         // (existing) Parcel/County/City Data
         ...rawData
     };
+
     // Rename most columns
     for (let [key, value] of Object.entries(rawData)) {
         if (renameMap[key]) {
