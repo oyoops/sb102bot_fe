@@ -5,18 +5,17 @@ const axios = require('axios');
 module.exports = async (req, res) => {
     //const { dataForAI } = req.query;
     let { aiCombinedResponses, suppDataForAI } = req.query;
-    console.log(req.query);
     console.log("[SER]\n");
-
+    console.log("aiComboResp:\n", aiComboResp);
+    
     // Remove geometry because it can break the API if too long
     if (suppDataForAI && suppDataForAI.geom) {
         delete suppDataForAI.geom;
     } else if (suppDataForAI) {
-        console.log("There is no geometry in the supplemental data, which is fine; just be aware!\n")
+        //console.log("There is no geometry in the supplemental data, which is fine; just be aware!\n")
     } else {
-        console.log("\n** WARNING! **\n There is no suppDataForAI!");
+        console.log("\n** HUGE WARNING! **\n There is no suppDataForAI!");
     }
-    console.log(suppDataForAI);
     
     // Stringify and escape
     let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
