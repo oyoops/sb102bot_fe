@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
                 // Preserve dirtyData
-                const dirtyData = JSON.stringify(aiSupplementalData, null, 2); 
+                dirtyData = JSON.stringify(aiSupplementalData, null, 2); 
 
                 // Log dataset PRE-transformation (dirtyData)
                 console.log("\n<----[PRE-TRANSFORMATION:]----->");
