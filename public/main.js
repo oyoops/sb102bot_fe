@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
-                console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
+                //////////////////////console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
 
                 // format the AI summary and add to div
                 summaryContent += composeAiResponsesCombined(aiGeneratedHTML);
@@ -368,11 +368,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // since this parcel is not LLA-qualified //
             }
 
+            // scroll to top
+            loadingContainer.scrollIntoView;
+
             // set AI+Eligibility div content
             eligibilityDiv.innerHTML = summaryContent;            
-            // display
+            // display div
             eligibilityDiv.style.display = 'block';
-            // fade in
+            // fade in div
             animateTextFadeIn(eligibilityDiv);
 
 
