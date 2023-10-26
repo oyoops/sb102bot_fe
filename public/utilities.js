@@ -21,8 +21,9 @@ async function fetchAiResponsesCombined(row) {
 
   // Log dataset POST-transformation
   console.log("\n<----[POST-TRANSFORMATION:]---->");
-  console.log(JSON.stringify(cleanData, null, 2));
-
+  //console.log(JSON.stringify(cleanData, null, 2));
+  console.log(cleanData); // test
+  
   // Define primary prompt endpoints
   const endpoints = [
       '/api/ask_ai_part1A',
