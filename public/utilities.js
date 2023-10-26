@@ -11,13 +11,13 @@
 
 
 // fetch set of AI responses given a supplemental dataset
-async function fetchAiResponsesCombined(row) {
+async function fetchAiResponsesCombined(cleanData) {
 
   /* START STAGE 1: ENRICH, GET, COMBINE */
 
-  // Add key globals to the dataset and apply final super-enhancements
-  //cleanData = refineData(row);
-  let cleanData = row; // <--- in the latest implementation, data has already been refined
+  /*// Add key globals to the dataset and apply final super-enhancements
+  let cleanData = row; */
+  //   ^ in the current implementation, data has already been refined
 
   // Log dataset POST-transformation
   console.log("\n<----[POST-TRANSFORMATION:]---->");
@@ -34,7 +34,7 @@ async function fetchAiResponsesCombined(row) {
   ];
 
   // Map primary prompts to endpoints, then fetch all simultaneously
-  const queryString = new URLSearchParams(row).toString();
+  const queryString = new URLSearchParams(cleanData).toString();
   const fetchPromises = endpoints.map(endpoint => {
     return Promise.race([
         fetch(`${endpoint}?${queryString}`)
@@ -65,8 +65,8 @@ async function fetchAiResponsesCombined(row) {
   
       /* START STAGE 2: SER */
       // SER the combined responses
-      console.log(row);
-      const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(row)}`;
+      console.log(cleanData);
+      const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(cleanData)}`;
       const serResponse = await fetch(serEndpoint);
       if (!serResponse.ok) {
           console.log('ERROR: SER failed!');

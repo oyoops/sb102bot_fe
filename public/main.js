@@ -354,11 +354,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 /* Generate the final AI summary */
 
-                // clean the data
+                // refine the data
                 const cleanerData = refineData(dirtyData);
-
                 // (Master prompt dispatcher) Collects globals, sends primary prompts, compiles responses, then gets & returns SER response
                 aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData); // send perfect supplemental data to the master dispatcher to inform all prompts
+                // check results
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
