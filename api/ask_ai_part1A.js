@@ -86,6 +86,7 @@ module.exports = async (req, res) => {
 
         // Send response to client
         console.log("[A] Done!\n");
+        console.log(aiResponseText);
         res.status(200).json(aiResponseText);
     } catch (error) {
         // Log OpenAI error message
