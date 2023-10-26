@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
     //const { dataForAI } = req.query;
     let { aiCombinedResponses, suppDataForAI } = req.query;
     console.log("[SER]\n");
-    console.log("aiComboResp:\n", aiComboResp);
+    console.log("aiComboResp:\n", aiCombinedResponses);
     
     // Remove geometry because it can break the API if too long
     if (suppDataForAI && suppDataForAI.geom) {
