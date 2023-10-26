@@ -16,7 +16,9 @@ async function fetchAiResponsesCombined(row) {
   /* START STAGE 1: ENRICH, GET, COMBINE */
 
   // Add key globals to the dataset and apply final super-enhancements
-  cleanData = refineData(row);
+  //cleanData = refineData(row);
+  let cleanData = row; // <--- in the latest implementation, data has already been refined
+
   // Log dataset POST-transformation
   console.log("\n<----[POST-TRANSFORMATION:]---->");
   console.log(JSON.stringify(cleanData, null, 2));

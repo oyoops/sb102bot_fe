@@ -219,5 +219,5 @@ const unwantedColumns = ["geom", "descriptionOfLiveLocalEligibility", "JV_HMSTD"
 
 // These globals will certainly NOT be available until after the data refinement process
 let refinedDataset;
-let cleanData;
+//let cleanData;
 let aiGeneratedHTML;
