@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // make a copy of parcelData for enhancement
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
-                //console.log("copy of parcelData:\n" + JSON.stringify(aiSupplementalData, null, 2));
+                console.log("copy of parcelData:\n" + JSON.stringify(aiSupplementalData, null, 2));
 
                 // decompose available JSONs and add their values
                 if (countyData) {
@@ -157,11 +157,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
                 // Preserve dirtyData
-                dirtyData = JSON.stringify(aiSupplementalData, null, 2); 
+                dirtyData = JSON.parse(JSON.stringify(aiSupplementalData));
+                let dirtyDataString = JSON.stringify(dirtyData, null, 2); 
 
                 // Log dataset PRE-transformation (dirtyData)
                 console.log("\n<----[PRE-TRANSFORMATION:]----->");
-                console.log(dirtyData);
+                console.log(dirtyDataString);
 
                 /*
                 // Add all global variables to dataset and apply final super-enhancements
@@ -356,6 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // refine the data
                 const cleanerData = refineData(dirtyData);
+                console.log("cleaner data: \n", cleanerData);
                 // (Master prompt dispatcher) Collects globals, sends primary prompts, compiles responses, then gets & returns SER response
                 aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData); // send perfect supplemental data to the master dispatcher to inform all prompts
                 // check results
