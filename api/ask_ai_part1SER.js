@@ -115,7 +115,7 @@ module.exports = async (req, res) => {
         // Log the response
         const aiResponseText = responseData?.choices[0]?.message?.content.trim();
         if (aiResponseText) {
-            console.log("\n[AI Response]\n" + aiResponseText);
+            ////console.log("\n[AI Response]\n" + aiResponseText);
         }
         
         // Log all available supplemental data
@@ -125,7 +125,6 @@ module.exports = async (req, res) => {
         let htmlFormattedResponse;
         //htmlFormattedResponse = aiResponseText.replace(/\n/g, '<br>');
         htmlFormattedResponse = aiResponseText.replace(/<br>/g, '').replace(/\n/g, '<br>');
-
         
         // Send AI response to client
         res.status(200).json(htmlFormattedResponse);

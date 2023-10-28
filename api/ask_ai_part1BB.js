@@ -27,19 +27,25 @@ module.exports = async (req, res) => {
     const lnd_val = req.query.lnd_val;
     const sale_prc1 = req.query.sale_prc1;
     const sale_prc2 = req.query.sale_prc2;
+
     const subject_area_median_income = req.query.subject_area_median_income;
     const subject_county_amis_income = req.query.subject_county_amis_income;
     const subject_max_rent_0bd_120ami = req.query.subject_max_rent_0bd_120ami;
     const subject_max_rent_1bd_120ami = req.query.subject_max_rent_1bd_120ami;
     const subject_max_rent_2bd_120ami = req.query.subject_max_rent_2bd_120ami;
     const subject_max_rent_3bd_120ami = req.query.subject_max_rent_3bd_120ami;
+
     const own_name = req.query.own_name;
+
     const s_legal = req.query.s_legal;
+
     const eff_yr_blt = req.query.eff_yr_blt;
+    
     const m_par_sal1 = req.query.m_par_sal1;
     const sale_yr1 = req.query.sale_yr1;
     const m_par_sal2 = req.query.m_par_sal2;
     const sale_yr2 = req.query.sale_yr2;
+
 
 
 
