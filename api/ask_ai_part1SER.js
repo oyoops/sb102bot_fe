@@ -6,6 +6,15 @@ module.exports = async (req, res) => {
     console.log("[SER]\n");
 
     let { aiCombinedResponses, suppDataForAI } = req.query;
+
+    // Try to parse if it's a JSON string
+    if (typeof suppDataForAI === "string") {
+        try {
+            suppDataForAI = JSON.parse(suppDataForAI);
+        } catch(e) {
+            // It's not a JSON string, so keep it as is
+        }
+    }
     
     // Remove geometry because it can break API if too long
     if (suppDataForAI && suppDataForAI.geom) {
@@ -16,13 +25,8 @@ module.exports = async (req, res) => {
         console.log("\n** HUGE PROBLEM! **\n There is no suppDataForAI!");
     }
 
-    let suppDataForAIString;
-    if (typeof suppDataForAI === "string") {
-        suppDataForAIString = suppDataForAI;        
-    } else {
-        // Stringify and escape
-        suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
-    }
+    // Stringify and escape
+    let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
     console.log("\nsuppDataForAIString: \n" + JSON.stringify(suppDataForAIString, null, 2));
     
 
@@ -50,7 +54,7 @@ module.exports = async (req, res) => {
 
                     RULES:
                         - Remove repetitive non-substantive, and low value, unavailable, and incomplete information.
-                        - You MUST emphasize key content through different colors and bold/italic/underlined text. Your result will go directly inside an HTML div, so use text styling as appropriate.  
+                        - You MUST emphasize key content through different colors and bold/italic/underlined text. Your result will go directly inside an already-existing HTML div, so use text styling as appropriate.
                         - Use emojis throughout for levity.
                 `
                 //    SUPPLEMENTAL DATA:
