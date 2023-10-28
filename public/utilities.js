@@ -264,39 +264,44 @@ async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter, parcelDat
 
 // Fade in the AI response text
 function animateTextFadeIn(element) {
-  if (!element) {
-      console.error("Invalid animation.");
-      return;
-  }
+    if (!element) {
+        console.error("Invalid animation.");
+        return;
+    }
 
-  const original = element.cloneNode(true);
-  element.innerHTML = '';
+    const original = element.cloneNode(true);
+    element.innerHTML = '';
 
-  let queue = [{ node: original, parent: element }];
-  let childQueue = [];
-  let interval = setInterval(() => {
-      if (queue.length > 0) {
-          const { node, parent } = queue.shift();
+    let textQueue = [];
+    let nodeQueue = [{ node: original, parent: element }];
 
-          if (node.nodeName !== "#text" || node.textContent.trim() !== "") {
-              const appendedNode = parent.appendChild(node.cloneNode(false));
+    while (nodeQueue.length > 0) {
+        const { node, parent } = nodeQueue.shift();
+        
+        if (node.nodeName === "#text") {
+            for (let char of node.textContent) {
+                textQueue.push({ char, parent });
+            }
+        } else {
+            const appendedNode = parent.appendChild(node.cloneNode(false));
+            if (node.childNodes.length > 0) {
+                for (let child of node.childNodes) {
+                    nodeQueue.push({ node: child, parent: appendedNode });
+                }
+            }
+        }
+    }
 
-              if (node.childNodes.length > 0) {
-                  Array.from(node.childNodes).forEach(child => {
-                      childQueue.push({ node: child, parent: appendedNode });
-                  });
-              }
-          }
-
-          if (queue.length === 0) {
-              queue = childQueue;
-              childQueue = [];
-          }
-      } else {
-          clearInterval(interval);
-      }
-  }, 150); //   <---- increase/decrease to change text fading speed
+    let interval = setInterval(() => {
+        if (textQueue.length > 0) {
+            const { char, parent } = textQueue.shift();
+            parent.textContent += char;
+        } else {
+            clearInterval(interval);
+        }
+    }, 15); // <---- ms between iterations (smaller = faster)
 }
+
 
 // Create a timeout (puts a time limit on the AI endpoints)
 function timeout(ms) {
