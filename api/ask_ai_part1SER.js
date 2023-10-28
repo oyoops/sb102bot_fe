@@ -118,7 +118,10 @@ module.exports = async (req, res) => {
         ////console.log("\nAVAILABLE DATA:\n" + JSON.stringify(suppDataForAIString, null, 2));
 
         // Convert newline characters to <br> tags for HTML rendering
-        const htmlFormattedResponse = aiResponseText.replace(/\n/g, '<br>');
+        let htmlFormattedResponse;
+        //htmlFormattedResponse = aiResponseText.replace(/\n/g, '<br>');
+        htmlFormattedResponse = aiResponseText.replace(/<br>/g, '').replace(/\n/g, '<br>');
+
         
         // Send AI response to client
         res.status(200).json(htmlFormattedResponse);
