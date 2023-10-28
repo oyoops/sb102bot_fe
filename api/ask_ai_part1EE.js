@@ -3,32 +3,68 @@
 const axios = require('axios');
 
 module.exports = async (req, res) => {
-    const { mkt_ar, nbrhd_cd, dor_uc, pa_uc, twn, rng, sec, census_bk, phy_addr1, phy_addr2, phy_city, phy_zipcd } = req.query;
+    console.log("[E]\n");
+    //const { own_name, address, cityNameProper, countyNameProper, own_addr1, own_addr2, own_city, own_state } = req.query;
 
+    // Log all supplemental data available
+    //console.log(req.query);
+
+    const address = req.query.address;
+    const cityNameProper = req.query.cityNameProper;
+    const descriptionOfLiveLocalEligibility = req.query.descriptionOfLiveLocalEligibility;
+    const subject_isInCity = req.query.subject_isInCity ? "inside" : "outside";
+    const maxMuniDensity = req.query.maxMuniDensity;
+    const maxCapacity = req.query.maxCapacity;
+    const displayMuniName = req.query.displayMuniName;
+
+    const tallestBuildingHeight = req.query.tallestBuildingHeight;
+    const act_yr_blt = req.query.act_yr_blt;
+    const tot_lvg_ar = req.query.tot_lvg_ar;
+    const no_buldng = req.query.no_buldng;
+    const address = req.query.address;
+    const cityNameProper = req.query.cityNameProper;
+    const jv = req.query.jv;
+    const av_sd = req.query.av_sd;
+    const lnd_val = req.query.lnd_val;
+    const sale_prc1 = req.query.sale_prc1;
+    const sale_prc2 = req.query.sale_prc2;
+    const subject_area_median_income = req.query.subject_area_median_income;
+    const subject_county_amis_income = req.query.subject_county_amis_income;
+    const subject_max_rent_0bd_120ami = req.query.subject_max_rent_0bd_120ami;
+    const subject_max_rent_1bd_120ami = req.query.subject_max_rent_1bd_120ami;
+    const subject_max_rent_2bd_120ami = req.query.subject_max_rent_2bd_120ami;
+    const subject_max_rent_3bd_120ami = req.query.subject_max_rent_3bd_120ami;
+    const own_name = req.query.own_name;
+    const s_legal = req.query.s_legal;
+    const eff_yr_blt = req.query.eff_yr_blt;
+    const m_par_sal1 = req.query.m_par_sal1;
+    const sale_yr1 = req.query.sale_yr1;
+    const m_par_sal2 = req.query.m_par_sal2;
+    const sale_yr2 = req.query.sale_yr2;
+
+
+    // Compose prompt
     const messages = [{
         "role": "system",
         "content": `
-        INSTRUCTIONS:
-        - Deliver precise and actionable location-based insights tailored for multifamily apartment complex developers.
-        - Use HTML to ensure clarity and a professional presentation. Be concise but thorough.
-        - Avoid generic or filler content. Every sentence should offer value.
-        - The audience consists of experienced multifamily apartment complex investors familiar with Florida's geography and zoning regulations.
-    
-        CONTEXT:
-        Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
-            1. Over 40% of units are 'affordable' (rent thresholds vary by county).
-            2. There are a minimum of 70 affordable units.
-            3. All non-density/height/zoning/land use municipal regulations are met.
-        The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
-
-        Given the parcel's location and use codes:
-        1. Deduce its broader location context within Florida, considering aspects like urban/rural setting, proximity to major hubs, and potential growth corridors.
-        2. Offer insights into the parcel's zoning based on its DOR and PA use codes and the potential implications for multifamily development.
-        3. If possible, infer areas within Florida that might be in demand for multifamily development or areas that could be losing popularity, based on the provided codes and known trends.
+            INSTRUCTIONS:
+            - Your role is to delve into the ownership history and context of a parcel. Consider past transactions, the year it was built, and any relevant legal descriptions.
+            - The audience is experienced multifamily investors familiar with Florida.
+            - Avoid generic and filler content.
+        
+            CONTEXT:
+            Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
+                1. Over 40% of units are 'affordable' (rent thresholds vary by county).
+                2. There are a minimum of 70 affordable units.
+                3. All non-density/height/zoning/land use municipal regulations are met.
+            The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
         `
     }, {
         "role": "user",
-        "content": `The parcel is located at ${phy_addr1} ${phy_addr2}, ${phy_city}, FL ${phy_zipcd}. It's in market area ${mkt_ar}, has neighborhood code ${nbrhd_cd}, and uses DOR code ${dor_uc} and PA code ${pa_uc}. Given this, what can you tell about its location context, potential growth areas, and zoning implications for multifamily development?`
+        "content": `
+            I'm interested in the ownership and historical background of the parcel at ${address}.
+            Can you shed light on its past transactions and any significant historical context?
+        `
     }];
 
     try {
@@ -82,8 +118,8 @@ module.exports = async (req, res) => {
         */
 
         // Send response to client
-        console.log("[E] Done!\n");
         res.status(200).json(aiResponseText);
+
     } catch (error) {
         // Log OpenAI error message
         const errorMessage = error?.data?.error || "[CRITICAL] Encountered a fatal OpenAI error!";

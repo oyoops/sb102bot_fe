@@ -15,12 +15,39 @@ module.exports = async (req, res) => {
     const subject_isInCity = req.query.subject_isInCity ? "inside" : "outside";
     const maxMuniDensity = req.query.maxMuniDensity;
     const maxCapacity = req.query.maxCapacity;
+    const displayMuniName = req.query.displayMuniName;
+
+    const tallestBuildingHeight = req.query.tallestBuildingHeight;
+    const act_yr_blt = req.query.act_yr_blt;
+    const tot_lvg_ar = req.query.tot_lvg_ar;
+    const no_buldng = req.query.no_buldng;
+    const address = req.query.address;
+    const cityNameProper = req.query.cityNameProper;
+    const jv = req.query.jv;
+    const av_sd = req.query.av_sd;
+    const lnd_val = req.query.lnd_val;
+    const sale_prc1 = req.query.sale_prc1;
+    const sale_prc2 = req.query.sale_prc2;
+    const subject_area_median_income = req.query.subject_area_median_income;
+    const subject_county_amis_income = req.query.subject_county_amis_income;
+    const subject_max_rent_0bd_120ami = req.query.subject_max_rent_0bd_120ami;
+    const subject_max_rent_1bd_120ami = req.query.subject_max_rent_1bd_120ami;
+    const subject_max_rent_2bd_120ami = req.query.subject_max_rent_2bd_120ami;
+    const subject_max_rent_3bd_120ami = req.query.subject_max_rent_3bd_120ami;
+    const own_name = req.query.own_name;
+    const s_legal = req.query.s_legal;
+    const eff_yr_blt = req.query.eff_yr_blt;
+    const m_par_sal1 = req.query.m_par_sal1;
+    const sale_yr1 = req.query.sale_yr1;
+    const m_par_sal2 = req.query.m_par_sal2;
+    const sale_yr2 = req.query.sale_yr2;
+
+
 
     // Compose prompt
     const messages = [{
         "role": "system",
         "content": `
-
             CONTEXT:
             Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
                 1. Over 40% of units are 'affordable' (maximum affordable rent limits vary by based on counties' Area Median Income).
@@ -31,18 +58,20 @@ module.exports = async (req, res) => {
             Furthermore, it offers a 75% property tax abatement on affordable units set at the 120% AMI level (quite high), equating to a net 30% property tax reduction for the entire development; big savings. 
 
             INSTRUCTIONS:
-            Analyze a parcel with regard to its ELIGIBILITY AND REGULATORY BENEFITS for multifamily using the Live Local Act.
-            Glean valuable information from the provided cheeky description of eligibility and benefits.
+            - Analyze a parcel with regard to its ELIGIBILITY AND REGULATORY BENEFITS for multifamily using the Live Local Act.
+            - Glean valuable information from the provided cheeky description of eligibility and benefits.
+            - The audience is experienced multifamily investors familiar with Florida.
+            - Avoid generic and filler content.
             
             Consider:
              - the parcel's municipality
              - maximum municipal density
-             - its maximum unit capacity under the Act
+             - its maximum unit capacity under the Act. 
+            
+            Very important final check: Remember there must be a minimum of 70 total affordable units to qualify! 
             
             Provide comprehensive insights.
 
-            If isInCity = false, then parcel's primary municipality is its county; if true, then it is the city '${cityNameProper}'
-                isInCity = ${subject_isInCity}
         `
     }, {
         "role": "user",
@@ -53,6 +82,7 @@ module.exports = async (req, res) => {
                 '''
                 ${descriptionOfLiveLocalEligibility}
                 '''
+            The parcel is ${subject_isInCity} city limits, so the primary municipality is ${displayMuniName}.
             The maximum density allowed in the municipality is ${maxMuniDensity} units/acre, which we can match using the Act.
             Given the parcel's size and location, the maximum achievable yield would be ${maxCapacity} units if approved through Live Local.
         `
