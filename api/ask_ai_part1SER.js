@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
         // Stringify and escape
         suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
     }
-    ////console.log("\nsuppDataForAIString: \n" + JSON.stringify(suppDataForAIString, null, 2));
+    console.log("\nsuppDataForAIString: \n" + JSON.stringify(suppDataForAIString, null, 2));
     
 
     const messages = [{
@@ -102,7 +102,7 @@ module.exports = async (req, res) => {
         const aiPromptSystem = messages[0]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
         const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
         if (aiPromptSystem) {
-            console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
+            ////console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
         }
         if (aiPromptUser) {
             ////console.log("\n[USER Prompt]\n" + aiPromptUser);
@@ -111,7 +111,7 @@ module.exports = async (req, res) => {
         // Log the response
         const aiResponseText = responseData?.choices[0]?.message?.content.trim();
         if (aiResponseText) {
-            ////console.log("\n[AI Response]\n" + aiResponseText);
+            console.log("\n[AI Response]\n" + aiResponseText);
         }
         
         // Log all available supplemental data
