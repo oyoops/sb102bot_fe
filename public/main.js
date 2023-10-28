@@ -71,8 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 cityData.cityName = 'unincorporated';
             }
             
-
-
             // initialize the map (is this too early?)
             initializeMap(lat, lng);
 
@@ -81,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // scroll to top
             //loadingContainer.scrollIntoView;
+
 
 
 
@@ -107,8 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-
             // API block #2 of 3: CITY DATA
             try {
                 // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
@@ -125,9 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
                 return;  // Exit early (can't proceed without parcel data)
             }
-
-
-
 
 
 
@@ -161,8 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 let dirtyDataString = JSON.stringify(dirtyData, null, 2); 
 
                 // Log dataset PRE-transformation (dirtyData)
-                console.log("\n<----[PRE-TRANSFORMATION:]----->");
-                console.log(dirtyDataString);
+                //console.log("\n<----[PRE-TRANSFORMATION:]----->");
+                //console.log(dirtyDataString);
 
                 /*
                 // Add all global variables to dataset and apply final super-enhancements
@@ -221,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
             countyTableBody.innerHTML = countyRow;
-            countyDataTable.style.display = 'table'; // show the county (and city*) data table
+            countyDataTable.style.display = 'table'; // show municipal data table
             
             // Populate the max rents table
             const rentsRow = `
@@ -234,7 +228,6 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             rentsTableBody.innerHTML = rentsRow;
             countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
-
 
 
             // convert land sq. ft. to acres
@@ -323,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 eligibilityDiv.style.fontSize = "18px";
             }
             summaryContent = eligibilityDiv.innerHTML;
-            console.log("\nSummary Content 1:\n", summaryContent);
+            //console.log("\nSummary Content 1:\n", summaryContent);
 
             // if parcel is LLA eligible, then finish composing the eligibility + AI summary
             if (eligibleCodes.includes(parcelData.dor_uc)) {
@@ -348,9 +341,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     The max. achievable yield on this ${acres.toFixed(2)}-acre parcel would be <i><u><b>${maxCapacity} units</b></u></i> if approved through Live Local.
                     `;
                 }
-                ////console.log("\nSummary Content 2:\n", summaryContent);
-
-
 
 
                 /* Generate the final AI summary */
@@ -372,8 +362,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
 
                 // format the AI summary and add to div
-                summaryContent += composeAiResponsesCombined(aiGeneratedHTML);
-                ////console.log("\nSummary Content 3:\n", summaryContent);
+                //summaryContent += composeAiResponsesCombined(aiGeneratedHTML); // show my written output first
+                summaryContent = composeAiResponsesCombined(aiGeneratedHTML); // show AI output only
+
             } else {
                 // -------------------------------------- //
                 //         *** CHANGE THIS! ***           //
@@ -383,11 +374,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
 
-
-
-
             // scroll to top
             loadingContainer.scrollIntoView;
+
 
             // set AI+Eligibility div content
             eligibilityDiv.innerHTML = summaryContent;            

@@ -12,12 +12,7 @@
 
 // fetch set of AI responses given a supplemental dataset
 async function fetchAiResponsesCombined(cleanData) {
-
-  /* START STAGE 1: ENRICH, GET, COMBINE */
-
-  /*// Add key globals to the dataset and apply final super-enhancements
-  let cleanData = row; */
-  //   ^ in the current implementation, data has already been refined
+  /* START STAGE 1: GET, ENRICH, COMBINE */
 
   // Log dataset POST-transformation
   console.log("\n<----[POST-TRANSFORMATION:]---->");
@@ -56,16 +51,11 @@ async function fetchAiResponsesCombined(cleanData) {
     });
   });
 
-  // Once results to all primary prompts available, then continue to combine
   try {
+      // Once results to all primary prompts available, then combine
       const results = await Promise.all(fetchPromises);
-      //console.log("\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
-      console.log("\n[STAGE #1 COMPLETE]");
-      /* END STAGE 1: ENRICH, GET, COMBINE */
   
       /* START STAGE 2: SER */
-      // SER the combined responses
-      console.log(JSON.stringify(cleanData, null, 2)); // test 2
       const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(cleanData)}`;
       const serResponse = await fetch(serEndpoint);
       if (!serResponse.ok) {
@@ -73,11 +63,11 @@ async function fetchAiResponsesCombined(cleanData) {
           throw new Error(`Server responded with ${serResponse.status}: ${await serResponse.text()}`);
       }
       const serData = await serResponse.json();
-      //console.log("\n--- SER Response ---\n" + serData + "\n--------------------\n");
-      console.log("\n[STAGE #2 COMPLETE]");
-      /* END STAGE 2: SER */
-
+      //console.log("\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
+      //console.log("\n--- SER Response ---\n" + serData + "\n--------------------\n");      
+      
       return serData;
+
   } catch (error) {
       const errorMessage = error?.data?.error?.message || "[CRITICAL] An unknown error occurred while fetching the Stage 2 (SER) AI response.";
       console.error("Error while compiling primary responses or fetching SER response:", errorMessage);
