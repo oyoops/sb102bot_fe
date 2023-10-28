@@ -12,23 +12,23 @@ module.exports = async (req, res) => {
     if (suppDataForAI && suppDataForAI.geom) {
         delete suppDataForAI.geom;
     } else if (suppDataForAI) {
-        //console.log("There is no geometry in the supplemental data, which is fine; just be aware!\n")
+        console.log("There is no geometry in the supplemental data, which is fine; just be aware!\n")
     } else {
-        console.log("\n** HUGE WARNING! **\n There is no suppDataForAI!");
+        console.log("\n** HUGE PROBLEM! **\n There is no suppDataForAI!");
     }
     
+
+    //console.log(typeof suppDataForAI);
     let suppDataForAIString;
     if (typeof suppDataForAI === "string") {
-        suppDataForAIString = suppDataForAI;
+        suppDataForAIString = suppDataForAI;        
     } else {
+        // Stringify and escape
         suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
     }
+    //console.log(suppDataForAIString);
     
-    // Stringify and escape
-    //let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
-    console.log(suppDataForAIString);
-    console.log(typeof suppDataForAI);
-
+    
     const messages = [{
         "role": "system",
         "content": `
@@ -75,7 +75,7 @@ module.exports = async (req, res) => {
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             model: process.env.AI_MODEL_SER_MODULE,
             messages: messages,
-            max_tokens: parseInt(process.env.AI_MAX_TOKENS_SER_MODULE, 10), // (gpt-3.5-turbo) I've set SER max output to 1596 (because I'm OCD) so max input space = 2500 tokens {= 4096 total limit - 1596 response}
+            max_tokens: parseInt(process.env.AI_MAX_TOKENS_SER_MODULE, 10), // (gpt-3.5-turbo) SER max output is set to 1596 (because I'm OCD) so max input space = 2500 tokens {= 4096 total limit - 1596 response}
             temperature: 0.6,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
@@ -119,6 +119,7 @@ module.exports = async (req, res) => {
         }
         
         // Log all supplemental data available
+        console.log(typeof suppDataForAIString);
         console.log(suppDataForAIString);
 
         // Send AI response to client
