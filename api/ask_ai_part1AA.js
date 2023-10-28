@@ -7,6 +7,7 @@ module.exports = async (req, res) => {
     //const { own_name, address, cityNameProper, countyNameProper, own_addr1, own_addr2, own_city, own_state } = req.query;
 
     // Log all supplemental data available
+    console.log("\nSupp. data: \n" + JSON.stringify(req.query, null, 2));
     //console.log(req.query);
 
     const address = req.query.address;
