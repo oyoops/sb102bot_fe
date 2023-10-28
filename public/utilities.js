@@ -270,10 +270,12 @@ function animateTextFadeIn(element) {
     }
 
     const original = element.cloneNode(true);
+
+    // Clear the content of the element
     element.innerHTML = '';
 
     let textQueue = [];
-    let nodeQueue = [{ node: original, parent: element }];
+    let nodeQueue = Array.from(original.childNodes).map(child => ({ node: child, parent: element }));
 
     while (nodeQueue.length > 0) {
         const { node, parent } = nodeQueue.shift();
