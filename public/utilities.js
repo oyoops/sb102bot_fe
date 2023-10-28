@@ -270,19 +270,19 @@ function animateTextFadeIn(element) {
     }
 
     const original = element.cloneNode(true);
-
-    // Clear the content of the element
     element.innerHTML = '';
 
     let textQueue = [];
     let nodeQueue = Array.from(original.childNodes).map(child => ({ node: child, parent: element }));
+    let lastTextNode = null;
 
     while (nodeQueue.length > 0) {
         const { node, parent } = nodeQueue.shift();
         
         if (node.nodeName === "#text") {
+            lastTextNode = parent.appendChild(document.createTextNode(''));
             for (let char of node.textContent) {
-                textQueue.push({ char, parent });
+                textQueue.push({ char, textNode: lastTextNode });
             }
         } else {
             const appendedNode = parent.appendChild(node.cloneNode(false));
@@ -296,13 +296,14 @@ function animateTextFadeIn(element) {
 
     let interval = setInterval(() => {
         if (textQueue.length > 0) {
-            const { char, parent } = textQueue.shift();
-            parent.textContent += char;
+            const { char, textNode } = textQueue.shift();
+            textNode.appendData(char);
         } else {
             clearInterval(interval);
         }
-    }, 15); // <---- ms between iterations (smaller = faster)
+    }, 15); // <---- adjust speed; ms between iterations
 }
+
 
 
 // Create a timeout (puts a time limit on the AI endpoints)
