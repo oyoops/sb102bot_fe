@@ -21,8 +21,7 @@ module.exports = async (req, res) => {
     const act_yr_blt = req.query.act_yr_blt;
     const tot_lvg_ar = req.query.tot_lvg_ar;
     const no_buldng = req.query.no_buldng;
-    const address = req.query.address;
-    const cityNameProper = req.query.cityNameProper;
+
     const jv = req.query.jv;
     const av_sd = req.query.av_sd;
     const lnd_val = req.query.lnd_val;
