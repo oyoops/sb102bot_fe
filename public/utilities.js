@@ -301,7 +301,7 @@ function animateTextFadeIn(element) {
         } else {
             clearInterval(interval);
         }
-    }, 15); // <---- adjust speed; ms between iterations
+    }, 3); // <---- adjust speed; ms between iterations
 }
 
 
