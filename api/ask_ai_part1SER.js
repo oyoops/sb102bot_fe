@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
 
     // Stringify and escape
     let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
-    console.log("\nsuppDataForAIString: \n" + JSON.stringify(suppDataForAIString, null, 2));
+    ////console.log("\nsuppDataForAIString: \n" + JSON.stringify(suppDataForAIString, null, 2));
     
 
     const messages = [{
