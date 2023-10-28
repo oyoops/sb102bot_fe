@@ -3,11 +3,11 @@
 const axios = require('axios');
 
 module.exports = async (req, res) => {
-    //const { dataForAI } = req.query;
+    console.log("[SER]\n");
+
     let { aiCombinedResponses, suppDataForAI } = req.query;
-    console.log("[SER]");
     
-    // Remove geometry because it can break the API if too long
+    // Remove geometry because it can break API if too long
     if (suppDataForAI && suppDataForAI.geom) {
         delete suppDataForAI.geom;
     } else if (suppDataForAI) {
@@ -16,9 +16,6 @@ module.exports = async (req, res) => {
         console.log("\n** HUGE PROBLEM! **\n There is no suppDataForAI!");
     }
 
-    ////console.log("aiComboResp:\n", aiCombinedResponses);
-
-    //console.log(typeof suppDataForAI);
     let suppDataForAIString;
     if (typeof suppDataForAI === "string") {
         suppDataForAIString = suppDataForAI;        
@@ -26,17 +23,17 @@ module.exports = async (req, res) => {
         // Stringify and escape
         suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
     }
-
-    console.log(suppDataForAIString);
-    console.log(suppDataForAI);
+    //console.log("\nsuppDataForAI: \n" + suppDataForAI);
+    //console.log("\nsuppDataForAIString: \n" + suppDataForAIString);
     
+
     const messages = [{
         "role": "system",
         "content": `
                     CONTEXT:
                         Florida's Live Local Act (went into effect July 1, 2023) revolutionized multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
                             1. Over 40% of units are 'affordable' (affordable rent maximums vary by county).
-                            2. There at least 70 affordable units.
+                            2. There at least 70 total affordable units.
                             3. All non-density/height/zoning/land use municipal regulations are met.
                         The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
                         Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
@@ -55,20 +52,21 @@ module.exports = async (req, res) => {
 
                     RULES:
                         - Remove repetitive non-substantive, and low value, unavailable, and incomplete information.
-                        - You MUST use </br> for ALL line breaks. For style, use only <b> and <i> to add emphasis. Do not use paragraph, heading, or any other HTML tags at all!
-                        - Pepper many emojis throughout for levity.
+                        - Pepper emojis throughout for levity.
                         
                     SUPPLEMENTAL DATA:
-                        ${suppDataForAIString}`
+                        ${suppDataForAIString}
+                `
     }, {
         "role": "user",
         "content": `
                     YOUR TASK:
-                        - Completely rewrite the crudely-combined AI responses (below).
+                        - Completely rewrite the repetitive AI responses (below).
                         - You will now write a well-formatted, concise evaluation about the viability of a parcel for multifamily development.
                         - If the parcel is currently zoned commercial or industrial, focus primarily on the Live Local Act pathway to build apartments. If not, then focus on apartments via obtaining traditional approvals.
                     ---
-                    ${aiCombinedResponses}`
+                    ${aiCombinedResponses}
+                `
     }];
 
     try {
@@ -87,8 +85,6 @@ module.exports = async (req, res) => {
         });
         const responseData = response.data;
         
-        console.log("[SER]\n");
-
         // Log token usage
         const tokensUsed = responseData?.usage?.total_tokens;
         const promptTokens = responseData?.usage?.prompt_tokens;
@@ -120,11 +116,14 @@ module.exports = async (req, res) => {
         }
         
         // Log all supplemental data available
-        console.log(typeof suppDataForAIString);
+        console.log("suppDataForAIString is a " + typeof suppDataForAIString);
         console.log(suppDataForAIString);
 
+        // Convert newline characters to <br> tags for HTML rendering
+        const htmlFormattedResponse = aiResponseText.replace(/\n/g, '<br>');
+        
         // Send AI response to client
-        res.status(200).json(aiResponseText);
+        res.status(200).json(htmlFormattedResponse);
     
     } catch (error) {
         // Log the OpenAI error
