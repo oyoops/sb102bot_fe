@@ -4,49 +4,103 @@ const axios = require('axios');
 
 module.exports = async (req, res) => {
     console.log("[C]\n");
-    //const { own_name, address, cityNameProper, countyNameProper, own_addr1, own_addr2, own_city, own_state } = req.query;
 
     // Log all supplemental data available
-    //console.log(req.query);
+    //console.log("\nSupp. data: \n" + JSON.stringify(req.query, null, 2)); // (doesn't work)
 
+    // Location
+    const lat = req.query.lat;
+    const lng = req.query.lng;
+    const parcelno = req.query.parcelno;
+    const parcel_id = req.query.parcel_id;
     const address = req.query.address;
-    const cityNameProper = req.query.cityNameProper;
-    const descriptionOfLiveLocalEligibility = req.query.descriptionOfLiveLocalEligibility;
+    //const county_name = req.query.county_name;
+    //const subject_county_name = req.query.subject_county_name;
+    //const subject_cityName = req.query.subject_cityName;
     const subject_isInCity = req.query.subject_isInCity ? "inside" : "outside";
-    const maxMuniDensity = req.query.maxMuniDensity;
-    const maxCapacity = req.query.maxCapacity;
+    const countyNameProper = req.query.countyNameProper;
+    const cityNameProper = req.query.cityNameProper;
     const displayMuniName = req.query.displayMuniName;
+    //const phy_addr1 = req.query.phy_addr1;
+    //const phy_city = req.query.phy_city;
+    //const phy_zipcd = req.query.phy_zipcd;
 
-    const tallestBuildingHeight = req.query.tallestBuildingHeight;
-    const act_yr_blt = req.query.act_yr_blt;
-    const tot_lvg_ar = req.query.tot_lvg_ar;
-    const no_buldng = req.query.no_buldng;
+    // Parcel
+    const acres = req.query.acres;
+    const s_legal = req.query.s_legal;
+    const dor_uc = req.query.dor_uc;
+    const pa_uc = req.query.pa_uc;
 
+    // Valuations
     const jv = req.query.jv;
-    const av_sd = req.query.av_sd;
     const lnd_val = req.query.lnd_val;
-    const sale_prc1 = req.query.sale_prc1;
-    const sale_prc2 = req.query.sale_prc2;
+    const av_sd = req.query.av_sd;
+    const jv_chng = req.query.jv_chng;
+    const jv_chng_cd = req.query.jv_chng_cd;
+    const av_nsd = req.query.av_nsd;
+    const tv_sd = req.query.tv_sd;
+    const tv_nsd = req.query.tv_nsd;
+    const jv_hmstd = req.query.jv_hmstd;
+    const av_hmstd = req.query.av_hmstd;
+    const jv_non_hms = req.query.jv_non_hms;
+    const av_non_hms = req.query.av_non_hms;
+    const jv_resd_no = req.query.jv_resd_no;
+    const av_resd_no = req.query.av_resd_no;
+    const jv_class_u = req.query.jv_class_u;
+    const av_class_u = req.query.av_class_u;
+    const jv_h2o_rec = req.query.jv_h2o_rec;
+    const av_h2o_rec = req.query.av_h2o_rec;
+    const jv_consrv_ = req.query.jv_consrv_;
+    const av_consrv_ = req.query.av_consrv_;
+    const jv_hist_co = req.query.jv_hist_co;
+    const av_hist_co = req.query.av_hist_co;
+    const jv_hist_si = req.query.jv_hist_si;
+    const av_hist_si = req.query.av_hist_si;
+    const jv_wrkng_w = req.query.jv_wrkng_w;
+    const av_wrkng_w = req.query.av_wrkng_w;
+    const nconst_val = req.query.nconst_val;
+    const del_val = req.query.del_val;
 
+    // Live Local
+    const descriptionOfLiveLocalEligibility = req.query.descriptionOfLiveLocalEligibility;
     const subject_area_median_income = req.query.subject_area_median_income;
     const subject_county_amis_income = req.query.subject_county_amis_income;
     const subject_max_rent_0bd_120ami = req.query.subject_max_rent_0bd_120ami;
     const subject_max_rent_1bd_120ami = req.query.subject_max_rent_1bd_120ami;
     const subject_max_rent_2bd_120ami = req.query.subject_max_rent_2bd_120ami;
     const subject_max_rent_3bd_120ami = req.query.subject_max_rent_3bd_120ami;
+    const tallestBuildingName = req.query.tallestBuildingName;
+    const tallestBuildingAddress = req.query.tallestBuildingAddress;
+    const tallestBuildingHeight = req.query.tallestBuildingHeight;
+    const distanceInMilesToTallestBldg = req.query.distanceInMilesToTallestBldg;
+    const maxMuniDensity = req.query.maxMuniDensity;
+    const maxCapacity = req.query.maxCapacity;
 
+    // Owner
     const own_name = req.query.own_name;
+    const own_addr1 = req.query.own_addr1;
+    const own_city = req.query.own_city;
+    const own_state = req.query.own_state;
+    const own_zipcd = req.query.own_zipcd;
+    const fidu_cd = req.query.fidu_cd;
 
-    const s_legal = req.query.s_legal;
-
+    // Structures
+    const no_buldng = req.query.no_buldng;
+    const act_yr_blt = req.query.act_yr_blt;
     const eff_yr_blt = req.query.eff_yr_blt;
-    
+    const tot_lvg_ar = req.query.tot_lvg_ar;
+
+    // Transactions
+    // (most recent through last two calendar years)
+    const sale_prc1 = req.query.sale_prc1;
     const m_par_sal1 = req.query.m_par_sal1;
     const sale_yr1 = req.query.sale_yr1;
+    const sale_mo1 = req.query.sale_mo1;
+    // (prior to most recent through last two calendar years)
+    const sale_prc2 = req.query.sale_prc2;
     const m_par_sal2 = req.query.m_par_sal2;
     const sale_yr2 = req.query.sale_yr2;
-
-
+    const sale_mo2 = req.query.sale_mo2;
 
 
     // Compose prompt
