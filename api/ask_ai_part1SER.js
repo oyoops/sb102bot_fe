@@ -23,8 +23,7 @@ module.exports = async (req, res) => {
         // Stringify and escape
         suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
     }
-    //console.log("\nsuppDataForAI: \n" + suppDataForAI);
-    //console.log("\nsuppDataForAIString: \n" + suppDataForAIString);
+    ////console.log("\nsuppDataForAIString: \n" + JSON.stringify(suppDataForAIString, null, 2));
     
 
     const messages = [{
@@ -40,30 +39,30 @@ module.exports = async (req, res) => {
                         
                     ROLE:
                         You are 'Live Local Buddy', the AI brains powering a web app that helps developers navigate this game-changing law.
-                        You help users find profitable properties to buy for building new apartment complexes.
+                        You help users find profitable properties to buy for multifamily development.
 
                     BACKGROUND:
-                        A set of related prompts with data were used to generate insights about a land parcel. Each was narrow, fseveral different aspects of it.
-                        The five AI responses were then combined in order; as a result, it's now long, boring, and repetitive (provided below).
-                        The AI's writing and parcel data are imperfect, but YOU are the editor; the last line of defense between me and distributing unprofessional mediocre content to my critical audience.            
+                        A set of related prompts with data were used to generate insights about a land parcel. Each was narrow, examining a different aspect of the land.
+                        The five AI responses were then crudely chained in order. As a result, it's now long, boring, and repetitive.
 
                     SPEECH/PERSONA:
-                        You are a real estate development genius giving an astute evaluation of a potential multifamily development site.
+                        You are a real estate development genius giving an executive report to the investment committee on a potential multifamily development site.
 
                     RULES:
                         - Remove repetitive non-substantive, and low value, unavailable, and incomplete information.
-                        - Pepper emojis throughout for levity.
-                        
-                    SUPPLEMENTAL DATA:
-                        ${suppDataForAIString}
+                        - You MUST emphasize key content through different colors and bold/italic/underlined text. Your result will go directly inside an HTML div, so use text styling as appropriate.  
+                        - Use emojis throughout for levity.
                 `
+                //    SUPPLEMENTAL DATA:
+                //        ${suppDataForAIString}
+                //`
     }, {
         "role": "user",
         "content": `
                     YOUR TASK:
-                        - Completely rewrite the repetitive AI responses (below).
-                        - You will now write a well-formatted, concise evaluation about the viability of a parcel for multifamily development.
-                        - If the parcel is currently zoned commercial or industrial, focus primarily on the Live Local Act pathway to build apartments. If not, then focus on apartments via obtaining traditional approvals.
+                        - Completely rewrite the repetitive chained AI responses (below).
+                        - Subject: Analysis of parcel's viability for purchase and development of apartments.
+                        - If the parcel is currently zoned commercial or industrial, focus primarily on the Live Local Act pathway to build apartments. If residential or other, then focus on the traditional pathway of getting land use, zoning, and all other municipal approvals.
                     ---
                     ${aiCombinedResponses}
                 `
@@ -103,7 +102,7 @@ module.exports = async (req, res) => {
         const aiPromptSystem = messages[0]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
         const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
         if (aiPromptSystem) {
-            ////console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
+            console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
         }
         if (aiPromptUser) {
             ////console.log("\n[USER Prompt]\n" + aiPromptUser);
@@ -115,9 +114,8 @@ module.exports = async (req, res) => {
             ////console.log("\n[AI Response]\n" + aiResponseText);
         }
         
-        // Log all supplemental data available
-        console.log("suppDataForAIString is a " + typeof suppDataForAIString);
-        console.log(suppDataForAIString);
+        // Log all available supplemental data
+        ////console.log("\nAVAILABLE DATA:\n" + JSON.stringify(suppDataForAIString, null, 2));
 
         // Convert newline characters to <br> tags for HTML rendering
         const htmlFormattedResponse = aiResponseText.replace(/\n/g, '<br>');
