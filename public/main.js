@@ -135,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // make a copy of parcelData for enhancement
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
-                console.log("copy of parcelData:\n" + JSON.stringify(aiSupplementalData, null, 2));
 
                 // decompose available JSONs and add their values
                 if (countyData) {
