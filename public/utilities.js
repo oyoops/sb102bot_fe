@@ -264,39 +264,25 @@ async function generateRefinedSummary(sheetPublicCSVUrl, columnLetter, parcelDat
 
 // Fade in the AI response text
 function animateTextFadeIn(element) {
-  if (!element) {
-      console.error("Invalid animation.");
-      return;
-  }
+    if (!element) {
+        console.error("Invalid animation.");
+        return;
+    }
 
-  const original = element.cloneNode(true);
-  element.innerHTML = '';
+    const originalText = element.textContent;
+    element.textContent = '';  // clear the content
 
-  let queue = [{ node: original, parent: element }];
-  let childQueue = [];
-  let interval = setInterval(() => {
-      if (queue.length > 0) {
-          const { node, parent } = queue.shift();
-
-          if (node.nodeName !== "#text" || node.textContent.trim() !== "") {
-              const appendedNode = parent.appendChild(node.cloneNode(false));
-
-              if (node.childNodes.length > 0) {
-                  Array.from(node.childNodes).forEach(child => {
-                      childQueue.push({ node: child, parent: appendedNode });
-                  });
-              }
-          }
-
-          if (queue.length === 0) {
-              queue = childQueue;
-              childQueue = [];
-          }
-      } else {
-          clearInterval(interval);
-      }
-  }, 150); //   <---- increase/decrease to change text fading speed
+    let charIndex = 0;
+    let interval = setInterval(() => {
+        if (charIndex < originalText.length) {
+            element.textContent += originalText[charIndex];
+            charIndex++;
+        } else {
+            clearInterval(interval);
+        }
+    }, 150); // <---- increase/decrease to change character loading speed
 }
+
 
 // Create a timeout (puts a time limit on the AI endpoints)
 function timeout(ms) {
