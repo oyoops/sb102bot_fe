@@ -16,7 +16,6 @@ async function fetchAiResponsesCombined(cleanData) {
 
   // Log dataset POST-transformation
   console.log("\n<----[POST-TRANSFORMATION:]---->");
-  //console.log(JSON.stringify(cleanData, null, 2));
   console.log(JSON.stringify(cleanData, null, 2)); // test
   
   // Define primary prompt endpoints
@@ -40,7 +39,7 @@ async function fetchAiResponsesCombined(cleanData) {
             }
             return response.json();
         }),
-        timeout(25000) // 25 seconds
+        timeout(20000) // 20 seconds
     ])
     .catch(err => {
         console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
@@ -63,6 +62,7 @@ async function fetchAiResponsesCombined(cleanData) {
           throw new Error(`Server responded with ${serResponse.status}: ${await serResponse.text()}`);
       }
       const serData = await serResponse.json();
+      
       //console.log("\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
       //console.log("\n--- SER Response ---\n" + serData + "\n--------------------\n");      
       
@@ -83,9 +83,8 @@ function composeAiResponsesCombined(aiResponse) {
     }
     // Preface final AI content with a custom introduction
     let combinedResponse = `
-        </br></br>
         <h3 style="color:black;" align="center">
-        First, let's review some preliminary intel.
+        Here's some preliminary intel:
         </h3>
         <ul>
             ${aiResponse}
