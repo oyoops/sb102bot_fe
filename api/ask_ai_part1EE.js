@@ -511,28 +511,14 @@ module.exports = async (req, res) => {
                 Amount to be refunded may not exceed the lesser of (i) $5,000 per Eligible unit; or (ii)
                 97.5% of the Florida sales or use tax paid on the cost of building materials used on an
                 Eligible Unit.
-                Caveat, Carve-out when CDBG, SHIP or a similar grant or loan program funds are used to purchase materials.
-                The exemption may also inure to a municipality, county, other governmental unit or
-                agency, or nonprofit community-based organization through a refund of previously
-                paid taxes when CDBG, SHIP or a similar grant or loan program funds are used to
-                purchase materials.
-                
-                Note, this section requires that an affordable housing development be subject to a recorded
-                agreement with Florida Housing and that the eligible units be restricted by a land use
-                restriction agreement. The land use restriction agreement must be submitted in the owner’s
-                application. Timing should be considered for strict 9% credit deals without Florida Housing
-                financing, as there may be a delay in Florida Housing’s issuance of the extended low-income
-                housing agreement. Moreover, the statute is unclear whether an owner will qualify under this
-                provision if the owner enters into (i) solely an extended low-income housing agreement with
-                Florida Housing; and (ii) whether the sections use of “land use restriction agreement”
-                includes an extended low-income housing agreement.
+
                 What this means: An affordable housing developer can now seek a refund for sales taxes paid for
                 building materials used for an eligible unit. This refund can be substantial as it allows for a refund of
                 $5,000 per eligible unit.
             '''
 
             YOUR TASK:
-                Provide a HIGHLY DETAILED SUMMARY of the sections of the Live Local Act that would be of interest to Florida multifamily developer planning a new development.
+                Summarize the sections of the Live Local Act that would be of interest to Florida multifamily developer planning a new development.
         `
     }];
 
