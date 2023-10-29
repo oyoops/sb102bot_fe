@@ -7,7 +7,8 @@ import {
     loadingContainer, initialContent, eligibilityDiv, developmentProgramInputSection,
     marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
     mainHeader,
-    parcelDataTable, parcelDataTableBody, countyDataTable, countyTableBody, countyMaxRentsTable, rentsTableBody,
+    ////parcelDataTable, parcelDataTableBody, 
+    countyDataTable, countyTableBody, countyMaxRentsTable, rentsTableBody,
     unitCalculationTable, abatementTable,
     form, addressInput, affordablePercentageSlider, affordablePctDisplay, acreageInput, densityInput,
     landCostPerUnit, totalHCPerUnit, matchAffordableSizesCheckbox,
@@ -209,6 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // convert land sq. ft. to acres
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
             
+            /*
             // populate parcel data table
             const parcelDataRow = `
                 <tr>
@@ -221,6 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
             parcelDataTableBody.innerHTML = parcelDataRow;
             ////parcelDataTableBody.style.display = 'block'; // show the parcel data table
             parcelDataTableBody.style.display = 'none'; // hide the parcel data table
+            */
 
             // scroll to top of map after everything is loaded x1
             //googlemap.scrollIntoView();
@@ -230,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
             /* USER INPUTS SECTION START */
 
             // unhide tables and I/O sections            
-            parcelDataTable.style.display = 'table'; // parcel data
+            ////parcelDataTable.style.display = 'table'; // parcel data
             developmentProgramInputSection.style.display = 'block'; // development program inputs (??)
             unitCalculationTable.style.display = 'block'; // unit counts
             marketRateInputSection.style.display = 'block'; // market rate rent inputs
