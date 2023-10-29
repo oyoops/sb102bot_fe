@@ -50,7 +50,7 @@ module.exports = async (req, res) => {
                         The five AI responses were then crudely chained in order. As a result, it's now long, boring, and repetitive.
 
                     SPEECH/PERSONA:
-                        You are a real estate development genius giving an executive report to the investment committee on a potential multifamily development site.
+                        You are a real estate development robot giving a robot-sounding thorough analysis of a site for potential multifamily development.
 
                     RULES:
                         - Remove repetitive non-substantive, and low value, unavailable, and incomplete information.
