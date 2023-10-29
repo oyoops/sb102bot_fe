@@ -292,15 +292,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                addLoadingLine(`<b><u>Eligible</u> for Live Local!</b>
-                    <br><br>
-                    Writing summary...
-                `);
+                addLoadingLine(`<b><u>NOT ELIGIBLE</u> for Live Local!</b>`);
+
                 eligibilityDiv.innerHTML += `<h3 style="color:orange;" align="center">Your site is probably <u>NOT ELIGIBLE</u> for Live Local development.</h3> 
                 </br>Believe it or not, a property can't qualify if it's <i>already</i> residential...`;
                 //eligibilityDiv.style.color = "Orange";
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
+                addLoadingLine(`<b><u>ELIGIBLE</u> for Live Local!</b>`);
+
                 buildingHeight = parseFloat(buildingHeight);
                 console.log("MAX HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">Your site is <u>ELIGIBLE</u> for Live Local development!</h3> 
@@ -313,6 +313,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 //eligibilityDiv.style.color = "green";
                 eligibilityDiv.style.fontSize = "18px";
             } else {
+                addLoadingLine(`<b><u>NOT ELIGIBLE</u> for Live Local!</b>`);
+
                 eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">Your site is likely <u>NOT ELIGIBLE</u> for Live Local development. </h3> <br> It needs to <i>already</i> be <b>commercial</b> or <b>industrial</b> to qualify.`;
                 //eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
