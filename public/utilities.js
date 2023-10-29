@@ -39,7 +39,7 @@ async function fetchAiResponsesCombined(cleanData) {
             }
             return response.json();
         }),
-        timeout(60000) // 60 seconds
+        timeout(30000) // 30 seconds
     ])
     .catch(err => {
         console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
@@ -430,7 +430,7 @@ function animateLoadingText(element) {
         } else {
             clearInterval(interval);
         }
-    }, 300); // adjust speed; ms between character iterations
+    }, 100); // adjust speed; ms between character iterations
 }
 
 
