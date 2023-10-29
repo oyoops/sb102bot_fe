@@ -15,8 +15,8 @@ async function fetchAiResponsesCombined(cleanData) {
   /* START STAGE 1: GET, ENRICH, COMBINE */
 
   // Log dataset POST-transformation
-  console.log("\n<----[POST-TRANSFORMATION:]---->");
-  console.log(JSON.stringify(cleanData, null, 2)); // test
+  ////console.log("\n<----[POST-TRANSFORMATION:]---->");
+  ////console.log(JSON.stringify(cleanData, null, 2)); // test
   
   // Define primary prompt endpoints
   const endpoints = [
