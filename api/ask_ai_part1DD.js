@@ -291,6 +291,8 @@ module.exports = async (req, res) => {
             
             INSTRUCTIONS:
                 Detail the tax abatement benefits and the rent structure under the Live Local Act.
+                Do not use HTML.
+                Use lots of emojis for levity.
         `
     }, {
         "role": "user",

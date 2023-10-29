@@ -290,7 +290,9 @@ module.exports = async (req, res) => {
                 The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
 
             INSTRUCTIONS:
-                Explore the parcel's valuation and provide a comprehensive analysis regarding development potential.
+                Explore the parcel's valuations.
+                Do not use HTML.
+                Use lots of emojis for levity.
             `
     }, {
         "role": "user",

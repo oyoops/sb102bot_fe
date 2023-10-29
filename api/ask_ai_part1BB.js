@@ -290,15 +290,13 @@ module.exports = async (req, res) => {
 
             INSTRUCTIONS:
                 Dive into the parcel's current use and determine its eligibility for the Live Local Act.
-        
-            CURRENT USE:
-                The parcel's current use is '${useCodeLookup[dor_uc] || dor_uc}' (use_code = '${dor_uc}').
-                To be eligible, the parcel must have either a commercial or industrial use (not residential, governmental, agriculutral, etc).
-                    - The following use_codes are considered COMMERCIAL and therefore Live Local-eligible:
-                        '010', '011', '012', '013', '014', '015', '016', '017', '018', '019', '020', '021', '022', '023', '024', '025', '026', '027', '028', '029', '030', '031', '032', '033', '034', '035', '036', '037', '038', '039'
-                    - The following use_codes are considered INDUSTRTIAL and therefore Live Local-eligible: 
-                        '040', '041', '042', '043', '044', '045', '046', '047', '048', '049'
-                    - All other use_codes are ineligible.
+                Do not use HTML.
+                Use lots of emojis for levity.
+
+            LIVE LOCAL REQUIREMENT:
+                - To be eligible, the parcel must have either a commercial or industrial use (not residential, governmental, agriculutral, etc).
+                
+                The subject parcel's current use is '${useCodeLookup[dor_uc] || dor_uc}' (use_code = '${dor_uc}').
         `
     }, {
         "role": "user",

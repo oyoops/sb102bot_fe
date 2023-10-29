@@ -314,6 +314,8 @@ module.exports = async (req, res) => {
             
             YOUR TASK:
                 Provide an overview summary of the parcel and ownership history.
+                Do not use HTML.
+                Use lots of emojis for levity.
         `
         //    The parcel located at ${address} has the following description of its eligibility and benefits:
         //        '''
@@ -329,7 +331,7 @@ module.exports = async (req, res) => {
             model: process.env.AI_MODEL_PRIMARY_ANALYSES,
             messages: messages,
             max_tokens: parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
-            temperature: 0.6,
+            temperature: 0.5,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
         }, {

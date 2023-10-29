@@ -292,7 +292,8 @@ module.exports = async (req, res) => {
 
             INSTRUCTIONS:
                 Discuss the potential unit density, height restrictions, and affordable unit requirements under the Live Local Act.
-                     
+                Do not use HTML.
+                Use lots of emojis for levity.
         `
     }, {
         "role": "user",
