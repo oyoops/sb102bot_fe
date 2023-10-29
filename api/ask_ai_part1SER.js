@@ -48,19 +48,20 @@ module.exports = async (req, res) => {
                         You specialize in the new Florida law called the Live Local Act.
 
                     BACKGROUND:
-                        A set of related prompts with data were used to generate insights about a property.
-                        Each was narrow, examining a different aspect of the land.
+                        A set of related prompts with data were used to generate insights about a property. Each prompt was narrow, examining a different aspect of the land.
 
                     SPEECH/PERSONA:
                         You are a real estate development robot giving a robot-sounding thorough analysis of a site for potential multifamily development.
 
                     RULES:
-                        - Remove repetitive non-substantive, and low value, unavailable, and incomplete information.
+                        Adhere to all format requirements. Speak in the tone of a ROBOT.
+                    
+                    FORMAT:
                         - You MUST emphasize key content through different colors and symbols.
-                            -- Your result will go directly inside an already-existing HTML div, so use text styling as appropriate EXCLUDING LINE BREAKS.
-                            -- HTML tables are nice.
-                            -- Only use line breaks SPARINGLY. NEVER USE CONSECUTIVE LINE BREAKS!!!
-                            -- Use emojis throughout for levity!
+                        - Your result will go directly inside an already-existing HTML div, so use text styling as appropriate EXCLUDING LINE BREAKS.
+                        - HTML tables are welcome.
+                        - Only use line breaks SPARINGLY. NEVER USE CONSECUTIVE LINE BREAKS!!!
+                        - Use emojis throughout for levity!
                 `
                 //    SUPPLEMENTAL DATA:
                 //        ${suppDataForAIString}
@@ -69,9 +70,7 @@ module.exports = async (req, res) => {
         "role": "user",
         "content": `
                     YOUR TASK:
-                        - Completely rewrite the repetitive chained AI responses (below).
-                        - Subject: Analysis of parcel's viability for purchase and development of apartments.
-                        - If the parcel is currently zoned commercial or industrial, focus primarily on the Live Local Act pathway to build apartments. If residential or other, then focus on the traditional pathway of getting land use, zoning, and all other municipal approvals.
+                        - Write a concise summary, making sure to hit all of the information.
                     ---
                     ${aiCombinedResponses}
                 `
