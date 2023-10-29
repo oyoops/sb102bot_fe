@@ -63,7 +63,6 @@ module.exports = async (req, res) => {
 
     // Live Local
     const descriptionOfLiveLocalEligibility = req.query.descriptionOfLiveLocalEligibility;
-    const subject_area_median_income = req.query.subject_area_median_income;
     const subject_county_amis_income = req.query.subject_county_amis_income;
     const subject_max_rent_0bd_120ami = req.query.subject_max_rent_0bd_120ami;
     const subject_max_rent_1bd_120ami = req.query.subject_max_rent_1bd_120ami;
@@ -308,7 +307,7 @@ module.exports = async (req, res) => {
             AFFORDABLE UNITS:
                 The big 'catch' of the Live Local Act is that AT LEAST 40% of total units must be 'affordable' AND the gross quantity of affordable units must be AT LEAST 70.
                 Affordable rent limits are set by the state and are relative to 120% of the Area Median Income of the county
-                    ('affordable' units must be rented to households with HH income of <= [120% * ${subject_area_median_income}]).
+                    ('affordable' units must be rented to households with HH income of <= [120% * ${subject_county_amis_income}]).
                 The current 'affordable' rent limits (size-agnostic; determined solely based on bedroom count) in ${countyNameProper} are:
                     - Studio: ${subject_max_rent_0bd_120ami}
                     - 1BD: ${subject_max_rent_1bd_120ami}

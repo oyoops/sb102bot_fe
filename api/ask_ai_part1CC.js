@@ -63,7 +63,6 @@ module.exports = async (req, res) => {
 
     // Live Local
     const descriptionOfLiveLocalEligibility = req.query.descriptionOfLiveLocalEligibility;
-    const subject_area_median_income = req.query.subject_area_median_income;
     const subject_county_amis_income = req.query.subject_county_amis_income;
     const subject_max_rent_0bd_120ami = req.query.subject_max_rent_0bd_120ami;
     const subject_max_rent_1bd_120ami = req.query.subject_max_rent_1bd_120ami;
