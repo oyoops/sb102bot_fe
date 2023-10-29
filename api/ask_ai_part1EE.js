@@ -101,7 +101,182 @@ module.exports = async (req, res) => {
     const m_par_sal2 = req.query.m_par_sal2;
     const sale_yr2 = req.query.sale_yr2;
     const sale_mo2 = req.query.sale_mo2;
-    
+
+    /*
+    // (rest)
+    const gid = req.query.gid;
+    const co_no = req.query.co_no;
+    const file_t = req.query.file_t;
+    const asmnt_yr = req.query.asmnt_yr;
+    const bas_strt = req.query.bas_strt;
+    const atv_strt = req.query.atv_strt;
+    const grp_no = req.query.grp_no;
+    const par_splt = req.query.par_splt;
+    const distr_cd = req.query.distr_cd;
+    const distr_yr = req.query.distr_yr;
+    const lnd_unts_c = req.query.lnd_unts_c;
+    const no_lnd_unt = req.query.no_lnd_unt;
+    const lnd_sqfoot = req.query.lnd_sqfoot;
+    const dt_last_in = req.query.dt_last_in;
+    const imp_qual = req.query.imp_qual;
+    const const_clas = req.query.const_clas;
+    const no_res_unt = req.query.no_res_unt;
+    const spec_feat_ = req.query.spec_feat_;
+    const qual_cd1 = req.query.qual_cd1;
+    const vi_cd1 = req.query.vi_cd1;
+    const or_book1 = req.query.or_book1;
+    const or_page1 = req.query.or_page1;
+    const s_chng_cd1 = req.query.s_chng_cd1;
+    const qual_cd2 = req.query.qual_cd2;
+    const vi_cd2 = req.query.vi_cd2;
+    const or_book2 = req.query.or_book2;
+    const or_page2 = req.query.or_page2;
+    const s_chng_cd2 = req.query.s_chng_cd2;
+    const mkt_ar = req.query.mkt_ar;
+    const nbrhd_cd = req.query.nbrhd_cd;
+    const tax_auth_c = req.query.tax_auth_c;
+    const twn = req.query.twn;
+    const rng = req.query.rng;
+    const sec = req.query.sec;
+    const census_bk = req.query.census_bk;
+    const prev_hmstd = req.query.prev_hmstd;
+    const ass_dif_tr = req.query.ass_dif_tr;
+    const cono_prv_h = req.query.cono_prv_h;
+    const yr_val_trn = req.query.yr_val_trn;
+    const seq_no = req.query.seq_no;
+    const rs_id = req.query.rs_id;
+    const mp_id = req.query.mp_id;
+    const state_par_ = req.query.state_par_;
+    const spc_cir_cd = req.query.spc_cir_cd;
+    const spc_cir_yr = req.query.spc_cir_yr;
+    const subject_county_millage = req.query.subject_county_millage;
+    */
+
+    // Eligible use codes
+    const eligibleCommercialCodes = ['010', '011', '012', '013', '014', '015', '016', '017', '018', '019', '020', '021', '022', '023', '024', '025', '026', '027', '028', '029', '030', '031', '032', '033', '034', '035', '036', '037', '038', '039'];
+    const eligibleIndustrialCodes = ['040', '041', '042', '043', '044', '045', '046', '047', '048', '049'];
+    // Complete list of use code definitions
+    const useCodeLookup = {
+        "000": "Vacant Residential",
+        "001": "Single Family",
+        "002": "Mobile Homes",
+        "004": "Condominiums",
+        "005": "Cooperatives",
+        "006": "Retirement Homes not eligible for exemption",
+        "007": "Miscellaneous Residential (migrant camps, boarding homes, etc.)",
+        "008": "Residential Multifamily (<10 units)",
+        "009": "Residential Common Elements/Areas",
+        "003": "'Commercial Multifamily' (10+ units)",
+        "010": "Vacant Commercial",
+        "011": "Stores, one story",
+        "012": "Mixed use - store and office or store and residential combination",
+        "013": "Department Stores",
+        "014": "Supermarkets",
+        "015": "Regional Shopping Centers",
+        "016": "Community Shopping Centers",
+        "017": "Office buildings, non-professional service buildings, one story",
+        "018": "Office buildings, non-professional service buildings, multi-story",
+        "019": "Professional service buildings",
+        "020": "Airports (private or commercial), bus terminals, marine terminals, piers, marinas",
+        "021": "Restaurants, cafeterias",
+        "022": "Drive-in Restaurants",
+        "023": "Financial institutions (banks, saving and loan companies, mortgage companies, credit services)",
+        "024": "Insurance company offices",
+        "025": "Repair service shops (excluding automotive), radio and T.V. repair, refrigeration service, electric repair, laundries, Laundromats",
+        "026": "Service stations",
+        "027": "Auto sales, auto repair and storage, auto service shops, body and fender shops, commercial garages, farm and machinery sales and services, auto rental, marine equipment, trailers and related equipment, mobile home sales, motorcycles, construction vehicle sales",
+        "028": "Parking lots (commercial or patron), mobile home parks",
+        "029": "Wholesale outlets, produce houses, manufacturing outlets",
+        "030": "Florists, greenhouses",
+        "031": "Drive-in theaters, open stadiums",
+        "032": "Enclosed theaters, enclosed auditoriums",
+        "033": "Nightclubs, cocktail lounges, bars",
+        "034": "Bowling alleys, skating rinks, pool halls, enclosed arenas",
+        "035": "Tourist attractions, permanent exhibits, other entertainment facilities, fairgrounds (privately owned)",
+        "036": "Camps",
+        "037": "Race tracks (horse, auto, or dog)",
+        "038": "Golf courses, driving ranges",
+        "039": "Hotels, motels",
+        "040": "Vacant Industrial",
+        "041": "Light manufacturing, small equipment manufacturing plants, small machine shops, instrument manufacturing, printing plants",
+        "042": "Heavy industrial, heavy equipment manufacturing, large machine shops, foundries, steel fabricating plants, auto or aircraft plants",
+        "043": "Lumber yards, sawmills, planing mills",
+        "044": "Packing plants, fruit and vegetable packing plants, meat packing plants",
+        "045": "Canneries, fruit and vegetable, bottlers and brewers, distilleries, wineries",
+        "046": "Other food processing, candy factories, bakeries, potato chip factories",
+        "047": "Mineral processing, phosphate processing, cement plants, refineries, clay plants, rock and gravel plants",
+        "048": "Warehousing, distribution terminals, trucking terminals, van and storage warehousing",
+        "049": "Open storage, new and used building supplies, junk yards, auto wrecking, fuel storage, equipment and material storage",
+        "050": "Improved agricultural",
+        "051": "Cropland soil capability Class I",
+        "052": "Cropland soil capability Class II",
+        "053": "Cropland soil capability Class III",
+        "054": "Timberland - site index 90 and above",
+        "055": "Timberland - site index 80 to 89",
+        "056": "Timberland - site index 70 to 79",
+        "057": "Timberland - site index 60 to 69",
+        "058": "Timberland - site index 50 to 59",
+        "059": "Timberland not classified by site index to Pines",
+        "060": "Grazing land soil capability Class I",
+        "061": "Grazing land soil capability Class II",
+        "062": "Grazing land soil capability Class III",
+        "063": "Grazing land soil capability Class IV",
+        "064": "Grazing land soil capability Class V",
+        "065": "Grazing land soil capability Class VI",
+        "066": "Orchard Groves, citrus, etc.",
+        "067": "Poultry, bees, tropical fish, rabbits, etc.",
+        "068": "Dairies, feed lots",
+        "069": "Ornamentals, miscellaneous agricultural",
+        "070": "Vacant Institutional, with or without extra features",
+        "071": "Churches",
+        "072": "Private schools and colleges",
+        "073": "Privately owned hospitals",
+        "074": "Homes for the aged",
+        "075": "Orphanages, other non-profit or charitable services",
+        "076": "Mortuaries, cemeteries, crematoriums",
+        "077": "Clubs, lodges, union halls",
+        "078": "Sanitariums, convalescent and rest homes",
+        "079": "Cultural organizations, facilities",
+        "080": "Vacant Governmental",
+        "081": "Military",
+        "082": "Forest, parks, recreational areas",
+        "083": "Public county schools - including all property of Board of Public Instruction",
+        "084": "Colleges (non-private)",
+        "085": "Hospitals (non-private)",
+        "086": "Counties (other than public schools, colleges, hospitals) including non-municipal government",
+        "087": "State, other than military, forests, parks, recreational areas, colleges, hospitals",
+        "088": "Federal, other than military, forests, parks, recreational areas, hospitals, colleges",
+        "089": "Municipal, other than parks, recreational areas, colleges, hospitals",
+        "090": "Leasehold interests (government-owned property leased by a non-governmental lessee)",
+        "091": "Utility, gas and electricity, telephone and telegraph, locally assessed railroads, water and sewer service, pipelines, canals, radio/television communication",
+        "092": "Mining lands, petroleum lands, or gas lands",
+        "093": "Subsurface rights",
+        "094": "Right-of-way, streets, roads, irrigation channel, ditch, etc.",
+        "095": "Rivers and lakes, submerged lands",
+        "096": "Sewage disposal, solid waste, borrow pits, drainage reservoirs, waste land, marsh, sand dunes, swamps",
+        "097": "Outdoor recreational or parkland, or high-water recharge subject to classified use assessment",
+        "098": "Centrally assessed",
+        "099": "Acreage not zoned agricultural with or without extra features"
+    };
+    // Determine parcel's eligibility by virtue of land use category
+    let eligibilityDescription;
+    let eligibleLandUseForLiveLocal = false;
+    if (eligibleCommercialCodes.includes(dor_uc)) {
+        eligibleLandUseForLiveLocal = true;
+        eligibilityDescription = "\nLand use is '" + useCodeLookup[dor_uc] + ",'\nwhich qualifies as COMMERCIAL!" + "\n\n  ** Live Local ELIGIBLE! **\n\n";
+    } else if (eligibleIndustrialCodes.includes(dor_uc)) {
+        eligibleLandUseForLiveLocal = true;
+        eligibilityDescription = "\nLand use is '" + useCodeLookup[dor_uc] + ",'\nwhich qualifies as INDUSTRIAL!" + "\n\n  ** Live Local ELIGIBLE! **\n\n";
+    } else if (dor_uc="003") {    
+        eligibleLandUseForLiveLocal = false;
+        eligibilityDescription = "\nLand use is '" + useCodeLookup[dor_uc] + ",'\nwhich does NOT qualify. It's ALREADY residential!\n";
+    } else {
+        eligibleLandUseForLiveLocal = false;
+        eligibilityDescription = "\nLand use is '" + useCodeLookup[dor_uc] + ",'\nwhich does NOT qualify. It's neither commercial nor industrial!\n";
+    }
+    ////console.log("[LAND USE ELIGIBILITY]\n" + eligibilityDescription);
+
+
 
     // Compose prompt
     const messages = [{
