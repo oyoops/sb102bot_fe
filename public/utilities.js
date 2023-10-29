@@ -426,7 +426,7 @@ function animateLoadingText(element) {
             for (let char of node.textContent) {
                 const span = document.createElement('span');
                 span.className = 'char';
-                span.innerText = char;
+                span.innerHTML = char === ' ' ? '&nbsp;' : char;  // Replace space with non-breaking space
                 parent.appendChild(span);
                 textQueue.push(span);
             }

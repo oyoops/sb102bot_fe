@@ -424,29 +424,29 @@ input:disabled {
     color: #555; /* Slightly darker text color for list items */
     margin-bottom: 10px; /* Space between list items */
 }
-
 .loading-container {
     display: none;
     text-align: center;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Playfair Display', serif; /* Changed font */
 }
 
 .animated-text {
     font-size: 18px;
     color: #333;
     margin: 10px 0;
+    font-weight: 700; /* Use the bold version of Playfair Display */
 }
 
 .animated-text .char {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     display: inline-block; /* This is to ensure that each character can be animated individually */
+    white-space: pre; /* This helps preserve spaces */
 }
 
 .animated-text .char.show {
     opacity: 1;
 }
-
 
 .spinner {
     width: 30px;
