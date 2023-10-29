@@ -445,7 +445,7 @@ function addLoadingLine(text) {
 // ...and so on.
 
 /* Update the fake loading progress bar */
-let percentageLoading = 0;
+//let percentageLoading = 0;
 const intervalTimeLoading = 100; // update every 100ms
 const totalUpdates = 600; // 60 seconds / 0.1 seconds
 let updateCount = 0; // number of times the function has been called
