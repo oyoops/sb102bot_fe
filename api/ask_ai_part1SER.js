@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
                             - You MUST emphasize key content through different colors and symbols. All subheadings should have text styling.
                         - HTML tables are welcome for tabular data.
                         - Only use line breaks SPARINGLY. NEVER USE CONSECUTIVE LINE BREAKS!!!
-                        - Use emojis throughout for levity!
+                        - Use emojis for levity!
                 `
                 //    SUPPLEMENTAL DATA:
                 //        ${suppDataForAIString}
@@ -70,8 +70,8 @@ module.exports = async (req, res) => {
         "role": "user",
         "content": `
                     YOUR TASK:
-                        - Write an extremely concise summary.
-                        Use <b> and <u> tags for all subheadings.
+                        - Write a concise summary.
+                        Use <b>tags for all subheadings.
                     ---
                     ${aiCombinedResponses}
                 `
