@@ -17,8 +17,8 @@ const landAndTotalHcOutputSection = document.getElementById('totalLandAndTotalHc
 const mainHeader = document.getElementById("mainHeader");
 
 // Tables and their bodies
-const parcelDataTable = document.getElementById('parcelDataTable');
-const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');
+//const parcelDataTable = document.getElementById('parcelDataTable');
+//const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');
 const countyDataTable = document.getElementById('countyDataTable');
 const countyTableBody = document.querySelector('#countyDataTable tbody');
 const countyMaxRentsTable = document.getElementById('countyMaxRentsTable');
@@ -57,8 +57,8 @@ export {
     landAndTotalHcInputSection,
     landAndTotalHcOutputSection,
     mainHeader,
-    parcelDataTable,
-    parcelDataTableBody,
+    //parcelDataTable,
+    //parcelDataTableBody,
     countyDataTable,
     countyTableBody,
     countyMaxRentsTable,
