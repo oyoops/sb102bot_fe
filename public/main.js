@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!parcelData || Object.keys(parcelData).length === 0) {
                     throw new Error('Missing or empty parcel data');
                 }
-                addLoadingLine(`Found data for ${specialCountyFormatting(countyData.county_name)} Parcel ID# ${parcelData.parcel_id}...`);
+                addLoadingLine(`Found data for ${specialCountyFormatting(countyData.county_name)} Parcel ID# <b>${parcelData.parcel_id}</b>...`);
             } catch (error) {
                 console.error("Error fetching parcel data:\n", error);
                 alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
@@ -155,8 +155,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
                 if (cityData) {
+                    if (toProperCase(cityData.cityName) == "Unincorporated") {
+                        addLoadingLine(`Site is inside <b>${toProperCase(cityData.cityName)}</b> city limits...`);
+                    } else {
+                        addLoadingLine(`Site is in unincorporated <b>${countyData.county_name} County</b>...`);
+                    }
                     // *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
-                    addLoadingLine(`Within <b>${toProperCase(cityData.cityName)}</b> city limits...`);
                     for (const [key, value] of Object.entries(cityData)) {
                         aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
                     }
@@ -371,11 +375,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // since this parcel is not LLA-qualified //
             }
 
-
             // scroll to top
             //loadingContainer.scrollIntoView;
             window.scrollTo(0, 0);
-
 
             // set AI+Eligibility div content
             eligibilityDiv.innerHTML = summaryContent;            
@@ -384,8 +386,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // fade in div
             animateTextFadeIn(eligibilityDiv);
 
-
-
+            
             /* Start -- Land Development Input/Output Section */
             
             // Run initial calculations using loaded & default values
