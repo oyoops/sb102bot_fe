@@ -274,11 +274,28 @@ function animateTextFadeIn(element) {
 
     let textQueue = [];
     let nodeQueue = Array.from(original.childNodes).map(child => ({ node: child, parent: element }));
+    let orderedQueue = [];
     let lastTextNode = null;
 
+    // Adjust the order of the nodes based on priority
+    while (nodeQueue.length > 0) {
+        const { node } = nodeQueue.shift();
+
+        if (["H1", "H2", "H3", "H4", "H5", "H6"].includes(node.nodeName)) {
+            orderedQueue.unshift(node);
+        } else if (["B", "STRONG", "I", "EM"].includes(node.nodeName)) {
+            const headingCount = orderedQueue.filter(n => ["H1", "H2", "H3", "H4", "H5", "H6"].includes(n.nodeName)).length;
+            orderedQueue.splice(headingCount, 0, node);
+        } else {
+            orderedQueue.push(node);
+        }
+    }
+
+    // Process nodes in the adjusted order
+    nodeQueue = orderedQueue.map(child => ({ node: child, parent: element }));
     while (nodeQueue.length > 0) {
         const { node, parent } = nodeQueue.shift();
-        
+
         if (node.nodeName === "#text") {
             lastTextNode = parent.appendChild(document.createTextNode(''));
             for (let char of node.textContent) {
