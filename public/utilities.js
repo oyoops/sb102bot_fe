@@ -305,7 +305,6 @@ function animateTextFadeIn(element) {
 }
 
 
-
 // Create a timeout (puts a time limit on the AI endpoints)
 function timeout(ms) {
     return new Promise((_, reject) => 
@@ -411,3 +410,54 @@ function initAutocomplete() {
 }
 */
   
+/* Loading animations */
+function animateLoadingText(element) {
+    const original = element.cloneNode(true);
+    element.innerHTML = '';
+
+    let textQueue = [];
+    let nodeQueue = Array.from(original.childNodes).map(child => ({ node: child, parent: element }));
+    let lastTextNode = null;
+
+    while (nodeQueue.length > 0) {
+        const { node, parent } = nodeQueue.shift();
+        
+        if (node.nodeName === "#text") {
+            lastTextNode = parent.appendChild(document.createTextNode(''));
+            for (let char of node.textContent) {
+                textQueue.push({ char, textNode: lastTextNode });
+            }
+        } else {
+            const appendedNode = parent.appendChild(node.cloneNode(false));
+            if (node.childNodes.length > 0) {
+                for (let child of node.childNodes) {
+                    nodeQueue.push({ node: child, parent: appendedNode });
+                }
+            }
+        }
+    }
+
+    let interval = setInterval(() => {
+        if (textQueue.length > 0) {
+            const { char, textNode } = textQueue.shift();
+            textNode.appendData(char);
+        } else {
+            clearInterval(interval);
+            element.classList.add('show');
+        }
+    }, 30); // <---- adjust speed; ms between character iterations
+}
+
+function addLoadingLine(text) {
+    const loadingContainer = document.querySelector('.loading-container');
+    const newTextElement = document.createElement('div');
+    newTextElement.classList.add('animated-text');
+    newTextElement.innerHTML = text;
+    loadingContainer.appendChild(newTextElement);
+    animateTextFadeIn(newTextElement);
+}
+// Example usage:
+// addLoadingLine('Fetching data from the server...');
+// addLoadingLine('Processing user information...');
+// ...and so on.
+
