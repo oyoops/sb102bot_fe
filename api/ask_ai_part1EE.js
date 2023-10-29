@@ -282,23 +282,26 @@ module.exports = async (req, res) => {
     const messages = [{
         "role": "system",
         "content": `
-            INSTRUCTIONS:
-            - Your role is to delve into the ownership history and context of a parcel. Consider past transactions, the year it was built, and any relevant legal descriptions.
-            - The audience is experienced multifamily investors familiar with Florida.
-            - Avoid generic and filler content.
-        
             CONTEXT:
-            Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
-                1. Over 40% of units are 'affordable' (rent thresholds vary by county).
-                2. There are a minimum of 70 affordable units.
-                3. All non-density/height/zoning/land use municipal regulations are met.
-            The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
-        `
+                Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
+                    1. Over 40% of units are 'affordable' (rent thresholds vary by county).
+                    2. There are a minimum of 70 affordable units.
+                    3. All non-density/height/zoning/land use municipal regulations are met.
+                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
+
+            INSTRUCTIONS:
+                Explore the parcel's valuation and provide a comprehensive analysis regarding development potential.
+            `
     }, {
         "role": "user",
         "content": `
-            I'm interested in the ownership and historical background of the parcel at ${address}.
-            Can you shed light on its past transactions and any significant historical context?
+            VALUATIONS:
+                - 'Just value': ${jv}
+                - 'Land value': ${lnd_val}
+                - 'Deletion value': ${del_val} (?)
+            
+            YOUR TASK:
+                Provide a comprehensive analysis of the parcel's valuation and conclude with insights on whether pursuing the Live Local Act or the traditional approval pathway is more advantageous.
         `
     }];
 

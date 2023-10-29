@@ -281,23 +281,34 @@ module.exports = async (req, res) => {
     const messages = [{
         "role": "system",
         "content": `
-            INSTRUCTIONS:
-            - Your role is to provide an analysis of the location and proximity advantages of a parcel. Consider its address, nearby landmarks, and its distance from the tallest building in the vicinity.
-            - The audience is experienced multifamily investors familiar with Florida.
-            - Avoid generic and filler content.
-            
             CONTEXT:
-            Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
-                1. Over 40% of units are 'affordable' (rent thresholds vary by county).
-                2. There are a minimum of 70 affordable units.
-                3. All non-density/height/zoning/land use municipal regulations are met.
-            The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
+                Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
+                    1. Over 40% of units are 'affordable' (rent thresholds vary by county).
+                    2. There are a minimum of 70 affordable units.
+                    3. All non-density/height/zoning/land use municipal regulations are met.
+                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
+
+            INSTRUCTIONS:
+                Dive into the parcel's current use and determine its eligibility for the Live Local Act.
+        
+            CURRENT USE:
+                The parcel's current use is '${useCodeLookup[dor_uc] || dor_uc}' (use_code = '${dor_uc}').
+                To be eligible, the parcel must have either a commercial or industrial use (not residential, governmental, agriculutral, etc).
+                    - The following use_codes are considered COMMERCIAL and therefore Live Local-eligible:
+                        '010', '011', '012', '013', '014', '015', '016', '017', '018', '019', '020', '021', '022', '023', '024', '025', '026', '027', '028', '029', '030', '031', '032', '033', '034', '035', '036', '037', '038', '039'
+                    - The following use_codes are considered INDUSTRTIAL and therefore Live Local-eligible: 
+                        '040', '041', '042', '043', '044', '045', '046', '047', '048', '049'
+                    - All other use_codes are ineligible.
         `
     }, {
         "role": "user",
         "content": `
-            Provide insights into the location and surrounding area of the parcel at ${address} in ${displayMuniName}.
-            How does its proximity to major landmarks affect its value for multifamily development?
+            CURRENT USE:
+                This parcel's Live Local eligibility status with respect to its current use is as follows:
+                    ${eligibilityDescription}
+    
+            YOUR TASK:
+                Provide insights into the parcel's Live Local Act eligibility based on its current use and zoning.            
         `
     }];
 

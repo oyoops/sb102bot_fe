@@ -283,23 +283,36 @@ module.exports = async (req, res) => {
     const messages = [{
         "role": "system",
         "content": `
-            INSTRUCTIONS:
-            - Your role is to evaluate the physical attributes of a parcel. Consider its size, the potential building height, its current capacity, and the year it was built.
-            - The audience is experienced multifamily investors familiar with Florida.
-            - Avoid generic and filler content.
-            
             CONTEXT:
-            Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
-                1. Over 40% of units are 'affordable' (rent thresholds vary by county).
-                2. There are a minimum of 70 affordable units.
-                3. All non-density/height/zoning/land use municipal regulations are met.
-            The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
+                Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
+                    1. Over 40% of units are 'affordable' (rent thresholds vary by county).
+                    2. There are a minimum of 70 affordable units.
+                    3. All non-density/height/zoning/land use municipal regulations are met.
+                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
+
+            INSTRUCTIONS:
+                Discuss the potential unit density, height restrictions, and affordable unit requirements under the Live Local Act.
+                     
         `
     }, {
         "role": "user",
         "content": `
-            I'd like to understand the physical attributes and capacity of the parcel at ${address}.
-            What kind of development might it best support given its size and the tallest building height in the vicinity?
+            MAX DENSITY:
+                The parcel is ${subject_isInCity} city limits, so its primary municipality is ${displayMuniName}.
+                Using the Live Local Act, qualifying developments may match ${displayMuniName}'s highest-allowed unit density.
+                    - ${displayMuniName}'s max density is ${maxMuniDensity} units/acre.
+                    - Therefore, the maximum achievable yield of this particular ${acres}-acre parcel would be ${maxCapacity} units (if fully-qualified).
+
+            MAX HEIGHT:
+                The Live Local Act also allows for buildings to be built as tall as the tallest building within one mile.
+                    - The tallest such building is:
+                        Title: ${tallestBuildingName}
+                        Address: ${tallestBuildingAddress}
+                        Height: ${tallestBuildingHeight} feet
+                        Distance: ${distanceInMilesToTallestBldg} mi. from subject
+            
+            YOUR TASK:
+                Analyze the maximum potential density, height, and affordable unit implications for this parcel under the Live Local Act.
         `
     }];
 

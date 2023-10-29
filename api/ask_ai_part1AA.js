@@ -290,99 +290,30 @@ module.exports = async (req, res) => {
                 4. The parcel is currently zoned for mixed use, commercial, or industrial uses.
             The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
             Furthermore, it offers a 75% property tax abatement on affordable units set at the 120% AMI level (quite high), equating to a net 30% property tax reduction for the entire development; big savings. 
-
-            INSTRUCTIONS:
-            - Analyze a parcel with regard to its ELIGIBILITY for multifamily using the Live Local Act.
-            - If eligible, determine the PROS & CONS of pursuing development approval via the Live Local Act as opposed to the traditional pathway of public hearings for land use, zoning, etc.
-            - The audience is EXPERIENCED multifamily investors who are familiar with Florida.
-            - Avoid generic and filler content.
-
-            Show math when determining eligibility.
-            Provide comprehensive insights.
-        `
+    `
     }, {
         "role": "user",
         "content": `
             INSTRUCTIONS:
-                Tell me about the eligibility for and potential benefits of Live Local Act development on the following parcel in ${displayMuniName}, FL.
+                Provide a comprehensive overview of the parcel and its ownership.
             
             PROPERTY:
-                Address:
-                    - ${address}
-                Lat/Long:
-                    - ${lat}, ${lng}
-                Parcel ID#:
-                    - ${parcel_id}
-                Total area:
-                    - ${acres} acres
-                Legal description:
-                    - ${s_legal}
-                Existing structure(s):
-                    - ${no_buldng} buildings currently exist on the parcel (first built in ${act_yr_blt})
-                    - ${tot_lvg_ar} SF A/C
-
-            VALUATIONS (per county Property Appraiser as of 2023)
-                    - 'Just value' of ${jv}
-                    - 'Land value' of ${lnd_val}
-                    - 'deletion value' of ${del_val} (?)
-
-            LANDOWNER:
-                    ${own_name}
-                    ${own_addr1}
-                    ${own_city}, ${own_state} ${own_zipcd}
-    
-                Purchased property in ${sale_mo1}/${sale_yr1} for ${sale_prc1}.
-                Prior sale (if available): ${sale_mo2}/${sale_yr2} for ${sale_prc2}.
-
-                Current fiduciary name: ${fidu_cd}.
-
-            CURRENT USE:
-                The parcel's current use is '${useCodeLookup[dor_uc] || dor_uc}' (use_code = '${dor_uc}').
-                To be eligible, the parcel must have either a commercial or industrial use (not residential, governmental, agriculutral, etc).
-                    - The following use_codes are considered COMMERCIAL and therefore Live Local-eligible:
-                        '010', '011', '012', '013', '014', '015', '016', '017', '018', '019', '020', '021', '022', '023', '024', '025', '026', '027', '028', '029', '030', '031', '032', '033', '034', '035', '036', '037', '038', '039'
-                    - The following use_codes are considered INDUSTRTIAL and therefore Live Local-eligible: 
-                        '040', '041', '042', '043', '044', '045', '046', '047', '048', '049'
-                    - All other use_codes are ineligible.
-                
-                Therefore, this parcel's Live Local eligibility status with respect to its current use is as follows:
-                    ${eligibilityDescription}
-
-            MAX DENSITY:
-                The parcel is ${subject_isInCity} city limits, so its primary municipality is ${displayMuniName}.
-                Using the Live Local Act, qualifying developments may match ${displayMuniName}'s highest-allowed unit density.
-                    - ${displayMuniName}'s max density is ${maxMuniDensity} units/acre.
-                    - Therefore, the maximum achievable yield of this particular ${acres}-acre parcel would be ${maxCapacity} units (if fully-qualified).
-
-            MAX HEIGHT:
-                The Live Local Act also allows for buildings to be built as tall as the tallest building within one mile.
-                    - The tallest such building is:
-                        Title: ${tallestBuildingName}
-                        Address: ${tallestBuildingAddress}
-                        Height: ${tallestBuildingHeight} feet
-                        Distance: ${distanceInMilesToTallestBldg} mi. from subject
+                - Address: ${address}
+                - Lat/Long: ${lat}, ${lng}
+                - Parcel ID#: ${parcel_id}
+                - Total area: ${acres} acres
+                - Legal description: ${s_legal}
+                - Existing structures: ${no_buldng} buildings (first built in ${act_yr_blt}), ${tot_lvg_ar} SF A/C
             
-            AFFORDABLE UNITS:
-                The big 'catch' of the Live Local Act is that AT LEAST 40% of total units must be 'affordable' AND the gross quantity of affordable units must be AT LEAST 70.
-                Affordable rent limits are set by the state and are relative to 120% of the Area Median Income of the county
-                    ('affordable' units must be rented to households with HH income of <= [120% * ${subject_area_median_income}]).
-                The current 'affordable' rent limits (size-agnostic; determined solely based on bedroom count) in ${countyNameProper} are:
-                    - Studio: ${subject_max_rent_0bd_120ami}
-                    - 1BD: ${subject_max_rent_1bd_120ami}
-                    - 2BD: ${subject_max_rent_2bd_120ami}
-                    - 3BD: ${subject_max_rent_3bd_120ami}
-                
-                Tip #1: Affordable rent limits must include utilities (water/electric), renter's insurance, taxes, and any other unavoidable 'additional fees'.
-                Tip #2: It typically makes sense financially to maximize lower bedroom-count units when apportioning units to the 'affordable' bucket because market-rate rents for larger households are much higher relative to the affordable rent limit at each bedroom quantity.
-
-            TAX ABATEMENT:
-                Another significant Live Local Act benefit for developers is that 'affordable' units receive a 75% ad valorem property tax abatement for the entire 30-year duration of their rent growth-limiting deed restriction.
-                In many cases, these factors can actually INCREASE net operating income. This is because the ability to maximize unit density beyond what would normally be allowed locally + significant OpEx savings on 'affordable' units from an abatement
-                (FL multifamily taxes typically range between $1500-3000/unit annually) + 'affordable' rents which are actually quite high (as far as 'affordable' rents go).
-
+            LANDOWNER:
+                - Owner: ${own_name}
+                - Address: ${own_addr1}, ${own_city}, ${own_state} ${own_zipcd}
+                - Purchase details: Bought in ${sale_mo1}/${sale_yr1} for ${sale_prc1}
+                - Prior sale (if available): ${sale_mo2}/${sale_yr2} for ${sale_prc2}
+                - Fiduciary name: ${fidu_cd}
+            
             YOUR TASK:
-                Determine the qualification status of this parcel.
-                If eligible, determine the pros and cons of pursuing development approval via the Live Local Act as opposed to the traditional pathway of public hearings for land use, zoning, etc.
+                Provide an overview summary of the parcel and ownership history.
         `
         //    The parcel located at ${address} has the following description of its eligibility and benefits:
         //        '''
