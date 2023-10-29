@@ -443,7 +443,7 @@ input:disabled {
 .loading-container {
     display: none;
     text-align: center;
-    font-family: 'Roboto', sans-serif; /* Changed font-family to Roboto and also corrected 'serif' to 'sans-serif' */
+    font-family: 'Orbitron', sans-serif; /* Changed font-family to Roboto and also corrected 'serif' to 'sans-serif' */
 }
 
 .animated-text {
@@ -456,7 +456,7 @@ input:disabled {
 .animated-text .char {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    font-family: 'Orbitron', sans-serif; /* Fixed the typo and set the correct font-family */
+    font-family: 'Roboto', sans-serif; /* Fixed the typo and set the correct font-family */
     display: inline-block; /* This is to ensure that each character can be animated individually */
     white-space: pre; /* This helps preserve spaces */
 }
@@ -471,7 +471,7 @@ input:disabled {
     height: 30px;
     margin: 0 auto 10px; /* centering and giving space below */
     border: 4px solid rgba(0, 123, 255, 0.2);
-    border-top-color: #0077ff;
+    border-top-color: var(--accent-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -479,7 +479,7 @@ input:disabled {
 .loading-text {
     font-size: 1.1em;
     font-weight: 600;
-    color: #0044ff;
+    color: var(--accent-color);
     margin-bottom: 10px;
 }
 
@@ -495,7 +495,7 @@ input:disabled {
 .loading-fill {
     height: 100%;
     width: 0%; /* will be modified by JavaScript */
-    background-color: #4b65db;
+    background-color: var(--accent-color);
     border-radius: 15px;
 }
 
