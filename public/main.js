@@ -128,7 +128,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early (can't proceed without parcel data)
             }
 
-            addLoadingLine(`Found a <b>${parseFloat(buildingHeight).toFixed(0)}'-tall building</b> within a mile...`);
+            let height = parseFloat(buildingHeight).toFixed(0);
+            if (isNaN(height)) {
+                height = "unknown";
+                addLoadingLine(`Trying to find a tall building within a mile...`);
+            } else {
+                addLoadingLine(`Found a <b>${parseFloat(buildingHeight).toFixed(0)}'-tall building</b> within a mile...`);
+            }
 
             // API block #3 of 3: AI RESPONSES
             try {
