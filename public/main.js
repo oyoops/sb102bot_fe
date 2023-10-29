@@ -389,16 +389,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 /* NEW: Generate the final AI summary anyway despite ineligibility */
 
                 // Prepare and refine the supplemental data
-                const cleanerData = refineData(dirtyData);
+                //const cleanerData = refineData(dirtyData);
                 // (Master prompt dispatcher) 
                 // Sends primary prompts, compiles responses, then gets and returns SER response
-                aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData); // send perfect supplemental data to the master dispatcher to inform all prompts
+                //aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData); // send perfect supplemental data to the master dispatcher to inform all prompts
                 // check SER response
-                if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');}
+                //if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');}
                 // log it
                 //console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
                 // format the AI summary and add to div
-                summaryContent = composeAiResponsesCombined(aiGeneratedHTML); // show AI output only
+                //summaryContent = composeAiResponsesCombined(aiGeneratedHTML); // show AI output only
             }
 
             // scroll to top
