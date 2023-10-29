@@ -72,7 +72,7 @@ module.exports = async (req, res) => {
                     Respond in two distinct sections.
 
                     YOUR TASKS:
-                        - (1) Write an extremely detailed internal report about the property. Be advanced, but include emojis.
+                        - (1) Write a detailed internal report about the property. Be advanced, but include emojis.
                         - (2) Write a formal nonbinding LOI to the owner for purchasing the property.
                         
                     PARAMETERS:
