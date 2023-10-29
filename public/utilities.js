@@ -312,24 +312,7 @@ function timeout(ms) {
     );
 }
 
-/* Update the fake loading progress bar */
-function updateLoadingBar() {
-  const loadingFill = document.querySelector('.loading-fill');
-  const loadingPercentage = document.querySelector('.loading-percentage');
 
-  percentageLoading = percentageLoading + (1 - percentageLoading / 100) * 1.69420; // This makes it slow down as it approaches 100
-
-  if (percentageLoading >= 99) {
-    percentageLoading = 99;
-  }
-
-  loadingFill.style.width = percentageLoading + '%';
-  loadingPercentage.textContent = Math.round(percentageLoading) + '%';
-
-  if (percentageLoading < 99) {
-      setTimeout(updateLoadingBar, intervalTimeLoading);
-  }
-}
 
 
 /* Non-AI Functions: */
@@ -445,7 +428,7 @@ function animateLoadingText(element) {
             clearInterval(interval);
             element.classList.add('show');
         }
-    }, 30); // <---- adjust speed; ms between character iterations
+    }, 300); // <---- adjust speed; ms between character iterations
 }
 
 function addLoadingLine(text) {
@@ -461,3 +444,28 @@ function addLoadingLine(text) {
 // addLoadingLine('Processing user information...');
 // ...and so on.
 
+/* Update the fake loading progress bar */
+let percentageLoading = 0;
+const intervalTimeLoading = 100; // update every 100ms
+const totalUpdates = 600; // 60 seconds / 0.1 seconds
+let updateCount = 0; // number of times the function has been called
+function updateLoadingBar() {
+    const loadingFill = document.querySelector('.loading-fill');
+    const loadingPercentage = document.querySelector('.loading-percentage');
+  
+    percentageLoading = percentageLoading + (1 - percentageLoading / 100) * (2 / totalUpdates);
+  
+    if (percentageLoading >= 99) {
+      percentageLoading = 99;
+    }
+  
+    loadingFill.style.width = percentageLoading + '%';
+    loadingPercentage.textContent = Math.round(percentageLoading) + '%';
+  
+    updateCount++;
+  
+    if (updateCount < totalUpdates) {
+        setTimeout(updateLoadingBar, intervalTimeLoading);
+    }
+  }
+  
