@@ -406,9 +406,12 @@ function animateLoadingText(element) {
         const { node, parent } = nodeQueue.shift();
         
         if (node.nodeName === "#text") {
-            lastTextNode = parent.appendChild(document.createTextNode(''));
             for (let char of node.textContent) {
-                textQueue.push({ char, textNode: lastTextNode });
+                const span = document.createElement('span');
+                span.className = 'char';
+                span.innerText = char;
+                parent.appendChild(span);
+                textQueue.push(span);
             }
         } else {
             const appendedNode = parent.appendChild(node.cloneNode(false));
@@ -422,14 +425,14 @@ function animateLoadingText(element) {
 
     let interval = setInterval(() => {
         if (textQueue.length > 0) {
-            const { char, textNode } = textQueue.shift();
-            textNode.appendData(char);
+            const span = textQueue.shift();
+            span.classList.add('show');
         } else {
             clearInterval(interval);
-            element.classList.add('show');
         }
-    }, 300); // <---- adjust speed; ms between character iterations
+    }, 300); // adjust speed; ms between character iterations
 }
+
 
 function addLoadingLine(text) {
     const loadingContainer = document.querySelector('.loading-container');

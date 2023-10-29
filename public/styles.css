@@ -402,16 +402,21 @@ input:disabled {
 }
 
 .animated-text {
-    opacity: 0;
     font-size: 18px;
     color: #333;
     margin: 10px 0;
-    transition: opacity 0.5s ease-in-out;
 }
 
-.animated-text.show {
+.animated-text .char {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    display: inline-block; /* This is to ensure that each character can be animated individually */
+}
+
+.animated-text .char.show {
     opacity: 1;
 }
+
 
 .spinner {
     width: 30px;
