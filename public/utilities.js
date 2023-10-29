@@ -39,7 +39,7 @@ async function fetchAiResponsesCombined(cleanData) {
             }
             return response.json();
         }),
-        timeout(45000) // 45 seconds
+        timeout(60000) // 60 seconds
     ])
     .catch(err => {
         console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
@@ -75,7 +75,7 @@ async function fetchAiResponsesCombined(cleanData) {
   }
 }
 
-// Compose final output by prepending it with a stupid intro and calling it a day
+// Compose final output by prepending it with a title and calling it a day
 function composeAiResponsesCombined(aiResponse, titleLine = `LIVING LOCAL AT ${phy_addr1}`) {
     if (!aiResponse || typeof aiResponse !== 'string') {
         console.error("Error: Invalid or no AI response received!");
@@ -317,7 +317,7 @@ function updateLoadingBar() {
   const loadingFill = document.querySelector('.loading-fill');
   const loadingPercentage = document.querySelector('.loading-percentage');
 
-  percentageLoading = percentageLoading + (1 - percentageLoading / 100) * 2; // This makes it slow down as it approaches 100
+  percentageLoading = percentageLoading + (1 - percentageLoading / 100) * 1.69420; // This makes it slow down as it approaches 100
 
   if (percentageLoading >= 99) {
     percentageLoading = 99;
