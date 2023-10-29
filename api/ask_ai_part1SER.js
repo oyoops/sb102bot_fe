@@ -27,7 +27,15 @@ module.exports = async (req, res) => {
 
     // Stringify and escape
     let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
-    console.log("\nsuppDataForAIString: \n" + JSON.stringify(suppDataForAIString, null, 2));
+    
+    let jsonString;
+    try {
+        jsonString = JSON.stringify(suppDataForAIString, null, 2);
+    } catch (err) {
+        jsonString = "Failed to stringify object: " + err.message;
+    }
+    console.log("\nsuppDataForAIString: \n" + jsonString);
+
     
 
     const messages = [{
