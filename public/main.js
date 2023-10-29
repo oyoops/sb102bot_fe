@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '25'); // For orange
                 ////addLoadingLine(`<b><u>NOT ELIGIBLE</u> for Live Local!</b>`);
                 eligibilityDiv.innerHTML += `<h3 style="color:orange;" align="center">Your site is probably <u>NOT ELIGIBLE</u> for Live Local development.</h3> 
-                </br>Believe it or not, a property can't qualify if it's <i>already</i> residential...`;
+                </br>Believe it or not, a property can't qualify if it's already residential.`;
                 //eligibilityDiv.style.color = "Orange";
                 eligibilityDiv.style.fontSize = "18px";
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // NEW: Set site to red
                 document.documentElement.style.setProperty('--hue', '360'); // For red
                 ////addLoadingLine(`<b><u>NOT ELIGIBLE</u> for Live Local!</b>`);
-                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">Your site is likely <u>NOT ELIGIBLE</u> for Live Local development. </h3> <br> It needs to <i>already</i> be <b>commercial</b> or <b>industrial</b> to qualify.`;
+                eligibilityDiv.innerHTML += `<h3 style="color:red;" align="center">Your site is likely <u>NOT ELIGIBLE</u> for Live Local development. </h3> <br> It needs to already be commercial or industrial to qualify.`;
                 //eligibilityDiv.style.color = "red";
                 eligibilityDiv.style.fontSize = "18px";
             }
