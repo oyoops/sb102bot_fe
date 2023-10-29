@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
     //const phy_zipcd = req.query.phy_zipcd;
 
     // Parcel
-    const acres = req.query.acres;
+    const acres = parseFloat(req.query.acres).toFixed(2)
     const s_legal = req.query.s_legal;
     const dor_uc = req.query.dor_uc;
     const pa_uc = req.query.pa_uc;
@@ -71,10 +71,10 @@ module.exports = async (req, res) => {
     const subject_max_rent_3bd_120ami = req.query.subject_max_rent_3bd_120ami;
     const tallestBuildingName = req.query.tallestBuildingName;
     const tallestBuildingAddress = req.query.tallestBuildingAddress;
-    const tallestBuildingHeight = req.query.tallestBuildingHeight;
-    const distanceInMilesToTallestBldg = req.query.distanceInMilesToTallestBldg;
-    const maxMuniDensity = req.query.maxMuniDensity;
-    const maxCapacity = req.query.maxCapacity;
+    const tallestBuildingHeight = parseFloat(req.query.tallestBuildingHeight).toFixed(0);
+    const distanceInMilesToTallestBldg = parseFloat(req.query.distanceInMilesToTallestBldg).toFixed(2);
+    const maxMuniDensity = parseFloat(req.query.maxMuniDensity).toFixed(0);
+    const maxCapacity = parseFloat(req.query.maxCapacity).toFixed(0);
 
     // Owner
     const own_name = req.query.own_name;
@@ -352,14 +352,14 @@ module.exports = async (req, res) => {
                 The parcel is ${subject_isInCity} city limits, so its primary municipality is ${displayMuniName}.
                 Using the Live Local Act, qualifying developments may match ${displayMuniName}'s highest-allowed unit density.
                     - ${displayMuniName}'s max density is ${maxMuniDensity} units/acre.
-                    - Therefore, the maximum achievable yield of this particular ${acres.toFixed(2)}-acre parcel would be ${maxCapacity} units (if fully-qualified).
+                    - Therefore, the maximum achievable yield of this particular ${acres}-acre parcel would be ${maxCapacity} units (if fully-qualified).
 
             MAX HEIGHT:
                 The Live Local Act also allows for buildings to be built as tall as the tallest building within one mile.
                     - The tallest such building is:
                         Title: ${tallestBuildingName}
                         Address: ${tallestBuildingAddress}
-                        Height: ${tallestBuildingHeight.to_fixed(2)} feet
+                        Height: ${tallestBuildingHeight} feet
                         Distance: ${distanceInMilesToTallestBldg} mi. from subject
             
             AFFORDABLE UNITS:
@@ -377,7 +377,8 @@ module.exports = async (req, res) => {
 
             TAX ABATEMENT:
                 Another significant Live Local Act benefit for developers is that 'affordable' units receive a 75% ad valorem property tax abatement for the entire 30-year duration of their rent growth-limiting deed restriction.
-                In many cases, these factors can actually INCREASE net operating income. This is because the ability to maximize unit density beyond what would normally be allowed locally + significant OpEx savings on 'affordable' units from an abatement (FL taxes range between $1500-3000/unit annually) + 'affordable' rents that are actually quite high in truth.
+                In many cases, these factors can actually INCREASE net operating income. This is because the ability to maximize unit density beyond what would normally be allowed locally + significant OpEx savings on 'affordable' units from an abatement
+                (FL multifamily taxes typically range between $1500-3000/unit annually) + 'affordable' rents which are actually quite high (as far as 'affordable' rents go).
 
             YOUR TASK:
                 Determine the qualification status of this parcel.
