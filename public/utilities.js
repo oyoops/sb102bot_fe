@@ -449,7 +449,7 @@ function updateLoadingBar() {
     const loadingFill = document.querySelector('.loading-fill');
     const loadingPercentage = document.querySelector('.loading-percentage');
   
-    percentageLoading = percentageLoading + (1 - percentageLoading / 100) * 3; // This makes it slow down as it approaches 100
+    percentageLoading = percentageLoading + (1 - percentageLoading / 100) * 1.42069; // This makes it slow down as it approaches 100
   
     if (percentageLoading >= 99) {
       percentageLoading = 99;
