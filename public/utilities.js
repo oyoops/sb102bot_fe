@@ -76,7 +76,7 @@ async function fetchAiResponsesCombined(cleanData) {
 }
 
 // Compose final output by prepending it with a stupid intro and calling it a day
-function composeAiResponsesCombined(aiResponse) {
+function composeAiResponsesCombined(aiResponse, titleLine = `${address}`) {
     if (!aiResponse || typeof aiResponse !== 'string') {
         console.error("Error: Invalid or no AI response received!");
         return;
@@ -84,7 +84,7 @@ function composeAiResponsesCombined(aiResponse) {
     // Preface final AI content with a custom introduction
     let combinedResponse = `
         <h3 style="color:black;" align="center">
-        Here's some preliminary intel:
+            <u>${titleLine}</u>
         </h3>
         <ul>
             ${aiResponse}
