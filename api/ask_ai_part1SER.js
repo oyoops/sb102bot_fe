@@ -76,12 +76,12 @@ module.exports = async (req, res) => {
                         - (2) Write a formal nonbinding LOI to the owner for purchasing the property.
                         
                     PARAMETERS:
-                        Offer price shall be whatever $30,000 per unit is; assume our unit count for purposes of the offer = min(${maxCapacity},500).
+                        Offer price shall be whatever $30,000 per unit is; assume our unit count for purposes of the offer = min(${suppDataForAI.maxCapacity},500).
 
                     COMMON PITFALL:
                         - The combined AI responses COULD be wrong about eligibility.
-                            * If there is no possible way to get to 70 total affordable units (if ${maxCapacity} < 70) while the parcel may be eligible, it is actually NOT POSSIBLE.
-                            * If this is the case, you MUST say so in the report and LOI, in which case we will offer SUBSTANTIALLY LESS (-50%).
+                            * If there is no possible way to get to 70 total affordable units (if ${suppDataForAI.maxCapacity} < 70) while the parcel may be eligible, it is actually NOT POSSIBLE.
+                            * If this is the case, you MUST override the content, say it is INELIGIBLE in the Report and LOI, and then offer SUBSTANTIALLY LESS (-99%) to purchase the property.
                     ---
                     ${aiCombinedResponses}
                 `
