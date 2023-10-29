@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
     } catch (err) {
         jsonString = "Failed to stringify object: " + err.message;
     }
-    console.log("\nsuppDataForAIString: \n" + jsonString);
+    ////console.log("\nsuppDataForAIString: \n" + jsonString);
 
     
 
