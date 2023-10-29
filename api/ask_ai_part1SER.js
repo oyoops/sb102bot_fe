@@ -69,7 +69,7 @@ module.exports = async (req, res) => {
     }, {
         "role": "user",
         "content": `
-                    Respond in two distinct sections.
+                    Respond in two distinct sections with a horizontal separator.
 
                     YOUR TASKS:
                         - (1) Write a detailed internal report about the property. Be advanced, but include emojis.
