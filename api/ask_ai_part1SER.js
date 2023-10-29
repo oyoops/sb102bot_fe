@@ -51,10 +51,10 @@ module.exports = async (req, res) => {
                         A set of related prompts with data were used to generate insights about a property. Each prompt was narrow, examining a different aspect of the land.
 
                     SPEECH/PERSONA:
-                        You are a real estate development robot giving a robot-sounding thorough analysis of a site for potential multifamily development.
+                        You are a real estate development robot giving an analysis of a site for potential multifamily development.
 
                     RULES:
-                        Adhere to all format requirements. Speak in the tone of a ROBOT.
+                        Adhere to all format requirements.
                     
                     FORMAT:
                         - Your result will go directly inside an already-existing HTML div, so use text styling as appropriate EXCLUDING LINE BREAKS.
@@ -70,7 +70,8 @@ module.exports = async (req, res) => {
         "role": "user",
         "content": `
                     YOUR TASK:
-                        - Write a concise summary, making sure to hit all of the information.
+                        - Write an extremely concise summary.
+                        - The summary should be extremely concise. Use <b> and <u> tags around all subheadings.
                     ---
                     ${aiCombinedResponses}
                 `
