@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if (cityData) {
                     if (toProperCase(cityData.cityName) == "Unincorporated") {
-                        addLoadingLine(`Site is inside <b>${toProperCase(cityData.cityName)}</b> city limits...`);
+                        addLoadingLine(`Site is within <b>${toProperCase(cityData.cityName)}</b> city limits...`);
                     } else {
                         //addLoadingLine(`Site is in unincorporated <b>${countyData.county_name} County</b>...`);
                     }
@@ -208,7 +208,6 @@ document.addEventListener('DOMContentLoaded', function() {
             countyTableBody.innerHTML = countyRow;
             ////countyDataTable.style.display = 'table'; // show municipal data table
             
-
             // Populate the max rents table
             const rentsRow = `
                 <tr>
@@ -221,11 +220,9 @@ document.addEventListener('DOMContentLoaded', function() {
             rentsTableBody.innerHTML = rentsRow;
             countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
 
-
             // convert land sq. ft. to acres
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
-
-            addLoadingLine(`Total area of <b>${acres.toFixed(2)} acres</b>...`);
+            addLoadingLine(`Area = <b>${acres.toFixed(2)} acres</b>...`);
             
             /*
             // populate parcel data table
@@ -247,8 +244,6 @@ document.addEventListener('DOMContentLoaded', function() {
             window.scrollTo(0, 0);
             
 
-
-
             
             /* USER INPUTS SECTION START */
 
@@ -265,8 +260,6 @@ document.addEventListener('DOMContentLoaded', function() {
             landAndTotalHcOutputSection.style.display = 'block';
             // ...
             */
-
-
 
 
 
@@ -299,6 +292,9 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = maxCapacity.toFixed(0);
             ////addLoadingLine(`Ceiling of <b>${maxCapacity} units</b>...`);
 
+            
+            buildingHeight = parseFloat(buildingHeight);
+
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
                 // NEW: Set site to orange
@@ -312,7 +308,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // NEW: Set site to green
                 document.documentElement.style.setProperty('--hue', '120'); // For green
                 ////addLoadingLine(`<b><u>ELIGIBLE</u> for Live Local!</b>`);
-                buildingHeight = parseFloat(buildingHeight);
                 console.log("MAX HEIGHT:", buildingHeight, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">Your site is <u>ELIGIBLE</u> for Live Local development!</h3> 
                     </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and <b><i>Live Local</i></b> on it:
@@ -387,6 +382,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 // -------------------------------------- //
                 // No LLA density limit explanation added //
                 // since this parcel is not LLA-qualified //
+                
+
+                /* NEW: Generate the final AI summary anyway despite ineligibility */
+
+                // Prepare and refine the supplemental data
+                const cleanerData = refineData(dirtyData);
+                // (Master prompt dispatcher) 
+                // Sends primary prompts, compiles responses, then gets and returns SER response
+                aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData); // send perfect supplemental data to the master dispatcher to inform all prompts
+                // check SER response
+                if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');}
+                // log it
+                //console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
+                // format the AI summary and add to div
+                summaryContent = composeAiResponsesCombined(aiGeneratedHTML); // show AI output only
             }
 
             // scroll to top
