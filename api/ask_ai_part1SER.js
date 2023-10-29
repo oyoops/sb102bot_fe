@@ -71,7 +71,7 @@ module.exports = async (req, res) => {
         "content": `
                     YOUR TASK:
                         - Write an extremely concise summary.
-                        - The summary should be extremely concise. Use <b> and <u> tags around all subheadings.
+                        Use <b> and <u> tags for all subheadings.
                     ---
                     ${aiCombinedResponses}
                 `
