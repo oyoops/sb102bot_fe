@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // display fake loading progress bar
             updateLoadingBar();
             loadingContainer.style.display = 'block';
+            window.scrollTo(0, 0);
 
             // geocode the input address
             const geocodeEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
@@ -49,9 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`Server responded with ${geocodeResponse.status}: ${await geocodeResponse.text()}`);
             }
             geocodeData = await geocodeResponse.json();
-            console.log("Geocode Data Received:", geocodeData);
+            ////console.log("Geocode Data Received:", geocodeData);
             if (!geocodeData.results || geocodeData.results.length === 0) {
-                throw new Error(`Whoops... That address isn't in my domain.\nI only know about Florida (and only the good counties at that).`);
+                throw new Error(`Whoops... That address isn't in my wheelhouse, buddy.\n\nI only know about Florida (and only the good parts at that).`);
             }
 
             /* Geocode was successful */
@@ -65,9 +66,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const cityCheckResponse = await fetch(cityCheckEndpoint);
             cityData = await cityCheckResponse.json(); // global
             if (cityData.isInCity) {
-                console.log(`Address is in city: ${cityData.cityName}`);
+                ////console.log(`Address is in city: ${cityData.cityName}`);
             } else {
-                console.log('Address is unincorporated.');
+                ////console.log('Address is unincorporated.');
                 cityData.cityName = 'unincorporated';
             }
             
@@ -78,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
             googlemap.style.display = 'block';
 
             // scroll to top
+            window.scrollTo(0, 0);
             //loadingContainer.scrollIntoView;
 
 
@@ -93,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const countyDataResponse = await fetch(countyDataEndpoint);
                 
                 countyData = await countyDataResponse.json();
-                console.log("County Data Received:", countyData);
+                ////console.log("County Data Received:", countyData);
                 
                 if (!countyData.county_name) {
                     throw new Error;
@@ -113,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const parcelDataResponse = await fetch(parcelDataEndpoint);
                 
                 parcelData = await parcelDataResponse.json();
-                console.log("Parcel Data Received:", parcelData);
+                ////console.log("Parcel Data Received:", parcelData);
                 if (!parcelData || Object.keys(parcelData).length === 0) {
                     throw new Error('Missing or empty parcel data');
                 }            
@@ -123,17 +125,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early (can't proceed without parcel data)
             }
 
-
-
             // API block #3 of 3: AI RESPONSES
             try {
                 // verify parcelData exists
                 if (!parcelData || Object.keys(parcelData).length === 0) {
-                    console.log(`Skipping AI analysis module.`);
+                    console.log(`Skipping AI analysis module...`);
                     throw new Error('Sorry, this property is not eligible, buddy.');
                 }
 
-                // make a copy of parcelData for enhancement
+                // make copy of parcelData for enhancement
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
 
                 // decompose available JSONs and add their values
@@ -153,22 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 dirtyData = JSON.parse(JSON.stringify(aiSupplementalData));
                 let dirtyDataString = JSON.stringify(dirtyData, null, 2); 
 
-                // Log dataset PRE-transformation (dirtyData)
-                //console.log("\n<----[PRE-TRANSFORMATION:]----->");
-                //console.log(dirtyDataString);
-
-                /*
-                // Add all global variables to dataset and apply final super-enhancements
-                cleanData = refineData(aiSupplementalData);
-
-                // Log dataset POST-transformation (cleanData)
-                console.log("\n<----[POST-TRANSFORMATION:]---->");
-                console.log(JSON.stringify(cleanData, null, 2));
-                */
-
-                /* Enhanced dataset is now fully prepared! */
-
-
                 /* ALTERNATE WAY TO PULL PRIMARY PROMPTS (FROM GOOGLE SHEETS):
                 // (maybe wrong formula name, IDK)
                 // (example usage)
@@ -177,15 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("Hmmm = " + hmmm);
                 });*/
 
-
-                /*
-                // Generate the SER response in its ultimate form
-                aiGeneratedHTML = await fetchAiResponsesCombined(cleanData); // get final product by sending enriched supplemental data to the primary prompts dispatcher endpoint
-                if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
-                    throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
-                }
-                console.log("\n*** FINAL ANALYSIS: *** \n", aiGeneratedHTML);
-                */
             } catch (error) {
                 console.error("[CRITICAL] Error while collecting AI responses: \n", error);
                 return;
@@ -197,6 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // show Try Again button
             tryAgainButton.style.display = 'block';
+            window.scrollTo(0, 0);
             
             // ...
             // MANUAL MILLAGE ADJUSTMENT:
@@ -248,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // scroll to top of map after everything is loaded x1
             //googlemap.scrollIntoView();
-            //window.scrollTo(0, 0);
+            window.scrollTo(0, 0);
             
 
             /* USER INPUTS SECTION START */
@@ -271,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // set density input placeholder
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             if (maxDensity !== null) {
-                console.log ("Maximum municipal density found for", countyData.county_name, cityData.cityName, ":", maxDensity);
+                ////console.log ("Maximum allowed density in", countyData.county_name, cityData.cityName, ":", maxDensity);
                 // set global
                 maxMuniDensity = maxDensity;
             } else {
@@ -292,7 +268,6 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
 
-            // div
 
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
@@ -349,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Prepare and refine the supplemental data
                 const cleanerData = refineData(dirtyData);
-                console.log("cleaner data: \n", cleanerData);
+                console.log("Clean property data: \n", cleanerData);
                 
                 // (Master prompt dispatcher) 
                 // Sends primary prompts, compiles responses, then gets and returns SER response
@@ -361,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 // log it
-                console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
+                //console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);
 
                 // format the AI summary and add to div
                 //summaryContent += composeAiResponsesCombined(aiGeneratedHTML); // show my written output first
@@ -377,7 +352,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             // scroll to top
-            loadingContainer.scrollIntoView;
+            //loadingContainer.scrollIntoView;
+            window.scrollTo(0, 0);
 
 
             // set AI+Eligibility div content
@@ -403,11 +379,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             // hide loading indicator
-            loadingContainer.scrollIntoView;
+            //loadingContainer.scrollIntoView;
+            window.scrollTo(0, 0);
             loadingContainer.style.display = 'none';       
 
             // scroll to top again
-            googlemap.scrollIntoView();
+            //googlemap.scrollIntoView();
             window.scrollTo(0, 0);
             
         } catch (error) {
