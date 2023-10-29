@@ -243,6 +243,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
             parcelDataTableBody.innerHTML = parcelDataRow;
+            ////parcelDataTableBody.style.display = 'block'; // show the parcel data table
+            parcelDataTableBody.style.display = 'none'; // hide the parcel data table
 
             // scroll to top of map after everything is loaded x1
             //googlemap.scrollIntoView();
