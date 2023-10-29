@@ -67,33 +67,56 @@ form {
 }
 
 /* Generic table styling */
-table {
-    width: auto;
-    max-width: 1000px;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-collapse: collapse;
-    background-color: #ffffff;      /* White background for tables */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);  /* A subtle shadow around the tables */
+.table-container {
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);  /* A more pronounced shadow around the tables */
+    padding: 20px;
+    background-color: #f2f4f7;  /* A light background for container to give it some padding */
 }
+
+table {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #ffffff;  /* White background for tables */
+}
+
 th, td {
-    border: 1px solid #e0e0e0;     /* Lighter border color */
-    padding: 12px 15px;            /* Increased padding for cells */
+    border: 1px solid #e0e0e0;  /* Lighter border color */
+    padding: 12px 15px;         /* Increased padding for cells */
     text-align: left;
 }
+
 th {
-    background-color: #f7f9fc;     /* Light background for table header */
+    background-color: #f7f9fc;  /* Light background for table header */
     color: #333;
-    font-weight: 600;              /* Bold font for table header */
+    font-weight: 600;           /* Bold font for table header */
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
+
+tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f9fafc;
+}
+
 tbody tr:hover {
-    background-color: #f2f4f7;    /* Hover effect for table rows */
+    background-color: #e6ebf1; /* Hover effect for table rows */
 }
+
 /* Responsive design: If the screen width is 600px or less, make the tables 95% width */
 @media (max-width: 600px) {
     table {
         font-size: 0.8em;
         width: 95%;
+    }
+    th, td {
+        padding: 8px 10px;
     }
 }
 
@@ -347,12 +370,6 @@ label {
     margin: 10px 0;
 }
 
-/* Style for the unit size input tables */
-table {
-    width: auto;
-    margin-top: 20px;
-}
-
 .sizeInput {
     width: 80%;
     padding: 5px 10px;
@@ -391,7 +408,6 @@ input:disabled {
 
 
 /* General styling for the eligibilityStatus div */
- 
 #eligibilityStatus {
     display: none;
     width: 80%;
@@ -427,19 +443,20 @@ input:disabled {
 .loading-container {
     display: none;
     text-align: center;
-    font-family: 'Playfair Display', serif; /* Changed font */
+    font-family: 'Roboto', sans-serif; /* Changed font-family to Roboto and also corrected 'serif' to 'sans-serif' */
 }
 
 .animated-text {
     font-size: 18px;
     color: #333;
     margin: 10px 0;
-    font-weight: 700; /* Use the bold version of Playfair Display */
+    font-weight: 700;
 }
 
 .animated-text .char {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    font-family: 'Orbitron', sans-serif; /* Fixed the typo and set the correct font-family */
     display: inline-block; /* This is to ensure that each character can be animated individually */
     white-space: pre; /* This helps preserve spaces */
 }
@@ -447,6 +464,7 @@ input:disabled {
 .animated-text .char.show {
     opacity: 1;
 }
+
 
 .spinner {
     width: 30px;
