@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Prepare and refine the supplemental data
                 const cleanerData = refineData(dirtyData);
-                console.log("Clean property data: \n", cleanerData);
+                ////console.log("Clean property data: \n", cleanerData);
                 
                 // (Master prompt dispatcher) 
                 // Sends primary prompts, compiles responses, then gets and returns SER response
@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // fade in div
             animateTextFadeIn(eligibilityDiv);
 
-            
+
             /* Start -- Land Development Input/Output Section */
             
             // Run initial calculations using loaded & default values
