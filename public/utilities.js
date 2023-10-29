@@ -76,7 +76,7 @@ async function fetchAiResponsesCombined(cleanData) {
 }
 
 // Compose final output by prepending it with a stupid intro and calling it a day
-function composeAiResponsesCombined(aiResponse, titleLine = `${address}`) {
+function composeAiResponsesCombined(aiResponse, titleLine = `LIVING LOCAL AT ${phy_addr1}`) {
     if (!aiResponse || typeof aiResponse !== 'string') {
         console.error("Error: Invalid or no AI response received!");
         return;
@@ -84,7 +84,7 @@ function composeAiResponsesCombined(aiResponse, titleLine = `${address}`) {
     // Preface final AI content with a custom introduction
     let combinedResponse = `
         <h2 style="color:black;" align="center">
-            <u>${titleLine}</u>
+            <b><i>${titleLine}</i></b>
         </h2>
         <ul>
             ${aiResponse}
