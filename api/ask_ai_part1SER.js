@@ -60,8 +60,8 @@ module.exports = async (req, res) => {
                         - Your result will go directly inside an already-existing HTML div, so use text styling as appropriate EXCLUDING LINE BREAKS.
                             - You MUST emphasize key content through different colors and symbols. All subheadings should have text styling.
                         - HTML tables are welcome for tabular data.
+                        - Use <b>tags for all subheadings.
                         - Only use line breaks SPARINGLY. NEVER USE CONSECUTIVE LINE BREAKS!!!
-                        - Use emojis for levity!
                 `
                 //    SUPPLEMENTAL DATA:
                 //        ${suppDataForAIString}
@@ -69,9 +69,19 @@ module.exports = async (req, res) => {
     }, {
         "role": "user",
         "content": `
-                    YOUR TASK:
-                        - Write a concise summary.
-                        Use <b>tags for all subheadings.
+                    Respond in two distinct sections.
+
+                    YOUR TASKS:
+                        - (1) Write an extremely detailed internal report about the property. Be advanced, but include emojis.
+                        - (2) Write a formal nonbinding LOI to the owner for purchasing the property.
+                        
+                    PARAMETERS:
+                        Offer price shall be whatever $30,000 per unit is; assume our unit count for purposes of the offer = min(${maxCapacity},500).
+
+                    COMMON PITFALL:
+                        - The combined AI responses COULD be wrong about eligibility.
+                            * If there is no possible way to get to 70 total affordable units (if ${maxCapacity} < 70) while the parcel may be eligible, it is actually NOT POSSIBLE.
+                            * If this is the case, you MUST say so in the report and LOI, in which case we will offer SUBSTANTIALLY LESS (-50%).
                     ---
                     ${aiCombinedResponses}
                 `
