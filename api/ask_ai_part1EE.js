@@ -282,40 +282,267 @@ module.exports = async (req, res) => {
         "role": "system",
         "content": `
             CONTEXT:
-                Florida's Live Local Act (went into effect July 1, 2023) revolutionized multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
+                Florida's Live Local Act (went into effect July 1, 2023) revolutionized multifamily development by overriding municipal restrictions.
+                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
+                Furthermore, it offers a *significant* property tax abatement on affordable units, equating to a net property tax reduction for the entire development from 30% to as much as 100%.
+                Key provisions mandate that qualified proposals *MUST* be approved by municipalities if:
                     1. Over 40% of units are 'affordable' ('affordable' rent maximums vary by county).
                     2. There must be at least 70 gross 'affordable' units.
                     3. All non-density/height/zoning/land use municipal regulations are met.
                     4. The parcel is currently zoned for mixed use, commercial, or industrial uses.
-                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
-                Furthermore, it offers a 75% property tax abatement on 'affordable' units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
-
-            INSTRUCTIONS:
-                Explore the parcel's valuations.
-                EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
-                Do not use HTML.
-                Use lots of emojis for levity.
         `
     }, {
         "role": "user",
         "content": `
-            VALUATIONS:
-                - 'Just value': ${jv}
-                - 'Land value': ${lnd_val}
-            
+            RECENT ARTICLE ABOUT LIVE LOCAL ACT:
+
+            '''
+            On March 29, 2023, Governor Ron DeSantis signed Senate Bill 102, otherwise known as the Live
+                Local Act, into law, representing the largest investment for housing efforts in Florida history. For your
+                convenience we have summarized below the major sections of the bill that provide incentives to
+                developers constructing affordable and workforce housing in Florida. Unless otherwise expressly
+                provided below the law shall take effect July 1, 2023. As this is simply a summary of certain terms,
+                please refer to Senate Bill 102 for specific language and requirements.
+
+            **The Live Local Act Summary**
+                
+            A. County approval for affordable housing (Section 3 of the bill):
+                Amends Section 125.01055
+                Current Law and Amendments:
+                Current law allows a county to circumvent its comprehensive plan and zoning regulations
+                when approving the development of affordable housing on any parcel zoned for residential,
+                commercial, or industrial use, subject to certain conditions.
+                Specifically, current law provides that a county may approve a residential project on any
+                parcel zoned as residential, commercial or industrial without the need to follow local rules and
+                regulations (for example, without the need to rezone the parcel) as long as: (i) at least 10% of
+                the units included in the project were used for affordable housing; and (ii) the developer did
+                not apply for or receive SAIL funding.
+
+                The amendment removes a county’s ability to approve affordable housing developments
+                pursuant to the statutory process on parcels zoned in residential areas, but also removes the
+                restriction on developers who have applied for/or received SAIL funding for parcels zoned in
+                commercial or industrial use areas.
+                
+                The amendment also provides that a county must authorize proposed multifamily and mixeduse residential projects as an allowable use in any area zoned for commercial, industrial,
+                or mixed use if the project will provide the following:
+                1. At least 40% of the residential units are affordable;
+                2. Affordable means: that the monthly rents, including taxes, insurance, and utilities do
+                not exceed 30% of the AMI for extremely-low-income persons (i.e., 30% AMI) (“ELI”),
+                very-low-income persons (i.e., 50% AMI) (“VLI”), low-income persons (i.e., 80% AMI)
+                (“LI”), and moderate-income persons (120% AMI) (“MI”);
+                3. Period of at least 30 years; and
+                4. For a mixed-use project at least 65% of the total square footage of the improvement
+                on the parcel must be used for residential purposes.
+
+                For proposed multifamily developments meeting the above requirements and that are to be
+                located in areas zoned for commercial, industrial, or mixed use, a county may no longer
+                require the owner to obtain a zoning or land use change, special exemption, conditional use
+                approval, variance, or comprehensive plan amendment for building height and densities. With
+                respect to density and building height, a county may not:
+                    Density – restrict density below the highest allowed density on any unincorporated
+                    land in the county where residential development is allowed;
+                    Height – restrict the height of the proposed development below the highest allowed
+                    height for a commercial or residential development located in its jurisdiction within one
+                    mile of the proposed development, or three stories, whichever is higher.
+                
+                It should be noted that a proposed development authorized under this section must still satisfy
+                the county’s land development regulations (i.e., setback, parking, etc.) and be
+                administratively approved, with the exception of provisions establishing allowable densities,
+                height, and land use. Further, there is no requirement to blend the AMI limits. All of the units
+                could be 120% AMI.
+
+                A county also must consider a reduced parking requirement for projects containing at least
+                40% affordable units if the parcel is located within a half-mile of a major transit stop.
+                
+                Sunset:
+                Amendment will expire on Oct. 1, 2033
+                
+                What this means: A county must administratively authorize a proposed residential or mixed-use
+                project on any parcel zoned as commercial, industrial, or mixed-use , without any comprehensive
+                plan amendments, rezoning or other special approvals needed, provided that: (i) the project contains
+                at least 40% affordable units at (ii) a density that does not exceed the highest density allowed on any
+                parcel where residential use is allowed with (iii) a building height that does not exceed than the
+                highest allowable building height for residential or commercial structures within one mile of the parcel
+                and (iv) the project satisfies all other applicable land development regulations. If any other applicable
+                land development regulations cannot be satisfied, then further action by the county may be required
+                to obtain the necessary relief, but in no event shall a county require a comprehensive plan
+                amendment or rezoning (or other special approval) to allow the use, building height, or density.
+                
+            B. County Property for Affordable Housing (Section 4 of the bill):
+                
+                Amends Section 125.379
+                Current law provides that each county is required to prepare an inventory list of all real
+                property within its jurisdiction which is owned by the county and deemed appropriate for
+                affordable housing.
+
+                The amendment now also requires any property deemed appropriate for affordable housing
+                that is owned by any dependent special district to be included in the inventory list and for the
+                county to publish this list on its website to encourage potential development.
+                The amendment also adds that any property on the inventory list may be used for affordable
+                housing through a long-term ground lease that requires the development and maintenance of
+                affordable housing.
+                
+                The amendment also adds best practices that should be followed by counties in regard to
+                their surplus land programs. The best practices provide that the counties should:
+                1. Establish eligibility criteria for the receipt or purchase of surplus land by developers;
+                2. Make the process for requesting surplus lands publicly available; and
+                3. Ensure long-term affordability through ground leases by retaining ROFR to purchase
+                property that would be sold or offered at market rate and by requiring reversion of
+                property not used for affordable housing within a timeframe.
+
+                What this means: A Developer will now be able to view the county’s property that is deemed
+                appropriate for affordable housing without having to contact the county and enter into a long-term
+                ground lease (rather than acquiring fee title to the property) for purposes of developing affordable
+                housing.
+
+            C. Municipal Approval for Affordable Housing (Section 5 of the bill):
+                Identical to Section 3 of the bill, but applies to municipalities, except that for municipalities
+                which are predominately residential (that is, less than 20% of the total land area is designated
+                as either commercial or industrial), the municipality must approve pursuant to this subsection
+                only if the proposed development is a mixed-use project.
+
+                See Paragraph B above for implications.
+
+            D. Municipal Property for Affordable Housing (Section 7 of the bill):
+                Identical to Section 4 of the bill but applies to municipalities.
+                See Paragraph C above for implications.
+
+            E. Property Tax Discounts/Exemptions (Section 8)
+                2. The Missing Middle:
+                The bill adds an ad-valorem property tax exemption for portions of property in a
+                multifamily project up to:
+                    75% of the assessed value if the project provides housing to natural persons
+                    or families whose annual household income is greater than 80% but no more
+                    than 120% AMI; or
+                    100% of the assessed value if the project provides housing to natural persons
+                    or families whose annual household income does not exceed 80%AMI.
+                Requirements:
+                    Project must be newly constructed meaning that the improvements were
+                    substantially completed within five years before the earlier of (i) the date of an
+                    applicant's first submission of a request of certification; or (ii) an application for
+                    an ad-valorem exemption
+                    Note, the definition of newly constructed may include substantial
+                    rehabilitation.
+                    Project must contain more than 70 units dedicated to persons or households
+                    whose household incomes do not exceed 120% AMI.
+                    Units must be rented for the lesser of 
+                        (i) an amount that does not exceed the
+                        amounts specified by the most recent multifamily rental program income and
+                        rental limit chart posted by FHFC (derived from HUD);
+                        (ii) 10% below the market rate.
+                    Units must not be subject to an agreement with Florida Housing.
+                    Cannot be used with the exemption provided in Paragraph G below.
+                
+                Compliance:
+                To receive an exemption the property owner must submit to the property
+                appraiser an application along with a certification notice from Florida Housing
+                by March 1st. Please contract us for more information on the application and
+                the certification.
+
+                Applicability:
+                First applies to the 2024 tax roll and sunsets on Dec. 31, 2059
+                What this means: All developers can now receive a property tax exemption on the
+                portions of their properties used for affordable housing if their properties qualify,
+                including market rate developers.
+
+            F. Affordable Housing Property Tax Exemption (Section 9 of the bill):
+                Creates Section 196.1979
+                Allows counties and municipalities to adopt an ordinance to exempt portions of property used
+                to provide affordable housing.
+                To be eligible, the portions of the property must meet the following:
+                1. Used to house persons or families whose annual income is no greater than 60%AMI;
+                2. Must contain more than 50 residential units of which at least 20% will be used to
+                provide affordable housing;
+                3. Units must be rented for the lesser of (i) an amount that does not exceed the amounts
+                specified by the most recent multifamily rental program income and rental limit chart
+                posted by FHFC (derived from HUD); or (ii) 10% below the market rate; and
+                4. The property must not have been cited for three code violations in the preceding 24
+                months and must not have outstanding code violations or related fines before final
+                determination on a property’s qualification.
+                
+                Amount of exemption:
+                1. If all units in the development are used for affordable housing, then the local
+                government can exempt up to 100% of the assessed value of each residential unit
+                used to provide affordable housing;
+                2. If less than 100% of the units are used for affordable housing, then the local
+                government can exempt up to 75% of the assessed value of each residential unit used
+                to provide affordable housing.
+                
+                Compliance:
+                1. To receive an exemption the property owner must submit to the property appraiser an
+                application along with a certification of qualified property by March 1st. Please
+                contract us for more information on the application and the certification.
+                
+                Applicability:
+                1. First applies to the 2024 tax roll.
+                What this means: This will allow a local government to adopt a property tax exemption for affordable
+                housing developments. Note, this exemption has to be adopted by the local jurisdiction before its use.
+                
+            G. Building Materials Sales Tax Refund (Section 12 of the bill):
+                An owner may receive a refund for sales taxes paid for building materials used to construct
+                property subject to a recorded agreement with Florida Housing, that has newly constructed
+                units restricted by a land use restriction agreement to provide affordable housing to natural
+                persons or families meeting the ELI, VLI, or LI limits.
+                Note, the definition of “newly constructed” under this section specifically carves out
+                rehabilitation, renovation, restoration, modification, alteration, or expansion of buildings from
+                the definition.
+                
+                Terms:
+                Exemption applies to sales of building materials that occur on or after July 1, 2023.
+                Only applies to tangible personal property that becomes a component of a newly
+                constructed units within the development which are restricted under the LURA
+                ("Eligible Units").
+                Includes appliances
+                Does not include plants, landscaping, fencing, and hardscaping.
+                Does not apply to renovation, restoration, rehabilitation of buildings already
+                located on the parcel on which the Eligible Units are built.
+                Inures to the owner at the time an eligible residential unit can be used for its intended
+                purpose.
+                Applies through a refund of previously paid taxes.
+                To receive the refund, the owner must file an application with the Department of
+                Revenue.
+                Owner must submit this application for refund to the Department of Revenue either (a)
+                within six months after the Eligible Unit is deemed to be substantially completed by the
+                local building code inspector; or (b) by Nov. 1 after the improved property is first
+                subject to assessment.
+
+                Amount of refund:
+                Must be over $500.
+                Amount to be refunded may not exceed the lesser of (i) $5,000 per Eligible unit; or (ii)
+                97.5% of the Florida sales or use tax paid on the cost of building materials used on an
+                Eligible Unit.
+                Caveat, Carve-out when CDBG, SHIP or a similar grant or loan program funds are used to purchase materials.
+                The exemption may also inure to a municipality, county, other governmental unit or
+                agency, or nonprofit community-based organization through a refund of previously
+                paid taxes when CDBG, SHIP or a similar grant or loan program funds are used to
+                purchase materials.
+                
+                Note, this section requires that an affordable housing development be subject to a recorded
+                agreement with Florida Housing and that the eligible units be restricted by a land use
+                restriction agreement. The land use restriction agreement must be submitted in the owner’s
+                application. Timing should be considered for strict 9% credit deals without Florida Housing
+                financing, as there may be a delay in Florida Housing’s issuance of the extended low-income
+                housing agreement. Moreover, the statute is unclear whether an owner will qualify under this
+                provision if the owner enters into (i) solely an extended low-income housing agreement with
+                Florida Housing; and (ii) whether the sections use of “land use restriction agreement”
+                includes an extended low-income housing agreement.
+                What this means: An affordable housing developer can now seek a refund for sales taxes paid for
+                building materials used for an eligible unit. This refund can be substantial as it allows for a refund of
+                $5,000 per eligible unit.
+            '''
+
             YOUR TASK:
-                Provide a comprehensive analysis of the parcel's valuation and conclude with insights on whether pursuing the Live Local Act or the traditional approval pathway is more advantageous.
-                Divide them by MIN(500,${maxCapacity}), which represents how many units we could realistically build, for per-unit valuations.
+                Provide a HIGHLY DETAILED SUMMARY of the sections of the Live Local Act that would be of interest to Florida multifamily developer planning a new development.
         `
     }];
 
     try {
         // Send fetch request from server to OpenAI API
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-            model: process.env.AI_MODEL_PRIMARY_ANALYSES,
+            model: 'gpt-3.5-16k',//process.env.AI_MODEL_PRIMARY_ANALYSES,
             messages: messages,
-            max_tokens: parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
-            temperature: 0.6,
+            max_tokens: 2000, //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
+            temperature: 0.3,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
         }, {

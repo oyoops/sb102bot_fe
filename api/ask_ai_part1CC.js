@@ -284,19 +284,14 @@ module.exports = async (req, res) => {
         "role": "system",
         "content": `
             CONTEXT:
-                Florida's Live Local Act (went into effect July 1, 2023) revolutionized multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
+                Florida's Live Local Act (went into effect July 1, 2023) revolutionized multifamily development by overriding municipal restrictions.
+                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
+                Furthermore, it offers a *significant* property tax abatement on affordable units, equating to a net property tax reduction for the entire development from 30% to as much as 100%.
+                Key provisions mandate that qualified proposals *MUST* be approved by municipalities if:
                     1. Over 40% of units are 'affordable' ('affordable' rent maximums vary by county).
                     2. There must be at least 70 gross 'affordable' units.
                     3. All non-density/height/zoning/land use municipal regulations are met.
                     4. The parcel is currently zoned for mixed use, commercial, or industrial uses.
-                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
-                Furthermore, it offers a 75% property tax abatement on 'affordable' units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
-
-            INSTRUCTIONS:
-                Discuss the potential unit density, height restrictions, and affordable unit requirements under the Live Local Act.
-                EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
-                Do not use HTML.
-                Use lots of emojis for levity.
         `
     }, {
         "role": "user",
@@ -305,18 +300,22 @@ module.exports = async (req, res) => {
                 The parcel is ${subject_isInCity} city limits, so its primary municipality is ${displayMuniName}.
                 Using the Live Local Act, qualifying developments may match ${displayMuniName}'s highest-allowed unit density.
                     - ${displayMuniName}'s max density is ${maxMuniDensity} units/acre.
-                    - Therefore, the maximum achievable yield of this particular ${acres}-acre parcel would be ${maxCapacity} units (if fully-qualified).
+                    - Therefore, the maximum achievable yield of this particular ${acres}-acre parcel would be ${maxCapacity} units .
 
             MAX HEIGHT:
-                The Live Local Act also allows for buildings to be built as tall as the tallest building within one mile.
+                The Live Local Act also allows for buildings to be built as high as the tallest building within a one mile radius.
                     - The tallest such building is:
                         Title: ${tallestBuildingName}
                         Address: ${tallestBuildingAddress}
                         Height: ${tallestBuildingHeight} feet
                         Distance: ${distanceInMilesToTallestBldg} mi. from subject
-            
-            YOUR TASK:
-                Analyze the maximum potential density, height, and affordable unit implications for this parcel under the Live Local Act.
+
+            INSTRUCTIONS:
+                    Write a concise summary of the max allowed unit density, max height limit, and minimum affordable unit requirements under the Live Local Act.
+                    Discuss the feasibility of this parcel meeting the affordable unit requirements (affordable units >= 70 *and* >= 40% of total units) given its area of ${acres} acres and max density of ${maxMuniDensity} units/acre (maximum total units = ${maxCapacity}).
+                    EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
+                    Do not use HTML.
+                    Use emojis for levity.
         `
     }];
 

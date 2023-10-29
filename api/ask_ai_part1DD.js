@@ -283,33 +283,30 @@ module.exports = async (req, res) => {
         "role": "system",
         "content": `
             CONTEXT:
-                Florida's Live Local Act (went into effect July 1, 2023) revolutionized multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
+                Florida's Live Local Act (went into effect July 1, 2023) revolutionized multifamily development by overriding municipal restrictions.
+                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
+                Furthermore, it offers a *significant* property tax abatement on affordable units, equating to a net property tax reduction for the entire development from 30% to as much as 100%.
+                Key provisions mandate that qualified proposals *MUST* be approved by municipalities if:
                     1. Over 40% of units are 'affordable' ('affordable' rent maximums vary by county).
                     2. There must be at least 70 gross 'affordable' units.
                     3. All non-density/height/zoning/land use municipal regulations are met.
                     4. The parcel is currently zoned for mixed use, commercial, or industrial uses.
-                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
-                Furthermore, it offers a 75% property tax abatement on 'affordable' units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
+                
+                TAX ABATEMENT:
+                    Another significant Live Local Act benefit for developers is that 'affordable' units receive a 75% ad valorem property tax abatement for the entire 30-year duration of their rent growth-limiting deed restriction.
+                    In many cases, these factors can actually INCREASE net operating income. This is because the ability to maximize unit density beyond what would normally be allowed locally + significant OpEx savings on 'affordable' units from an abatement
+                    FL multifamily taxes typically range between $1500-3000/unit annually.
+                    'affordable' rents are actually quite high (as far as 'affordable' rents go).
 
-            INSTRUCTIONS:
-                Detail the tax abatement benefits and the rent structure under the Live Local Act.
-                EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
-                Do not use HTML.
-                Use lots of emojis for levity.
+                AFFORDABLE UNITS:
+                    The big 'catch' of the Live Local Act is that AT LEAST 40% of total units must be 'affordable' AND the gross quantity of affordable units must be AT LEAST 70.
+                    Affordable rent limits are set by the state and are relative to 120% of the Area Median Income of the county.
+                    In ${countyNameProper}, 'affordable' units must be rented to households with HH income of <= [120% * ${subject_county_amis_income}].
         `
     }, {
         "role": "user",
         "content": `
-            TAX ABATEMENT:
-                Another significant Live Local Act benefit for developers is that 'affordable' units receive a 75% ad valorem property tax abatement for the entire 30-year duration of their rent growth-limiting deed restriction.
-                In many cases, these factors can actually INCREASE net operating income. This is because the ability to maximize unit density beyond what would normally be allowed locally + significant OpEx savings on 'affordable' units from an abatement
-                FL multifamily taxes typically range between $1500-3000/unit annually.
-                'affordable' rents are actually quite high (as far as 'affordable' rents go).
 
-            AFFORDABLE UNITS:
-                The big 'catch' of the Live Local Act is that AT LEAST 40% of total units must be 'affordable' AND the gross quantity of affordable units must be AT LEAST 70.
-                Affordable rent limits are set by the state and are relative to 120% of the Area Median Income of the county
-                    ('affordable' units must be rented to households with HH income of <= [120% * ${subject_county_amis_income}]).
                 The current 'affordable' rent limits (size-agnostic; determined solely based on bedroom count) in ${countyNameProper} are:
                     - Studio: ${subject_max_rent_0bd_120ami}
                     - 1BD: ${subject_max_rent_1bd_120ami}
@@ -318,9 +315,12 @@ module.exports = async (req, res) => {
                     
                 Tip #1: Affordable rent limits must include utilities (water/electric), renter's insurance, taxes, and any other unavoidable 'additional fees'.
                 Tip #2: It typically makes sense financially to maximize lower bedroom-count units when apportioning units to the 'affordable' bucket because market-rate rents for larger households are much higher relative to the affordable rent limit at each bedroom quantity.
-    
-            YOUR TASK:
-                Detail out the financial benefits of tax abatement and how affordable rents are structured under the Live Local Act.    
+            
+            INSTRUCTIONS:
+                Provide a concise summary of the tax abatement benefits and the affordable rent structure under the Live Local Act.
+                EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
+                Do not use HTML.
+                Use emojis for levity.
         `
     }];
 

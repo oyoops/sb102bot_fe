@@ -280,7 +280,9 @@ module.exports = async (req, res) => {
     // Compose prompt
     const messages = [{
         "role": "system",
-        "content": `
+        "content": 
+        /*
+        `
             CONTEXT:
                 Florida's Live Local Act (went into effect July 1, 2023) revolutionized multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
                     1. Over 40% of units are 'affordable' ('affordable' rent maximums vary by county).
@@ -289,9 +291,10 @@ module.exports = async (req, res) => {
                     4. The parcel is currently zoned for mixed use, commercial, or industrial uses.
                 The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
                 Furthermore, it offers a 75% property tax abatement on 'affordable' units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
-    
+        */
+        `
             INSTRUCTIONS:
-                Provide a comprehensive overview of the parcel and its ownership.
+                Provide a concise overview of the parcel and its ownership.
         `
     }, {
         "role": "user",
@@ -313,16 +316,15 @@ module.exports = async (req, res) => {
                 - Fiduciary name: ${fidu_cd}
             
             YOUR TASK:
-                Provide an overview summary of the parcel and ownership history.
+                Provide a concise summary of the property and and ownership history.
                 EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
                 Do not use HTML.
-                Use lots of emojis for levity.
+                Use emojis for levity.
         `
         //    The parcel located at ${address} has the following description of its eligibility and benefits:
         //        '''
         //        ${descriptionOfLiveLocalEligibility}
         //        '''
-        //
         //`
     }];    
 
