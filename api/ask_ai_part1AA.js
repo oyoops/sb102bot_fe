@@ -308,8 +308,8 @@ module.exports = async (req, res) => {
             LANDOWNER:
                 - Owner: ${own_name}
                 - Address: ${own_addr1}, ${own_city}, ${own_state} ${own_zipcd}
-                - Purchase details: Bought in ${sale_mo1}/${sale_yr1} for ${sale_prc1}
-                - Prior sale (if available): ${sale_mo2}/${sale_yr2} for ${sale_prc2}
+                - Latest sale: ${sale_mo2}/${sale_yr2} for ${sale_prc2}
+                - Prior sale: ${sale_mo1}/${sale_yr1} for ${sale_prc1}
                 - Fiduciary name: ${fidu_cd}
             
             YOUR TASK:
