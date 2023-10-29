@@ -372,9 +372,15 @@ module.exports = async (req, res) => {
         res.status(200).json(aiResponseText);
 
     } catch (error) {
-        // Log OpenAI error message
-        const errorMessage = error?.data?.error || "[CRITICAL] Encountered a fatal OpenAI error!";
-        console.error("Error from OpenAI:", errorMessage);
+        // Log the OpenAI error
+        console.error("Full error object:", error);
+    
+        // Check if the error response contains detailed error information
+        if (error.response && error.response.data && error.response.data.error) {
+            console.error("Detailed OpenAI error:", error.response.data.error);
+        }
+    
+        const errorMessage = error.response?.data?.message || JSON.stringify(error);
         res.status(500).send(errorMessage);
     }
 };
