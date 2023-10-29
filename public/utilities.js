@@ -39,7 +39,7 @@ async function fetchAiResponsesCombined(cleanData) {
             }
             return response.json();
         }),
-        timeout(20000) // 20 seconds
+        timeout(30000) // 30 seconds
     ])
     .catch(err => {
         console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
