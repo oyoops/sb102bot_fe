@@ -8,6 +8,7 @@ const loadingContainer = document.querySelector('.loading-container');
 const initialContent = document.querySelector('#initialContent');
 const eligibilityDiv = document.getElementById("eligibilityStatus");
 const developmentProgramInputSection = document.getElementById('developmentProgramInputSection');
+const rentInfoContainer = document.getElementById('rentInfoContainer');
 const marketRateInputSection = document.getElementById('marketRateInputSection');
 const rentPerSqFtTableSection = document.getElementById('rentPerSqFtTableSection');
 const landAndTotalHcInputSection = document.getElementById('landAndTotalHcInputSection');
@@ -51,6 +52,7 @@ export {
     loadingContainer,
     initialContent,
     eligibilityDiv,
+    rentInfoContainer,
     developmentProgramInputSection,
     marketRateInputSection,
     rentPerSqFtTableSection,

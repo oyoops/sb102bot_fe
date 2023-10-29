@@ -8,7 +8,7 @@ import {
     marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
     mainHeader,
     ////parcelDataTable, parcelDataTableBody, 
-    countyDataTable, countyTableBody, countyMaxRentsTable, rentsTableBody,
+    rentInfoContainer, countyDataTable, countyTableBody, countyMaxRentsTable, rentsTableBody,
     unitCalculationTable, abatementTable,
     form, addressInput, affordablePercentageSlider, affordablePctDisplay, acreageInput, densityInput,
     landCostPerUnit, totalHCPerUnit, matchAffordableSizesCheckbox,
@@ -218,6 +218,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
             rentsTableBody.innerHTML = rentsRow;
+
+            rentInfoContainer.style.display = 'table'; // show the max affordable rents container
             countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
 
             // convert land sq. ft. to acres

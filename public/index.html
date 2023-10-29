@@ -111,28 +111,31 @@
         </tbody>
     </table>
 
-    <!-- County max rents table -->
-    <br><br>
-    <table id="countyMaxRentsTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
-        <thead>
-            <tr>
-                <th colspan="4">'Affordable Rents' (2023)</th>
-            </tr>
-            <tr>
-                <th>Studio</th>
-                <th>1BD</th>
-                <th>2BD</th>
-                <th>3BD</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be inserted here by JavaScript -->
-        </tbody>
-    </table>
-    <p> 
-        Maximum affordable rents are at the 120% AMI level.
-        <br><i>These limits must <u>include</u> billing of electricity, water, renter's insurance, and taxes.</i>
-    </p>
+    <div id="rentInfoContainer" style="display: none;">
+        <!-- County max rents table -->
+        <br><br>
+        <table id="countyMaxRentsTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th colspan="4">'Affordable Rents' (2023)</th>
+                </tr>
+                <tr>
+                    <th>Studio</th>
+                    <th>1BD</th>
+                    <th>2BD</th>
+                    <th>3BD</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+        <p> 
+            Maximum affordable rents are at the 120% AMI level.
+            <br><i>These limits must <u>include</u> billing of electricity, water, renter's insurance, and taxes.</i>
+        </p>
+    </div>
+    
 
     <!-- START: PART 2 -- DEVELOPMENT PROGRAM I/O -->
     <div id="developmentProgramInputSection" style="display: none;">
