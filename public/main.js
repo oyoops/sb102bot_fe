@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
             countyTableBody.innerHTML = countyRow;
             ////countyDataTable.style.display = 'table'; // show municipal data table
             
-            
+
             // Populate the max rents table
             const rentsRow = `
                 <tr>
@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${useCodeLookup[parcelData.dor_uc] || parcelData.dor_uc}</td>
                 </tr>
             `;
-            ////parcelDataTableBody.innerHTML = parcelDataRow;
+            parcelDataTableBody.innerHTML = parcelDataRow;
 
             // scroll to top of map after everything is loaded x1
             //googlemap.scrollIntoView();
