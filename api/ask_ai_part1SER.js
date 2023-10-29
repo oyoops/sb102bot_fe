@@ -82,6 +82,8 @@ module.exports = async (req, res) => {
                         - The combined AI responses COULD be wrong about eligibility.
                             * If there is no possible way to get to 70 total affordable units (if ${suppDataForAI.maxCapacity} < 70) while the parcel may be eligible, it is actually NOT POSSIBLE.
                             * If this is the case, you MUST override the content, say it is INELIGIBLE in the Report and LOI, and then offer SUBSTANTIALLY LESS (-99%) to purchase the property.
+                                However, if the landowner can find an adjacent neighbor with enough acreage to achieve the necessary unit count by agreeing to combine parcels, we'd offer both of them their pro rata share at the original offer price per unit.
+                                Calculate the minimum number of acres we'd need if we were to do 100% affordable (in other words, 70 affordable units) and include it in the LOI.
                     ---
                     ${aiCombinedResponses}
                 `
