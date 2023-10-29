@@ -305,6 +305,7 @@ module.exports = async (req, res) => {
             
             YOUR TASK:
                 Provide a comprehensive analysis of the parcel's valuation and conclude with insights on whether pursuing the Live Local Act or the traditional approval pathway is more advantageous.
+                Divide them by MIN(500,${maxCapacity}), which represents how many units we could realistically build, for per-unit valuations.
         `
     }];
 
