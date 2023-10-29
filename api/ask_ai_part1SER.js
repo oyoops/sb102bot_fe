@@ -2,6 +2,31 @@
 
 const axios = require('axios');
 
+// Function to calculate the cost of API call
+function calculateCost(tokensUsed, modelName) {
+    let ratePer1000Tokens = 0;
+
+    switch (modelName) {
+        case "GPT-4":
+            ratePer1000Tokens = 0.06; // 8K context output rate
+            break;
+        case "GPT-4-32k":
+            ratePer1000Tokens = 0.12; // 32K context output rate
+            break;
+        case "GPT-3.5-turbo":
+            ratePer1000Tokens = 0.002; // 4K context output rate
+            break;
+        case "GPT-3.5-turbo-16k":
+            ratePer1000Tokens = 0.004; // 16K context output rate
+            break;
+        default:
+            console.error("Invalid model name");
+            break;
+    }
+
+    return (tokensUsed / 1000) * ratePer1000Tokens;
+}
+
 module.exports = async (req, res) => {
     console.log("[SER]\n");
 
@@ -123,16 +148,20 @@ module.exports = async (req, res) => {
         
         // Log token usage
         const tokensUsed = responseData?.usage?.total_tokens;
+        const modelName = responseData?.model; // Extract model name from the response data
         const promptTokens = responseData?.usage?.prompt_tokens;
         const completionTokens = responseData?.usage?.completion_tokens;
         if (tokensUsed) {
-            console.log("    # Total Tkns. =", tokensUsed);
+            // Calculate cost in dollars
+            const totalCost = calculateCost(tokensUsed, modelName);
+            console.log(`       Total Cost = $${totalCost.toFixed(2)}`);
+            console.log("\n    # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
-            console.log("   # Prompt Tkns. =", promptTokens);
+            console.log("\n   # Prompt Tkns. =", promptTokens);
         }
         if (completionTokens) {
-            console.log("    # Resp. Tkns. =", completionTokens);
+            console.log("\n    # Resp. Tkns. =", completionTokens);
         }
 
         // Log the prompt

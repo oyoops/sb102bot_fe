@@ -344,20 +344,22 @@ module.exports = async (req, res) => {
         });
         const responseData = response.data;
 
-        // Get token usage
+        // Log token usage
         const tokensUsed = responseData?.usage?.total_tokens;
+        const modelName = responseData?.model; // Extract model name from the response data
         const promptTokens = responseData?.usage?.prompt_tokens;
         const completionTokens = responseData?.usage?.completion_tokens;
-
-        // Log token usage
         if (tokensUsed) {
-            console.log(" # Total Tkns. =", tokensUsed);
+            // Calculate cost in dollars
+            const totalCost = calculateCost(tokensUsed, modelName);
+            console.log(`       Total Cost = $${totalCost.toFixed(2)}`);
+            console.log("\n    # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
-            console.log("# Prompt Tkns. =", promptTokens);
+            console.log("\n   # Prompt Tkns. =", promptTokens);
         }
         if (completionTokens) {
-            console.log(" # Resp. Tkns. =", completionTokens);
+            console.log("\n    # Resp. Tkns. =", completionTokens);
         }
 
         // Extract prompt components and response
