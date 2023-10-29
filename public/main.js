@@ -412,6 +412,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);
                 alert('There was an error with the server. Darn! Please try again later.');
+            } else if (error.message.startsWith("Took too long")) {
+                console.error('Server error:', error);
+                alert('Ehhh, I\'m not really feeling it right now  :-/\nJk. It just happens ~1 in 10 times.\n\nRefresh and run me again!');
             } else {
                 console.error('Error:', error);
                 // to-do: significantly improve error handling.
