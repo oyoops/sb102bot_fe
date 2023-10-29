@@ -83,9 +83,9 @@ function composeAiResponsesCombined(aiResponse, titleLine = `${address}`) {
     }
     // Preface final AI content with a custom introduction
     let combinedResponse = `
-        <h3 style="color:black;" align="center">
+        <h2 style="color:black;" align="center">
             <u>${titleLine}</u>
-        </h3>
+        </h2>
         <ul>
             ${aiResponse}
         </ul>
