@@ -464,8 +464,8 @@ module.exports = async (req, res) => {
         const completionTokens = responseData?.usage?.completion_tokens;
         if (tokensUsed) {
             // Calculate cost in dollars
-            const totalCost = calculateCost(tokensUsed, modelName);
-            console.log(`       Total Cost = $${totalCost.toFixed(2)}`);
+            //const totalCost = calculateCost(tokensUsed, modelName);
+            //console.log(`       Total Cost = $${totalCost.toFixed(2)}`);
             console.log("\n    # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
