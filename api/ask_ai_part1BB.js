@@ -349,18 +349,16 @@ module.exports = async (req, res) => {
         const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
         const aiResponseText = responseData?.choices[0]?.message?.content.trim();
         
-        /*
         // Log prompt components and response
         if (aiPromptSystem) {
-            console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
+            ////console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
         }
         if (aiPromptUser) {
             console.log("\n[USER Prompt]\n" + aiPromptUser);
         }
         if (aiResponseText) {
-            console.log("\n[AI Response]\n" + aiResponseText);
+            ////console.log("\n[AI Response]\n" + aiResponseText);
         }
-        */
 
         // Send response to client
         res.status(200).json(aiResponseText);
