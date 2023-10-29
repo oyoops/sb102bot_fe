@@ -119,6 +119,9 @@ async function initializeMap(lat, lng) {
             createStyledMarker(lineLabelPos, map, `${buildingHeight.toFixed(0)} feet tall\n${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
 
             bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));
+
+            window.scrollTo(0, 0);
+
         } catch (error) {
             console.error(`Error processing tallest building #${index}:`, error);
         }
