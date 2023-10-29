@@ -454,7 +454,7 @@ function addLoadingLine(text) {
     newTextElement.classList.add('animated-text');
     newTextElement.innerHTML = text;
     loadingContainer.appendChild(newTextElement);
-    animateTextFadeIn(newTextElement);
+    animateLoadingText(newTextElement); // Use the new function here
 }
 // Example usage:
 // addLoadingLine('Fetching data from the server...');

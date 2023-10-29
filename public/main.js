@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!countyData.county_name) {
                     throw new Error;
                 }
+                addLoadingLine(`Found ${specialCountyFormatting(countyData.county_name)} County data...`);
             } catch (error) {
                 console.error("Error fetching county data:\n", error);
                 alert("Looks like we hit a roadblock on County Road! 🛣️\nCouldn't fetch the county data.");
@@ -119,7 +120,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 ////console.log("Parcel Data Received:", parcelData);
                 if (!parcelData || Object.keys(parcelData).length === 0) {
                     throw new Error('Missing or empty parcel data');
-                }            
+                }
+                addLoadingLine(`Found data for ${specialCountyFormatting(countyData.county_name)} parcel ID# ${parcelData.parcel_id}...`);
             } catch (error) {
                 console.error("Error fetching parcel data:\n", error);
                 alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
@@ -146,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if (cityData) {
                     // *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
+                    addLoadingLine(`Within ${toProperCase(cityData.cityName)} city limits...`);
                     for (const [key, value] of Object.entries(cityData)) {
                         aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
                     }
@@ -169,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // convert city and county names to Proper Case for clean
             cityNameProper = toProperCase(cityData.cityName);
-            countyNameProper = specialCountyFormatting(countyData.county_name);     
+            countyNameProper = specialCountyFormatting(countyData.county_name);
 
             // show Try Again button
             tryAgainButton.style.display = 'block';
@@ -209,6 +212,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // convert land sq. ft. to acres
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
+
+            addLoadingLine(`Total area of ${acres.toFixed(2)} acres...`);
             
             /*
             // populate parcel data table
@@ -259,6 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 maxMuniDensity = 0;
             }
             densityInput.value = maxMuniDensity.toFixed(0); // DENSITY AUTO/MANUAL INPUT
+            addLoadingLine(`Max density in ${displayMuniName} is ${maxDensity.toFixed(0)} units/acre...`);
 
             // get Municipality Name in Proper Case for cleaner display      
             if (cityNameProper.toLowerCase() === "unincorporated") {
@@ -270,10 +276,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // calculate the parcel's absolute maximum unit capacity
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
-
+            addLoadingLine(`Max of ${maxCapacity} units...`);
 
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
+                addLoadingLine(`<b><u>Eligible</u> for Live Local!</b>
+                    <br><br>
+                    Writing summary...
+                `);
                 eligibilityDiv.innerHTML += `<h3 style="color:orange;" align="center">Your site is probably <u>NOT ELIGIBLE</u> for Live Local development.</h3> 
                 </br>Believe it or not, a property can't qualify if it's <i>already</i> residential...`;
                 //eligibilityDiv.style.color = "Orange";
