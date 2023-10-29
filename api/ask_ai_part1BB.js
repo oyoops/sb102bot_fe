@@ -2,6 +2,31 @@
 
 const axios = require('axios');
 
+// Function to calculate the cost of API call
+function calculateCost(tokensUsed, modelName) {
+    let ratePer1000Tokens = 0;
+
+    switch (modelName) {
+        case "GPT-4":
+            ratePer1000Tokens = 0.06; // 8K context output rate
+            break;
+        case "GPT-4-32k":
+            ratePer1000Tokens = 0.12; // 32K context output rate
+            break;
+        case "GPT-3.5-turbo":
+            ratePer1000Tokens = 0.002; // 4K context output rate
+            break;
+        case "GPT-3.5-turbo-16k":
+            ratePer1000Tokens = 0.004; // 16K context output rate
+            break;
+        default:
+            console.error("Invalid model name");
+            break;
+    }
+
+    return (tokensUsed / 1000) * ratePer1000Tokens;
+}
+
 module.exports = async (req, res) => {
     console.log("[B]\n");
 
