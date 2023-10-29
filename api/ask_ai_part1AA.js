@@ -371,10 +371,10 @@ module.exports = async (req, res) => {
             ////console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
         }
         if (aiPromptUser) {
-            console.log("\n[USER Prompt]\n" + aiPromptUser);
+            ////console.log("\n[USER Prompt]\n" + aiPromptUser);
         }
         if (aiResponseText) {
-            ////console.log("\n[AI Response]\n" + aiResponseText);
+            console.log("\n[AI Response]\n" + aiResponseText);
         }
         
 
