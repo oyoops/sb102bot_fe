@@ -54,8 +54,11 @@ module.exports = async (req, res) => {
 
                     RULES:
                         - Remove repetitive non-substantive, and low value, unavailable, and incomplete information.
-                        - You MUST emphasize key content through different colors and bold/italic/underlined text. Your result will go directly inside an already-existing HTML div, so use text styling as appropriate.
-                        - Use emojis throughout for levity.
+                        - You MUST emphasize key content through different colors and symbols.
+                            -- Your result will go directly inside an already-existing HTML div, so use text styling as appropriate EXCLUDING LINE BREAKS.
+                            -- HTML tables are nice.
+                            -- Only use line breaks SPARINGLY. NEVER USE CONSECUTIVE LINE BREAKS!!!
+                            -- Use emojis throughout for levity!
                 `
                 //    SUPPLEMENTAL DATA:
                 //        ${suppDataForAIString}
