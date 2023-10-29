@@ -311,7 +311,7 @@ module.exports = async (req, res) => {
                     - Studio: ${subject_max_rent_0bd_120ami}
                     - 1BD: ${subject_max_rent_1bd_120ami}
                     - 2BD: ${subject_max_rent_2bd_120ami}
-                    - 3BD: ${subject_max_rent_3bd_120ami}            
+                    - 3BD: ${subject_max_rent_3bd_120ami}    
                     
                 Tip #1: Affordable rent limits must include utilities (water/electric), renter's insurance, taxes, and any other unavoidable 'additional fees'.
                 Tip #2: It typically makes sense financially to maximize lower bedroom-count units when apportioning units to the 'affordable' bucket because market-rate rents for larger households are much higher relative to the affordable rent limit at each bedroom quantity.

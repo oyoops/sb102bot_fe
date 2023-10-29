@@ -283,19 +283,21 @@ module.exports = async (req, res) => {
         "role": "system",
         "content": `
             CONTEXT:
-            Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
-                1. Over 40% of units are 'affordable' (maximum affordable rent limits vary by based on counties' Area Median Income).
-                2. There are a minimum of 70 total affordable units.
-                3. All non-density/height/zoning/land use municipal regulations are met.
-                4. The parcel is currently zoned for mixed use, commercial, or industrial uses.
-            The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
-            Furthermore, it offers a 75% property tax abatement on affordable units set at the 120% AMI level (quite high), equating to a net 30% property tax reduction for the entire development; big savings. 
-    `
+                Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
+                    1. Over 40% of units are 'affordable' (maximum affordable rent limits vary by based on counties' Area Median Income).
+                    2. There are a minimum of 70 total affordable units.
+                    3. All non-density/height/zoning/land use municipal regulations are met.
+                    4. The parcel is currently zoned for mixed use, commercial, or industrial uses.
+                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
+                Furthermore, it offers a 75% property tax abatement on affordable units set at the 120% AMI level (quite high), equating to a net 30% property tax reduction for the entire development; big savings. 
+            
+            INSTRUCTIONS:
+                Provide a comprehensive overview of the parcel and its ownership.
+        `
     }, {
         "role": "user",
         "content": `
-            INSTRUCTIONS:
-                Provide a comprehensive overview of the parcel and its ownership.
+
             
             PROPERTY:
                 - Address: ${address}
