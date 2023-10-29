@@ -167,34 +167,100 @@ module.exports = async (req, res) => {
             Furthermore, it offers a 75% property tax abatement on affordable units set at the 120% AMI level (quite high), equating to a net 30% property tax reduction for the entire development; big savings. 
 
             INSTRUCTIONS:
-            - Analyze a parcel with regard to its ELIGIBILITY AND REGULATORY BENEFITS for multifamily using the Live Local Act.
-            - Glean valuable information from the provided cheeky description of eligibility and benefits.
-            - The audience is experienced multifamily investors familiar with Florida.
+            - Analyze a parcel with regard to its ELIGIBILITY for multifamily using the Live Local Act.
+            - If eligible, determine the PROS & CONS of pursuing development approval via the Live Local Act as opposed to the traditional pathway of public hearings for land use, zoning, etc.
+            - The audience is EXPERIENCED multifamily investors who are familiar with Florida.
             - Avoid generic and filler content.
-            
-            Consider:
-             - the parcel's municipality
-             - maximum municipal density
-             - its maximum unit capacity under the Act. 
-            
-            Very important final check: Remember there must be a minimum of 70 total affordable units to qualify! 
-            
-            Provide comprehensive insights.
 
+            Show math when determining eligibility.
+            Provide comprehensive insights.
         `
     }, {
         "role": "user",
         "content": `
-            Tell me about the eligibility and potential benefits of the parcel at ${address} in ${cityNameProper} for Live Local Act.
+            INSTRUCTIONS:
+                Tell me about the eligibility for and potential benefits of Live Local Act development on the following parcel in ${displayMuniName}, FL.
             
-            The parcel located at ${address} has the following cheeky description of its eligibility and benefits:
-                '''
-                ${descriptionOfLiveLocalEligibility}
-                '''
-            The parcel is ${subject_isInCity} city limits, so the primary municipality is ${displayMuniName}.
-            The maximum density allowed in the municipality is ${maxMuniDensity} units/acre, which we can match using the Act.
-            Given the parcel's size and location, the maximum achievable yield would be ${maxCapacity} units if approved through Live Local.
+            PROPERTY:
+                Address:
+                    - ${address}
+                Lat/Long:
+                    - ${lat}, ${lng}
+                Parcel ID#:
+                    - ${parcel_id}
+                Total area:
+                    - ${acres} acres
+                Legal description:
+                    - ${s_legal}
+                Existing structure(s):
+                    - ${no_buldng} buildings currently exist on the parcel (first built in ${act_yr_blt})
+                    - ${tot_lvg_ar} SF A/C
+
+            VALUATIONS (per county Property Appraiser as of 2023)
+                    - 'Just value' of ${jv}
+                    - 'Land value' of ${lnd_val}
+                    - 'deletion value' of ${del_val} (?)
+
+            LANDOWNER:
+                    ${own_name}
+                    ${own_addr1}
+                    ${own_city}, ${own_state} ${own_zipcd}
+    
+                Purchased property in ${sale_mo1}/${sale_yr1} for ${sale_prc1}.
+                Prior sale (if available): ${sale_mo2}/${sale_yr2} for ${sale_prc2}.
+
+                Current fiduciary name: ${fidu_cd}.
+
+            CURRENT USE:
+                The parcel's current use is '${useCodeLookup[dor_uc] || dor_uc}' (use_code = '${dor_uc}').
+                To be eligible, the parcel must have either a commercial or industrial use (not residential, governmental, agriculutral, etc).
+                    - The following use_codes are considered COMMERCIAL and therefore Live Local-eligible:
+                        '010', '011', '012', '013', '014', '015', '016', '017', '018', '019', '020', '021', '022', '023', '024', '025', '026', '027', '028', '029', '030', '031', '032', '033', '034', '035', '036', '037', '038', '039'
+                    - The following use_codes are considered INDUSTRTIAL and therefore Live Local-eligible: 
+                        '040', '041', '042', '043', '044', '045', '046', '047', '048', '049'
+                    - All other use_codes are ineligible.
+
+            MAX DENSITY:
+                The parcel is ${subject_isInCity} city limits, so its primary municipality is ${displayMuniName}.
+                Using the Live Local Act, qualifying developments may match ${displayMuniName}'s highest-allowed unit density.
+                    - ${displayMuniName}'s max density is ${maxMuniDensity} units/acre.
+                    - Therefore, the maximum achievable yield of this particular ${acres.toFixed(2)}-acre parcel would be ${maxCapacity} units (if fully-qualified).
+
+            MAX HEIGHT:
+                The Live Local Act also allows for buildings to be built as tall as the tallest building within one mile.
+                    - The tallest such building is:
+                        Title: ${tallestBuildingName}
+                        Address: ${tallestBuildingAddress}
+                        Height: ${tallestBuildingHeight.to_fixed(2)} feet
+                        Distance: ${distanceInMilesToTallestBldg} mi. from subject
+            
+            AFFORDABLE UNITS:
+                The big 'catch' of the Live Local Act is that AT LEAST 40% of total units must be 'affordable' AND the gross quantity of affordable units must be AT LEAST 70.
+                Affordable rent limits are set by the state and are relative to 120% of the Area Median Income of the county
+                    ('affordable' units must be rented to households with HH income of <= [120% * ${subject_area_median_income}]).
+                The current 'affordable' rent limits (size-agnostic; determined solely based on bedroom count) in ${countyNameProper} are:
+                    - Studio: ${subject_max_rent_0bd_120ami}
+                    - 1BD: ${subject_max_rent_1bd_120ami}
+                    - 2BD: ${subject_max_rent_2bd_120ami}
+                    - 3BD: ${subject_max_rent_3bd_120ami}
+                
+                Tip #1: Affordable rent limits must include utilities (water/electric), renter's insurance, taxes, and any other unavoidable 'additional fees'.
+                Tip #2: It typically makes sense financially to maximize lower bedroom-count units when apportioning units to the 'affordable' bucket because market-rate rents for larger households are much higher relative to the affordable rent limit at each bedroom quantity.
+
+            TAX ABATEMENT:
+                Another significant Live Local Act benefit for developers is that 'affordable' units receive a 75% ad valorem property tax abatement for the entire 30-year duration of their rent growth-limiting deed restriction.
+                In many cases, these factors can actually INCREASE net operating income. This is because the ability to maximize unit density beyond what would normally be allowed locally + significant OpEx savings on 'affordable' units from an abatement (FL taxes range between $1500-3000/unit annually) + 'affordable' rents that are actually quite high in truth.
+
+            YOUR TASK:
+                Determine the qualification status of this parcel.
+                If eligible, determine the pros and cons of pursuing development approval via the Live Local Act as opposed to the traditional pathway of public hearings for land use, zoning, etc.
         `
+        //    The parcel located at ${address} has the following description of its eligibility and benefits:
+        //        '''
+        //        ${descriptionOfLiveLocalEligibility}
+        //        '''
+        //
+        //`
     }];    
 
     try {
@@ -234,18 +300,18 @@ module.exports = async (req, res) => {
         const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
         const aiResponseText = responseData?.choices[0]?.message?.content.trim();
         
-        /*
+        
         // Log prompt components and response
         if (aiPromptSystem) {
-            console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
+            ////console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
         }
         if (aiPromptUser) {
             console.log("\n[USER Prompt]\n" + aiPromptUser);
         }
         if (aiResponseText) {
-            console.log("\n[AI Response]\n" + aiResponseText);
+            ////console.log("\n[AI Response]\n" + aiResponseText);
         }
-        */
+        
 
         // Send response to client
         res.status(200).json(aiResponseText);
