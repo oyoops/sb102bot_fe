@@ -247,9 +247,13 @@ document.addEventListener('DOMContentLoaded', function() {
             window.scrollTo(0, 0);
             
 
+
+
+            
             /* USER INPUTS SECTION START */
 
             // unhide tables and I/O sections            
+            /*
             ////parcelDataTable.style.display = 'table'; // parcel data
             developmentProgramInputSection.style.display = 'block'; // development program inputs (??)
             unitCalculationTable.style.display = 'block'; // unit counts
@@ -260,6 +264,11 @@ document.addEventListener('DOMContentLoaded', function() {
             landAndTotalHcInputSection.style.display = 'block';
             landAndTotalHcOutputSection.style.display = 'block';
             // ...
+            */
+
+
+
+
 
             // set acreage input placeholder
             acreageInput.value = acres.toFixed(2); // ACREAGE AUTO/MANUAL INPUT

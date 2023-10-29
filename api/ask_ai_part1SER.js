@@ -87,6 +87,10 @@ module.exports = async (req, res) => {
                                 If this is the case, you MUST override the content, say it is INELIGIBLE in the Report and LOI, and then decline to make an offer to purchase the property alone.
                                     Instead, if the landowner can find an adjacent neighbor with enough acreage to achieve the necessary unit count by agreeing to combine parcels, we'd offer both of them their pro rata share at the original offer prices per unit of $20,000 per 'affordable' unit and $40,000 per market-rate unit (so 100% @ $20,000 * 70 units in the absolute minimum case).
                                     Calculate the minimum number of acres we'd need if we were to do 100% affordable (in other words, 70 affordable units) and include it in the LOI.
+                    
+                    OTHER RULES:
+                        - In the LOI, don't explicitly mention the maximum units/acre density allowed in the municipality.
+                    
                     ---
                     ${aiCombinedResponses}
                 `
