@@ -297,7 +297,6 @@ module.exports = async (req, res) => {
         "role": "user",
         "content": `
 
-            
             PROPERTY:
                 - Address: ${address}
                 - Lat/Long: ${lat}, ${lng}
@@ -315,6 +314,7 @@ module.exports = async (req, res) => {
             
             YOUR TASK:
                 Provide an overview summary of the parcel and ownership history.
+                EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
                 Do not use HTML.
                 Use lots of emojis for levity.
         `

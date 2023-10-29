@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
     //const phy_zipcd = req.query.phy_zipcd;
 
     // Parcel
-    const acres = req.query.acres;
+    const acres = parseFloat(req.query.acres).toFixed(2)
     const s_legal = req.query.s_legal;
     const dor_uc = req.query.dor_uc;
     const pa_uc = req.query.pa_uc;
@@ -70,10 +70,10 @@ module.exports = async (req, res) => {
     const subject_max_rent_3bd_120ami = req.query.subject_max_rent_3bd_120ami;
     const tallestBuildingName = req.query.tallestBuildingName;
     const tallestBuildingAddress = req.query.tallestBuildingAddress;
-    const tallestBuildingHeight = req.query.tallestBuildingHeight;
-    const distanceInMilesToTallestBldg = req.query.distanceInMilesToTallestBldg;
-    const maxMuniDensity = req.query.maxMuniDensity;
-    const maxCapacity = req.query.maxCapacity;
+    const tallestBuildingHeight = parseFloat(req.query.tallestBuildingHeight).toFixed(0);
+    const distanceInMilesToTallestBldg = parseFloat(req.query.distanceInMilesToTallestBldg).toFixed(2);
+    const maxMuniDensity = parseFloat(req.query.maxMuniDensity).toFixed(0);
+    const maxCapacity = parseFloat(req.query.maxCapacity).toFixed(0);
 
     // Owner
     const own_name = req.query.own_name;
@@ -257,6 +257,7 @@ module.exports = async (req, res) => {
         "098": "Centrally assessed",
         "099": "Acreage not zoned agricultural with or without extra features"
     };
+
     // Determine parcel's eligibility by virtue of land use category
     let eligibilityDescription;
     let eligibleLandUseForLiveLocal = false;
@@ -294,6 +295,7 @@ module.exports = async (req, res) => {
 
             INSTRUCTIONS:
                 Dive into the parcel's current use and determine its eligibility for the Live Local Act.
+                EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
                 Do not use HTML.
                 Use lots of emojis for levity.
         `
