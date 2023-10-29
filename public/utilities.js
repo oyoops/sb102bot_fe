@@ -76,7 +76,7 @@ async function fetchAiResponsesCombined(cleanData) {
 }
 
 // Compose final output by prepending it with a title and calling it a day
-function composeAiResponsesCombined(aiResponse, titleLine = `LIVING LOCAL AT ${phy_addr1}`) {
+function composeAiResponsesCombined(aiResponse, titleLine = `🌞 Living Local in ${displayMuniName} 😎`) {
     if (!aiResponse || typeof aiResponse !== 'string') {
         console.error("Error: Invalid or no AI response received!");
         return;
