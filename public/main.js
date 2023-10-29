@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!countyData.county_name) {
                     throw new Error;
                 }
-                addLoadingLine(`Found ${specialCountyFormatting(countyData.county_name)} County data...`);
+                addLoadingLine(`Found the address in <b>${specialCountyFormatting(countyData.county_name)} County</b>...`);
             } catch (error) {
                 console.error("Error fetching county data:\n", error);
                 alert("Looks like we hit a roadblock on County Road! 🛣️\nCouldn't fetch the county data.");
@@ -121,12 +121,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!parcelData || Object.keys(parcelData).length === 0) {
                     throw new Error('Missing or empty parcel data');
                 }
-                addLoadingLine(`Found data for ${specialCountyFormatting(countyData.county_name)} parcel ID# ${parcelData.parcel_id}...`);
+                addLoadingLine(`Found data for ${specialCountyFormatting(countyData.county_name)} Parcel ID# ${parcelData.parcel_id}...`);
             } catch (error) {
                 console.error("Error fetching parcel data:\n", error);
                 alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
                 return;  // Exit early (can't proceed without parcel data)
             }
+
+            addLoadingLine(`Found a <b>${buildingHeight.toFixed(0)}' building</b> within a mile...`);
 
             // API block #3 of 3: AI RESPONSES
             try {
@@ -148,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if (cityData) {
                     // *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
-                    addLoadingLine(`Within ${toProperCase(cityData.cityName)} city limits...`);
+                    addLoadingLine(`Within <b>${toProperCase(cityData.cityName)}</b> city limits...`);
                     for (const [key, value] of Object.entries(cityData)) {
                         aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
                     }
@@ -213,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // convert land sq. ft. to acres
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
 
-            addLoadingLine(`Total area of ${acres.toFixed(2)} acres...`);
+            addLoadingLine(`Total area of <b>${acres.toFixed(2)} acres</b>...`);
             
             /*
             // populate parcel data table
@@ -264,7 +266,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 maxMuniDensity = 0;
             }
             densityInput.value = maxMuniDensity.toFixed(0); // DENSITY AUTO/MANUAL INPUT
-            addLoadingLine(`Max density in ${displayMuniName} is ${maxDensity.toFixed(0)} units/acre...`);
 
             // get Municipality Name in Proper Case for cleaner display      
             if (cityNameProper.toLowerCase() === "unincorporated") {
@@ -272,11 +273,12 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 displayMuniName = cityNameProper;
             }
+            addLoadingLine(`Max density in ${displayMuniName} is <b>${maxDensity.toFixed(0)} units/acre</b>...`);
 
             // calculate the parcel's absolute maximum unit capacity
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
             maxCapacity = maxCapacity.toFixed(0);
-            addLoadingLine(`Max of ${maxCapacity} units...`);
+            addLoadingLine(`Ceiling of <b>${maxCapacity} units</b>...`);
 
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
