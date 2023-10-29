@@ -403,16 +403,17 @@ document.addEventListener('DOMContentLoaded', function() {
             window.scrollTo(0, 0);
             
         } catch (error) {
+            const loadingContainer = document.querySelector('.loading-container');
+        
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);
-                alert('There was an error with the server. Darn! Please try again later.');
+                loadingContainer.style.color = "red";
             } else if (error.message.startsWith("Took too long")) {
                 console.error('Server error:', error);
-                alert('Sorry, I\'m not feeling it right now.\nJust kidding. I\'m just busy sometimes!\nRefresh and run me again.');
+                location.reload(); // Reload the page
             } else {
                 console.error('Error:', error);
-                // to-do: significantly improve error handling.
-                alert('Whoops, something bad happened and I failed...\nTry again. I was probably just hella busy for a minute.');
+                loadingContainer.style.color = "grey";
             }
         }
     });
