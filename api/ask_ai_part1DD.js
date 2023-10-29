@@ -283,12 +283,14 @@ module.exports = async (req, res) => {
         "role": "system",
         "content": `
             CONTEXT:
-                Florida's Live Local Act, effective July 1, 2023, revolutionizes multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
-                    1. Over 40% of units are 'affordable' (rent thresholds vary by county).
-                    2. There are a minimum of 70 affordable units.
+                Florida's Live Local Act (went into effect July 1, 2023) revolutionized multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
+                    1. Over 40% of units are 'affordable' ('affordable' rent maximums vary by county).
+                    2. There must be at least 70 gross 'affordable' units.
                     3. All non-density/height/zoning/land use municipal regulations are met.
-                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile. Furthermore, it offers a 75% property tax abatement on affordable units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
-            
+                    4. The parcel is currently zoned for mixed use, commercial, or industrial uses.
+                The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
+                Furthermore, it offers a 75% property tax abatement on 'affordable' units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
+
             INSTRUCTIONS:
                 Detail the tax abatement benefits and the rent structure under the Live Local Act.
                 Do not use HTML.
