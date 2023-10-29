@@ -294,6 +294,7 @@ module.exports = async (req, res) => {
             INSTRUCTIONS:                
                 Below is a summary.
                 Your task is to add emojis throughout the summary.
+                Do not summarize too much further as most remaining figures are very important.
 
             SUMMARY:
 
@@ -420,7 +421,7 @@ module.exports = async (req, res) => {
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             model: 'gpt-3.5-turbo-16k',//process.env.AI_MODEL_PRIMARY_ANALYSES,
             messages: messages,
-            max_tokens: 600, //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
+            max_tokens: 800, //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
             temperature: 0.3,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
