@@ -337,7 +337,8 @@ function timeout(ms) {
 // Get max density of a municipality
 async function getMaxDensity(county, city) {
   try {
-    const response = await fetch(`https://www.oyoops.com/api/get_max_density?county=${county}&city=${city}`);
+    //const response = await fetch(`https://www.oyoops.com/api/get_max_density?county=${county}&city=${city}`);
+    const response = await fetch(`/api/get_max_density?county=${county}&city=${city}`);
     const data = await response.json();
     if (data.error) {
       console.error(data.error);
@@ -353,7 +354,8 @@ async function getMaxDensity(county, city) {
 // Fetch tallest building within a 1-mile radius of the address
 async function fetchTallestBuilding(lat, lng, radius) {
     try {
-        const response = await fetch(`https://www.oyoops.com/api/building_height?lat=${lat}&lng=${lng}&radius=${radius}`);
+        //const response = await fetch(`https://www.oyoops.com/api/building_height?lat=${lat}&lng=${lng}&radius=${radius}`);
+        const response = await fetch(`/api/building_height?lat=${lat}&lng=${lng}&radius=${radius}`);
         const data = await response.json();
         return data;
     } catch (error) {
