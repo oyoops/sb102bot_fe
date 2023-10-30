@@ -5,15 +5,7 @@
 **Florida Multifamily Development Calculator**
 
 ## Overview
-SB102Bot is a Flask web application designed to assist developers and property owners in Florida in evaluating the maximum allowable development intensity for multifamily constructions. The application uses a variety of data sources including county and parcel databases to provide a comprehensive report. The report includes unit counts, affordable housing options, tax abatements, and more.
-
-## Technology Stack
-- Backend: Python, Flask
-- Frontend: HTML, CSS, JavaScript
-- Database: PostgreSQL
-- Deployment: Vercel
-- APIs: Google Maps API
-- Libraries: NumPy, Pandas, Geopy, SQLAlchemy
+SB102Bot is a web app designed to assist real estate developers and property owners in Florida in evaluating the maximum allowable development intensity for multifamily constructions. The application uses a variety of data sources including county and parcel databases to provide a comprehensive report. The report includes unit counts, affordable housing options, tax abatements, and more.
 
 ## Project Structure
 - `/api`: Contains JavaScript files for serverless functions that handle API endpoints.
