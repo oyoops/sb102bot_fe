@@ -6,10 +6,10 @@
 // Div sections/containers
 const loadingContainer = document.querySelector('.loading-container');
 const initialContent = document.querySelector('#initialContent');
-const infoSections = document.querySelector('infoSections');
-const currentBugsContainer = document.querySelector('currentBugs');
-const recentUpdatesContainer = document.querySelector('recentUpdates');
-const futureUpdatesContainer = document.querySelector('futureUpdates');
+const infoSections = document.getElementById('infoSections');
+const currentBugsContainer = document.getElementById('currentBugs');
+const recentUpdatesContainer = document.getElementById('recentUpdates');
+const futureUpdatesContainer = document.getElementById('futureUpdates');
 const eligibilityDiv = document.getElementById("eligibilityStatus");
 const developmentProgramInputSection = document.getElementById('developmentProgramInputSection');
 const rentInfoContainer = document.getElementById('rentInfoContainer');
