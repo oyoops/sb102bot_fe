@@ -386,7 +386,7 @@ module.exports = async (req, res) => {
             //model: 'gpt-3.5-turbo-16k',//process.env.AI_MODEL_PRIMARY_ANALYSES,
             model: 'gpt-3.5-turbo',//process.env.AI_MODEL_PRIMARY_ANALYSES,
             messages: messages,
-            max_tokens: 800, //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
+            max_tokens: 600, //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
             temperature: 0.3,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
