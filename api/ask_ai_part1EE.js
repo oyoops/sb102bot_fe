@@ -405,7 +405,7 @@ module.exports = async (req, res) => {
             '''
 
             YOUR TASK:
-                Reproduce the text, interspersing relevant emojis throughout.
+                Summarize the text, interspersing relevant emojis throughout.
         `
     }];
 
@@ -456,7 +456,7 @@ module.exports = async (req, res) => {
             ////console.log("\n[USER Prompt]\n" + aiPromptUser);
         }
         if (aiResponseText) {
-            console.log("\n[AI Response]\n" + aiResponseText);
+            ////console.log("\n[AI Response]\n" + aiResponseText);
         }
 
         // Send response to client
