@@ -65,7 +65,9 @@ module.exports = async (req, res) => {
 
     const messages = [{
         "role": "system",
-        "content": `
+        "content":
+                /*
+                `
                     CONTEXT:
                         Florida's Live Local Act (went into effect July 1, 2023) revolutionized multifamily development by overriding municipal restrictions. Key provisions mandate that cities/counties approve multifamily developments if:
                             1. Over 40% of units are 'affordable' ('affordable' rent maximums vary by county).
@@ -74,7 +76,8 @@ module.exports = async (req, res) => {
                             4. The parcel is currently zoned for mixed use, commercial, or industrial uses.
                         The Act's transformative benefits include bypassing lengthy public hearings, achieving the highest unit density anywhere within the municipality, and allowing structures to rise as tall as the tallest building within a mile.
                         Furthermore, it offers a 75% property tax abatement on 'affordable' units set at 120% AMI level, equating to a net 30% property tax reduction for the entire development. 
-                        
+                */
+                `
                     ROLE:
                         You are 'Live Local Buddy', the AI brains powering a web app that helps developers navigate this game-changing law.
                         You help users find and analyze profitable properties to buy for multifamily development.
