@@ -81,9 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // scroll to top
             window.scrollTo(0, 0);
-            //loadingContainer.scrollIntoView;
-
-
 
 
             /* API blocks: */
@@ -101,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!countyData.county_name) {
                     throw new Error;
                 }
-                addLoadingLine(`Found the address in <b>${specialCountyFormatting(countyData.county_name)} County</b>...`);
+                ////addLoadingLine(`Found the address in <b>${specialCountyFormatting(countyData.county_name)} County</b>.`);
             } catch (error) {
                 console.error("Error fetching county data:\n", error);
                 alert("Looks like we hit a roadblock on County Road! 🛣️\nCouldn't fetch the county data.");
@@ -121,7 +118,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!parcelData || Object.keys(parcelData).length === 0) {
                     throw new Error('Missing or empty parcel data');
                 }
-                addLoadingLine(`Found data for ${specialCountyFormatting(countyData.county_name)} Parcel ID# <b>${parcelData.parcel_id}</b>...`);
+                addLoadingLine(`Found ${specialCountyFormatting(countyData.county_name)} <br>parcel <b>#${parcelData.parcel_id}</b>.
+                    <br><br>Writing a memo about the property...`);
+                
             } catch (error) {
                 console.error("Error fetching parcel data:\n", error);
                 alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
@@ -131,9 +130,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let height = parseFloat(buildingHeight).toFixed(0);
             if (isNaN(height)) {
                 height = "unknown";
-                addLoadingLine(`Trying to find a tall building within a mile...`);
+                ////addLoadingLine(`Trying to find a tall building within a mile...`);
             } else {
-                addLoadingLine(`Found a <b>${parseFloat(buildingHeight).toFixed(0)}'-tall building</b> within a mile...`);
+                ////addLoadingLine(`Found a <b>${parseFloat(buildingHeight).toFixed(0)}'-tall building</b> within a mile...`);
             }
 
             // API block #3 of 3: AI RESPONSES
@@ -156,9 +155,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if (cityData) {
                     if (toProperCase(cityData.cityName) == "Unincorporated") {
-                        addLoadingLine(`Site is within <b>${toProperCase(cityData.cityName)}</b> city limits...`);
+                        ////addLoadingLine(`Site is within <b>${toProperCase(cityData.cityName)}</b> city limits...`);
                     } else {
-                        //addLoadingLine(`Site is in unincorporated <b>${countyData.county_name} County</b>...`);
+                        ////addLoadingLine(`Site is in unincorporated <b>${countyData.county_name} County</b>...`);
                     }
                     // *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
                     for (const [key, value] of Object.entries(cityData)) {
@@ -224,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // convert land sq. ft. to acres
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
-            addLoadingLine(`Area = <b>${acres.toFixed(2)} acres</b>...`);
+            ////addLoadingLine(`Area = <b>${acres.toFixed(2)} acres</b>...`);
             
             /*
             // populate parcel data table
@@ -287,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 displayMuniName = cityNameProper;
             }
-            addLoadingLine(`Max density in ${displayMuniName} is <b>${maxDensity.toFixed(0)} units/acre</b>...`);
+            ////addLoadingLine(`Max density in ${displayMuniName} is <b>${maxDensity.toFixed(0)} units/acre</b>...`);
 
             // calculate the parcel's absolute maximum unit capacity
             maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
