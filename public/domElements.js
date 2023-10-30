@@ -6,6 +6,7 @@
 // Div sections/containers
 const loadingContainer = document.querySelector('.loading-container');
 const initialContent = document.querySelector('#initialContent');
+const infoSections = document.querySelector('infoSections');
 const currentBugsContainer = document.querySelector('currentBugs');
 const recentUpdatesContainer = document.querySelector('recentUpdates');
 const futureUpdatesContainer = document.querySelector('futureUpdates');
@@ -54,6 +55,7 @@ const tryAgainButton = document.getElementById("tryAgainButton");
 export {
     loadingContainer,
     initialContent,
+    infoSections,
     currentBugsContainer,
     recentUpdatesContainer,
     futureUpdatesContainer,

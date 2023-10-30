@@ -5,7 +5,7 @@ import './eventListeners.js';
 // get DOM elements
 import {
     loadingContainer, initialContent, eligibilityDiv, developmentProgramInputSection,
-    currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer,
+    currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections,
     marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
     mainHeader,
     ////parcelDataTable, parcelDataTableBody, 
@@ -39,10 +39,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // hide header and initial content
             mainHeader.style.display = 'none';
             initialContent.style.display = 'none';
+            
+            infoSections.style.display = 'none';
             currentBugsContainer.style.display = 'none';
             recentUpdatesContainer.style.display = 'none';
             futureUpdatesContainer.style.display = 'none';
-            
+
             // display fake loading progress bar
             updateLoadingBar();
             loadingContainer.style.display = 'block';
