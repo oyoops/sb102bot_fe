@@ -318,8 +318,8 @@ module.exports = async (req, res) => {
         "content": `
             INSTRUCTIONS:                
                 Below is a summary.
-                Your task is to add emojis throughout the summary.
-                Do not summarize too much further as most remaining figures are very important.
+                Do not summarize too much further as most remaining sections and figures are very important.
+                Your task is simply to add emojis throughout.
 
             SUMMARY:
 
@@ -328,15 +328,15 @@ module.exports = async (req, res) => {
                 
             MOST RELEVANT CHANGES FOR MULTIFAMILY DEVELOPERS:
 
-            A. County Approval for Affordable Housing (Section 3 of the bill):
-                The current law permits counties to bypass their comprehensive plan and zoning regulations when they approve the development of affordable housing on parcels with zoning that allows mixed-use, commercial, or industrial (note: residential not included) uses.
+            I.  Approval for Affordable Housing (Section 3 of the Act):
+                The Live Local Act permits counties/cities/municipalities to bypass their comprehensive plan and zoning regulations when they approve developments with more than 10% of rental units dedicated to 'affordable housing' on parcels with zoning currently allowing for mixed-use, commercial, or industrial uses (note: residential not included), allowing them to bypass comprehensive plans and rezonings.
+                If more than 40% is affordable, then the county/city/municipality *MUST* approve such development proposals.
                 Amends Section 125.01055.
  
                 Major Key Provisions:
                     A municipality *CAN APPROVE* any proposed multifamily and mixed-use residential projects in any area  zoned as mixed-use, commercial, or industrial (note: residential not included) without the need to adhere to local rules, provided:
                         - At least 10% of the units are used for affordable housing.
                         - The developer has not sought or received SAIL (State Apartment Incentive Loan) funding.
-                
                     A municipality *MUST APPROVE* any proposed multifamily/mixed-use projects on any parcel zoned for commercial, industrial, or mixed-use (notice 'residential' is excluded) - no public hearings required - if:
                         - The current zoning allows for mixed-use, commercial, or industrial (note: residential not included) uses.
                         - At least 40% of the residential units are affordable.
@@ -351,20 +351,11 @@ module.exports = async (req, res) => {
                         Overrides height restrictions; allows a proposed development to build up to the height of the highest allowed height for a commercial or residential development located within a mile of the proposed site or three stories, whichever is taller.
                         (As a proxy for "highest allowed height", I will provide you with the *tallest existing building* to be conservative.) 
                 
-                Other Provisions:
-                    - Developments must still meet city/county land development regulations (like setback, parking) except for rules about allowable densities, height, and land use.
-                    - Reduced parking requirements must be "considered" (whatever that really means...) for projects with at least 40% affordable units if located within half a mile of a major transit stop.
+                Other Notes:
+                    - Developments must still meet city/county/municipal land development regulations (like setbacks, design, parking) with the exceptions of those restricting land use, unit density, and building height.
+                    - Reduced parking requirements must be "considered" (whatever that truly means...) for projects with at least 40% affordable units if located within half a mile of a major transit stop.
 
-            B. Municipal Approval for Affordable Housing (Section 5 of the bill):
-                Identical to Part A (Section 3 of the bill, but applies to municipalities, except that for municipalities
-                which are predominately residential (that is, less than 20% of the total land area is designated
-                as either commercial or industrial), the municipality must approve pursuant to this subsection
-                only if the proposed development is a mixed-use project.
-
-            C. Municipal Property for Affordable Housing (Section 7 of the bill):
-                See Parts A and B
-
-            D. Property Tax Discounts/Exemptions (Section 8):
+            II. Property Tax Discounts/Exemptions (Section 8 of the Act):
                 The bill introduces an ad-valorem property tax exemption for portions of property in a multifamily project up to:
                     - 75% of the assessed value if housing is provided for households with income between 80% and 120% AMI.
                     - 100% of the assessed value if housing is provided for households with income not exceeding 80% AMI.
@@ -373,7 +364,8 @@ module.exports = async (req, res) => {
                     - The project should be newly constructed, defined as improvements substantially completed within five years before certain application dates. This can include substantial rehabilitation.
                     - The project must have over 70 units dedicated to households with incomes not exceeding 120% AMI.
                     - Rents for units should be the lesser of the amount specified by the most recent multifamily rental program income and rental limit chart posted by FHFC (derived from HUD) or 10% below market rate.
-                    - Units must not have an agreement with Florida Housing and cannot be used with exemptions from Paragraph G.
+                    - Units must not have an agreement with Florida Housing.
+                    - The affordability period is 30 years (equal to the tax abatement period).
                 
                 Compliance and Applicability:
                     Property owners must submit an application along with a certification from Florida Housing by March 1st to avail the exemption.
@@ -381,32 +373,8 @@ module.exports = async (req, res) => {
                 
                 Implication:
                     Developers, including market-rate developers, can avail of substantial property tax exemptions for portions of their properties used for affordable housing, provided they meet the stipulated conditions.
-
-            E. Affordable Housing Property Tax Exemption (Section 9 of the bill):
-                The bill creates Section 196.1979, enabling counties and municipalities to enact an ordinance granting tax exemptions for portions of properties used to provide affordable housing.
                 
-                Eligibility Criteria:
-                    - The property must house individuals or families whose annual income does not surpass 60% AMI.
-                    - The property should contain over 50 residential units, with at least 20% dedicated to affordable housing.
-                    - Affordable unit rents must either:
-                        Not exceed amounts specified by the latest multifamily rental program income and rental limit chart posted by FHFC (based on HUD data).
-                        Be at least 10% below market rate.
-                    - The affordability period is 30 years (equal to the tax abatement period).
-                    - The property should not have been flagged for three or more code violations in the prior 24 months. Furthermore, it shouldn't have any outstanding code violations or associated fines before the final decision on its qualification for the exemption.
-                
-                Amount of Exemption:
-                    If all units in the development are designated for affordable housing, local authorities can exempt up to 100% of the assessed value of each residential unit that offers affordable housing.
-                    If fewer than 100% of the units are designated for affordable housing, the exemption can be up to 75% of the assessed value for each affordable housing unit.
-                
-                Compliance and Applicability:
-                    Property owners need to send an application and certification of qualified property to the property appraiser by March 1st for the exemption.
-                    The exemption starts applying from the 2024 tax roll.
-                    
-                Implication:
-                    Local governments can now offer property tax exemptions for developments that provide affordable housing.
-                    It's crucial to note that this exemption requires adoption by the respective local jurisdiction before its implementation.
-                
-            F. Building Materials Sales Tax Refund (Section 12 of the bill):
+            III. Building Materials Sales Tax Refund (Section 12 of the Act):
                 Tax Refund Provisions:
                     Property owners can get a refund for sales taxes paid on building materials used in constructing properties that have a recorded agreement with Florida Housing. These properties should have newly built units that are bound by a land use restriction agreement to offer affordable housing to individuals or families meeting the ELI, VLI, or LI limits.
                 
@@ -437,7 +405,7 @@ module.exports = async (req, res) => {
             '''
 
             YOUR TASK:
-                Summarize the sections of the Live Local Act that would be of interest to Florida multifamily developer planning a new development.
+                Reproduce the text, interspersing relevant emojis throughout.
         `
     }];
 
@@ -446,7 +414,7 @@ module.exports = async (req, res) => {
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             model: 'gpt-3.5-turbo-16k',//process.env.AI_MODEL_PRIMARY_ANALYSES,
             messages: messages,
-            max_tokens: 800, //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
+            max_tokens: 1000, //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
             temperature: 0.3,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
