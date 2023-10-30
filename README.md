@@ -1,6 +1,6 @@
 # Live Local Guru :house_with_garden: :construction_worker:
 
-`This whole description was written by ChatGPT`
+`This whole description was 100% written by ChatGPT`
 
 **Florida Multifamily Development Calculator**
 
