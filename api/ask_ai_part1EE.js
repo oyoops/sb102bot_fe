@@ -373,39 +373,10 @@ module.exports = async (req, res) => {
                 
                 Implication:
                     Developers, including market-rate developers, can avail of substantial property tax exemptions for portions of their properties used for affordable housing, provided they meet the stipulated conditions.
-                
-            III. Building Materials Sales Tax Refund (Section 12 of the Act):
-                Tax Refund Provisions:
-                    Property owners can get a refund for sales taxes paid on building materials used in constructing properties that have a recorded agreement with Florida Housing. These properties should have newly built units that are bound by a land use restriction agreement to offer affordable housing to individuals or families meeting the ELI, VLI, or LI limits.
-                
-                Definitions:
-                    "Newly constructed" in this section explicitly excludes rehabilitation, renovation, restoration, modification, alteration, or expansion of existing buildings.
-                
-                Terms and Conditions:
-                    - The exemption applies to sales of building materials starting July 1, 2023.
-                    - Only tangible personal property that becomes a component of newly built units within the development that are restricted under the LURA (Land Use Restriction Agreement) qualify as "Eligible Units."
-                    - It includes appliances but excludes items like plants, landscaping, fencing, and hardscaping.
-                    - This exemption doesn't apply to renovation or restoration of existing buildings on the parcel where the Eligible Units are constructed.
-                    - The benefit is realized through a refund of previously paid taxes.
-                
-                Application Process:
-                    - To get the refund, property owners must send an application to the Department of Revenue.
-                    - The application must be submitted:
-                        Within six months after the eligible unit is deemed substantially complete by the local building code inspector.
-                        Or by November 1st after the improved property is first subject to assessment.
-                    
-                Refund Amount:
-                    - The refund must be over $500.
-                    - The refundable amount can't exceed the lesser of:
-                        $5,000 per Eligible unit.
-                        97.5% of the Florida sales or use tax paid on the building materials used on an Eligible Unit.
-                    
-                Implication:
-                    Affordable housing developers can now reclaim sales taxes paid on building materials used for qualifying units. This refund can be significant, allowing for a refund of up to $5,000 per eligible unit.
             '''
 
             YOUR TASK:
-                Summarize the text, interspersing relevant emojis throughout.
+                Summarize both sections, interspersing relevant emojis throughout.
         `
     }];
 
@@ -415,7 +386,7 @@ module.exports = async (req, res) => {
             //model: 'gpt-3.5-turbo-16k',//process.env.AI_MODEL_PRIMARY_ANALYSES,
             model: 'gpt-3.5-turbo',//process.env.AI_MODEL_PRIMARY_ANALYSES,
             messages: messages,
-            max_tokens: 700, //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
+            max_tokens: 800, //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
             temperature: 0.3,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
