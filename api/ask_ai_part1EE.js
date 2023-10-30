@@ -1,4 +1,4 @@
-// Live Local general summary
+// Live Local Act key summary
 
 const axios = require('axios');
 
