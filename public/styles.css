@@ -531,3 +531,30 @@ input:disabled {
     opacity: 1;
     transform: translateX(0);
 }
+
+#infoSections {
+    text-align: left;
+    font-size: 0.9em;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+#infoSections h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+#infoSections ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+#infoSections ul li {
+    margin-bottom: 5px;
+    padding-left: 10px;
+    background: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwIiB3aWR0aD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBvbHlnb24gcG9pbnRzPSI1LDIgMiw1IDUsOCIgc3R5bGU9ImZpbGw6YmxhY2siLz48L3N2Zz4=) no-repeat;
+    background-position: 0 50%;
+    background-size: 10px;
+}
