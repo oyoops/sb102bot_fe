@@ -71,7 +71,8 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
       const results = await Promise.all(fetchPromises);
   
       /* START STAGE 2: SER */
-      const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(cleanData)}&superAI=${superAI}`;
+      ////const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(cleanData)}&superAI=${superAI}`;
+      const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(JSON.stringify(results))}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData))}&superAI=${superAI}`;
       const serResponse = await fetch(serEndpoint);
       if (!serResponse.ok) {
           console.log('ERROR: SER failed! -- SuperAI was', superAI);
