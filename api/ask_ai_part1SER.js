@@ -36,6 +36,7 @@ module.exports = async (req, res) => {
     ////const superAI = req.superAI; // 'on' / 'off'
     const superAI = suppDataForAI.superAI; // 'on' / 'off'
     console.log("<", superAI, ">");
+    console.log("<", req.superAI, ">");
     
 
     /*
