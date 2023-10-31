@@ -59,7 +59,7 @@ module.exports = async (req, res) => {
     */
 
     // Stringify and escape
-    let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
+    let suppDataForAIString = JSON.stringify(suppDataForAI);
     console.log("\nsuppDataForAIString: \n" + suppDataForAIString);
     let jsonString;
     try {
