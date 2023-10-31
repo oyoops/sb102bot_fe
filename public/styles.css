@@ -400,7 +400,7 @@ input:disabled {
     height: 40vh;                /* Make it shorter vertically; adjust as needed */
     box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);   /* Slight shadow underneath */
     position: relative;
-    top: 20px;                  /* Push it down by 20 pixels; adjust as needed */
+    top: 0px;                  /* Push it down by 0 pixels; adjust as needed */
     z-index: 1;                 /* Ensure it's on top of other content */
     transition: opacity 1s, transform 0.2s;
     border-radius: 0;           /* Remove border radius for full edge-to-edge look */
