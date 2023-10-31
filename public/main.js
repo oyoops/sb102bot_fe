@@ -23,6 +23,16 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
     //initAutocomplete(); // prepare Places API
     
+
+    // (manually add 'Supercharge AI' switch event listener)
+    let superAI = 'off';
+    document.getElementById('superchargeSwitch').addEventListener('change', function() {
+        this.value = this.checked ? 'on' : 'off';
+        superAI = this.value;
+        console.log(`SuperAI=${superAI}`);
+    });
+
+      
     // on form submit:
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -30,12 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get user input (dirty address) 
         address = addressInput.value;
         if (!address) {
-            alert('Ummm, you might want to try typing an address first? Just a suggestion, though...');
+            alert('You might want to try typing an address first? Just a suggestion, though...');
             return;
         }
 
         // ONE HUGE TRY BLOCK
         try {
+            console.log(`Submitting ${address} to Live Local Guru w/ SuperAI=${superAI}...`);
+            
             // hide header and initial content
             mainHeader.style.display = 'none';
             initialContent.style.display = 'none';
