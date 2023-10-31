@@ -70,128 +70,40 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             geocodeData = await geocodeResponse.json();
             */
-            const geocodeData = await geocodeAddress(address);
-            ////console.log("Geocode Data Received:", geocodeData);            
-            // extract coordinates from geo data
-            lat = geocodeData.results[0].geometry.location.lat;
-            lng = geocodeData.results[0].geometry.location.lng;
 
-            // fetch the city of the address (Lat,Lng = CityData || CityName = Unincorporated if not in a city)
-            /*
-            const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
-            const cityCheckResponse = await fetch(cityCheckEndpoint);
-            cityData = await cityCheckResponse.json(); // global
-            if (cityData.isInCity) {
-                ////console.log(`Address is in city: ${cityData.cityName}`);
-            } else {
-                ////console.log('Address is unincorporated.');
-                cityData.cityName = 'unincorporated';
-            }
-            */
-            const cityData = await checkCity(geocodeData);
-
-
-            // Initialize the map (and get tallest building data)
-            const tallestBuildingData = await initializeMap(lat, lng);
-            // Get max building height & dist. from tallest building data
-            const maxBH = tallestBuildingData.maxHeight.toFixed(0);
-            const maxBD = tallestBuildingData.maxDistance.toFixed(0);
-            console.log("MaxBH =", maxBH, "ft.");
-            console.log("MaxBD =", maxBD, "mi.");
-            // Display the map
-            googlemap.style.display = 'block';
-            // scroll to top
-            window.scrollTo(0, 0);
-            // hackily set global
-            buildingHeight = maxBH;
 
 
             /* API blocks: */
 
-            // API block #1 of 3: COUNTY DATA
-            /*
-            try {
-                // fetch the county data for the address (Lat,Lng = CountyData)
-                const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
-                const countyDataResponse = await fetch(countyDataEndpoint);
-                
-                countyData = await countyDataResponse.json();
-                ////console.log("County Data Received:", countyData);
-                
-                if (!countyData.county_name) {
-                    throw new Error;
-                }
-                ////addLoadingLine(`Found the address in <b>${specialCountyFormatting(countyData.county_name)} County</b>.`);
-            } catch (error) {
-                console.error("Error fetching county data:\n", error);
-                alert("Looks like we hit a roadblock on County Road! 🛣️\nCouldn't fetch the county data.");
-                return;  // Exit early since we can't proceed without county data
-            }
-            */
+            // GEO DATA
+            const geocodeData = await geocodeAddress(address);
+            lat = geocodeData.results[0].geometry.location.lat;
+            lng = geocodeData.results[0].geometry.location.lng;
+
+            // TALLEST BLDG. DATA (and initializes map)
+            const tallestBuildingData = await initializeMap(lat, lng);
+
+            // get max height & distance
+            const maxBH = tallestBuildingData.maxHeight.toFixed(0); // feet
+            console.log("MaxBH =", maxBH, "ft.");
+            const maxBD = tallestBuildingData.maxDistance.toFixed(2); // miles
+            console.log("MaxBD =", maxBD, "mi.");
+            buildingHeight = maxBH; // (hackily set global)
+
+            // display the map
+            googlemap.style.display = 'block';
+            window.scrollTo(0, 0);
+
+            // CITY / MUNI. DATA
+            const cityData = await checkCity(geocodeData);
+            
+            // COUNTY DATA
             const countyData = await fetchCountyData(lat, lng);
-            try {
-                console.log("County Data Received:", countyData);
-                //addLoadingLine(`Found the address in <b>${specialCountyFormatting(countyData.county_name)} County</b>.`);
-            } catch (error) {
-                console.error("Error fetching county data:\n", error);
-                alert("Looks like we hit a roadblock on County Road! 🛣️\nCouldn't fetch the county data.");
-                return;  // Exit early since we can't proceed without county data
-            }
 
-            // API block #2 of 3: PARCEL DATA
-            /*
-            try {
-                // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
-                const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
-                const parcelDataResponse = await fetch(parcelDataEndpoint);
-                
-                parcelData = await parcelDataResponse.json();
-                ////console.log("Parcel Data Received:", parcelData);
-                if (!parcelData || Object.keys(parcelData).length === 0) {
-                    throw new Error('Missing or empty parcel data');
-                }
-                //addLoadingLine(`Found ${specialCountyFormatting(countyData.county_name)} <br>parcel <b>#${parcelData.parcel_id}</b>.<br><br>Writing a memo about the property...`);
-                addLoadingLine(`Found parcel #${parcelData.parcel_id}.<br>Researching the parcel...<br>`);
-                
-            } catch (error) {
-                console.error("Error fetching parcel data:\n", error);
-                alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
-                return;  // Exit early (can't proceed without parcel data)
-            }
-            */
+            // PARCEL DATA
             const parcelData = await fetchParcelData(lat, lng, countyData.county_name);
-            try {
-                console.log(`Parcel Data Received:`, parcelData);
-                //addLoadingLine(`Found parcel #${parcelData.parcel_id}.<br>Researching the parcel...<br>`);
-            } catch (error) {
-                console.error(`Error fetching parcel data:\n`, error);
-                alert(`We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.`);
-                return;  // Exit early (can't proceed without parcel data)
-            }
 
-            // API block #2.5 of 3: MAX BUILDING HEIGHT
-            /*
-            const tallBldgsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
-            try {
-                // Fetch ALL data on tallest buildings within radius
-                console.log(`TallBldgs:`, tallBldgsData);
-            } catch {
-                console.error(`Error fetching max building height:\n`, error);
-                alert(`Looks like we hit a ceiling on my usefuless! \nCouldn't fetch the maximum building height.`);
-                return;  // Exit early since we can't proceed without max building height data
-            }
-            */
-            /*
-            let height = parseFloat(buildingHeight).toFixed(0); /////// fix
-            if (isNaN(height)) {
-                height = "unknown";
-                ////addLoadingLine(`Trying to find a tall building within a mile...`);
-            } else {
-                ////addLoadingLine(`Found a <b>${parseFloat(buildingHeight).toFixed(0)}'-tall building</b> within a mile...`);
-            }
-            */
-
-            // API block #3 of 3: AI RESPONSES
+            // AI RESPONSES
             try {
                 // verify parcelData exists
                 if (!parcelData || Object.keys(parcelData).length === 0) {
@@ -220,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
                     }
                 }
+
                 // Preserve dirtyData
                 dirtyData = JSON.parse(JSON.stringify(aiSupplementalData));
                 let dirtyDataString = JSON.stringify(dirtyData, null, 2); 
@@ -237,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // convert city and county names to Proper Case for clean
+            // Proper case city and county names
             cityNameProper = toProperCase(cityData.cityName);
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
