@@ -295,7 +295,7 @@ module.exports = async (req, res) => {
     } else if (eligibleIndustrialCodes.includes(dor_uc)) {
         eligibleLandUseForLiveLocal = true;
         eligibilityDescription = "\nLand use is '" + useCodeLookup[dor_uc] + ",'\nwhich qualifies as INDUSTRIAL!" + "\n\n  ** Live Local ELIGIBLE! **\n\n";
-    } else if (dor_uc="003") {    
+    } else if (dor_uc=="003") {    
         eligibleLandUseForLiveLocal = false;
         eligibilityDescription = "\nLand use is '" + useCodeLookup[dor_uc] + ",'\nwhich does NOT qualify. It's ALREADY residential!\n";
     } else {
