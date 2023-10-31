@@ -569,7 +569,7 @@ input:disabled {
     position: relative;
     display: inline-block;
     width: 60px;
-    height: 14px;
+    height: 23px;
     margin-right: 10px; /* This will add some spacing between the switch and the text */
 }
   
