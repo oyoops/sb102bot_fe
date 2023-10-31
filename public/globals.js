@@ -80,6 +80,42 @@ let buildingAddress; // may not work
 let hmmm;
 
 
+/* CALCULATIONS.JS GLOBALS (DOM stuff) */
+// map
+const mapDisplay = document.getElementById('map');
+// acreage & density inputs
+const acreageInputDisplay = document.getElementById('acreageInput');
+const densityInputDisplay = document.getElementById('densityInput');
+// affordable percentage input/output
+const affordablePctSliderDisplay = document.getElementById('affordablePctSlider');
+const affordablePctDisplay = document.getElementById('affordablePctDisplay');
+// unit count outputs
+const unitCountTableBody = document.getElementById('unitCalculationTableBody');
+const warningContainer = document.getElementById('warningContainer');
+// unit size outputs
+const marketStudioSizeDisplay = document.getElementById('marketStudioSize');
+const market1BDSizeDisplay = document.getElementById('market1BDSize');
+const market2BDSizeDisplay = document.getElementById('market2BDSize');
+const market3BDSizeDisplay = document.getElementById('market3BDSize');
+const affordableStudioSizeDisplay = document.getElementById('affordableStudioSize');
+const affordable1BDSizeDisplay = document.getElementById('affordable1BDSize');
+const affordable2BDSizeDisplay = document.getElementById('affordable2BDSize');
+const affordable3BDSizeDisplay = document.getElementById('affordable3BDSize');
+const avgAffordableSizeDisplay = document.getElementById('avgAffordableSizeDisplay');
+const avgMarketSizeDisplay = document.getElementById('avgMarketSizeDisplay');
+const avgBlendedSizeDisplay = document.getElementById('avgBlendedSizeDisplay');
+// cost inputs
+const landCostPerUnitInputDisplay = document.getElementById('landCostPerUnitInput');
+const totalHCPerUnitInputDisplay = document.getElementById('totalHCPerUnitInput');
+// cost outputs
+const totalLandCostDisplay = document.getElementById('totalLandCost');
+const totalHcCostDisplay = document.getElementById('totalHcCost');
+const totalLandAndTotalHcDisplay = document.getElementById('totalLandAndTotalHc');
+const totalLandAndTotalHcPerUnitDisplay = document.getElementById('totalLandAndTotalHcPerUnit');
+const totalLandAndTotalHcPerSqFtDisplay = document.getElementById('totalLandAndTotalHcPerSqFt');
+// abatement output
+const abatementTableBody = document.getElementById('abatementTableBody');
+
 
 
 /*    parcelData ----> [__data refinement process__] ----> clean dataset, ready to be fed into AI    */
