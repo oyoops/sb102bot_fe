@@ -124,9 +124,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early since we can't proceed without county data
             }
             */
+            const countyData = await fetchCountyData(lat, lng);
             try {
-                const countyData = await fetchCountyData(lat, lng);
-                ////console.log("County Data Received:", countyData);
+                console.log("County Data Received:", countyData);
                 //addLoadingLine(`Found the address in <b>${specialCountyFormatting(countyData.county_name)} County</b>.`);
             } catch (error) {
                 console.error("Error fetching county data:\n", error);
@@ -155,24 +155,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early (can't proceed without parcel data)
             }
             */
+            const parcelData = await fetchParcelData(lat, lng, countyData.county_name);
             try {
-                const parcelData = await fetchParcelData(lat, lng, countyData.county_name);
-                ////console.log("Parcel Data Received:", parcelData);
+                console.log(`Parcel Data Received:`, parcelData);
                 //addLoadingLine(`Found parcel #${parcelData.parcel_id}.<br>Researching the parcel...<br>`);
             } catch (error) {
-                console.error("Error fetching parcel data:\n", error);
-                alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
+                console.error(`Error fetching parcel data:\n`, error);
+                alert(`We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.`);
                 return;  // Exit early (can't proceed without parcel data)
             }
 
             // API block #2.5 of 3: MAX BUILDING HEIGHT
+            const tallBldgsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
             try {
                 // Fetch ALL data on tallest buildings within radius
-                const tallBldgsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
-                console.log(maxBH);
+                console.log(`TallBldgs:`, tallBldgsData);
             } catch {
-                console.error("Error fetching max building height:\n", error);
-                alert("Looks like we hit a ceiling on my usefuless! \nCouldn't fetch the maximum building height.");
+                console.error(`Error fetching max building height:\n`, error);
+                alert(`Looks like we hit a ceiling on my usefuless! \nCouldn't fetch the maximum building height.`);
                 return;  // Exit early since we can't proceed without max building height data
             }
             /*
