@@ -17,6 +17,22 @@ async function geocodeAddress(address) {
     return geoData;
 }
 
+// check city v2
+async function checkCity(geoData) {
+    const lat = geoData.results[0].geometry.location.lat;
+    const lng = geoData.results[0].geometry.location.lng;
+    const muniCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
+    const muniData = await fetchAPI(cityCheckEndpoint);
+    if (muniData.isInCity) {
+        console.log(`Proeprty is within ${muniData.cityName} limits.`);
+    } else {
+        muniData.cityName = 'unincorporated';
+        console.log('Property is in unincorporated county area.');
+    }
+    /* City check was successful */
+    return muniData;
+}
+
 // generic fetch API
 async function fetchAPI(url) {
     const apiResponse = await fetch(url);
