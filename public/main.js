@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;  // Exit early (can't proceed without parcel data)
             }
 
-            let height = parseFloat(buildingHeight).toFixed(0);
+            let height = parseFloat(buildingHeight).toFixed(0); /////// fix
             if (isNaN(height)) {
                 height = "unknown";
                 ////addLoadingLine(`Trying to find a tall building within a mile...`);

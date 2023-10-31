@@ -33,7 +33,10 @@ module.exports = async (req, res) => {
     let { aiCombinedResponses, suppDataForAI } = req.query;
         
     // SuperAI Switch
-    const superAI = req.superAI; // 'on' / 'off'
+    ////const superAI = req.superAI; // 'on' / 'off'
+    const superAI = suppDataForAI.superAI; // 'on' / 'off'
+    console.log("<", superAI, ">");
+    
 
     /*
     // Try to parse if it's a JSON string

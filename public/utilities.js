@@ -18,6 +18,9 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
   ////console.log("\n<----[POST-TRANSFORMATION:]---->");
   ////console.log(JSON.stringify(cleanData, null, 2)); // test
   
+  // Add value of superAI switch to all primary requests
+  cleanData.superAI = superAI;
+
   // Define primary prompt endpoints
   let endpoints;
   if (superAI == 'on') {
