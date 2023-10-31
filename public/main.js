@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('Missing or empty parcel data');
                 }
                 //addLoadingLine(`Found ${specialCountyFormatting(countyData.county_name)} <br>parcel <b>#${parcelData.parcel_id}</b>.<br><br>Writing a memo about the property...`);
-                addLoadingLine(`Found parcel #${parcelData.parcel_id}<br>I'm researching your property...`);
+                addLoadingLine(`Found parcel #${parcelData.parcel_id}.<br>Researching the parcel...<br>`);
                 
             } catch (error) {
                 console.error("Error fetching parcel data:\n", error);
