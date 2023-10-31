@@ -30,7 +30,7 @@ function calculateCost(tokensUsed, modelName) {
 module.exports = async (req, res) => {
     console.log("[SER]\n");
 
-    let { aiCombinedResponses, suppDataForAI, superAI } = req.query;
+    let { aiCombinedResponses, suppDataForAI, superAI } = req.body;
         
     // SuperAI Switch
     //const superAI = req.superAI; // 'on' / 'off'
