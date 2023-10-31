@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
     let { aiCombinedResponses, suppDataForAI, superAI } = req.query;
         
     // SuperAI Switch
-    const superAI = req.superAI; // 'on' / 'off'
+    //const superAI = req.superAI; // 'on' / 'off'
     ////const superAI = suppDataForAI.superAI; // 'on' / 'off'
     console.log("<", superAI, ">");
     ////console.log("<", req.superAI, ">");
