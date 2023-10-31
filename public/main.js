@@ -51,12 +51,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // hide header and initial content
             mainHeader.style.display = 'none';
             initialContent.style.display = 'none';
-            
             infoSections.style.display = 'none';
             currentBugsContainer.style.display = 'none';
             recentUpdatesContainer.style.display = 'none';
             futureUpdatesContainer.style.display = 'none';
-
             // display fake loading progress bar
             updateLoadingBar();
             loadingContainer.style.display = 'block';
@@ -124,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-            // API block #2 of 3: CITY DATA
+            // API block #2 of 3: PARCEL DATA
             try {
                 // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
                 const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
