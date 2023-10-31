@@ -63,7 +63,11 @@ async function initializeMap(lat, lng) {
     // Fetch data on tallest buildings within radius
     tallestBuildingsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
 
-    // Parse buildings and add to map
+    // Keep track of the tallest one
+    let maxDistance = 0;
+    let maxHeight = 0;
+
+    // Parse building(s) and add to map
     (tallestBuildingsData || []).forEach((buildingData, index) => {
         try {
             if (!buildingData.lat || !buildingData.lng) {
@@ -114,6 +118,15 @@ async function initializeMap(lat, lng) {
                 new google.maps.LatLng(buildingLat, buildingLng)
             );
             distanceInMilesToTallestBldg = distanceInMeters * 0.000621371;
+
+            ///// NEW: Keep track of tallest
+            const currentBuildingHeight = parseFloat(buildingHeight);
+            if (currentBuildingHeight > maxHeight) {
+                maxHeight = currentBuildingHeight;
+                maxDistance = distanceInMilesToTallestBldg;
+            }
+            /////
+
             // distance line label
             const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
             createStyledMarker(lineLabelPos, map, `${buildingHeight.toFixed(0)} feet tall\n${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
@@ -131,7 +144,7 @@ async function initializeMap(lat, lng) {
         map.fitBounds(bounds);
     }
     
-    return distanceInMilesToTallestBldg;
+    return maxDistance;
 }
 
 // Create a text marker (transparent placemark with a label)
