@@ -455,6 +455,39 @@ function specialCountyFormatting(county) {
   return specialCases[county] || toProperCase(county);
 }
 
+
+// NEW:
+
+function verifyParcelData(parcelData) {
+    if (!parcelData || Object.keys(parcelData).length === 0) {
+        console.log(`Skipping AI analysis module...`);
+        throw new Error('Sorry, this property is not eligible, buddy.');
+    }
+}
+
+function enhanceWithCountyData(aiSupplementalData, countyData) {
+    for (const [key, value] of Object.entries(countyData)) {
+        aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
+    }
+}
+
+function enhanceWithCityData(aiSupplementalData, cityData) {
+    if (toProperCase(cityData.cityName) == "Unincorporated") {
+        // addLoadingLine(`Site is within <b>${toProperCase(cityData.cityName)}</b> city limits...`);
+    } else {
+        // addLoadingLine(`Site is in unincorporated <b>${countyData.county_name} County</b>...`);
+    }
+    for (const [key, value] of Object.entries(cityData)) {
+        aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
+    }
+}
+
+function preserveDirtyData(aiSupplementalData) {
+    let dirtyData = JSON.parse(JSON.stringify(aiSupplementalData));
+    return JSON.stringify(dirtyData, null, 2);
+}
+
+
 /*
 function initAutocomplete() {
     const input = document.getElementById('addressInput');

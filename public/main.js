@@ -105,46 +105,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // AI RESPONSES
             try {
-                // verify parcelData exists
-                if (!parcelData || Object.keys(parcelData).length === 0) {
-                    console.log(`Skipping AI analysis module...`);
-                    throw new Error('Sorry, this property is not eligible, buddy.');
-                }
-
-                // make copy of parcelData for enhancement
+                verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
-
-                // decompose available JSONs and add their values
                 if (countyData) {
-                    // *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
-                    for (const [key, value] of Object.entries(countyData)) {
-                        aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
-                    }
+                    enhanceWithCountyData(aiSupplementalData, countyData);
                 }
                 if (cityData) {
-                    if (toProperCase(cityData.cityName) == "Unincorporated") {
-                        ////addLoadingLine(`Site is within <b>${toProperCase(cityData.cityName)}</b> city limits...`);
-                    } else {
-                        ////addLoadingLine(`Site is in unincorporated <b>${countyData.county_name} County</b>...`);
-                    }
-                    // *must* stay in simple flat JSON form; will need a recursive merge if I ever add nested objects
-                    for (const [key, value] of Object.entries(cityData)) {
-                        aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
-                    }
+                    enhanceWithCityData(aiSupplementalData, cityData);
                 }
-
-                // Preserve dirtyData
-                dirtyData = JSON.parse(JSON.stringify(aiSupplementalData));
-                let dirtyDataString = JSON.stringify(dirtyData, null, 2); 
-
-                /* ALTERNATE WAY TO PULL PRIMARY PROMPTS (FROM GOOGLE SHEETS):
-                // (maybe wrong formula name, IDK)
-                // (example usage)
-                generateRefinedSummary('https://docs.google.com/spreadsheets/d/e/2PACX-1vQDEUHmX1uafVBH5AHDDOibri_dnweF-UQ5wJsubhLM7Z4sX5ifOn1pRNvmgbSCL5OMYW-2UVbKTUYc/pubhtml', 'A', cleanData).then(summary => {
-                    hmmm = summary;
-                    console.log("Hmmm = " + hmmm);
-                });*/
-
+                let dirtyDataString = preserveDirtyData(aiSupplementalData);
             } catch (error) {
                 console.error("[CRITICAL] Error while collecting AI responses: \n", error);
                 return;
