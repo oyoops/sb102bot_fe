@@ -11,7 +11,7 @@
 
 
 // fetch set of AI responses given a supplemental dataset
-async function fetchAiResponsesCombined(cleanData) {
+async function fetchAiResponsesCombined(cleanData, superAI) {
   /* START STAGE 1: GET, ENRICH, COMBINE */
 
   // Log dataset POST-transformation
@@ -19,13 +19,26 @@ async function fetchAiResponsesCombined(cleanData) {
   ////console.log(JSON.stringify(cleanData, null, 2)); // test
   
   // Define primary prompt endpoints
-  const endpoints = [
-      '/api/ask_ai_part1AA',
-      '/api/ask_ai_part1BB',
-      '/api/ask_ai_part1CC',
-      '/api/ask_ai_part1DD',
-      '/api/ask_ai_part1EE'
-  ];
+  let endpoints;
+  if (superAI == 'on') {
+    // If superAI is on, ...
+    endpoints = [
+        '/api/ask_ai_part1AA',
+        '/api/ask_ai_part1BB',
+        '/api/ask_ai_part1CC',
+        '/api/ask_ai_part1DD',
+        '/api/ask_ai_part1EE',
+    ];
+  } else {
+    // If superAI is off, ...
+    endpoints = [
+        '/api/ask_ai_part1AA',
+        '/api/ask_ai_part1BB',
+        '/api/ask_ai_part1CC',
+        '/api/ask_ai_part1DD',
+        '/api/ask_ai_part1EE'
+      ];
+  }
 
   // Map primary prompts to endpoints, then fetch all simultaneously
   const queryString = new URLSearchParams(cleanData).toString();
@@ -55,10 +68,10 @@ async function fetchAiResponsesCombined(cleanData) {
       const results = await Promise.all(fetchPromises);
   
       /* START STAGE 2: SER */
-      const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(cleanData)}`;
+      const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(cleanData)}&superAI=${encodeURIComponent(superAI)}`;
       const serResponse = await fetch(serEndpoint);
       if (!serResponse.ok) {
-          console.log('ERROR: SER failed!');
+          console.log('ERROR: SER failed! -- SuperAI was', superAI);
           throw new Error(`Server responded with ${serResponse.status}: ${await serResponse.text()}`);
       }
       const serData = await serResponse.json();

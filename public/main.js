@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // (Master prompt dispatcher) 
                 // Sends primary prompts, compiles responses, then gets and returns SER response
-                aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData); // send perfect supplemental data to the master dispatcher to inform all prompts
+                aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData, superAI); // send perfect supplemental data to the master dispatcher to inform all prompts
 
                 // check SER response
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
