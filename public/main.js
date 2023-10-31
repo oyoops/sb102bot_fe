@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 /* Generate the final AI summary */
 
                 // Prepare and refine the supplemental data
-                const cleanerData = refineData(dirtyData);
+                const cleanerData = refineData(dirtyData, superAI);
                 ////console.log("Clean property data: \n", cleanerData);
                 
                 // (Master prompt dispatcher) 

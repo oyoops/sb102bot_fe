@@ -94,7 +94,7 @@ function composeAiResponsesCombined(aiResponse, titleLine = `🌞 Living Local i
 }
 
 // Add globals to dataset and apply final super-enhancements
-function refineData(rawData) {
+function refineData(rawData, superAI) {
     let refinedData = {};
     // Attach key globals to dataset
     rawData = {
