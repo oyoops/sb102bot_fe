@@ -10,6 +10,10 @@
 async function geocodeAddress(address) {
     const geoEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
     const geoData = await fetchAPI(geoEndpoint);
+        if (!geoData.results || geoData.results.length === 0) {
+        throw new Error(`Whoops... That address isn't in my wheelhouse, buddy.\n\nI only know about Florida (and only the good parts at that).`);
+    }
+    /* Geocode was successful */
     return geoData;
 }
 
