@@ -102,14 +102,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const countyData = await fetchCountyData(lat, lng);
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
-            // Get Municipality      
+            // Get Municipality
+            let muniNameProper;
             if (cityNameProper.toLowerCase() === "unincorporated") {
-                const muniName = "Unincorporated " + countyNameProper + " County";
-                ////const muniName = "unincorporated " + countyNameProper + " County";
+                muniNameProper = "Unincorporated " + countyNameProper + " County";
+                ////muniNameProper = "unincorporated " + countyNameProper + " County";
             } else {
-                const muniName = cityNameProper;
+                muniNameProper = cityNameProper;
             }
-            displayMuniName = muniName; // (hackily set global)
+            displayMuniName = muniNameProper; // (hackily set global)
 
             // Get Max Density
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
@@ -125,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = maxCapacity.toFixed(0);
 
             // AI RESPONSES
+            let dirtyDataString;
             try {
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
@@ -134,13 +136,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (cityData) {
                     enhanceWithCityData(aiSupplementalData, cityData);
                 }
-                let dirtyDataString = preserveDirtyData(aiSupplementalData);
+                dirtyDataString = preserveDirtyData(aiSupplementalData); // why bother doing this?
             } catch (error) {
                 console.error("[CRITICAL] Error while collecting AI responses: \n", error);
                 return;
             }
-
-
 
             // show Try Again button
             tryAgainButton.style.display = 'block';
