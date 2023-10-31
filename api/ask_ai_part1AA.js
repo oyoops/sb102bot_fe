@@ -366,8 +366,8 @@ module.exports = async (req, res) => {
             useTokens = 200;
         } else {
             console.log('[SuperAI is OFF]');
-            useModel = process.env.AI_MODEL_PRIMARY_MODULE;
-            useTokens = parseInt(process.env.AI_MAX_TOKENS_PRIMARY_MODULE, 10);
+            useModel = process.env.AI_MODEL_PRIMARY_ANALYSES;
+            useTokens = parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10);
         }
 
         // Send fetch request from server to OpenAI API

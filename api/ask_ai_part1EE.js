@@ -393,8 +393,8 @@ module.exports = async (req, res) => {
             useTokens = 400; //1000;
         } else {
             console.log('[SuperAI is OFF]');
-            useModel = 'gpt-3.5-turbo'; //process.env.AI_MODEL_PRIMARY_MODULE;
-            useTokens = 555; //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_MODULE, 10);
+            useModel = 'gpt-3.5-turbo'; //process.env.AI_MODEL_PRIMARY_ANALYSES;
+            useTokens = 555; //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10);
         }
         
         // Send fetch request from server to OpenAI API
