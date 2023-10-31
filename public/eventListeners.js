@@ -85,8 +85,10 @@ matchAffordableSizesCheckbox.addEventListener('change', function() {
 });
 
 // on cost inputs change:
+/*
 landCostPerUnit.addEventListener('input', updateTotalCosts);
 totalHCPerUnit.addEventListener('input', updateTotalCosts);
+*/
 
 // on New Search button click:
 tryAgainButton.addEventListener("click", function() {
