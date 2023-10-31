@@ -59,7 +59,8 @@ module.exports = async (req, res) => {
     */
 
     // Stringify and escape
-    let suppDataForAIString = JSON.stringify(suppDataForAI);
+    let suppDataForAIString = suppDataForAI;
+    ////let suppDataForAIString = JSON.stringify(suppDataForAI);
     console.log("\nsuppDataForAIString: \n" + suppDataForAIString);
     let jsonString;
     try {
@@ -68,7 +69,6 @@ module.exports = async (req, res) => {
         jsonString = "Failed to stringify object: " + err.message;
     }
     console.log("\njsonString: \n" + jsonString);
-
     
 
     const messages = [{
