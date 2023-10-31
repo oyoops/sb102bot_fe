@@ -95,14 +95,20 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
         '/api/ask_ai_part1CC',
         '/api/ask_ai_part1DD',
         '/api/ask_ai_part1EE'
-      ];
+    ];
   }
 
   // Map primary prompts to endpoints, then fetch all simultaneously
   const queryString = new URLSearchParams(cleanData).toString();
   const fetchPromises = endpoints.map(endpoint => {
     return Promise.race([
-        fetch(`${endpoint}?${queryString}`)
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cleanData)  // Send the data as JSON in the request body
+        })
         .then(response => {
             if (!response.ok) {
                 console.error(`Failed at endpoint ${endpoint} with status: ${response.statusText}`);
@@ -110,7 +116,7 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
             }
             return response.json();
         }),
-        timeout(30000) // 30 seconds
+        timeout(30000) // 30 seconds timeout function
     ])
     .catch(err => {
         console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
@@ -119,32 +125,35 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
         }
         throw err;
     });
-  });
-
-  try {
-      // Once results to all primary prompts available, then combine
-      const results = await Promise.all(fetchPromises);
+    });
+    try {
+        // Once results to all primary prompts available, then combine
+        const results = await Promise.all(fetchPromises);
   
-      /* START STAGE 2: SER */
-      ////const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(results)}&suppDataForAI=${encodeURIComponent(cleanData)}&superAI=${superAI}`;
-      const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(JSON.stringify(results))}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData))}&superAI=${superAI}`;
-      const serResponse = await fetch(serEndpoint);
-      if (!serResponse.ok) {
-          console.log('ERROR: SER failed! -- SuperAI was', superAI);
-          throw new Error(`Server responded with ${serResponse.status}: ${await serResponse.text()}`);
-      }
-      const serData = await serResponse.json();
+        /* START STAGE 2: SER */
+        const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(JSON.stringify(results))}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData))}&superAI=${superAI}`;
+        const serResponse = await fetch('/api/ask_ai_part1SER', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                aiCombinedResponses: results,
+                suppDataForAI: cleanData,
+                superAI: superAI
+            })
+        });
+        const serData = await serResponse.json();
       
-      //console.log("\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
-      //console.log("\n--- SER Response ---\n" + serData + "\n--------------------\n");      
+        //console.log("\n--- Combined Resp: ---\n" + results + "\n--------------------\n");
+        //console.log("\n--- SER Response ---\n" + serData + "\n--------------------\n");      
       
-      return serData;
-
-  } catch (error) {
-      const errorMessage = error?.data?.error?.message || "[CRITICAL] An unknown error occurred while fetching the Stage 2 (SER) AI response.";
-      console.error("Error while compiling primary responses or fetching SER response:", errorMessage);
-      throw error;
-  }
+        return serData;
+    } catch (error) {
+        const errorMessage = error?.data?.error?.message || "[CRITICAL] An unknown error occurred while fetching the Stage 2 (SER) AI response.";
+        console.error("Error while compiling primary responses or fetching SER response:", errorMessage);
+        throw error;
+    }
 }
 
 // Compose final output by prepending it with a title and calling it a day
