@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
     //console.log("\nSupp. data: \n" + JSON.stringify(req.body, null, 2)); // (doesn't work)
 
     // SuperAI Switch
-    const superAI = req.superAI; // 'on' / 'off'
+    const superAI = req.body.superAI; // 'on' / 'off'
 
     // Location
     const lat = req.body.lat;
@@ -362,7 +362,7 @@ module.exports = async (req, res) => {
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
             useModel = 'gpt-4';
-            useTokens = 200;
+            useTokens = 150;
         } else {
             console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_PRIMARY_ANALYSES;
