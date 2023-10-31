@@ -130,6 +130,8 @@ async function initializeMap(lat, lng) {
     if (bounds.getNorthEast() !== bounds.getSouthWest()) {
         map.fitBounds(bounds);
     }
+    
+    return distanceInMilesToTallestBldg;
 }
 
 // Create a text marker (transparent placemark with a label)
