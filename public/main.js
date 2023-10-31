@@ -83,12 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // TALLEST BLDG. DATA (and initializes map)
             const tallestBuildingData = await initializeMap(lat, lng);
 
-            // get max height & distance
+            // Get Max Height (& distance)
             const maxBH = tallestBuildingData.maxHeight.toFixed(0); // feet
             console.log("MaxBH =", maxBH, "ft.");
             const maxBD = tallestBuildingData.maxDistance.toFixed(2); // miles
             console.log("MaxBD =", maxBD, "mi.");
-            buildingHeight = maxBH; // (hackily set global)
+            buildingHeight = maxBH; //// (hackily set global)
 
             // display the map
             googlemap.style.display = 'block';
@@ -96,12 +96,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // CITY / MUNI. DATA
             const cityData = await checkCity(geocodeData);
+            cityNameProper = toProperCase(cityData.cityName);
             
             // COUNTY DATA
             const countyData = await fetchCountyData(lat, lng);
+            countyNameProper = specialCountyFormatting(countyData.county_name);
 
+            // Get Municipality      
+            if (cityNameProper.toLowerCase() === "unincorporated") {
+                const muniName = "Unincorporated " + countyNameProper + " County";
+                ////const muniName = "unincorporated " + countyNameProper + " County";
+            } else {
+                const muniName = cityNameProper;
+            }
+            displayMuniName = muniName; // (hackily set global)
+
+            // Get Max Density
+            const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
+            maxMuniDensity = maxDensity; //// (hackily set global)
+            console.log("MMD:", maxMuniDensity,"units/ac.");
+            
             // PARCEL DATA
             const parcelData = await fetchParcelData(lat, lng, countyData.county_name);
+            acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
+
+            // Calculate parcel's maximum LLA unit capacity
+            maxCapacity = parseFloat(maxMuniDensity) * acres;
+            maxCapacity = maxCapacity.toFixed(0);
 
             // AI RESPONSES
             try {
@@ -119,9 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Proper case city and county names
-            cityNameProper = toProperCase(cityData.cityName);
-            countyNameProper = specialCountyFormatting(countyData.county_name);
+
 
             // show Try Again button
             tryAgainButton.style.display = 'block';
@@ -159,10 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
             rentInfoContainer.style.display = 'table'; // show the max affordable rents container
             countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
 
-            // convert land sq. ft. to acres
-            acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
-            ////addLoadingLine(`Area = <b>${acres.toFixed(2)} acres</b>...`);
-            
             /*
             // populate parcel data table
             const parcelDataRow = `
@@ -205,8 +220,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // set acreage input placeholder
             acreageInput.value = acres.toFixed(2); // ACREAGE AUTO/MANUAL INPUT
 
-            // set density input placeholder
-            const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
+            
+            ////const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
+            /*
             if (maxDensity !== null) {
                 ////console.log ("Maximum allowed density in", countyData.county_name, cityData.cityName, ":", maxDensity);
                 // set global
@@ -216,23 +232,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // set global
                 maxMuniDensity = 0;
             }
+            */
+            // set density input placeholder
             densityInput.value = maxMuniDensity.toFixed(0); // DENSITY AUTO/MANUAL INPUT
 
-            // get Municipality Name in Proper Case for cleaner display      
-            if (cityNameProper.toLowerCase() === "unincorporated") {
-                displayMuniName = "unincorporated " + countyNameProper + " County";
-            } else {
-                displayMuniName = cityNameProper;
-            }
-            ////addLoadingLine(`Max density in ${displayMuniName} is <b>${maxDensity.toFixed(0)} units/acre</b>...`);
-
-            // calculate the parcel's absolute maximum unit capacity
-            maxCapacity = parseFloat(maxMuniDensity) * parseFloat(acres);
-            maxCapacity = maxCapacity.toFixed(0);
-            ////addLoadingLine(`Ceiling of <b>${maxCapacity} units</b>...`);
-
-            
-            buildingHeight = parseFloat(buildingHeight);
 
             // Get detailed eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
@@ -247,12 +250,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // NEW: Set site to green
                 document.documentElement.style.setProperty('--hue', '120'); // For green
                 ////addLoadingLine(`<b><u>ELIGIBLE</u> for Live Local!</b>`);
-                console.log("MAX HEIGHT:", buildingHeight, "feet");
+                console.log("MAX HEIGHT:", maxBH, "feet");
                 eligibilityDiv.innerHTML += `<h3 style="color:green;" align="center">Your site is <u>ELIGIBLE</u> for Live Local development!</h3> 
                     </br></br><b><i>Coolio 😎👍</b></i> Now here's why you should <i><b>grab this land by the dirt</b></i> and <b><i>Live Local</i></b> on it:
                     </br></br>First, you can build <i>up to the height of the <b>tallest building within a mile</b> radius</i>. 
-                    </br></br>That would allow <i>up to <b><u>${buildingHeight.toFixed(0)} feet</u></b> here</i>. <b><i>Oh my! 😮</b></i>`
-                /*if (buildingHeight >= 200) {
+                    </br></br>That would allow <i>up to <b><u>${maxBH} feet</u></b> here</i>. <b><i>Oh my! 😮</b></i>`
+                /*if (maxBH >= 200) {
                     eligibilityDiv.innerHTML += ` <i><b>Wow!</b> That's a lot of juicy feet 👀👣. </i>`;
                 }*/
                 //eligibilityDiv.style.color = "green";
