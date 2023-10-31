@@ -33,44 +33,26 @@ module.exports = async (req, res) => {
     let { aiCombinedResponses, suppDataForAI, superAI } = req.body;
         
     // SuperAI Switch
-    //const superAI = req.superAI; // 'on' / 'off'
-    ////const superAI = suppDataForAI.superAI; // 'on' / 'off'
     console.log("<", superAI, ">");
-    ////console.log("<", req.superAI, ">");
 
-    /*
-    // Try to parse if it's a JSON string
-    if (typeof suppDataForAI === "string") {
-        try {
-            suppDataForAI = JSON.parse(suppDataForAI);
-        } catch(e) {
-            // It's not a JSON string, so keep it as is
-        }
-    }
-    
     // Remove geometry because it can break API if too long
     if (suppDataForAI && suppDataForAI.geom) {
         delete suppDataForAI.geom;
     } else if (suppDataForAI) {
-        //console.log("\nThere is no geometry in the supplemental data, which is fine; just be aware!\n")
+        console.log("\nThere is no geometry in the supplemental data, which is fine; just be aware!\n")
     } else {
         console.log("\n** HUGE PROBLEM! **\n There is no suppDataForAI!");
     }
-    */
-
+    
     // Stringify and escape
-    let suppDataForAIString = suppDataForAI;
-    ////let suppDataForAIString = JSON.stringify(suppDataForAI);
-    console.log("\nsuppDataForAIString: \n" + suppDataForAIString);
     let jsonString;
     try {
-        jsonString = JSON.stringify(suppDataForAIString, null, 2);
+        jsonString = JSON.stringify(suppDataForAI, null, 2);
     } catch (err) {
         jsonString = "Failed to stringify object: " + err.message;
     }
-    console.log("\njsonString: \n" + jsonString);
+    console.log(jsonString);
     
-
     const messages = [{
         "role": "system",
         "content": `
@@ -156,10 +138,10 @@ module.exports = async (req, res) => {
             console.log("\n    # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
-            console.log("\n   # Prompt Tkns. =", promptTokens);
+            console.log("   # Prompt Tkns. =", promptTokens);
         }
         if (completionTokens) {
-            console.log("\n    # Resp. Tkns. =", completionTokens);
+            console.log("    # Resp. Tkns. =", completionTokens);
         }
 
         // Log the prompt
