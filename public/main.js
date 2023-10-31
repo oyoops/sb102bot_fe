@@ -91,11 +91,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const cityData = await checkCity(geocodeData);
 
 
-            // initialize the map (is this too early?)
-            const maxBH = await initializeMap(lat, lng); // returns max bldg height
-            await console.log("MaxBH =", maxBH);
+            // Initialize the map & get max building height & dist.
+            const {maxBH, maxBD} = await (initializeMap(lat, lng).maxHeight).toFixed(0); // returns max bldg height
+            await console.log("MaxBH =", maxBH,"ft.");
+            await console.log("MaxBD =", maxBD, "mi.");
 
-            // Display Google Map
+            // Display the map
             googlemap.style.display = 'block';
             // scroll to top
             window.scrollTo(0, 0);

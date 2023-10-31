@@ -145,7 +145,7 @@ async function initializeMap(lat, lng) {
         map.fitBounds(bounds);
     }
     
-    return maxDistance;
+    return {maxHeight, maxDistance};
 }
 
 // Create a text marker (transparent placemark with a label)
