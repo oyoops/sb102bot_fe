@@ -19,9 +19,9 @@ async function geocodeAddress(address) {
 
 // check city v2
 async function checkCity(geoData) {
-    const lat = geoData.results[0].geometry.location.lat;
-    const lng = geoData.results[0].geometry.location.lng;
-    const muniCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
+    const latitude = geoData.results[0].geometry.location.lat;
+    const longitude = geoData.results[0].geometry.location.lng;
+    const muniCheckEndpoint = `/api/check_city?lat=${latitude}&lng=${longitude}`;
     const muniData = await fetchAPI(muniCheckEndpoint);
     if (muniData.isInCity) {
         console.log(`Proeprty is within ${muniData.cityName} limits.`);
