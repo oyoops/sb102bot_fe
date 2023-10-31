@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // initialize the map (is this too early?)
             const maxBH = await parseFloat(initializeMap(lat, lng)).toFixed(0); // returns max bldg height
-            console.log("MaxBH =", maxBH);
+            await console.log("MaxBH =", maxBH);
 
             // Display Google Map
             googlemap.style.display = 'block';
