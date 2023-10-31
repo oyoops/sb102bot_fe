@@ -348,12 +348,18 @@ module.exports = async (req, res) => {
     }];
 
     try {
+        // Regular or SuperAI?
+        let useModel;
+        if (superAI == 'on') {useModel = 'gpt-4'} else {useModel = process.env.AI_MODEL_PRIMARY_MODULE}
+        let useTokens;
+        if (superAI == 'on') {useTokens = 333} else {useTokens = parseInt(process.env.AI_MAX_TOKENS_PRIMARY_MODULE, 10)}
+
         // Send fetch request from server to OpenAI API
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-            model: process.env.AI_MODEL_PRIMARY_ANALYSES,
+            model: useModel,
             messages: messages,
-            max_tokens: parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
-            temperature: 0.6,
+            max_tokens: useTokens,
+            temperature: 0.5,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
         }, {

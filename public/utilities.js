@@ -98,6 +98,9 @@ function refineData(rawData) {
     let refinedData = {};
     // Attach key globals to dataset
     rawData = {
+        // Model data
+        superAI: superAI,
+
         // Display Data
         descriptionOfLiveLocalEligibility: summaryContent,
 

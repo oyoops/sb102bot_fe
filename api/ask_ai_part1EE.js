@@ -384,13 +384,18 @@ module.exports = async (req, res) => {
     }];
 
     try {
+        // Regular or SuperAI?
+        let useModel;
+        if (superAI == 'on') {useModel = 'gpt-3.5-turbo'} else {useModel = process.env.AI_MODEL_PRIMARY_MODULE}
+        let useTokens;
+        if (superAI == 'on') {useTokens = 333} else {useTokens = parseInt(process.env.AI_MAX_TOKENS_PRIMARY_MODULE, 10)}
+
         // Send fetch request from server to OpenAI API
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-            //model: 'gpt-3.5-turbo-16k',//process.env.AI_MODEL_PRIMARY_ANALYSES,
-            model: 'gpt-3.5-turbo',//process.env.AI_MODEL_PRIMARY_ANALYSES,
+            model: useModel,
             messages: messages,
-            max_tokens: 600, //parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10),
-            temperature: 0.3,
+            max_tokens: useTokens,
+            temperature: 0.5,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
         }, {
