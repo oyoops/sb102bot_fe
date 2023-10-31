@@ -7,8 +7,8 @@ let intervalTimeLoading = 250; // loading indicator - estimated time to reach 99
 let percentageLoading = 0; // loading indicator - % value text
 let address;
 let geocodeData;
-let countyData;
-let parcelData;
+//let countyData;
+//let parcelData;
 let cityData;
 let lat;
 let lng;
