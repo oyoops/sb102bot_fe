@@ -113,7 +113,7 @@ tbody tr:hover {
 @media (max-width: 600px) {
     table {
         font-size: 0.8em;
-        width: 95%;
+        width: 90%;
     }
     th, td {
         padding: 8px 10px;
@@ -124,7 +124,7 @@ tbody tr:hover {
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    width: 95%;
+    width: 90%;
     margin: 0 auto; /* Center the input field */
     margin-left: 10px;
     margin-right: 10px;
@@ -203,7 +203,7 @@ button:hover {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 5px 10px;
+    padding: 5px 5px;
     background-color: var(--primary-color);
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -244,7 +244,7 @@ button:hover {
 
 
 footer {
-    padding: 5px 10px;
+    padding: 5px 5px;
     background-color: var(--primary-color);
     box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
     position: fixed;
@@ -394,22 +394,22 @@ input:disabled {
     }
 }
 
-/* NEW styles for Google Map container */
+/* Google Map container */
 #map {
     width: 100%;                 /* Take up the full width of its container */
-    height: 30vh;                /* Make it shorter vertically; adjust as needed */
+    height: 40vh;                /* Make it shorter vertically; adjust as needed */
     box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);   /* Slight shadow underneath */
     position: relative;
     top: 20px;                  /* Push it down by 20 pixels; adjust as needed */
     z-index: 1;                 /* Ensure it's on top of other content */
-    transition: opacity 1s, transform 1s;
+    transition: opacity 1s, transform 0.2s;
     border-radius: 0;           /* Remove border radius for full edge-to-edge look */
     opacity: 0;                   /* Initial opacity */
-    animation: fadeInSlideDown 1s forwards; /* Apply the animation; it runs for 1 second and the "forwards" value ensures the end state of the animation is retained */
+    animation: fadeInSlideDown 0.2s forwards; /* Apply the animation; it runs for 1 second and the "forwards" value ensures the end state of the animation is retained */
 
     /* Desktop specific styles */
     @media (min-width: 768px) { /* Adjust breakpoint as needed */
-        max-width: 1500px;     /* Limit maximum width for large screens */
+        /* max-width: 1500px; */     /* Limit maximum width for large screens */
         margin: 0 auto;        /* Center the map if its width is less than the container's width */
     }
 
@@ -419,10 +419,9 @@ input:disabled {
     }
 }
 
-
-/* General styling for the eligibilityStatus div */
+/* Deprecated? */
 #eligibilityStatus {
-    display: none;
+    display: none; /* General styling for the eligibilityStatus div */
     width: 80%;
     max-width: 1200px;
     margin: 2% auto;
@@ -436,12 +435,10 @@ input:disabled {
     text-align: left;
     font-family: 'Arial', sans-serif;
 }
-
 #eligibilityStatus ul {
     list-style-type: none; /* Removes bullet points */
     padding-left: 0; /* Removes default padding */
 }
-
 .char {
     display: inline-block;
     opacity: 0;
@@ -449,29 +446,32 @@ input:disabled {
     transition: all 0.3s;
 }
 
+/* deprecated? */
 #eligibilityStatus li {
-    color: #555; /* Slightly darker text color for list items */
-    margin-bottom: 10px; /* Space between list items */
+    color: #555;
+    margin-bottom: 10px;
 }
+
 .loading-container {
     display: none;
     text-align: center;
-    font-family: 'Orbitron', sans-serif; /* Changed font-family to Roboto and also corrected 'serif' to 'sans-serif' */
+    font-family: 'Orbitron', sans-serif;
 }
 
+
 .animated-text {
-    font-size: 18px;
+    font-size: 16px;
     color: #333;
     margin: 10px 0;
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .animated-text .char {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    font-family: 'Roboto', sans-serif; /* Fixed the typo and set the correct font-family */
-    display: inline-block; /* This is to ensure that each character can be animated individually */
-    white-space: pre; /* This helps preserve spaces */
+    font-family: 'Roboto', sans-serif;
+    display: inline-block; /* ensures each char animates individually */
+    white-space: pre; /* preserve spaces */
 }
 
 .animated-text .char.show {
@@ -534,14 +534,15 @@ input:disabled {
 
 #infoSections {
     text-align: left;
-    font-size: 0.9em;
+    font-size: 0.7em;
     max-width: 800px;
     margin: auto;
     padding: 20px;
 }
 
 #infoSections h2 {
-    font-size: 1.2em;
+    text-align: center;
+    font-size: 1.0em;
     margin-bottom: 10px;
 }
 
