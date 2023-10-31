@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.scrollTo(0, 0);
 
             // geocode the input address
+            /*
             const geocodeEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
             const geocodeResponse = await fetch(geocodeEndpoint);
             if (!geocodeResponse.ok) {
@@ -70,18 +71,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`Server responded with ${geocodeResponse.status}: ${await geocodeResponse.text()}`);
             }
             geocodeData = await geocodeResponse.json();
-            ////console.log("Geocode Data Received:", geocodeData);
-            if (!geocodeData.results || geocodeData.results.length === 0) {
-                throw new Error(`Whoops... That address isn't in my wheelhouse, buddy.\n\nI only know about Florida (and only the good parts at that).`);
-            }
-
-            /* Geocode was successful */
-            
+            */
+            const geocodeData = await geocodeAddress(address);
+            ////console.log("Geocode Data Received:", geocodeData);            
             // extract coordinates from geo data
             lat = geocodeData.results[0].geometry.location.lat;
             lng = geocodeData.results[0].geometry.location.lng;
 
             // fetch the city of the address (Lat,Lng = CityData || CityName = Unincorporated if not in a city)
+            /*
             const cityCheckEndpoint = `/api/check_city?lat=${lat}&lng=${lng}`;
             const cityCheckResponse = await fetch(cityCheckEndpoint);
             cityData = await cityCheckResponse.json(); // global
@@ -91,19 +89,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 ////console.log('Address is unincorporated.');
                 cityData.cityName = 'unincorporated';
             }
-            
+            */
+            const cityData = await checkCity(geocodeData);
+
             // initialize the map (is this too early?)
             initializeMap(lat, lng);
-
             // Display Google Map
             googlemap.style.display = 'block';
-
             // scroll to top
             window.scrollTo(0, 0);
 
 
-            /* API blocks: */
 
+            /* API blocks: */
 
             // API block #1 of 3: COUNTY DATA
             try {
