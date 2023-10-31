@@ -6,9 +6,22 @@
 //  main.js  //
 //===========*/
 
+// geocode v2
+async function geocodeAddress(address) {
+    const geoEndpoint = `/api/geocode?address=${encodeURIComponent(address)}`;
+    const geoData = await fetchAPI(geoEndpoint);
+    return geoData;
+}
+
+// generic fetch API
+async function fetchAPI(url) {
+    const apiResponse = await fetch(url);
+    if (!apiResponse.ok) throw new Error(`Server responded with ${apiResponse.status}: ${await apiResponse.text()}`);
+    return await apiResponse.json();
+}
+
 
 /* AI-Related Functions: */
-
 
 // fetch set of AI responses given a supplemental dataset
 async function fetchAiResponsesCombined(cleanData, superAI) {
