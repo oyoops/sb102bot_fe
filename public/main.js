@@ -91,16 +91,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const cityData = await checkCity(geocodeData);
 
 
-            // Initialize the map & get max building height & dist.
-            const {maxBH, maxBD} = await (initializeMap(lat, lng).maxHeight).toFixed(0); // returns max bldg height
-            await console.log("MaxBH =", maxBH,"ft.");
-            await console.log("MaxBD =", maxBD, "mi.");
-
+            // Initialize the map (and get tallest building data)
+            const tallestBuildingData = await initializeMap(lat, lng);
+            // Get max building height & dist. from tallest building data
+            const maxBH = tallestBuildingData.maxHeight.toFixed(0);
+            const maxBD = tallestBuildingData.maxDistance.toFixed(0);
+            console.log("MaxBH =", maxBH, "ft.");
+            console.log("MaxBD =", maxBD, "mi.");
             // Display the map
             googlemap.style.display = 'block';
             // scroll to top
             window.scrollTo(0, 0);
-
+            // hackily set global
+            buildingHeight = maxBH;
 
 
             /* API blocks: */
@@ -167,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // API block #2.5 of 3: MAX BUILDING HEIGHT
+            /*
             const tallBldgsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
             try {
                 // Fetch ALL data on tallest buildings within radius
@@ -176,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert(`Looks like we hit a ceiling on my usefuless! \nCouldn't fetch the maximum building height.`);
                 return;  // Exit early since we can't proceed without max building height data
             }
+            */
             /*
             let height = parseFloat(buildingHeight).toFixed(0); /////// fix
             if (isNaN(height)) {
