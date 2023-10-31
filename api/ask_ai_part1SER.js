@@ -56,19 +56,20 @@ module.exports = async (req, res) => {
     } else {
         console.log("\n** HUGE PROBLEM! **\n There is no suppDataForAI!");
     }
+    */
 
     // Stringify and escape
     let suppDataForAIString = JSON.stringify(suppDataForAI).replace(/`/g, "\\`");
-    
+    console.log("\nsuppDataForAIString: \n" + suppDataForAIString);
     let jsonString;
     try {
         jsonString = JSON.stringify(suppDataForAIString, null, 2);
     } catch (err) {
         jsonString = "Failed to stringify object: " + err.message;
     }
-    ////console.log("\nsuppDataForAIString: \n" + jsonString);
+    console.log("\njsonString: \n" + jsonString);
 
-    */
+    
 
     const messages = [{
         "role": "system",
