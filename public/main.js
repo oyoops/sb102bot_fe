@@ -126,7 +126,6 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = maxCapacity.toFixed(0);
 
             // AI RESPONSES
-            let dirtyDataString;
             try {
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
@@ -136,7 +135,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (cityData) {
                     enhanceWithCityData(aiSupplementalData, cityData);
                 }
-                dirtyDataString = preserveDirtyData(aiSupplementalData); // why bother doing this?
+                
+                /* Generate the final AI summary */
+
+                // Get dirty data
+                const dirtyData = await getDirtyData(aiSupplementalData);
+                const dirtyDataString = await getDirtyDataString(aiSupplementalData);
+
+                // Prepare and refine the supplemental data
+                const cleanerData = await refineData(dirtyData, superAI);
+                ////console.log("Clean property data: \n", cleanerData);
+                
+                // (Master prompt dispatcher) 
+                // Sends primary prompts, compiles responses, then gets and returns SER response
+                aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData, superAI); // send perfect supplemental data to the master dispatcher to inform all prompts
+
+                // check SER response
+                if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
+                    throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
+                }
+
             } catch (error) {
                 console.error("[CRITICAL] Error while collecting AI responses: \n", error);
                 return;
@@ -298,8 +316,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 /* Generate the final AI summary */
 
+                /*
                 // Prepare and refine the supplemental data
-                const cleanerData = refineData(dirtyData, superAI);
+                const cleanerData = await refineData(dirtyData, superAI);
                 ////console.log("Clean property data: \n", cleanerData);
                 
                 // (Master prompt dispatcher) 
@@ -310,6 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
+                */
 
                 // log it
                 //console.log("\n\n***** FINAL ANALYSIS ***** \n", aiGeneratedHTML);

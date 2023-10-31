@@ -1,6 +1,6 @@
 // globals.js - Centralized global variable declarations for SB102bot web app.
 
-let dirtyData;
+//let dirtyData;
 
 /* GLOBAL VARIABLES related to main.js */
 let intervalTimeLoading = 250; // loading indicator - estimated time to reach 99%

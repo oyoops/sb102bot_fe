@@ -183,7 +183,7 @@ function refineData(rawData, superAI) {
         superAI: superAI,
 
         // Display Data
-        descriptionOfLiveLocalEligibility: summaryContent,
+        //descriptionOfLiveLocalEligibility: summaryContent,
 
         // Location Data
         address: address,
@@ -491,7 +491,12 @@ function enhanceWithCityData(aiSupplementalData, cityData) {
     }
 }
 
-function preserveDirtyData(aiSupplementalData) {
+function getDirtyData(aiSupplementalData) {
+    let dirtyData = JSON.parse(JSON.stringify(aiSupplementalData));
+    return dirtyData;
+}
+
+function getDirtyDataString(aiSupplementalData) {
     let dirtyData = JSON.parse(JSON.stringify(aiSupplementalData));
     return JSON.stringify(dirtyData, null, 2);
 }
