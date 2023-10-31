@@ -90,8 +90,11 @@ document.addEventListener('DOMContentLoaded', function() {
             */
             const cityData = await checkCity(geocodeData);
 
+
             // initialize the map (is this too early?)
-            initializeMap(lat, lng);
+            const maxBH = await parseFloat(initializeMap(lat, lng)).toFixed(0); // returns max bldg height
+            console.log("MaxBH =", maxBH);
+
             // Display Google Map
             googlemap.style.display = 'block';
             // scroll to top
@@ -102,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
             /* API blocks: */
 
             // API block #1 of 3: COUNTY DATA
+            /*
             try {
                 // fetch the county data for the address (Lat,Lng = CountyData)
                 const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
@@ -119,10 +123,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert("Looks like we hit a roadblock on County Road! 🛣️\nCouldn't fetch the county data.");
                 return;  // Exit early since we can't proceed without county data
             }
-
-
+            */
+            try {
+                const countyData = await fetchCountyData(lat, lng);
+                ////console.log("County Data Received:", countyData);
+                //addLoadingLine(`Found the address in <b>${specialCountyFormatting(countyData.county_name)} County</b>.`);
+            } catch (error) {
+                console.error("Error fetching county data:\n", error);
+                alert("Looks like we hit a roadblock on County Road! 🛣️\nCouldn't fetch the county data.");
+                return;  // Exit early since we can't proceed without county data
+            }
 
             // API block #2 of 3: PARCEL DATA
+            /*
             try {
                 // fetch the parcel data for the address (Lat,Lng + County = ParcelData)
                 const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyData.county_name}`;
@@ -141,7 +154,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
                 return;  // Exit early (can't proceed without parcel data)
             }
+            */
+            try {
+                const parcelData = await fetchParcelData(lat, lng, countyData.county_name);
+                ////console.log("Parcel Data Received:", parcelData);
+                //addLoadingLine(`Found parcel #${parcelData.parcel_id}.<br>Researching the parcel...<br>`);
+            } catch (error) {
+                console.error("Error fetching parcel data:\n", error);
+                alert("We tried to lay the foundation, but hit a snag with the parcel! 🏗️\nCouldn't fetch the parcel data.");
+                return;  // Exit early (can't proceed without parcel data)
+            }
 
+            // API block #2.5 of 3: MAX BUILDING HEIGHT
+            try {
+                // Fetch ALL data on tallest buildings within radius
+                const tallBldgsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
+                console.log(maxBH);
+            } catch {
+                console.error("Error fetching max building height:\n", error);
+                alert("Looks like we hit a ceiling on my usefuless! \nCouldn't fetch the maximum building height.");
+                return;  // Exit early since we can't proceed without max building height data
+            }
+            /*
             let height = parseFloat(buildingHeight).toFixed(0); /////// fix
             if (isNaN(height)) {
                 height = "unknown";
@@ -149,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 ////addLoadingLine(`Found a <b>${parseFloat(buildingHeight).toFixed(0)}'-tall building</b> within a mile...`);
             }
+            */
 
             // API block #3 of 3: AI RESPONSES
             try {
