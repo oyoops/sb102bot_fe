@@ -35,9 +35,8 @@ module.exports = async (req, res) => {
     // SuperAI Switch
     ////const superAI = req.superAI; // 'on' / 'off'
     const superAI = suppDataForAI.superAI; // 'on' / 'off'
-    console.log("<", superAI, ">");
-    console.log("<", req.superAI, ">");
-    
+    //console.log("<", superAI, ">");
+    //console.log("<", req.superAI, ">");
 
     /*
     // Try to parse if it's a JSON string
