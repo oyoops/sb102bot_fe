@@ -33,6 +33,28 @@ async function checkCity(geoData) {
     return muniData;
 }
 
+// county data v2
+async function fetchCountyData(lat, lng) {
+    const countyDataEndpoint = `/api/load_county_table?lat=${lat}&lng=${lng}`;
+    const countyData = await fetchAPI(countyDataEndpoint);
+    if (!countyData.county_name) {
+        throw new Error('Missing county name in county data');
+    }
+    /* County data lookup was successful */
+    return countyData;
+}
+
+// parcel data v2
+async function fetchParcelData(lat, lng, countyName) {
+    const parcelDataEndpoint = `/api/load_parcel_data?lat=${lat}&lng=${lng}&county_name=${countyName}`;
+    const parcelData = await fetchAPI(parcelDataEndpoint);
+    if (!parcelData || Object.keys(parcelData).length === 0) {
+        throw new Error('Missing or empty parcel data');
+    }
+    /* Parcel data lookup was successful */
+    return parcelData;
+}
+
 // generic fetch API
 async function fetchAPI(url) {
     const apiResponse = await fetch(url);
