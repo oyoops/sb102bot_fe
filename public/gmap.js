@@ -60,12 +60,12 @@ async function initializeMap(lat, lng) {
     const bounds = new google.maps.LatLngBounds();
     bounds.extend(new google.maps.LatLng(lat, lng));
 
-    // Fetch data on tallest buildings within radius
-    tallestBuildingsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
-
     // Keep track of the tallest one
     let maxDistance = 0;
     let maxHeight = 0;
+
+    // Fetch data on tallest buildings within radius
+    tallestBuildingsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
 
     // Parse building(s) and add to map
     (tallestBuildingsData || []).forEach((buildingData, index) => {
@@ -124,6 +124,7 @@ async function initializeMap(lat, lng) {
             if (currentBuildingHeight > maxHeight) {
                 maxHeight = currentBuildingHeight;
                 maxDistance = distanceInMilesToTallestBldg;
+                console.log(`New tallest = ${maxHeight}'`);
             }
             /////
 
