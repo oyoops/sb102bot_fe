@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
             */
 
 
-
             /* API blocks: */
 
             // GEO DATA
@@ -138,37 +137,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 /* Generate the final AI summary */
 
-                // Get dirty data
+                // Compile all supplementary data
                 const dirtyData = await getDirtyData(aiSupplementalData);
                 const dirtyDataString = await getDirtyDataString(aiSupplementalData);
-
-                // Prepare and refine the supplemental data
-                const cleanerData = await refineData(dirtyData, superAI);
-                ////console.log("Clean property data: \n", cleanerData);
+                const cleanerData = await refineData(dirtyData, superAI); // refine, add globals, etc
+                console.log("AI will get this data: \n", cleanerData);
                 
-                // (Master prompt dispatcher) 
-                // Sends primary prompts, compiles responses, then gets and returns SER response
-                aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData, superAI); // send perfect supplemental data to the master dispatcher to inform all prompts
-
-                // check SER response
+                // Send primary prompts, compile intermediate responses, and get SER response
+                aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData, superAI); // <-- Master prompt dispatch
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
+
+                // Hide loading indicator
+                window.scrollTo(0, 0);
+                loadingContainer.style.display = 'none';   
+
+                // Show 'New Search' button
+                tryAgainButton.style.display = 'block';
+                window.scrollTo(0, 0);
 
             } catch (error) {
                 console.error("[CRITICAL] Error while collecting AI responses: \n", error);
                 return;
             }
-
-            // show Try Again button
-            tryAgainButton.style.display = 'block';
-            window.scrollTo(0, 0);
             
-            // ...
             // MANUAL MILLAGE ADJUSTMENT:
             fakeMillage = parseFloat(countyData.county_millage) + parseFloat(MILLAGE_ADJUSTMENT); // "rough estimate" using known county mills + a constant manual adjustment to approximate state (and perhaps local...) portion of grand total millage
             fakeMillage = parseFloat(fakeMillage).toFixed(4);
-            // ...
 
             // Populate the municipal data table
             const countyRow = `
@@ -370,26 +366,21 @@ document.addEventListener('DOMContentLoaded', function() {
             // display div
             eligibilityDiv.style.display = 'block';
             // fade in div
+            /*
             animateTextFadeIn(eligibilityDiv);
-
+            */
 
             /* Start -- Land Development Input/Output Section */
             
             // Run initial calculations using loaded & default values
+            /*
             calculateMaximumUnits();
             calculateWeightedAverageSizes();
             updateRentPerSqFtTable();
             updateTotalCosts();
             calculateAbatement();
-            
-            /* End -- Land Development Input/Output Section */
-
-
-
-            // hide loading indicator
-            //loadingContainer.scrollIntoView;
-            window.scrollTo(0, 0);
-            loadingContainer.style.display = 'none';       
+            */
+            /* End -- Land Development Input/Output Section */    
 
             // scroll to top again
             //googlemap.scrollIntoView();

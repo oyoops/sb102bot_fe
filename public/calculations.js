@@ -233,6 +233,3 @@ function updateTotalCosts() {
     totalLandAndTotalHcPerUnitDisplay.textContent = '$' + totalLandAndTotalHcPerUnit.toFixed(0);
     totalLandAndTotalHcPerSqFtDisplay.textContent = '$' + totalLandAndTotalHcPerSqFt.toFixed(2);
 }
-
-
-
