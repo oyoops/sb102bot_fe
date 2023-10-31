@@ -33,6 +33,9 @@ module.exports = async (req, res) => {
     // Log all supplemental data available
     //console.log("\nSupp. data: \n" + JSON.stringify(req.query, null, 2)); // (doesn't work)
 
+    // SuperAI Switch
+    const superAI = req.superAI; // 'on' / 'off'
+
     // Location
     const lat = req.query.lat;
     const lng = req.query.lng;
