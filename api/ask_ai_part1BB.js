@@ -349,7 +349,7 @@ module.exports = async (req, res) => {
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
             useModel = 'gpt-3.5-turbo';
-            useTokens = 150;
+            useTokens = 125;
         } else {
             console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_PRIMARY_ANALYSES;
