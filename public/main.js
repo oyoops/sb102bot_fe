@@ -86,6 +86,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const countyData = await fetchCountyData(lat, lng);
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
+            // Populate the max rents table
+            const rentsRow = `
+                <tr>
+                    <td>$${parseFloat(countyData.max_rent_0bd_120ami).toFixed(0)}</td>
+                    <td>$${parseFloat(countyData.max_rent_1bd_120ami).toFixed(0)}</td>
+                    <td>$${parseFloat(countyData.max_rent_2bd_120ami).toFixed(0)}</td>
+                    <td>$${parseFloat(countyData.max_rent_3bd_120ami).toFixed(0)}</td>
+                </tr>
+            `;
+            rentsTableBody.innerHTML = rentsRow;
+            rentInfoContainer.style.display = 'table'; // show the max affordable rents container
+            countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
+
             // Get Municipality
             let muniNameProper;
             if (cityNameProper.toLowerCase() === "unincorporated") {
@@ -166,19 +179,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error("[CRITICAL] Error while collecting AI responses: \n", error);
                 return;
             }
-            
-            // Populate the max rents table
-            const rentsRow = `
-                <tr>
-                    <td>$${parseFloat(countyData.max_rent_0bd_120ami).toFixed(0)}</td>
-                    <td>$${parseFloat(countyData.max_rent_1bd_120ami).toFixed(0)}</td>
-                    <td>$${parseFloat(countyData.max_rent_2bd_120ami).toFixed(0)}</td>
-                    <td>$${parseFloat(countyData.max_rent_3bd_120ami).toFixed(0)}</td>
-                </tr>
-            `;
-            rentsTableBody.innerHTML = rentsRow;
-            rentInfoContainer.style.display = 'table'; // show the max affordable rents container
-            countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
             
             /* Start: Land Development I/O Section */
             // Run initial calculations using loaded & default values
