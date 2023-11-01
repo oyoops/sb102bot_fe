@@ -79,7 +79,7 @@ module.exports = async (req, res) => {
         "role": "user",
         "content": `
                 YOUR TASK:
-                    Write a succinct summary report about the property with respect to the Live Local Act.
+                    Write a succinct summary report about the property with respect to the Live Local Act. Is it eligible?
                     Do not go into excessive detail about the law itself.
                     Be advanced, but include emojis.
                 ---
