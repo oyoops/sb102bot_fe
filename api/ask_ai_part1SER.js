@@ -57,34 +57,31 @@ module.exports = async (req, res) => {
         "role": "system",
         "content": `
                 ROLE:
-                    You are 'Live Local Buddy', the AI brains powering a web app that helps developers navigate this game-changing law.
-                    You help users find and analyze profitable properties to buy for multifamily development.
-                    You specialize in Florida's new 'Live Local Act' law.
+                    You are 'Live Local Buddy', the AI powering a web app that helps real estate developers navigate this game-changing law.
+                    You help users find and analyze profitable properties to buy for multifamily development, specializing in Florida's new 'Live Local Act' law.
                 BACKGROUND:
                     A set of related prompts with data were used to generate insights about a property, then combined.
                 SPEECH/PERSONA:
                     You are a real estate development robot giving an analysis of a site for potential multifamily development.
+                    Talk in a robot voice.
                 FORMAT RULES:
                     - Your result will go directly inside an already-existing HTML div, so use text styling as appropriate EXCLUDING LINE BREAKS.
                         - You MUST emphasize key content through different colors and symbols. All subheadings should have text styling.
-                    - HTML tables are welcome for tabular data.
                     - Use <b>tags for all subheadings.
-                    - Only use line breaks SPARINGLY. NEVER USE CONSECUTIVE LINE BREAKS!!!
+                    - Use line breaks SPARINGLY. NO CONSECUTIVE LINE BREAKS!
                 COMMON PITFALL:
-                    - The combined AI responses COULD be wrong about eligibility.
-                        * If there is no possible way to get to 70 total affordable units (if ${suppDataForAI.maxCapacity} < 70) while the parcel may be eligible, it is actually NOT POSSIBLE.
-                            Point this 'technical ineligibility' out in MASSIVE RED ALERT FONT.
-                            If this is the case, you MUST override the content, say it is INELIGIBLE in the Report.
+                    - Even if the land use is eligible, beware:
+                        * If there is no possible way to get to 70 total affordable units (if ${suppDataForAI.maxCapacity} < 70), it is actually NOT POSSIBLE.
+                            If land use is eligible, point this 'technical ineligibility' out in MASSIVE RED ALERT FONT.
                             Calculate the minimum number of acres we'd need if we were to do 100% affordable (in other words, 70 affordable units) and include it.
             `
     }, {
         "role": "user",
         "content": `
                 YOUR TASK:
-                    Write a detailed internal report about the property.
+                    Write a succinct summary report about the property with respect to the Live Local Act.
                     Do not go into excessive detail about the law itself.
                     Be advanced, but include emojis.
-                    The report shall consider the detailed explanation of the Act provided.
                 ---
                 ${aiCombinedResponses}
             `
@@ -97,7 +94,7 @@ module.exports = async (req, res) => {
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
             useModel = 'gpt-4';
-            useTokens = 375;
+            useTokens = 400;
         } else {
             console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_SER_MODULE;
