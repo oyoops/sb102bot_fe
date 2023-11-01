@@ -64,6 +64,12 @@ module.exports = async (req, res) => {
                 SPEECH/PERSONA:
                     You are a real estate development robot giving an analysis of a site for potential multifamily development.
                     Talk in a robot voice.
+                CONTENT RULES:
+                    - If and only if the land use is qualifying (commercial or industrial):
+                            * If there is no possible way to get to 70 total affordable units (if ${suppDataForAI.maxCapacity} < 70), it is actually NOT POSSIBLE.
+                                Point this 'technical ineligibility' out in MASSIVE RED ALERT FONT.
+                                Calculate the minimum number of acres we'd need if we were to do 100% affordable (in other words, 70 affordable units) and include it.
+                    - ELSE, IF THE LAND USE IS NOT LIVE LOCAL-QUALIFIED, STOP THERE AND DO NOT MENTION IT.
                 FORMAT RULES:
                     - Your result will go directly inside an already-existing HTML div, so use text styling as appropriate EXCLUDING LINE BREAKS.
                         - You MUST emphasize key content through different colors and symbols. All subheadings should have text styling.
@@ -77,12 +83,6 @@ module.exports = async (req, res) => {
                     Write a succinct summary report about the property with respect to the Live Local Act. Is it eligible?
                     Do not go into excessive detail about the law itself.
                     Be advanced, but include emojis.
-                
-                - If the land use is Live Local-ineligible, stop there.
-                - But if and only if the land use is Live Local-eligible:
-                        * If there is no possible way to get to 70 total affordable units (if ${suppDataForAI.maxCapacity} < 70), it is actually NOT POSSIBLE.
-                            Point this 'technical ineligibility' out in MASSIVE RED ALERT FONT.
-                            Calculate the minimum number of acres we'd need if we were to do 100% affordable (in other words, 70 affordable units) and include it.
                 ---
                 ${aiCombinedResponses}
             `
