@@ -562,7 +562,7 @@ input:disabled {
 
 .switchContainer {
     display: flex;
-    align-items: center; /* This will vertically center align the text and the switch */
+    /* align-items: center;*/ /* This will vertically center align the text and the switch */
 }
 
 .switchBox {
@@ -594,8 +594,8 @@ input:disabled {
 .toggle:before {
     position: absolute;
     content: "";
-    height: 13px;
-    width: 13px;
+    height: 17px;
+    width: 17px;
     left: 2px;
     bottom: 2px;
     background-color: white;
