@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
 
-            /* Generate the final AI summary */
+            /* Generate AI */
             try {
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
@@ -144,8 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (cityData) {
                     enhanceWithCityData(aiSupplementalData, cityData);
                 }
-                
-                // passed checks; send to AI
 
                 // Compile all supplementary data
                 const dirtyData = await getDirtyData(aiSupplementalData);
@@ -176,7 +174,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.scrollTo(0, 0);
 
             } catch (error) {
-                console.error("[CRITICAL] Error while collecting AI responses: \n", error);
+                if (error.message.startsWith("[CRITICAL]")) {
+                    loadingContainer.style.color = "red";
+                    console.error('AI FAILURE!');
+                    alert('Sorry, the server did not respond. Try again!');
+                    location.reload(); // Reload the page    
+                } else {
+                    console.error('Unknown AI Error!');
+                    location.reload(); // Reload the page
+                }
                 return;
             }
             
@@ -190,17 +196,22 @@ document.addEventListener('DOMContentLoaded', function() {
             /* End: Land Development I/O Section */    
             
         } catch (error) {
-            const loadingContainer = document.querySelector('.loading-container');
+            //const loadingContainer = document.querySelector('.loading-container');
         
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);
                 loadingContainer.style.color = "red";
+                alert('Sorry, the server did not respond. Try again!');
+                location.reload(); // Reload the page
             } else if (error.message.startsWith("Took too long")) {
                 console.error('Server error:', error);
+                loadingContainer.style.color = "red";
+                alert('Sorry, the server did not respond. Try again!');
                 location.reload(); // Reload the page
             } else {
                 console.error('Error:', error);
                 loadingContainer.style.color = "grey";
+                alert('Sorry, an unknown AI error happened. Try again!');
             }
         }
     });
