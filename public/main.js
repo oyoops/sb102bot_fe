@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.scrollTo(0, 0);
 
                 // Fade in div
-                //animateTextFadeIn(eligibilityDiv);
+                animateTextFadeIn(eligibilityDiv);
   
                 // Show 'New Search' button
                 tryAgainButton.style.display = 'block';

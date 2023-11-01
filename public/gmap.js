@@ -124,7 +124,7 @@ async function initializeMap(lat, lng) {
             if (currentBuildingHeight > maxHeight) {
                 maxHeight = currentBuildingHeight;
                 maxDistance = distanceInMilesToTallestBldg;
-                console.log(`New tallest = ${maxHeight}'`);
+                //console.log(`New tallest = ${maxHeight}'`);
             }
             /////
 
