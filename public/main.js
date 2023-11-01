@@ -166,7 +166,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error("[CRITICAL] Error while collecting AI responses: \n", error);
                 return;
             }
-
+            
+            // Populate the max rents table
+            const rentsRow = `
+                <tr>
+                    <td>$${parseFloat(countyData.max_rent_0bd_120ami).toFixed(0)}</td>
+                    <td>$${parseFloat(countyData.max_rent_1bd_120ami).toFixed(0)}</td>
+                    <td>$${parseFloat(countyData.max_rent_2bd_120ami).toFixed(0)}</td>
+                    <td>$${parseFloat(countyData.max_rent_3bd_120ami).toFixed(0)}</td>
+                </tr>
+            `;
+            rentsTableBody.innerHTML = rentsRow;
+            rentInfoContainer.style.display = 'table'; // show the max affordable rents container
+            countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
+            
             /* Start: Land Development I/O Section */
             // Run initial calculations using loaded & default values
             //calculateMaximumUnits();
