@@ -607,3 +607,94 @@ function updateLoadingBar() {
     }
   }
   
+// Load main tables
+function loadMainTables() {
+    // MANUAL MILLAGE ADJUSTMENT:
+    fakeMillage = parseFloat(countyData.county_millage) + parseFloat(MILLAGE_ADJUSTMENT); // "rough estimate" using known county mills + a constant manual adjustment to approximate state (and perhaps local...) portion of grand total millage
+    fakeMillage = parseFloat(fakeMillage).toFixed(4);
+
+    // Populate the municipal data table
+    const countyRow = `
+        <tr>
+            <td>${cityNameProper}</td>
+            <td>${countyNameProper}</td>
+            <td>$${parseFloat(countyData.county_amis_income).toFixed(0)}</td>
+            <td>${parseFloat(fakeMillage).toFixed(4)}</td>
+        </tr>
+    `;
+    countyTableBody.innerHTML = countyRow;
+    ////countyDataTable.style.display = 'table'; // show municipal data table
+    
+    // Populate the max rents table
+    const rentsRow = `
+        <tr>
+            <td>$${parseFloat(countyData.max_rent_0bd_120ami).toFixed(0)}</td>
+            <td>$${parseFloat(countyData.max_rent_1bd_120ami).toFixed(0)}</td>
+            <td>$${parseFloat(countyData.max_rent_2bd_120ami).toFixed(0)}</td>
+            <td>$${parseFloat(countyData.max_rent_3bd_120ami).toFixed(0)}</td>
+        </tr>
+    `;
+    rentsTableBody.innerHTML = rentsRow;
+
+    rentInfoContainer.style.display = 'table'; // show the max affordable rents container
+    countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
+
+    /*
+    // populate parcel data table
+    const parcelDataRow = `
+        <tr>
+            <td>${parcelData.own_name}</td>
+            <td>${parcelData.parcel_id}</td>
+            <td>${acres.toFixed(2)}</td>
+            <td>${useCodeLookup[parcelData.dor_uc] || parcelData.dor_uc}</td>
+        </tr>
+    `;
+    parcelDataTableBody.innerHTML = parcelDataRow;
+    ////parcelDataTableBody.style.display = 'block'; // show the parcel data table
+    parcelDataTableBody.style.display = 'none'; // hide the parcel data table
+    */
+
+    // scroll to top of map after everything is loaded x1
+    //googlemap.scrollIntoView();
+    window.scrollTo(0, 0);
+    
+
+    
+    /* USER INPUTS SECTION START */
+
+    // unhide tables and I/O sections            
+    /*
+    ////parcelDataTable.style.display = 'table'; // parcel data
+    developmentProgramInputSection.style.display = 'block'; // development program inputs (??)
+    unitCalculationTable.style.display = 'block'; // unit counts
+    marketRateInputSection.style.display = 'block'; // market rate rent inputs
+    rentPerSqFtTableSection.style.display = 'block'; // rent per Sq Ft
+    abatementTable.style.display = 'block'; // property tax abatement
+    // ...
+    landAndTotalHcInputSection.style.display = 'block';
+    landAndTotalHcOutputSection.style.display = 'block';
+    // ...
+    */
+
+
+
+    // set acreage input placeholder
+    acreageInput.value = acres.toFixed(2); // ACREAGE AUTO/MANUAL INPUT
+
+    
+    ////const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
+    /*
+    if (maxDensity !== null) {
+        ////console.log ("Maximum allowed density in", countyData.county_name, cityData.cityName, ":", maxDensity);
+        // set global
+        maxMuniDensity = maxDensity;
+    } else {
+        console.log ("WARNING: Maximum municipal density was not found!")
+        // set global
+        maxMuniDensity = 0;
+    }
+    */
+    // set density input placeholder
+    densityInput.value = maxMuniDensity.toFixed(0); // DENSITY AUTO/MANUAL INPUT
+
+}
