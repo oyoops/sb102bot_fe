@@ -82,6 +82,7 @@ module.exports = async (req, res) => {
         "content": `
                 YOUR TASK:
                     Write a detailed internal report about the property.
+                    Do not go into excessive detail about the law itself.
                     Be advanced, but include emojis.
                     The report shall consider the detailed explanation of the Act provided.
                 ---
@@ -96,7 +97,7 @@ module.exports = async (req, res) => {
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
             useModel = 'gpt-4';
-            useTokens = 500;
+            useTokens = 300;
         } else {
             console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_SER_MODULE;
@@ -108,7 +109,7 @@ module.exports = async (req, res) => {
             model: useModel,
             messages: messages,
             max_tokens: useTokens,
-            temperature: 0.6,
+            temperature: 0.5,
             presence_penalty: 0.1,
             frequency_penalty: 0.1
         }, {
