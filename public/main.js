@@ -125,7 +125,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get eligibility & Set colors
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
                 // Set site to orange
-                document.documentElement.style.setProperty('--hue', '25'); // orange
+                //document.documentElement.style.setProperty('--hue', '25'); // orange
+                // Set site to red
+                document.documentElement.style.setProperty('--hue', '360'); // red
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Set site to green
                 document.documentElement.style.setProperty('--hue', '120'); // green
