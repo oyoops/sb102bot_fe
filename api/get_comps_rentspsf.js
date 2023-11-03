@@ -41,6 +41,7 @@ module.exports = async (req, res) => {
     const result = await pool.query(query, [lat, lng, radius]);
     res.status(200).json(result.rows[0]);
   } catch (err) {
+    console.log(err);
     res.status(500).send('Internal Server Error');
   }
 };
