@@ -25,19 +25,19 @@ module.exports = async (req, res) => {
       )
 
       SELECT 
-          AVG(st_ask_rent_unit) AS avg_st_ask_rent_unit, 
-          AVG(one_bd_ask_rent_unit) AS avg_one_bd_ask_rent_unit,
-          AVG(two_bd_ask_rent_unit) AS avg_two_bd_ask_rent_unit,
-          AVG(three_bd_ask_rent_unit) AS avg_three_bd_ask_rent_unit
+          ROUND(AVG(st_ask_rent_unit))::INT AS avg_st_ask_rent_unit,
+          ROUND(AVG(one_bd_ask_rent_unit))::INT AS avg_one_bd_ask_rent_unit,
+          ROUND(AVG(two_bd_ask_rent_unit))::INT AS avg_two_bd_ask_rent_unit,
+          ROUND(AVG(three_bd_ask_rent_unit))::INT AS avg_three_bd_ask_rent_unit
       FROM 
           public.comps_data, Constants
       WHERE 
+          building_status = 'Existing' AND
           EarthRadius * 2 * ASIN(SQRT(POWER(SIN((lat - $1) * PI() / 180 / 2), 2) + 
           COS(lat * PI() / 180) * COS($1 * PI() / 180) * 
-          POWER(SIN((lng - $2) * PI() / 180 / 2), 2))) < $3 
-          AND building_status = 'Existing'
+          POWER(SIN((lng - $2) * PI() / 180 / 2), 2))) < $3
     `;
-
+    
     const result = await pool.query(query, [lat, lng, radius]);
     res.status(200).json(result.rows[0]);
   } catch (err) {
