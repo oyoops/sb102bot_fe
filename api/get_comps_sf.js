@@ -8,8 +8,6 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-await pool.connect();
-
 module.exports = async (req, res) => {
   const lat = parseFloat(req.query.lat);
   const lng = parseFloat(req.query.lng);
