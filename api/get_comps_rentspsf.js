@@ -39,7 +39,13 @@ module.exports = async (req, res) => {
     `;
 
     const result = await pool.query(query, [lat, lng, radius]);
-    res.status(200).json(result.rows[0]);
+    const parsedResult = {
+      avg_st_eff_rent_sf: parseFloat(result.rows[0].avg_st_eff_rent_sf),
+      avg_one_bd_eff_rent_sf: parseFloat(result.rows[0].avg_one_bd_eff_rent_sf),
+      avg_two_bd_eff_rent_sf: parseFloat(result.rows[0].avg_two_bd_eff_rent_sf),
+      avg_three_bd_eff_rent_sf: parseFloat(result.rows[0].avg_three_bd_eff_rent_sf)
+    };
+    res.status(200).json(parsedResult);
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
