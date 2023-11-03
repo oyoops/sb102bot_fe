@@ -38,8 +38,13 @@ module.exports = async (req, res) => {
           AND building_status = 'Existing'
     `;
 
-    const result = await pool.query(query, [lat, lng, radius]);
-    res.status(200).json(result.rows[0]);
+    const parsedResult = {
+      pct_st: parseFloat(result.rows[0].avg_pct_st),
+      pct_1bd: parseFloat(result.rows[0].avg_pct_1bd),
+      pct_2bd: parseFloat(result.rows[0].avg_pct_2bd),
+      pct_3bd: parseFloat(result.rows[0].avg_pct_3bd)
+    };
+    res.status(200).json(parsedResult);
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
