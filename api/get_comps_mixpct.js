@@ -37,12 +37,13 @@ module.exports = async (req, res) => {
           POWER(SIN((lng - $2) * PI() / 180 / 2), 2))) < $3 
           AND building_status = 'Existing'
     `;
-
+    
+    const result = await pool.query(query, [lat, lng, radius]);
     const parsedResult = {
-      pct_st: parseFloat(result.rows[0].avg_pct_st),
-      pct_1bd: parseFloat(result.rows[0].avg_pct_1bd),
-      pct_2bd: parseFloat(result.rows[0].avg_pct_2bd),
-      pct_3bd: parseFloat(result.rows[0].avg_pct_3bd)
+      avg_pct_st: parseFloat(result.rows[0].avg_pct_st),
+      avg_pct_1bd: parseFloat(result.rows[0].avg_pct_1bd),
+      avg_pct_2bd: parseFloat(result.rows[0].avg_pct_2bd),
+      avg_pct_3bd: parseFloat(result.rows[0].avg_pct_3bd)
     };
     res.status(200).json(parsedResult);
   } catch (err) {
