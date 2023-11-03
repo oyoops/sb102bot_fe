@@ -25,10 +25,10 @@ module.exports = async (req, res) => {
       )
 
       SELECT 
-          AVG(pct_st) AS avg_pct_st, 
-          AVG(pct_1bd) AS avg_pct_1bd,
-          AVG(pct_2bd) AS avg_pct_2bd,
-          AVG(pct_3bd) AS avg_pct_3bd
+          ROUND(AVG(pct_st) / 100, 2) AS avg_pct_st,
+          ROUND(AVG(pct_1bd) / 100, 2) AS avg_pct_1bd,
+          ROUND(AVG(pct_2bd) / 100, 2) AS avg_pct_2bd,
+          ROUND(AVG(pct_3bd) / 100, 2) AS avg_pct_3bd
       FROM 
           public.comps_data, Constants
       WHERE 
