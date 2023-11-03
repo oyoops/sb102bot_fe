@@ -25,10 +25,10 @@ module.exports = async (req, res) => {
       )
 
       SELECT 
-          AVG(st_eff_rent_sf) AS avg_st_eff_rent_sf, 
-          AVG(one_bd_eff_rent_sf) AS avg_one_bd_eff_rent_sf,
-          AVG(two_bd_eff_rent_sf) AS avg_two_bd_eff_rent_sf,
-          AVG(three_bd_eff_rent_sf) AS avg_three_bd_eff_rent_sf
+          ROUND(AVG(st_eff_rent_sf), 2) AS avg_st_eff_rent_sf,
+          ROUND(AVG(one_bd_eff_rent_sf), 2) AS avg_one_bd_eff_rent_sf,
+          ROUND(AVG(two_bd_eff_rent_sf), 2) AS avg_two_bd_eff_rent_sf,
+          ROUND(AVG(three_bd_eff_rent_sf), 2) AS avg_three_bd_eff_rent_sf
       FROM 
           public.comps_data, Constants
       WHERE 
