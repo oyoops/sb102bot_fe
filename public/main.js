@@ -40,6 +40,12 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('You might want to try typing an address first? Just a suggestion, though...');
             return;
         }
+        // Google Analytics -> capture address
+        gtag('event', 'Address Submission', {
+            'event_category': 'Form',
+            'event_label': 'Address Input',
+            'value': address
+        });
 
         // ONE HUGE TRY BLOCK
         try {
