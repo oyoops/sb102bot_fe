@@ -19,23 +19,23 @@ module.exports = async (req, res) => {
 
   try {
     const query = `
-      WITH Constants AS (
-          SELECT 
-              3959 AS EarthRadius -- in miles; use 6371 for kilometers
-      )
-
-      SELECT 
-          ROUND(AVG(st_eff_rent_sf), 2) AS avg_st_eff_rent_sf,
-          ROUND(AVG(one_bd_eff_rent_sf), 2) AS avg_one_bd_eff_rent_sf,
-          ROUND(AVG(two_bd_eff_rent_sf), 2) AS avg_two_bd_eff_rent_sf,
-          ROUND(AVG(three_bd_eff_rent_sf), 2) AS avg_three_bd_eff_rent_sf
-      FROM 
-          public.comps_data, Constants
-      WHERE 
-          EarthRadius * 2 * ASIN(SQRT(POWER(SIN((lat - $1) * PI() / 180 / 2), 2) + 
-          COS(lat * PI() / 180) * COS($1 * PI() / 180) * 
-          POWER(SIN((lng - $2) * PI() / 180 / 2), 2))) < $3 
-          AND building_status = 'Existing'
+        WITH Constants AS (
+            SELECT 
+                3959 AS EarthRadius -- in miles; use 6371 for kilometers
+        )
+        
+        SELECT 
+            ROUND(AVG(st_eff_rent_sf::numeric), 2) AS avg_st_eff_rent_sf,
+            ROUND(AVG(one_bd_eff_rent_sf::numeric), 2) AS avg_one_bd_eff_rent_sf,
+            ROUND(AVG(two_bd_eff_rent_sf::numeric), 2) AS avg_two_bd_eff_rent_sf,
+            ROUND(AVG(three_bd_eff_rent_sf::numeric), 2) AS avg_three_bd_eff_rent_sf
+        FROM 
+            public.comps_data, Constants
+        WHERE 
+            EarthRadius * 2 * ASIN(SQRT(POWER(SIN((lat - $1) * PI() / 180 / 2), 2) + 
+            COS(lat * PI() / 180) * COS($1 * PI() / 180) * 
+            POWER(SIN((lng - $2) * PI() / 180 / 2), 2))) < $3 
+            AND building_status = 'Existing'
     `;
 
     const result = await pool.query(query, [lat, lng, radius]);
