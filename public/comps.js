@@ -20,6 +20,9 @@ function displayAverages(compsAvgs, compsWeightedPercentages) {
 }
 
 function generateAveragesTable(averages, percentages) {
+    console.log(averages);
+    console.log(percentages);
+
     const types = [
         { key: 'studio', display: 'Studio' },
         { key: 'oneBd', display: '1 Bed' },
