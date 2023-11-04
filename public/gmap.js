@@ -174,8 +174,8 @@ function createStyledMarker(position, map, label) {
 /* Maps + Comps Database */
 
 // Adds each comp returned to a Google Map
-function addCompsMarkersToMap(data) {
-    data.forEach(item => {
+function addCompsMarkersToMap(responseData) {
+    responseData.forEach(item => {
 
         // Custom icon using SVG for a smaller and different-colored marker
         const customIcon = {

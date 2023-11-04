@@ -24,6 +24,7 @@ module.exports = async (req, res) => {
   const radius = parseFloat(req.query.radius);
   const limit = parseInt(req.query.limit);
   const COMPS_COUNT_CAP = 10;
+  
   // Validate and cap the comps quantity
   if (limit > COMPS_COUNT_CAP) {
     console.warn('Comps limit exceeds the allowed value; capping to ' + COMPS_COUNT_CAP + '.');
