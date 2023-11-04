@@ -106,8 +106,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error("Network response was not ok");
                 }
                 const compsDataObj = await response.json();
+                
+                // Extract raw comps data
                 compsData = compsDataObj.data; //// (hackily set global)
-                console.log("Comps: \n" + JSON.stringify(compsData));
+                ////console.log("Comps: \n" + JSON.stringify(compsData));
+                
+                // Extract comps averages
+                const compsAvgs = compsDataObj.averages;
+                console.log("Comps Averages: \n" + JSON.stringify(compsAvgs));
                 
                 // Add placemarks to map
                 addCompsMarkersToMap(compsData);
