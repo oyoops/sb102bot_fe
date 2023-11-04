@@ -103,11 +103,17 @@ module.exports = async (req, res) => {
 
     result.rows.forEach(row => {
         const totalUnits = row.num_of_units;
-        
+      
         const studioUnits = totalUnits * (row.pct_st || 0) / 100;
         const oneBdUnits = totalUnits * (row.pct_1bd || 0) / 100;
         const twoBdUnits = totalUnits * (row.pct_2bd || 0) / 100;
         const threeBdUnits = totalUnits * (row.pct_3bd || 0) / 100;
+    
+        // Increment the total units by type
+        totalUnitsByType.studio += studioUnits;
+        totalUnitsByType.oneBd += oneBdUnits;
+        totalUnitsByType.twoBd += twoBdUnits;
+        totalUnitsByType.threeBd += threeBdUnits;
         
         console.log(`PropertyID: ${row.propertyid} - Total Units: ${totalUnits}, Studio Units: ${studioUnits}, One Bedroom Units: ${oneBdUnits}, Two Bedroom Units: ${twoBdUnits}, Three Bedroom Units: ${threeBdUnits}`);
 
@@ -130,26 +136,26 @@ module.exports = async (req, res) => {
         console.log(`Accumulated Weighted Sums for PropertyID: ${row.propertyid}`, JSON.stringify(weightedSums));
     });
 
-    const totalUnitsInResult = result.rows.reduce((acc, row) => acc + row.num_of_units, 0);
+    //const totalUnitsInResult = result.rows.reduce((acc, row) => acc + row.num_of_units, 0);
 
     console.log('Weighted Effective Rents:');
-    console.log('Studio:', totalUnitsInResult ? (weightedSums.studio.rent / totalUnitsInResult) : 0);
-    console.log('1 Bed: ', totalUnitsInResult ? (weightedSums.oneBd.rent / totalUnitsInResult) : 0);
-    console.log('2 Bed: ', totalUnitsInResult ? (weightedSums.twoBd.rent / totalUnitsInResult) : 0);
-    console.log('3 Bed: ', totalUnitsInResult ? (weightedSums.threeBd.rent / totalUnitsInResult) : 0);
+    console.log('Studio:', totalUnitsByType.studio ? (weightedSums.studio.rent / totalUnitsByType.studio) : 0);
+    console.log('1 Bed: ', totalUnitsByType.oneBd ? (weightedSums.oneBd.rent / totalUnitsByType.oneBd) : 0);
+    console.log('2 Bed: ', totalUnitsByType.twoBd ? (weightedSums.twoBd.rent / totalUnitsByType.twoBd) : 0);
+    console.log('3 Bed: ', totalUnitsByType.threeBd ? (weightedSums.threeBd.rent / totalUnitsByType.threeBd) : 0);
     
     console.log('\nWeighted Average Square Footages:');
-    console.log('Studio:', totalUnitsInResult ? (weightedSums.studio.sqft / totalUnitsInResult) : 0);
-    console.log('1 Bed: ', totalUnitsInResult ? (weightedSums.oneBd.sqft / totalUnitsInResult) : 0);
-    console.log('2 Bed: ', totalUnitsInResult ? (weightedSums.twoBd.sqft / totalUnitsInResult) : 0);
-    console.log('3 Bed: ', totalUnitsInResult ? (weightedSums.threeBd.sqft / totalUnitsInResult) : 0);
-
+    console.log('Studio:', totalUnitsByType.studio ? (weightedSums.studio.sqft / totalUnitsByType.studio) : 0);
+    console.log('1 Bed: ', totalUnitsByType.oneBd ? (weightedSums.oneBd.sqft / totalUnitsByType.oneBd) : 0);
+    console.log('2 Bed: ', totalUnitsByType.twoBd ? (weightedSums.twoBd.sqft / totalUnitsByType.twoBd) : 0);
+    console.log('3 Bed: ', totalUnitsByType.threeBd ? (weightedSums.threeBd.sqft / totalUnitsByType.threeBd) : 0);
+    
     console.log('\nWeighted Effective Rent per Square Foot:');
-    console.log('Studio:', totalUnitsInResult ? (weightedSums.studio.rentPerSqft / totalUnitsInResult) : 0);
-    console.log('1 Bed: ', totalUnitsInResult ? (weightedSums.oneBd.rentPerSqft / totalUnitsInResult) : 0);
-    console.log('2 Bed: ', totalUnitsInResult ? (weightedSums.twoBd.rentPerSqft / totalUnitsInResult) : 0);
-    console.log('3 Bed: ', totalUnitsInResult ? (weightedSums.threeBd.rentPerSqft / totalUnitsInResult) : 0);
-
+    console.log('Studio:', totalUnitsByType.studio ? (weightedSums.studio.rentPerSqft / totalUnitsByType.studio) : 0);
+    console.log('1 Bed: ', totalUnitsByType.oneBd ? (weightedSums.oneBd.rentPerSqft / totalUnitsByType.oneBd) : 0);
+    console.log('2 Bed: ', totalUnitsByType.twoBd ? (weightedSums.twoBd.rentPerSqft / totalUnitsByType.twoBd) : 0);
+    console.log('3 Bed: ', totalUnitsByType.threeBd ? (weightedSums.threeBd.rentPerSqft / totalUnitsByType.threeBd) : 0);
+    
     res.status(200).json(result.rows);
   } catch (err) {
     console.error('Error encountered:', err);
