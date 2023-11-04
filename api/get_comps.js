@@ -21,8 +21,8 @@ module.exports = async (req, res) => {
   
   const lat = parseFloat(req.query.lat);
   const lng = parseFloat(req.query.lng);
-  const radius = parseFloat(req.query.radius); // radius in miles
-  const limit = parseInt(req.query.limit); // max result rows
+  const radius = parseFloat(req.query.radius);
+  const limit = parseInt(req.query.limit);
 
   console.log('Received new comps request:\n', {
     lat: lat,
@@ -30,7 +30,6 @@ module.exports = async (req, res) => {
     radius: radius
   });
 
-  // Validate if latitude and longitude are within Florida bounds
   if (lat < 24.396308 || lat > 31.001056 || lng < -87.634938 || lng > -80.031362) {
     return res.status(400).send('Please provide a valid lat and long for Florida.');
   }
@@ -50,7 +49,7 @@ module.exports = async (req, res) => {
     let query = `
       WITH Constants AS (
           SELECT 
-              3959 AS EarthRadius -- in miles; use 6371 for kilometers
+              3959 AS EarthRadius
       )
 
       SELECT 
@@ -60,7 +59,7 @@ module.exports = async (req, res) => {
       WHERE 
           ${distanceFormula} < $3
       ORDER BY 
-          ${distanceFormula} ASC  -- Sort by closest distance first
+          ${distanceFormula} ASC
     `;
 
     if (limit) {
@@ -103,66 +102,65 @@ module.exports = async (req, res) => {
     };
 
     result.rows.forEach(row => {
-        if (row.st_eff_rent_unit && row.pct_st) {
+        if (row.st_eff_rent_unit !== null && row.st_eff_rent_unit !== undefined && row.pct_st !== null && row.pct_st !== undefined) {
             weightedSums.studio.rent += row.st_eff_rent_unit * row.pct_st / 100;
             counts.studio.rent++;
         }
-        if (row.st_avg_sf && row.pct_st) {
+        if (row.st_avg_sf !== null && row.st_avg_sf !== undefined && row.pct_st !== null && row.pct_st !== undefined) {
             weightedSums.studio.sqft += row.st_avg_sf * row.pct_st / 100;
             counts.studio.sqft++;
         }
-        if (row.st_eff_rent_sf && row.pct_st) {
+        if (row.st_eff_rent_sf !== null && row.st_eff_rent_sf !== undefined && row.pct_st !== null && row.pct_st !== undefined) {
             weightedSums.studio.rentPerSqft += row.st_eff_rent_sf * row.pct_st / 100;
             counts.studio.rentPerSqft++;
         }
     
-        if (row.one_bd_eff_rent_unit && row.pct_1bd) {
+        if (row.one_bd_eff_rent_unit !== null && row.one_bd_eff_rent_unit !== undefined && row.pct_1bd !== null && row.pct_1bd !== undefined) {
             weightedSums.oneBd.rent += row.one_bd_eff_rent_unit * row.pct_1bd / 100;
             counts.oneBd.rent++;
         }
-        if (row.one_bd_avg_sf && row.pct_1bd) {
+        if (row.one_bd_avg_sf !== null && row.one_bd_avg_sf !== undefined && row.pct_1bd !== null && row.pct_1bd !== undefined) {
             weightedSums.oneBd.sqft += row.one_bd_avg_sf * row.pct_1bd / 100;
             counts.oneBd.sqft++;
         }
-        if (row.one_bd_eff_rent_sf && row.pct_1bd) {
+        if (row.one_bd_eff_rent_sf !== null && row.one_bd_eff_rent_sf !== undefined && row.pct_1bd !== null && row.pct_1bd !== undefined) {
             weightedSums.oneBd.rentPerSqft += row.one_bd_eff_rent_sf * row.pct_1bd / 100;
             counts.oneBd.rentPerSqft++;
         }
-    
-        if (row.two_bd_eff_rent_unit && row.pct_2bd) {
+
+        if (row.two_bd_eff_rent_unit !== null && row.two_bd_eff_rent_unit !== undefined && row.pct_2bd !== null && row.pct_2bd !== undefined) {
             weightedSums.twoBd.rent += row.two_bd_eff_rent_unit * row.pct_2bd / 100;
             counts.twoBd.rent++;
         }
-        if (row.two_bd_avg_sf && row.pct_2bd) {
+        if (row.two_bd_avg_sf !== null && row.two_bd_avg_sf !== undefined && row.pct_2bd !== null && row.pct_2bd !== undefined) {
             weightedSums.twoBd.sqft += row.two_bd_avg_sf * row.pct_2bd / 100;
             counts.twoBd.sqft++;
         }
-        if (row.two_bd_eff_rent_sf && row.pct_2bd) {
+        if (row.two_bd_eff_rent_sf !== null && row.two_bd_eff_rent_sf !== undefined && row.pct_2bd !== null && row.pct_2bd !== undefined) {
             weightedSums.twoBd.rentPerSqft += row.two_bd_eff_rent_sf * row.pct_2bd / 100;
             counts.twoBd.rentPerSqft++;
         }
-    
-        if (row.three_bd_eff_rent_unit && row.pct_3bd) {
+
+        if (row.three_bd_eff_rent_unit !== null && row.three_bd_eff_rent_unit !== undefined && row.pct_3bd !== null && row.pct_3bd !== undefined) {
             weightedSums.threeBd.rent += row.three_bd_eff_rent_unit * row.pct_3bd / 100;
             counts.threeBd.rent++;
         }
-        if (row.three_bd_avg_sf && row.pct_3bd) {
+        if (row.three_bd_avg_sf !== null && row.three_bd_avg_sf !== undefined && row.pct_3bd !== null && row.pct_3bd !== undefined) {
             weightedSums.threeBd.sqft += row.three_bd_avg_sf * row.pct_3bd / 100;
             counts.threeBd.sqft++;
         }
-        if (row.three_bd_eff_rent_sf && row.pct_3bd) {
+        if (row.three_bd_eff_rent_sf !== null && row.three_bd_eff_rent_sf !== undefined && row.pct_3bd !== null && row.pct_3bd !== undefined) {
             weightedSums.threeBd.rentPerSqft += row.three_bd_eff_rent_sf * row.pct_3bd / 100;
             counts.threeBd.rentPerSqft++;
         }
     });
-  
 
     console.log('Weighted Effective Rents:');
     console.log('Studio:', counts.studio.rent ? (weightedSums.studio.rent / counts.studio.rent) : 0);
     console.log('1 Bed: ', counts.oneBd.rent ? (weightedSums.oneBd.rent / counts.oneBd.rent) : 0);
     console.log('2 Bed: ', counts.twoBd.rent ? (weightedSums.twoBd.rent / counts.twoBd.rent) : 0);
     console.log('3 Bed: ', counts.threeBd.rent ? (weightedSums.threeBd.rent / counts.threeBd.rent) : 0);
-    
+
     console.log('\nWeighted Average Square Footages:');
     console.log('Studio:', counts.studio.sqft ? (weightedSums.studio.sqft / counts.studio.sqft) : 0);
     console.log('1 Bed: ', counts.oneBd.sqft ? (weightedSums.oneBd.sqft / counts.oneBd.sqft) : 0);
