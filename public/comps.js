@@ -32,10 +32,10 @@ function generateAveragesTable(averages, percentages) {
             <thead>
                 <tr>
                     <th>Type</th>
-                    <th>%</th>
-                    <th>SqFt</th>
-                    <th>Rent ($)</th>
-                    <th>Rent/SqFt ($)</th>
+                    <th>Mix</th>
+                    <th>Sq. Ft.</th>
+                    <th>Eff. Rent</th>
+                    <th>Eff. Rent/Sq. Ft.</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,9 +62,9 @@ function generateAveragesTable(averages, percentages) {
             <tr>
                 <td>${type.display}</td>
                 <td>${weight.toFixed(0)}%</td>
-                <td>${sqft.toFixed(0)}</td>
-                <td>${rent.toFixed(0)}</td>
-                <td>${rentPerSqft.toFixed(2)}</td>
+                <td>${sqft.toFixed(0)} sf</td>
+                <td>$${rent.toFixed(0)}</td>
+                <td>$${rentPerSqft.toFixed(2)}/sf</td>
             </tr>
         `;
     });
