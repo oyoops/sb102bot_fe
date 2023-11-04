@@ -37,7 +37,7 @@ async function initializeMap(lat, lng) {
     console.log('Centering map on lat:', lat, ', lng:', lng);
     const mapOptions = {
         center: { lat: lat, lng: lng },
-        zoom: 17,
+        zoom: 16,
         mapTypeId: google.maps.MapTypeId.SATELLITE
     };
 
@@ -197,16 +197,11 @@ function addCompsMarkersToMap(data) {
         // Info window content
         const infoContent = `
             <strong>${item.property_name}</strong><br>
+            ${item.property_address}<br>
             by ${item.dev_name} (${item.yr_built})<br>
-            ${item.property_address}<br><br>
-
-            ${item.num_of_units} units<br>
-            ${item.num_of_stories} stories<br><br>
-
-            $${item.avg_eff_sf}/SF = ${item.avg_unit_sf} SF @ $${item.avg_eff_unit}/mo.<br><br>
-
-            ${item.style}
-            ${(1-item.vacancy_pct)}% occupancy
+            ${item.num_of_units} ${item.style} units; ${item.num_of_stories} stories<br><br>
+            $${item.avg_eff_unit}/mo. = ${item.avg_unit_sf} SF @ $${item.avg_eff_sf}/SF<br>
+            ${(100-item.vacancy_pct)}% occupancy
         `;
 
         const infoWindow = new google.maps.InfoWindow({
