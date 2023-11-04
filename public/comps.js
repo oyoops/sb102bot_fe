@@ -13,8 +13,8 @@ function populateCompsTable(data) {
 }
 
 // Fetch the data and populate the table (this is an example)
-function displayAverages(compsData) {
-    const tableHTML = generateAveragesTable(compsData.averages);
+function displayAverages(compsAvgs) {
+    const tableHTML = generateAveragesTable(compsAvgs);
     document.getElementById('averagesTableContainer').innerHTML = tableHTML;
     document.getElementById('averagesTableContainer').style.display = 'block';
 }

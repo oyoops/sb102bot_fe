@@ -111,9 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 compsData = compsDataObj.data; //// (hackily set global)
                 ////console.log("Comps: \n" + JSON.stringify(compsData));
                 
-                // Extract comps averages
-                const compsAvgs = compsDataObj.averages;
-                console.log("Comps Averages: \n" + JSON.stringify(compsAvgs));
+
                 
                 // Add placemarks to map
                 addCompsMarkersToMap(compsData);
@@ -121,12 +119,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Populate comps table
                 populateCompsTable(compsData);
                 //document.getElementById("compsTable").style.display = 'block';
-                displayAverages(compsData);
-                //const tableHTML = generateAveragesTable(endpointData.averages);
-                //document.getElementById('averagesTableContainer').innerHTML = tableHTML;
                 
+                // Extract comps averages
+                const compsAvgs = compsDataObj.averages;
+                console.log("Comps Averages: \n" + JSON.stringify(compsAvgs));
+                displayAverages(compsAvgs);
                 
-
             } catch (error) {
                 alert("An unknown error tragically befell me while pulling your comps.")
                 console.error("Error while fetching comps: \n", error);
