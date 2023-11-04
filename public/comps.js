@@ -1,4 +1,4 @@
-
+// unused
 // Populate the Comps table
 function populateCompsTable(data) {
     const compsTableBody = document.getElementById("compsTable").querySelector("tbody");
@@ -12,12 +12,17 @@ function populateCompsTable(data) {
     });
 }
 
+
+
+
+
 // Fetch the data and populate the table (this is an example)
 function displayAverages(compsAvgs, compsWeightedPercentages) {
     const tableHTML = generateAveragesTable(compsAvgs, compsWeightedPercentages);
     document.getElementById('averagesTableContainer').innerHTML = tableHTML;
     document.getElementById('averagesTableContainer').style.display = 'block';
 }
+
 
 function generateAveragesTable(averages, percentages) {
     const types = [
@@ -80,9 +85,9 @@ function generateAveragesTable(averages, percentages) {
             <tr>
                 <td><strong>Average</strong></td>
                 <td><strong>${percentageSum.toFixed(0)}%</strong></td>
-                <td><strong>${averageWeightedSqft}</strong></td>
-                <td><strong>${averageWeightedRent}</strong></td>
-                <td><strong>${averageWeightedRentPerSqft}</strong></td>
+                <td><strong>${averageWeightedSqft} sf</strong></td>
+                <td><strong>$${averageWeightedRent}</strong></td>
+                <td><strong>$${averageWeightedRentPerSqft}/sf</strong></td>
             </tr>
     `;
 
