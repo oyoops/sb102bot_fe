@@ -3,65 +3,68 @@
 
 /* FUNCTIONS: */
 
-function runCompsModule(latitude, longitude, radius) {
+async function runCompsModule(latitude, longitude, radius="3.000") {
     // Search Parameters:
     const SEARCH_RESULTS_COMPS_LIMIT = 10;
     const searchLat = latitude.toFixed(6);
     const searchLng = longitude.toFixed(6);
-    const searchRadiusMiles = radius;
+    const searchRadius = radius;
 
     // Pull data from endpoint
     try {
         // Compose URL
-        const endpointUrl = "https://www.livelocal.guru/api/get_comps?lat=" + searchLng + "&lng=" + searchLng + "&radius=" + searchRadiusMiles + "&limit=" + SEARCH_RESULTS_COMPS_LIMIT;
+        const endpointUrl = "https://www.livelocal.guru/api/get_comps?lat=" + searchLat + "&lng=" + searchLng + "&radius=" + searchRadius + "&limit=" + searchRadius;
     
         // Pull comps data
         const response = await fetch(endpointUrl);
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }
-        compsData = await response.json(); //// (hackily set global to entire object)
-    
+        compsData = await response.json(); //// (set global = whole object)
     } catch(error) {
-        alert("Error: Failed to pull comps data from the server! \nThat's a pretty big 'OOPSIE'!")
-        console.error("Error while pulling comps data from server: \n", error);
+        alert("Error: Failed to pull comps from the server! \nThat's a pretty big 'OOPSIE'!")
+        console.error("Error while pulling comps from the server: \n", error);
     }
 
-    /* Decompose compsData */
-
-    // full data set
-    const compsDataFull = compsData.data;        
-    // weighted average set
-    const compsAvgs = compsData.averages;
-
-    const compsUnitMixPct = compsData.percentages; // example structure: {"studio":"4.99","oneBd":"45.01","twoBd":"40.01","threeBd":"9.99"} (notice, not like percentages)
-    const compsRents = compsData.averages.rents; // example structure: {"studio":2193,"oneBd":2379,"twoBd":3141,"threeBd":4007}
-    const compsSqFts = compsData.averages.sqfts; // example structure: {"studio":550,"oneBd":775,"twoBd":1050,"threeBd":1300}
-    const compsRentPerSqfts = compsData.averages.rentPerSqfts; // example structure: {"studio":3.75,"oneBd":3.50,"twoBd":3.21,"threeBd":3.33}
-    console.log("Market % Unit Mix: \n" + JSON.stringify(compsUnitMixPct));
-    console.log("Market Rents: \n" + JSON.stringify(compsRents));
-    console.log("Market Avg Sq Ft: \n" + JSON.stringify(compsSqFts));
-    console.log("Market Rents/Sq Ft: \n" + JSON.stringify(compsRentPerSqfts));
-        
-    // Create and show market comps table
+    // Decompose compsData into its constituent parts (.percentages, .averages, etc.)
     try {
-        // Create and show comps table
+        // get full data set
+        const compsDataFull = compsData.data;        
+        // get weighted averages set
+        const compsAvgs = compsData.averages;
+        // extract all weighted avgs
+        const compsUnitMixPct = compsData.percentages; // example structure: {"studio":"4.99","oneBd":"45.01","twoBd":"40.01","threeBd":"9.99"} (notice, not like percentages)
+        const compsRents = compsData.averages.rents; // example structure: {"studio":2193,"oneBd":2379,"twoBd":3141,"threeBd":4007}
+        const compsSqFts = compsData.averages.sqfts; // example structure: {"studio":550,"oneBd":775,"twoBd":1050,"threeBd":1300}
+        const compsRentPerSqfts = compsData.averages.rentPerSqfts; // example structure: {"studio":3.75,"oneBd":3.50,"twoBd":3.21,"threeBd":3.33}
+        // log all weighted avgs
+        console.log("Market % Unit Mix: \n" + JSON.stringify(compsUnitMixPct));
+        console.log("Market Rents: \n" + JSON.stringify(compsRents));
+        console.log("Market Avg Sq Ft: \n" + JSON.stringify(compsSqFts));
+        console.log("Market Rents/Sq Ft: \n" + JSON.stringify(compsRentPerSqfts));
+    } catch (error) {
+        alert("Error: Failed while trying to get weighted averages from the comp set. \nWhoops!")
+        console.error("Error while trying to get weighted averages from the comp set: \n", error);        
+    }
+        
+    // Create and display market comps table
+    try {
         displayCompsTable(compsData);
     } catch (error) {
         alert("Error: Failed to get/display the comp set's weighted averages. \nWhoops!")
         console.error("Error while getting comp weighted avgs: \n", error);
     }
 
-    // Add comps to the map
+    // Add comp placemarks to the map
     try {
-        // Add a placemark for each comp
         addCompsMarkersToMap(compsDataFull);
     } catch (error) {
         alert("Error: Failed to add comp placemarks to the map. \nWhoops!")
         console.error("Error while adding comp placemarks to map: \n", error);
     }
 
-    console.log("Comps module complete!");
+    // Done
+    console.log("Comps module complete.");
     return {compsUnitMixPct, compsRents, compsSqFts, compsRentPerSqfts};
 }
 

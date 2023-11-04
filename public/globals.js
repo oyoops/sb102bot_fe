@@ -1,5 +1,6 @@
 // globals.js - Centralized global variable declarations for SB102bot web app.
 
+
 //let dirtyData;
 
 /* GLOBAL VARIABLES related to main.js */
@@ -28,6 +29,7 @@ let aiSupplementalData;
 let aiResponses;
 
 let compsData;
+const COMPS_SEARCH_RADIUS_MILES = "3.0000"; // miles (must be a string)
 
 /* GLOBAL VARIABLES related to calculations.js */
 const MILLAGE_ADJUSTMENT = 9.999;

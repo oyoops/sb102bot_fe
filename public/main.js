@@ -91,10 +91,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             // COMPS DATA
-            const compsSearchRadius = "3.0000" // miles (must be a string)
-            const compsModuleResult = runCompsModule(lat, lng, compsSearchRadius);
+            const compsModuleResult = await runCompsModule(lat, lng, COMPS_SEARCH_RADIUS_MILES);
             console.log(compsModuleResult);
-            
+
             /*
             try {
                 // Search Parameters:
