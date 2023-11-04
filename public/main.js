@@ -159,20 +159,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const parcelData = await fetchParcelData(lat, lng, countyData.county_name);
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
 
+            // Show try again button
+            tryAgainButton.style.display = 'block';
+
+            
+
             // Calculate parcel's maximum LLA unit capacity
             maxCapacity = parseFloat(maxMuniDensity) * acres;
             maxCapacity = maxCapacity.toFixed(0);
 
-            // Show try again button
-            tryAgainButton.style.display = 'block';
 
-
-            // Set colors based on Live Local eligibility
+            // Set site colors based on Live Local eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                // Set site to orange
-                //document.documentElement.style.setProperty('--hue', '25'); // orange
                 // Set site to red
                 document.documentElement.style.setProperty('--hue', '360'); // red
+                //document.documentElement.style.setProperty('--hue', '25'); // orange
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
                 // Set site to green
                 document.documentElement.style.setProperty('--hue', '120'); // green
@@ -208,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
                 
-                // Get and show final content
+                // Get and show final AI content
                 summaryContent = composeAiResponsesCombined(aiGeneratedHTML); // show AI output only
                 eligibilityDiv.innerHTML = summaryContent;            
                 eligibilityDiv.style.display = 'block';
@@ -247,24 +248,23 @@ document.addEventListener('DOMContentLoaded', function() {
             /* End: Land Development I/O Section */    
             
         } catch (error) {
-            //const loadingContainer = document.querySelector('.loading-container');
-        
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);
-                loadingContainer.style.color = "red";
+                document.documentElement.style.setProperty('--hue', '360'); // red
                 alert('Sorry, the server did not respond. Try again!');
                 location.reload(); // Reload the page
             } else if (error.message.startsWith("Took too long")) {
                 console.error('Server error:', error);
-                loadingContainer.style.color = "red";
-                alert('Sorry, the server did not respond. Try again!');
+                document.documentElement.style.setProperty('--hue', '360'); // red
+                alert('It happens on occasion -- the server timed out. \nMy fault, not yours. Try again!');
                 location.reload(); // Reload the page
             } else {
                 console.error('Error:', error);
-                loadingContainer.style.color = "grey";
+                document.documentElement.style.setProperty('--hue', '360'); // red
                 alert('Sorry, an unknown AI error happened. Try again!');
             }
         }
+
     });
 
     // dynamically load Google Maps & Places APIs
