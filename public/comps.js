@@ -20,9 +20,6 @@ function displayAverages(compsAvgs, compsWeightedPercentages) {
 }
 
 function generateAveragesTable(averages, percentages) {
-    console.log(averages);
-    console.log(percentages);
-
     const types = [
         { key: 'studio', display: 'Studio' },
         { key: 'oneBd', display: '1 Bed' },
@@ -38,23 +35,55 @@ function generateAveragesTable(averages, percentages) {
                     <th>Average Rent ($)</th>
                     <th>Average Sqft</th>
                     <th>Average Rent per Sqft ($)</th>
-                    <th>Weighted Percentage (%)</th> <!-- Added this new header -->
+                    <th>Weighted Percentage (%)</th>
                 </tr>
             </thead>
             <tbody>
     `;
 
+    let weightedRentSum = 0;
+    let weightedSqftSum = 0;
+    let weightedRentPerSqftSum = 0;
+    let percentageSum = 0;
+
     types.forEach(type => {
+        const rent = averages.rents[type.key];
+        const sqft = averages.sqfts[type.key];
+        const rentPerSqft = averages.rentPerSqfts[type.key];
+        const weight = parseFloat(percentages[type.key] || '0');
+
+        // Accumulate the weighted sums
+        weightedRentSum += rent * weight;
+        weightedSqftSum += sqft * weight;
+        weightedRentPerSqftSum += rentPerSqft * weight;
+        percentageSum += weight;
+
         tableHTML += `
             <tr>
                 <td>${type.display}</td>
-                <td>${averages.rents[type.key]}</td>
-                <td>${averages.sqfts[type.key]}</td>
-                <td>${averages.rentPerSqfts[type.key]}</td>
-                <td>${percentages[type.key]}%</td> <!-- Added this new column to display the percentage -->
+                <td>${rent}</td>
+                <td>${sqft}</td>
+                <td>${rentPerSqft}</td>
+                <td>${weight.toFixed(2)}%</td>
             </tr>
         `;
     });
+
+    // Calculate the weighted averages
+    const averageWeightedRent = (weightedRentSum / 100).toFixed(2);
+    const averageWeightedSqft = (weightedSqftSum / 100).toFixed(2);
+    const averageWeightedRentPerSqft = (weightedRentPerSqftSum / 100).toFixed(2);
+
+    // Append the weighted average row
+    tableHTML += `
+        <tr>
+            <td><strong>Average</strong></td>
+            <td><strong>${averageWeightedRent}</strong></td>
+            <td><strong>${averageWeightedSqft}</strong></td>
+            <td><strong>${averageWeightedRentPerSqft}</strong></td>
+            <td><strong>${percentageSum.toFixed(2)}%</strong></td>
+        </tr>
+    `;
 
     tableHTML += `
             </tbody>
