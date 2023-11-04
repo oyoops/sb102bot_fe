@@ -11,7 +11,10 @@ const infoSections = document.getElementById('infoSections');
 const currentBugsContainer = document.getElementById('currentBugs');
 const recentUpdatesContainer = document.getElementById('recentUpdates');
 const futureUpdatesContainer = document.getElementById('futureUpdates');
+
 const eligibilityDiv = document.getElementById("eligibilityStatus");
+const compsTable = document.getElementById("compsTable");
+
 const developmentProgramInputSection = document.getElementById('developmentProgramInputSection');
 const rentInfoContainer = document.getElementById('rentInfoContainer');
 const marketRateInputSection = document.getElementById('marketRateInputSection');
@@ -57,11 +60,15 @@ export {
     loadingContainer,
     initialContent,
     navButtonsContainer,
+
     infoSections,
     currentBugsContainer,
     recentUpdatesContainer,
     futureUpdatesContainer,
+    
     eligibilityDiv,
+    compsTable,
+    
     rentInfoContainer,
     developmentProgramInputSection,
     marketRateInputSection,

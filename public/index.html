@@ -76,9 +76,11 @@
         <div id="recentUpdates">
             <h2><u>Latest Updates</u></h2>
             <ul>
-                <li><b>Nov. 1, 2023</b> <u>v0.13</u>:  Added 🧠Concise Mode (smarter & shorter)</li>
-                <li><b>Oct. 31, 2023</b> <u>v0.12</u>: Fixed most remaining bugs</li>
-                <li><b>Oct. 29, 2023</b> <u>v0.10</u>: Launched alpha</li>
+                <li><b>11-04-2023</b> <br><u>v0.122</u>: Created first few comps database endpoints</li>
+                <li><b>11-03-2023</b> <br><u>v0.121</u>: Started integrating a comps database</li>
+                <li><b>11-01-2023</b> <br><u>v0.120</u>: Added 🧠Concise Mode for a shorter & smarter response</li>
+                <li><b>10-31-2023</b> <br><u>v0.110</u>: Fixed most of the remaining bugs</li>
+                <li><b>10-29-2023</b> <br><u>v0.100</u>: Launched Live Local Guru alpha</li>
                 <!-- ... other updates ... -->
             </ul>
             <br>
@@ -119,6 +121,18 @@
     
     <!-- Eligibility Result -->
     <div id="eligibilityStatus"></div> 
+
+    <!-- Comps -->
+    <table id="compsTable" style="display: none">
+        <thead>
+            <tr>
+                <th>Comp Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be populated here -->
+        </tbody>
+    </table>
         
     <!-- Loading Indicator -->
     <div class="loading-container">
@@ -457,7 +471,7 @@
     <!-- Footer -->
     <footer>
         <p>
-            Made by <u>Nick</u> |<a href="https://www.cresunshine.com/" target="_blank"><u>CRE☀️</u></a>| Last updated: Nov. 4, 2023 -->
+            Created by <b>Nick</b> |<a href="https://www.cresunshine.com/" target="_blank"><b>CRE☀️</b></a>| Last update: 11-04-2023
             <!-- Created by<a href="https://www.twitter.com/oyoops" target="_blank"><u>@oyoops</u></a>|<a href="https://www.cresunshine.com/" target="_blank"><u>CRE☀️</u></a>|<a href="https://www.github.com/oyoops/sb102bot_fe"><u>GitHub</u></a>| Last update: 11/1/23 -->
         </p>
     </footer>
@@ -466,6 +480,7 @@
     <script src="./globals.js"></script>
     <!-- <script src="./calculations.js"></script> -->
     <script src="./utilities.js"></script>
+    <script src="./comps.js"></script>
     <script src="./gmap.js"></script>
     <script src="./gsheet.js"></script>
     <script src="./useCodes.js"></script>

@@ -638,13 +638,13 @@ input:checked + .toggle:before {
     padding: 10px 20px;
     margin: 0 10px;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 8px;
     transition: background-color 0.3s, transform 0.3s;
 }
 
 .fancy-button:hover {
-    background-color: #092c6e;
-    transform: translateY(-3px);
+    background-color: #0f44a7;
+    transform: translateY(-5px);
 }
 
 .fancy-button:active {

@@ -27,6 +27,8 @@ let summaryContent = "";
 let aiSupplementalData;
 let aiResponses;
 
+let compsData;
+
 /* GLOBAL VARIABLES related to calculations.js */
 const MILLAGE_ADJUSTMENT = 9.999;
 

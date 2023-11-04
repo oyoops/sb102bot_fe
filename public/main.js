@@ -4,16 +4,18 @@
 import './eventListeners.js';
 // get DOM elements
 import {
-    loadingContainer, initialContent, navButtons, eligibilityDiv, developmentProgramInputSection,
+    mainHeader, initialContent, form, addressInput, navButtons, loadingContainer,
+    eligibilityDiv, tryAgainButton, 
     currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections,
+    googlemap, compsTable,
+    developmentProgramInputSection,
     marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
-    mainHeader, ////parcelDataTable, parcelDataTableBody, 
+    ////parcelDataTable, parcelDataTableBody, 
     rentInfoContainer, countyDataTable, countyTableBody, countyMaxRentsTable, rentsTableBody,
     unitCalculationTable, abatementTable,
-    form, addressInput, affordablePercentageSlider, affordablePctDisplay, acreageInput, densityInput,
+    affordablePercentageSlider, affordablePctDisplay, acreageInput, densityInput,
     landCostPerUnit, totalHCPerUnit, matchAffordableSizesCheckbox,
-    sizeInputs, marketInputs, affordableSizeInputs, marketRateInputs,
-    googlemap, tryAgainButton
+    sizeInputs, marketInputs, affordableSizeInputs, marketRateInputs
 } from './domElements.js';
 
 
@@ -71,24 +73,56 @@ document.addEventListener('DOMContentLoaded', function() {
             lat = geocodeData.results[0].geometry.location.lat;
             lng = geocodeData.results[0].geometry.location.lng;
 
-            // TALLEST BLDG. DATA (and initializes map)
+            // TALLEST BLDG. DATA
+            // + initializes map
             const tallestBuildingData = await initializeMap(lat, lng);
 
             // Get Max Height (& distance)
             const maxBH = tallestBuildingData.maxHeight.toFixed(0); // feet
-            console.log("MaxBH =", maxBH, "ft.");
             const maxBD = tallestBuildingData.maxDistance.toFixed(2); // miles
-            console.log("MaxBD =", maxBD, "mi.");
+            //console.log("MaxBH =", maxBH, "ft.");
+            //console.log("MaxBD =", maxBD, "mi.");
             buildingHeight = maxBH; //// (hackily set global)
 
-            // display the map
+
+            // Display the map
             googlemap.style.display = 'block';
             window.scrollTo(0, 0);
+
+
+            // COMPS DATA
+            try {
+                // Search Parameters:
+                //const exampleLat = "26.7056";
+                //const exampleLng = "-80.0364";
+                const exampleLat = toString(lat.toFixed(6));
+                const exampleLng = toString(lng.toFixed(6));
+                const exampleRadiusMiles = "3.000";
+                // Compose URL
+                const endpointUrl = "livelocal.guru/api/get_comps?lat=" + exampleLat + "&lng=" + exampleLng + "&radius=" + exampleRadiusMiles;
+                // Pull comps data
+                const response = await fetch(endpointUrl);
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                const data = await response.json();
+                compsData = data; //// (hackily set global)
+                // Add placemarks to map
+                addCompsMarkersToMap(compsData, googlemap);
+                // Populate comps table
+                populateCompsTable(compsData);
+                document.getElementById("compsTable").style.display = 'block';
+            } catch (error) {
+                alert("An unknown error tragically befell me while pulling your comps.")
+                console.error("Error while fetching comps: \n", error);
+            }
+    
 
             // CITY / MUNI. DATA
             const cityData = await checkCity(geocodeData);
             cityNameProper = toProperCase(cityData.cityName);
             
+
             // COUNTY DATA
             const countyData = await fetchCountyData(lat, lng);
             countyNameProper = specialCountyFormatting(countyData.county_name);
@@ -129,7 +163,11 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = parseFloat(maxMuniDensity) * acres;
             maxCapacity = maxCapacity.toFixed(0);
 
-            // Get eligibility & Set colors
+            // Show try again button
+            tryAgainButton.style.display = 'block';
+
+
+            // Set colors based on Live Local eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
                 // Set site to orange
                 //document.documentElement.style.setProperty('--hue', '25'); // orange
@@ -156,8 +194,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Compile all supplementary data
                 const dirtyData = await getDirtyData(aiSupplementalData);
-                const dirtyDataString = await getDirtyDataString(aiSupplementalData);
-                const cleanerData = await refineData(dirtyData, superAI); // refine, add globals, etc
+                ////const dirtyDataString = await getDirtyDataString(aiSupplementalData);
+                ////const cleanerData = await refineData(dirtyData, superAI); // refine, add globals, etc
+                const cleanerData = refineData(dirtyData, superAI); // refine, add globals, etc
                 console.log("AI will get this data: \n", cleanerData);
                 
                 // Send primary prompts, compile intermediate responses, and get SER response
@@ -177,20 +216,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Fade in div
                 animateTextFadeIn(eligibilityDiv);
-  
-                // Show 'New Search' button
-                tryAgainButton.style.display = 'block';
                 window.scrollTo(0, 0);
 
             } catch (error) {
                 if (error.message.startsWith("[CRITICAL]")) {
-                    loadingContainer.style.color = "red";
+                    loadingContainer.style.color = "red";              
+                    // Show 'New Search' button
+                    tryAgainButton.style.display = 'block';
                     console.error('AI FAILURE!');
                     alert('Sorry, the server did not respond. Try again!');
                     location.reload(); // Reload the page    
                 } else {
+                    loadingContainer.style.color = "red";              
+                    // Show 'New Search' button
+                    alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 30 seconds.');
+                    tryAgainButton.style.display = 'block';
                     console.error('Unknown AI Error!');
-                    location.reload(); // Reload the page
+                    //location.reload(); // Reload the page
                 }
                 return;
             }

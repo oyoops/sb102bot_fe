@@ -168,3 +168,27 @@ function createStyledMarker(position, map, label) {
     });
     return marker;
 }
+
+
+
+/* Comps Database */
+
+// Adds each comp returned to a Google Map
+function addCompsMarkersToMap(data, map) {
+    data.forEach(item => {
+        const marker = new google.maps.Marker({
+            position: { lat: item.lat, lng: item.lng }, // Comp location
+            map: map,
+            title: item.property_name // Comp name
+        });
+
+        // (Optional) Add an info window to display property name when marker is clicked
+        const infoWindow = new google.maps.InfoWindow({
+            content: item.property_name // Add more!
+        });
+        marker.addListener('click', () => {
+            infoWindow.open(map, marker);
+        });
+    });
+}
+
