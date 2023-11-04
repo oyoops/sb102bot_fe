@@ -126,7 +126,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("Comps Averages: \n" + JSON.stringify(compsAvgs));
                 console.log("Market Unit Mix: \n" + JSON.stringify(compsWeightedPercentages));
                 displayAverages(compsAvgs, compsWeightedPercentages);
-                
+
+
+
             } catch (error) {
                 alert("An unknown error tragically befell me while pulling your comps.")
                 console.error("Error while fetching comps: \n", error);
@@ -143,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const countyData = await fetchCountyData(lat, lng);
             countyNameProper = specialCountyFormatting(countyData.county_name);
 
+            /*
             // Populate the max rents table
             const rentsRow = `
                 <tr>
@@ -152,9 +155,37 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>$${parseFloat(countyData.max_rent_3bd_120ami).toFixed(0)}</td>
                 </tr>
             `;
-            rentsTableBody.innerHTML = rentsRow;
-            rentInfoContainer.style.display = 'table'; // show the max affordable rents container
+            */
+
+            ////const compsRents = compsAvgs.rents; // example structure: {"studio":2193,"oneBd":2379,"twoBd":3141,"threeBd":4007}
+
+            // Map market & affordable units for rents table
+            const unitTypes = [
+                { key: '0bd', display: 'Studio', marketKey: 'studio' },
+                { key: '1bd', display: '1 Bed', marketKey: 'oneBd' },
+                { key: '2bd', display: '2 Bed', marketKey: 'twoBd' },
+                { key: '3bd', display: '3 Bed', marketKey: 'threeBd' },
+            ];
+            let rentsRows = '';
+            types.forEach(type => {
+                const maxAffordableRent = parseFloat(countyData[`max_rent_${type.key}_120ami`]).toFixed(0);
+                const avgMarketRent = parseFloat(compsAvgs.rents[type.marketKey]).toFixed(0);
+                const diffDollar = (maxAffordableRent - avgMarketRent).toFixed(0);
+                const diffPercent = ((diffDollar / maxAffordableRent) * 100).toFixed(0);
+                    
+                rentsRows += `
+                    <tr>
+                        <td>${type.display}</td>
+                        <td>$${maxAffordableRent}</td>
+                        <td>$${avgMarketRent}</td>
+                        <td>$${diffDollar} (${diffPercent}%)</td>
+                    </tr>
+                `;
+            });
+            rentsTableBody.innerHTML = rentsRow; // populate the rents table
+            rentInfoContainer.style.display = 'table'; // show the rents container
             countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
+            
 
             // Get Municipality
             let muniNameProper;
@@ -169,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get Max Density
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             maxMuniDensity = maxDensity; //// (hackily set global)
-            console.log("MMD:", maxMuniDensity,"units/ac.");
+            console.log("Max muni. density:", maxMuniDensity,"units/ac.");
             
             // PARCEL DATA
             const parcelData = await fetchParcelData(lat, lng, countyData.county_name);
