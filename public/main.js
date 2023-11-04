@@ -105,21 +105,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
-                const compsDataObj = await response.json();
-                compsData = compsDataObj; //// (hackily set global)
-                
+                compsData = await response.json(); //// (hackily set global to entire object)
+                                
                 // Extract raw comps data
-                const compsDataRaw = compsData.data;
-                ////console.log("Comps Raw Data: \n" + JSON.stringify(compsDataRaw));
+                const compsDataFull = compsData.data;
                 
-                // Extract comps averages
-                const compsAvgs = compsDataObj.averages;
-                const compsWeightedPercentages = compsDataObj.percentages;
-                console.log("Comps Averages: \n" + JSON.stringify(compsAvgs));
-                console.log("Market Unit Mix: \n" + JSON.stringify(compsWeightedPercentages));
+                // Extract set of weighted averages
+                const compsAvgs = compsData.averages;
                 
-                // Add placemarks to map
-                addCompsMarkersToMap(compsDataRaw);
+                // Add comp placemarks to the map
+                addCompsMarkersToMap(compsDataFull);
+
+                /* Weighted averages by bedroom type: */
+                // Extract
+                const compsUnitMixPct = compsData.percentages; // example structure: {"studio":"4.99","oneBd":"45.01","twoBd":"40.01","threeBd":"9.99"} (notice, not like percentages)
+                const compsRents = compsData.averages.rents; // example structure: {"studio":2193,"oneBd":2379,"twoBd":3141,"threeBd":4007}
+                const compsSqFts = compsData.averages.sqfts; // example structure: {"studio":550,"oneBd":775,"twoBd":1050,"threeBd":1300}
+                const compsRentPerSqfts = compsData.averages.rentPerSqfts; // example structure: {"studio":3.75,"oneBd":3.50,"twoBd":3.21,"threeBd":3.33}
+                // Log
+                console.log("Market % Unit Mix: \n" + JSON.stringify(compsUnitMixPct));
+                console.log("Market Rents: \n" + JSON.stringify(compsRents));
+                console.log("Market Avg Sq Ft: \n" + JSON.stringify(compsSqFts));
+                console.log("Market Rents/Sq Ft: \n" + JSON.stringify(compsRentPerSqfts));
+                
 
                 /*
                 // Populate comps table (old method)
@@ -157,24 +165,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
             */
-
-            ////const compsRents = compsAvgs.rents; // example structure: {"studio":2193,"oneBd":2379,"twoBd":3141,"threeBd":4007}
-
-            // Map market & affordable units for rents table
+            // Mapping of market & affordable units (for the market/affordable rents comparison table)
             const unitTypes = [
                 { key: '0bd', display: 'Studio', marketKey: 'studio' },
                 { key: '1bd', display: '1 Bed', marketKey: 'oneBd' },
                 { key: '2bd', display: '2 Bed', marketKey: 'twoBd' },
                 { key: '3bd', display: '3 Bed', marketKey: 'threeBd' },
             ];
-
             let rentsRows = '';
             unitTypes.forEach(type => {
                 const maxAffordableRent = parseFloat(countyData[`max_rent_${type.key}_120ami`]).toFixed(0);
                 const avgMarketRent = parseFloat(compsData.averages.rents[type.marketKey]).toFixed(0);
                 const diffDollar = (maxAffordableRent - avgMarketRent).toFixed(0);
-                const diffPercent = ((diffDollar / maxAffordableRent) * 100).toFixed(0);
-                
+                const diffPercent = ((diffDollar / maxAffordableRent) * 100).toFixed(0);  
                 rentsRows += `
                     <tr>
                         <td>${type.display}</td>
@@ -184,7 +187,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </tr>
                 `;
             });
-
             rentsTableBody.innerHTML = rentsRows; // populate the rents table
             rentInfoContainer.style.display = 'table'; // show the rents container
             countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
