@@ -226,18 +226,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
             } catch (error) {
                 if (error.message.startsWith("[CRITICAL]")) {
-                    loadingContainer.style.color = "red";              
-                    // Show 'New Search' button
-                    tryAgainButton.style.display = 'block';
                     console.error('AI FAILURE!');
-                    alert('Sorry, the server did not respond. Try again!');
-                    location.reload(); // Reload the page    
-                } else {
-                    loadingContainer.style.color = "red";              
-                    // Show 'New Search' button
-                    alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 30 seconds.');
+                    document.documentElement.style.setProperty('--hue', '360'); // red
                     tryAgainButton.style.display = 'block';
+                    loadingContainer.style.display = 'none';
+                    alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 20 seconds.');
+                    //location.reload(); // Reload the page    
+                } else {
                     console.error('Unknown AI Error!');
+                    document.documentElement.style.setProperty('--hue', '360'); // red
+                    tryAgainButton.style.display = 'block';
+                    loadingContainer.style.display = 'none';
+                    alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 25 seconds.');
                     //location.reload(); // Reload the page
                 }
                 return;
@@ -256,17 +256,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
-                alert('Sorry, the server did not respond. Try again!');
-                location.reload(); // Reload the page
+                tryAgainButton.style.display = 'block';
+                loadingContainer.style.display = 'none';
+                alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 35 seconds.');
+                //location.reload(); // Reload the page
             } else if (error.message.startsWith("Took too long")) {
                 console.error('Server error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
-                alert('It happens on occasion -- the server timed out. \nMy fault, not yours. Try again!');
-                location.reload(); // Reload the page
+                tryAgainButton.style.display = 'block';
+                loadingContainer.style.display = 'none';
+                alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 40 seconds.');
+                //location.reload(); // Reload the page
             } else {
                 console.error('Error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
-                alert('Sorry, an unknown AI error happened. Try again!');
+                tryAgainButton.style.display = 'block';
+                loadingContainer.style.display = 'none';
+                alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 45 seconds.');
+                //location.reload(); // Reload the page
             }
         }
 
