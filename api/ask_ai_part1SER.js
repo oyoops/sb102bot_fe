@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
     } catch (err) {
         jsonString = "Failed to stringify object: " + err.message;
     }
-    console.log(jsonString);
+    //console.log(jsonString);
     
     const messages = [{
         "role": "system",
@@ -155,6 +155,9 @@ module.exports = async (req, res) => {
         let htmlFormattedResponse;
         htmlFormattedResponse = aiResponseText.replace(/<br>/g, '').replace(/\n/g, '<br>');
         
+        // (log all available data)
+        console.log(jsonString);
+
         // Send AI response to client
         res.status(200).json(htmlFormattedResponse);
     
