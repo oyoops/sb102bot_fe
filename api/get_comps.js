@@ -72,6 +72,26 @@ module.exports = async (req, res) => {
     console.log('Database returned', result.rows.length, 'rows.');
     console.log('Comp #1:\n', result.rows.slice(0, 1));
 
+    let weightedSums = {
+      studio: 0,
+      oneBd: 0,
+      twoBd: 0,
+      threeBd: 0
+    };
+  
+    result.rows.forEach(row => {
+      weightedSums.studio += (row.st_eff_rent_unit || 0) * (row.pct_st || 0) / 100;
+      weightedSums.oneBd += (row.one_bd_eff_rent_unit || 0) * (row.pct_1bd || 0) / 100;
+      weightedSums.twoBd += (row.two_bd_eff_rent_unit || 0) * (row.pct_2bd || 0) / 100;
+      weightedSums.threeBd += (row.three_bd_eff_rent_unit || 0) * (row.pct_3bd || 0) / 100;
+    });
+  
+    console.log('\nWeighted Effective Rents:');
+    console.log('Studio:', weightedSums.studio / result.rows.length);
+    console.log('1 Bedroom:', weightedSums.oneBd / result.rows.length);
+    console.log('2 Bedrooms:', weightedSums.twoBd / result.rows.length);
+    console.log('3 Bedrooms:', weightedSums.threeBd / result.rows.length);  
+
     res.status(200).json(result.rows);
   } catch (err) {
     console.error('Error encountered:', err);
