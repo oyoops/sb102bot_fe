@@ -182,9 +182,9 @@ function addCompsMarkersToMap(data) {
             path: google.maps.SymbolPath.CIRCLE,
             fillColor: 'blue', // Change this color as needed
             fillOpacity: 0.8,
-            scale: 4,  // Adjust the size using the scale property
+            scale: 10,  // Adjust the size using the scale property
             strokeColor: 'white',
-            strokeWeight: 1
+            strokeWeight: 2
         };
 
         const marker = new google.maps.Marker({
@@ -197,8 +197,16 @@ function addCompsMarkersToMap(data) {
         // Info window content
         const infoContent = `
             <strong>${item.property_name}</strong><br>
-            ${item.property_address}<br>
-            Number of units: ${item.num_of_units}
+            by ${item.dev_name} (${item.yr_built})<br>
+            ${item.property_address}<br><br>
+
+            ${item.num_of_units} units<br>
+            ${item.num_of_stories} stories<br><br>
+
+            $${item.avg_eff_sf}/SF = ${item.avg_unit_sf} SF @ $${item.avg_eff_unit}/mo.<br><br>
+
+            ${item.style}
+            ${(1-item.vacancy_pct)}% occupancy
         `;
 
         const infoWindow = new google.maps.InfoWindow({

@@ -265,14 +265,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
-                alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 40 seconds.');
+                alert('Sorry, there was an unknown error of the fatal variety. \n\nYour device will self-destruct in 40 seconds.');
                 //location.reload(); // Reload the page
             } else {
                 console.error('Error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
-                alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 45 seconds.');
+                alert('Sorry, there was an unknown error of the cataclysmic variety. \n\nYour device will self-destruct in 45 seconds.');
                 //location.reload(); // Reload the page
             }
         }
