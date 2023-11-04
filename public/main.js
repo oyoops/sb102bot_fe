@@ -4,7 +4,7 @@
 import './eventListeners.js';
 // get DOM elements
 import {
-    mainHeader, initialContent, form, addressInput, navButtons, loadingContainer,
+    mainHeader, initialContent, form, addressInput, navButtonsContainer, loadingContainer,
     eligibilityDiv, tryAgainButton, 
     currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections,
     googlemap, compsTable,
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // hide header and initial content
             mainHeader.style.display = 'none';
             initialContent.style.display = 'none';
-            navButtons.style.display = 'none';
+            navButtonsContainer.style.display = 'none';
             infoSections.style.display = 'none';
             currentBugsContainer.style.display = 'none';
             recentUpdatesContainer.style.display = 'none';
