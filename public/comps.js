@@ -13,13 +13,13 @@ function populateCompsTable(data) {
 }
 
 // Fetch the data and populate the table (this is an example)
-function displayAverages(compsAvgs) {
-    const tableHTML = generateAveragesTable(compsAvgs);
+function displayAverages(compsAvgs, compsWeightedPercentages) {
+    const tableHTML = generateAveragesTable(compsAvgs, compsWeightedPercentages);
     document.getElementById('averagesTableContainer').innerHTML = tableHTML;
     document.getElementById('averagesTableContainer').style.display = 'block';
 }
 
-function generateAveragesTable(averages) {
+function generateAveragesTable(averages, percentages) {
     const types = [
         { key: 'studio', display: 'Studio' },
         { key: 'oneBd', display: '1 Bed' },
@@ -35,6 +35,7 @@ function generateAveragesTable(averages) {
                     <th>Average Rent ($)</th>
                     <th>Average Sqft</th>
                     <th>Average Rent per Sqft ($)</th>
+                    <th>Weighted Percentage (%)</th> <!-- Added this new header -->
                 </tr>
             </thead>
             <tbody>
@@ -47,6 +48,7 @@ function generateAveragesTable(averages) {
                 <td>${averages.rents[type.key]}</td>
                 <td>${averages.sqfts[type.key]}</td>
                 <td>${averages.rentPerSqfts[type.key]}</td>
+                <td>${percentages[type.key]}%</td> <!-- Added this new column to display the percentage -->
             </tr>
         `;
     });

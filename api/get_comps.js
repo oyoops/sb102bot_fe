@@ -145,6 +145,23 @@ module.exports = async (req, res) => {
         //console.log(`Accumulated Weighted Sums for PropertyID: ${row.propertyid}`, JSON.stringify(weightedSums));
     });
 
+    // Total number of units from all properties
+    const totalUnitsAllProperties = totalUnitsByType.studio + totalUnitsByType.oneBd + totalUnitsByType.twoBd + totalUnitsByType.threeBd;
+
+    // Calculate the weighted percentages by unit type
+    const weightedPercentages = {
+      studio: (totalUnitsByType.studio / totalUnitsAllProperties * 100).toFixed(2),
+      oneBd: (totalUnitsByType.oneBd / totalUnitsAllProperties * 100).toFixed(2),
+      twoBd: (totalUnitsByType.twoBd / totalUnitsAllProperties * 100).toFixed(2),
+      threeBd: (totalUnitsByType.threeBd / totalUnitsAllProperties * 100).toFixed(2)
+    };
+
+    console.log('\nWeighted Percentages by Unit Type:');
+    console.log('Studio: ' + weightedPercentages.studio + '%');
+    console.log('1 Bed: ' + weightedPercentages.oneBd + '%');
+    console.log('2 Bed: ' + weightedPercentages.twoBd + '%');
+    console.log('3 Bed: ' + weightedPercentages.threeBd + '%');
+
     console.log('Weighted Effective Rents:');
     console.log('Studio:', totalUnitsByType.studio ? parseFloat((weightedSums.studio.rent / totalUnitsByType.studio).toFixed(0)) : 0);
     console.log('1 Bed: ', totalUnitsByType.oneBd ? parseFloat((weightedSums.oneBd.rent / totalUnitsByType.oneBd).toFixed(0)) : 0);
@@ -187,8 +204,9 @@ module.exports = async (req, res) => {
 
     // Return the averages in the response
     res.status(200).json({
-      data: result.rows,   // original data
-      averages: averages   // calculated averages
+        data: result.rows,
+        averages: averages,
+        percentages: weightedPercentages
     });
   } catch (err) {
     console.error('Error encountered:', err);

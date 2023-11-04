@@ -122,8 +122,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Extract comps averages
                 const compsAvgs = compsDataObj.averages;
+                const compsWeightedPercentages = compsDataObj.weightedPercentages;
                 console.log("Comps Averages: \n" + JSON.stringify(compsAvgs));
-                displayAverages(compsAvgs);
+                console.log("Market Unit Mix: \n" + JSON.stringify(compsWeightedPercentages));
+                displayAverages(compsAvgs, compsWeightedPercentages);
                 
             } catch (error) {
                 alert("An unknown error tragically befell me while pulling your comps.")
