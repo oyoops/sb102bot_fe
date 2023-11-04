@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Extract comps averages
                 const compsAvgs = compsDataObj.averages;
-                const compsWeightedPercentages = compsDataObj.weightedPercentages;
+                const compsWeightedPercentages = compsDataObj.percentages;
                 console.log("Comps Averages: \n" + JSON.stringify(compsAvgs));
                 console.log("Market Unit Mix: \n" + JSON.stringify(compsWeightedPercentages));
                 displayAverages(compsAvgs, compsWeightedPercentages);
