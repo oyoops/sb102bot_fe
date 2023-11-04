@@ -108,6 +108,8 @@ module.exports = async (req, res) => {
         const oneBdUnits = totalUnits * (row.pct_1bd || 0) / 100;
         const twoBdUnits = totalUnits * (row.pct_2bd || 0) / 100;
         const threeBdUnits = totalUnits * (row.pct_3bd || 0) / 100;
+        
+        console.log(`PropertyID: ${row.propertyid} - Total Units: ${totalUnits}, Studio Units: ${studioUnits}, One Bedroom Units: ${oneBdUnits}, Two Bedroom Units: ${twoBdUnits}, Three Bedroom Units: ${threeBdUnits}`);
 
         weightedSums.studio.rent += (row.st_eff_rent_unit || 0) * studioUnits;
         weightedSums.studio.sqft += (row.st_avg_sf || 0) * studioUnits;
@@ -124,6 +126,8 @@ module.exports = async (req, res) => {
         weightedSums.threeBd.rent += (row.three_bd_eff_rent_unit || 0) * threeBdUnits;
         weightedSums.threeBd.sqft += (row.three_bd_avg_sf || 0) * threeBdUnits;
         weightedSums.threeBd.rentPerSqft += (row.three_bd_eff_rent_sf || 0) * threeBdUnits;
+        
+        console.log(`Accumulated Weighted Sums for PropertyID: ${row.propertyid}`, JSON.stringify(weightedSums));
     });
 
     const totalUnitsInResult = result.rows.reduce((acc, row) => acc + row.num_of_units, 0);
