@@ -16,6 +16,14 @@ body {
     overflow-x: hidden;
 }
 
+#mainHeader #mainLogo {
+    width: 250px;  /* or whatever width you desire for the main logo */
+    height: auto;  /* maintain the aspect ratio */
+    display: block; /* centers the image if h1 text-align is centered */
+    margin: 0 auto; /* centers the image */
+}
+
+
 /* Hide mobile logo by default */
 #logoMobile {
     display: none;
