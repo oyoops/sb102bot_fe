@@ -91,6 +91,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             // COMPS DATA
+            const compsSearchRadius = "3.0000" // miles (must be a string)
+            const compsModuleResult = runCompsModule(lat, lng, compsSearchRadius);
+            console.log(compsModuleResult);
+            
+            /*
             try {
                 // Search Parameters:
                 const exampleLat = lat.toFixed(6);
@@ -116,26 +121,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add comp placemarks to the map
                 addCompsMarkersToMap(compsDataFull);
 
-                /* Weighted averages by bedroom type: */
-                // Extract
+                //
+                // Weighted Averages:
+                //
+
+                // Get all weighted averages by unit type for the comp set
                 const compsUnitMixPct = compsData.percentages; // example structure: {"studio":"4.99","oneBd":"45.01","twoBd":"40.01","threeBd":"9.99"} (notice, not like percentages)
                 const compsRents = compsData.averages.rents; // example structure: {"studio":2193,"oneBd":2379,"twoBd":3141,"threeBd":4007}
                 const compsSqFts = compsData.averages.sqfts; // example structure: {"studio":550,"oneBd":775,"twoBd":1050,"threeBd":1300}
                 const compsRentPerSqfts = compsData.averages.rentPerSqfts; // example structure: {"studio":3.75,"oneBd":3.50,"twoBd":3.21,"threeBd":3.33}
-                // Log
                 console.log("Market % Unit Mix: \n" + JSON.stringify(compsUnitMixPct));
                 console.log("Market Rents: \n" + JSON.stringify(compsRents));
                 console.log("Market Avg Sq Ft: \n" + JSON.stringify(compsSqFts));
                 console.log("Market Rents/Sq Ft: \n" + JSON.stringify(compsRentPerSqfts));
-                
 
-                /*
-                // Populate comps table (old method)
-                populateCompsTable(compsDataRaw);
-                //document.getElementById("compsTable").style.display = 'block';
-                */
-
-                // Create and show comps table (v2)
+                // Create and show comps table
                 displayCompsTable(compsData);
 
             } catch (error) {
@@ -143,6 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error("Error while fetching comps: \n", error);
             }
             console.log("Comps module complete.");
+            */
     
 
             // CITY / MUNI. DATA
