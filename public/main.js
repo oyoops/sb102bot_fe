@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 const data = await response.json();
                 compsData = data; //// (hackily set global)
-                console.log("Comps: \n" + compsData);
+                console.log("Comps: \n" + JSON.stringify(compsData));
                 
                 // Add placemarks to map
                 addCompsMarkersToMap(compsData);
@@ -115,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Populate comps table
                 populateCompsTable(compsData);
                 //document.getElementById("compsTable").style.display = 'block';
+
             } catch (error) {
                 alert("An unknown error tragically befell me while pulling your comps.")
                 console.error("Error while fetching comps: \n", error);

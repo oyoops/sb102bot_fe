@@ -124,7 +124,7 @@ tbody tr:hover {
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    width: 90%;
+    width: 85%;
     margin: 0 auto; /* Center the input field */
     margin-left: 10px;
     margin-right: 10px;
@@ -136,7 +136,7 @@ tbody tr:hover {
 /* Responsive styles for smaller screen widths */
 @media (max-width: 800px) {
     form {
-        width: 90%;
+        width: 85%;
         margin: 0 auto; /* Center the input field */
         margin-left: 10px;
         margin-right: 10px;
@@ -162,7 +162,7 @@ tbody tr:hover {
     }
     #addressInput {
         font-size: 0.9em; /* Adjust font size for the input field */
-        width: 100%;
+        width: 90%;
         box-sizing: border-box;
         margin-left: 10px;
         margin-right: 10px;

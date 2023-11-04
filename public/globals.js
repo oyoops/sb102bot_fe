@@ -82,12 +82,10 @@ let buildingAddress; // may not work
 let hmmm;
 
 /* MAP GLOBALS */
-let map;
-
+let map; // THE ACTUAL MAP
+const mapDisplay = document.getElementById('map');
 
 /* CALCULATIONS.JS GLOBALS (DOM stuff) */
-// map
-const mapDisplay = document.getElementById('map');
 // acreage & density inputs
 const acreageInputDisplay = document.getElementById('acreageInput');
 const densityInputDisplay = document.getElementById('densityInput');

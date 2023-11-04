@@ -171,7 +171,7 @@ function createStyledMarker(position, map, label) {
 
 
 
-/* Comps Database */
+/* Maps + Comps Database */
 
 // Adds each comp returned to a Google Map
 function addCompsMarkersToMap(data) {
