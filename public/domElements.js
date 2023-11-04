@@ -6,7 +6,7 @@
 // Div sections/containers
 const loadingContainer = document.querySelector('.loading-container');
 const initialContent = document.querySelector('#initialContent');
-const navButtonsContainer = document.querySelector('navButtons');
+const navButtonsContainer = document.querySelector('navButtonsContainer');
 const infoSections = document.getElementById('infoSections');
 const currentBugsContainer = document.getElementById('currentBugs');
 const recentUpdatesContainer = document.getElementById('recentUpdates');
