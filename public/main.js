@@ -95,11 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Search Parameters:
                 //const exampleLat = "26.7056";
                 //const exampleLng = "-80.0364";
-                const exampleLat = toString(lat.toFixed(6));
-                const exampleLng = toString(lng.toFixed(6));
+                const exampleLat = lat.toFixed(6);
+                const exampleLng = lng.toFixed(6);
                 const exampleRadiusMiles = "3.000";
                 // Compose URL
-                const endpointUrl = "livelocal.guru/api/get_comps?lat=" + exampleLat + "&lng=" + exampleLng + "&radius=" + exampleRadiusMiles;
+                const endpointUrl = "https://livelocal.guru/api/get_comps?lat=" + exampleLat + "&lng=" + exampleLng + "&radius=" + exampleRadiusMiles;
+
                 // Pull comps data
                 const response = await fetch(endpointUrl);
                 if (!response.ok) {

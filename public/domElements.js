@@ -4,6 +4,7 @@
 /* (Option 1) ES6 Module Syntax */
 
 // Div sections/containers
+const mainHeader = document.getElementById("mainHeader");
 const loadingContainer = document.querySelector('.loading-container');
 const initialContent = document.querySelector('#initialContent');
 const navButtonsContainer = document.querySelector('#navButtonsContainer');
@@ -23,10 +24,8 @@ const rentPerSqFtTableSection = document.getElementById('rentPerSqFtTableSection
 const landAndTotalHcInputSection = document.getElementById('landAndTotalHcInputSection');
 const landAndTotalHcOutputSection = document.getElementById('totalLandAndTotalHcOutputSection');
 
-// Header
-const mainHeader = document.getElementById("mainHeader");
 
-// Tables and their bodies
+// Tables & bodies
 //const parcelDataTable = document.getElementById('parcelDataTable');
 //const parcelDataTableBody = document.querySelector('#parcelDataTable tbody');
 const countyDataTable = document.getElementById('countyDataTable');
