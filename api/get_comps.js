@@ -69,7 +69,7 @@ module.exports = async (req, res) => {
     const queryParams = limit ? [lat, lng, radius, limit] : [lat, lng, radius];
     const result = await pool.query(query, queryParams);
     console.log('Database returned', result.rows.length, 'rows.');
-    console.log('Comp #1:\n', result.rows.slice(0, 1));
+    //console.log('Comp #1:\n', result.rows.slice(0, 1));
 
     let counts = {
       studio: { rent: 0, sqft: 0, rentPerSqft: 0 },
