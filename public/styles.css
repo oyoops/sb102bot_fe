@@ -17,7 +17,7 @@ body {
 }
 
 #mainHeader #mainLogo {
-    width: 250px;  /* or whatever width you desire for the main logo */
+    width: 300px;  /* or whatever width you desire for the main logo */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* centers the image if h1 text-align is centered */
     margin: 0 auto; /* centers the image */
@@ -225,12 +225,14 @@ button:hover {
     width: 150px;  /* or whatever width you desire */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* to handle vertical spacing better */
+    margin-left: 10px;
 }
 
 #menuBar #logoMobile {
     width: 100px;  /* or whatever width you desire for the mobile logo */
     height: auto;  /* maintain the aspect ratio */
     display: none; /* by default, hide it if you plan to show it only on smaller screens */
+    margin-left: 10px;
 }
 
 /* If you are planning to show the mobile logo on smaller screens using media queries: */
