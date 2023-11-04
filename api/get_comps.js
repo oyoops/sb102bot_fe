@@ -124,7 +124,7 @@ module.exports = async (req, res) => {
         totalUnitsByType.twoBd += twoBdUnits;
         totalUnitsByType.threeBd += threeBdUnits;
         
-        console.log(`PropertyID: ${row.propertyid} - Total Units: ${totalUnits}, Studio Units: ${studioUnits}, One Bedroom Units: ${oneBdUnits}, Two Bedroom Units: ${twoBdUnits}, Three Bedroom Units: ${threeBdUnits}`);
+        console.log(`\nProperty: ${row.property_name}\n  - Total Units: ${totalUnits.toFixed(0)}\n  - Studio Units: ${studioUnits.toFixed(0)}\n  - One Bedroom Units: ${oneBdUnits.toFixed(0)}\n  - Two Bedroom Units: ${twoBdUnits.toFixed(0)}\n  - Three Bedroom Units: ${threeBdUnits.toFixed(0)}\n`);
 
         weightedSums.studio.rent += (row.st_eff_rent_unit || 0) * studioUnits;
         weightedSums.studio.sqft += (row.st_avg_sf || 0) * studioUnits;
@@ -142,7 +142,7 @@ module.exports = async (req, res) => {
         weightedSums.threeBd.sqft += (row.three_bd_avg_sf || 0) * threeBdUnits;
         weightedSums.threeBd.rentPerSqft += (row.three_bd_eff_rent_sf || 0) * threeBdUnits;
         
-        console.log(`Accumulated Weighted Sums for PropertyID: ${row.propertyid}`, JSON.stringify(weightedSums));
+        //console.log(`Accumulated Weighted Sums for PropertyID: ${row.propertyid}`, JSON.stringify(weightedSums));
     });
 
     console.log('Weighted Effective Rents:');
