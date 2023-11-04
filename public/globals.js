@@ -81,6 +81,9 @@ let buildingAddress; // may not work
 /* AI GLOBALS */
 let hmmm;
 
+/* MAP GLOBALS */
+let map;
+
 
 /* CALCULATIONS.JS GLOBALS (DOM stuff) */
 // map

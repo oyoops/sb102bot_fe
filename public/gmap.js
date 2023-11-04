@@ -41,7 +41,7 @@ async function initializeMap(lat, lng) {
         mapTypeId: google.maps.MapTypeId.SATELLITE
     };
 
-    const map = new google.maps.Map(mapDisplay, mapOptions);
+    map = new google.maps.Map(mapDisplay, mapOptions);
     console.log('Map generated!');
 
     const userMarker = new google.maps.Marker({
@@ -174,21 +174,41 @@ function createStyledMarker(position, map, label) {
 /* Comps Database */
 
 // Adds each comp returned to a Google Map
-function addCompsMarkersToMap(data, map) {
+function addCompsMarkersToMap(data) {
     data.forEach(item => {
+
+        // Custom icon using SVG for a smaller and different-colored marker
+        const customIcon = {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: 'blue', // Change this color as needed
+            fillOpacity: 0.8,
+            scale: 4,  // Adjust the size using the scale property
+            strokeColor: 'white',
+            strokeWeight: 1
+        };
+
         const marker = new google.maps.Marker({
             position: { lat: item.lat, lng: item.lng }, // Comp location
             map: map,
-            title: item.property_name // Comp name
+            title: item.property_name, // Comp name
+            icon: customIcon
         });
 
-        // (Optional) Add an info window to display property name when marker is clicked
+        // Info window content
+        const infoContent = `
+            <strong>${item.property_name}</strong><br>
+            ${item.property_address}<br>
+            Number of units: ${item.num_of_units}
+        `;
+
         const infoWindow = new google.maps.InfoWindow({
-            content: item.property_name // Add more!
+            content: infoContent
         });
+        
         marker.addListener('click', () => {
             infoWindow.open(map, marker);
         });
     });
 }
+
 

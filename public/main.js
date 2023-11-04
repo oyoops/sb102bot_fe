@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("Comps: \n" + compsData);
                 
                 // Add placemarks to map
-                addCompsMarkersToMap(compsData, googlemap);
+                addCompsMarkersToMap(compsData);
 
                 // Populate comps table
                 populateCompsTable(compsData);
