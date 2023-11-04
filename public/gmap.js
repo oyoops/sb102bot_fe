@@ -180,7 +180,7 @@ function addCompsMarkersToMap(data) {
         // Custom icon using SVG for a smaller and different-colored marker
         const customIcon = {
             path: google.maps.SymbolPath.CIRCLE,
-            fillColor: 'blue', // Change this color as needed
+            fillColor: 'orange', // Change this color as needed
             fillOpacity: 0.8,
             scale: 10,  // Adjust the size using the scale property
             strokeColor: 'white',
