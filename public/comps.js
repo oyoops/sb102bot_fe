@@ -1,38 +1,18 @@
-// unused
-// Populate the Comps table
-function populateCompsTable(data) {
-    const compsTableBody = document.getElementById("compsTable").querySelector("tbody");
-    data.forEach(item => {
-    
-        const row = compsTableBody.insertRow();
-        const cell = row.insertCell();
-
-        cell.textContent = item.property_name; // Property Name
-    
-    });
-}
+// comps.js -  Functions related to managing and displaying comps data
 
 
+/* FUNCTIONS: */
 
-
-
-// Fetch the data and populate the table (this is an example)
+// Create the comps table and show it
 function displayCompsTable(compsData) {
-    // extract components of comps data object
-    //const compsAvgs = compsData.averages; // avg rent, sq ft, and rent/sq ft by unit type
-    //const compsWeightedPercentages = compsData.percentages; // % mix by unit type
-    //const compsNames = compsData.names; // details of the properties within the comp set
-    // (...)
-    
-    // generate and show comps table
-    ////const tableHTML = generateMarketRentsTable(compsAvgs, compsWeightedPercentages);
-    const tableHTML = generateMarketRentsTable(compsData);
+    // Generate and show comps table
+    const tableHTML = generateMarketRentsTableHTML(compsData);
     document.getElementById('averagesTableContainer').innerHTML = tableHTML;
     document.getElementById('averagesTableContainer').style.display = 'block';
 }
 
-
-function generateMarketRentsTable(compsData) {
+// (helper) Generates raw table HTML from comps data
+function generateMarketRentsTableHTML(compsData) {
     const averages = compsData.averages;
     const percentages = compsData.percentages;
     const names = compsData.names;
@@ -111,3 +91,21 @@ function generateMarketRentsTable(compsData) {
 
     return tableHTML;
 }
+
+
+/*   :-D   */
+
+
+/* // (UNUSED) Populate the old comps table [deprecated]
+function populateCompsTable(data) {
+    const compsTableBody = document.getElementById("compsTable").querySelector("tbody");
+    data.forEach(item => {
+    
+        const row = compsTableBody.insertRow();
+        const cell = row.insertCell();
+
+        cell.textContent = item.property_name; // Property Name
+    
+    });
+}*/
+
