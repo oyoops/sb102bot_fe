@@ -23,11 +23,19 @@ module.exports = async (req, res) => {
   const lng = parseFloat(req.query.lng);
   const radius = parseFloat(req.query.radius);
   const limit = parseInt(req.query.limit);
+  const COMPS_COUNT_CAP = 10;
+  // Validate and cap the comps quantity
+  if (limit > COMPS_COUNT_CAP) {
+    console.warn('Comps limit exceeds the allowed value; capping to ' + COMPS_COUNT_CAP + '.');
+    limit = COMPS_COUNT_CAP;
+  }
+  /* still will produce unlimited results if no limit provided (potentially a huge problem) */
 
   console.log('Received new comps request:\n', {
     lat: lat,
     lng: lng,
-    radius: radius
+    radius: radius,
+    limit: limit
   });
 
   if (lat < 24.396308 || lat > 31.001056 || lng < -87.634938 || lng > -80.031362) {
@@ -70,13 +78,6 @@ module.exports = async (req, res) => {
     const result = await pool.query(query, queryParams);
     console.log('Database returned', result.rows.length, 'rows.');
     //console.log('Comp #1:\n', result.rows.slice(0, 1));
-
-    /*let counts = {
-      studio: { rent: 0, sqft: 0, rentPerSqft: 0 },
-      oneBd: { rent: 0, sqft: 0, rentPerSqft: 0 },
-      twoBd: { rent: 0, sqft: 0, rentPerSqft: 0 },
-      threeBd: { rent: 0, sqft: 0, rentPerSqft: 0 }
-    };*/
 
     let totalUnitsByType = {
       studio: 0,
@@ -143,27 +144,51 @@ module.exports = async (req, res) => {
         console.log(`Accumulated Weighted Sums for PropertyID: ${row.propertyid}`, JSON.stringify(weightedSums));
     });
 
-    //const totalUnitsInResult = result.rows.reduce((acc, row) => acc + row.num_of_units, 0);
-
     console.log('Weighted Effective Rents:');
-    console.log('Studio:', totalUnitsByType.studio ? (weightedSums.studio.rent / totalUnitsByType.studio) : 0);
-    console.log('1 Bed: ', totalUnitsByType.oneBd ? (weightedSums.oneBd.rent / totalUnitsByType.oneBd) : 0);
-    console.log('2 Bed: ', totalUnitsByType.twoBd ? (weightedSums.twoBd.rent / totalUnitsByType.twoBd) : 0);
-    console.log('3 Bed: ', totalUnitsByType.threeBd ? (weightedSums.threeBd.rent / totalUnitsByType.threeBd) : 0);
-    
+    console.log('Studio:', totalUnitsByType.studio ? parseFloat((weightedSums.studio.rent / totalUnitsByType.studio).toFixed(0)) : 0);
+    console.log('1 Bed: ', totalUnitsByType.oneBd ? parseFloat((weightedSums.oneBd.rent / totalUnitsByType.oneBd).toFixed(0)) : 0);
+    console.log('2 Bed: ', totalUnitsByType.twoBd ? parseFloat((weightedSums.twoBd.rent / totalUnitsByType.twoBd).toFixed(0)) : 0);
+    console.log('3 Bed: ', totalUnitsByType.threeBd ? parseFloat((weightedSums.threeBd.rent / totalUnitsByType.threeBd).toFixed(0)) : 0);
+
     console.log('\nWeighted Average Square Footages:');
-    console.log('Studio:', totalUnitsByType.studio ? (weightedSums.studio.sqft / totalUnitsByType.studio) : 0);
-    console.log('1 Bed: ', totalUnitsByType.oneBd ? (weightedSums.oneBd.sqft / totalUnitsByType.oneBd) : 0);
-    console.log('2 Bed: ', totalUnitsByType.twoBd ? (weightedSums.twoBd.sqft / totalUnitsByType.twoBd) : 0);
-    console.log('3 Bed: ', totalUnitsByType.threeBd ? (weightedSums.threeBd.sqft / totalUnitsByType.threeBd) : 0);
-    
+    console.log('Studio:', totalUnitsByType.studio ? parseFloat((weightedSums.studio.sqft / totalUnitsByType.studio).toFixed(0)) : 0);
+    console.log('1 Bed: ', totalUnitsByType.oneBd ? parseFloat((weightedSums.oneBd.sqft / totalUnitsByType.oneBd).toFixed(0)) : 0);
+    console.log('2 Bed: ', totalUnitsByType.twoBd ? parseFloat((weightedSums.twoBd.sqft / totalUnitsByType.twoBd).toFixed(0)) : 0);
+    console.log('3 Bed: ', totalUnitsByType.threeBd ? parseFloat((weightedSums.threeBd.sqft / totalUnitsByType.threeBd).toFixed(0)) : 0);
+
     console.log('\nWeighted Effective Rent per Square Foot:');
-    console.log('Studio:', totalUnitsByType.studio ? (weightedSums.studio.rentPerSqft / totalUnitsByType.studio) : 0);
-    console.log('1 Bed: ', totalUnitsByType.oneBd ? (weightedSums.oneBd.rentPerSqft / totalUnitsByType.oneBd) : 0);
-    console.log('2 Bed: ', totalUnitsByType.twoBd ? (weightedSums.twoBd.rentPerSqft / totalUnitsByType.twoBd) : 0);
-    console.log('3 Bed: ', totalUnitsByType.threeBd ? (weightedSums.threeBd.rentPerSqft / totalUnitsByType.threeBd) : 0);
+    console.log('Studio:', totalUnitsByType.studio ? parseFloat((weightedSums.studio.rentPerSqft / totalUnitsByType.studio).toFixed(2)) : 0);
+    console.log('1 Bed: ', totalUnitsByType.oneBd ? parseFloat((weightedSums.oneBd.rentPerSqft / totalUnitsByType.oneBd).toFixed(2)) : 0);
+    console.log('2 Bed: ', totalUnitsByType.twoBd ? parseFloat((weightedSums.twoBd.rentPerSqft / totalUnitsByType.twoBd).toFixed(2)) : 0);
+    console.log('3 Bed: ', totalUnitsByType.threeBd ? parseFloat((weightedSums.threeBd.rentPerSqft / totalUnitsByType.threeBd).toFixed(2)) : 0);
     
-    res.status(200).json(result.rows);
+    // Calculate the averages
+    const averages = {
+      rents: {
+        studio: totalUnitsByType.studio ? parseFloat((weightedSums.studio.rent / totalUnitsByType.studio).toFixed(0)) : 0,
+        oneBd: totalUnitsByType.oneBd ? parseFloat((weightedSums.oneBd.rent / totalUnitsByType.oneBd).toFixed(0)) : 0,
+        twoBd: totalUnitsByType.twoBd ? parseFloat((weightedSums.twoBd.rent / totalUnitsByType.twoBd).toFixed(0)) : 0,
+        threeBd: totalUnitsByType.threeBd ? parseFloat((weightedSums.threeBd.rent / totalUnitsByType.threeBd).toFixed(0)) : 0
+      },
+      sqfts: {
+        studio: totalUnitsByType.studio ? parseFloat((weightedSums.studio.sqft / totalUnitsByType.studio).toFixed(0)) : 0,
+        oneBd: totalUnitsByType.oneBd ? parseFloat((weightedSums.oneBd.sqft / totalUnitsByType.oneBd).toFixed(0)) : 0,
+        twoBd: totalUnitsByType.twoBd ? parseFloat((weightedSums.twoBd.sqft / totalUnitsByType.twoBd).toFixed(0)) : 0,
+        threeBd: totalUnitsByType.threeBd ? parseFloat((weightedSums.threeBd.sqft / totalUnitsByType.threeBd).toFixed(0)) : 0
+      },
+      rentPerSqfts: {
+        studio: totalUnitsByType.studio ? parseFloat((weightedSums.studio.rentPerSqft / totalUnitsByType.studio).toFixed(2)) : 0,
+        oneBd: totalUnitsByType.oneBd ? parseFloat((weightedSums.oneBd.rentPerSqft / totalUnitsByType.oneBd).toFixed(2)) : 0,
+        twoBd: totalUnitsByType.twoBd ? parseFloat((weightedSums.twoBd.rentPerSqft / totalUnitsByType.twoBd).toFixed(2)) : 0,
+        threeBd: totalUnitsByType.threeBd ? parseFloat((weightedSums.threeBd.rentPerSqft / totalUnitsByType.threeBd).toFixed(2)) : 0
+      }
+    };
+
+    // Return the averages in the response
+    res.status(200).json({
+      data: result.rows,   // original data
+      averages: averages   // calculated averages
+    });
   } catch (err) {
     console.error('Error encountered:', err);
     res.status(500).send('Internal Server Error');
