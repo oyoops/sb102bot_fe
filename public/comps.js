@@ -20,7 +20,8 @@ async function runCompsModule(latitude, longitude, radius="3.000") {
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }
-        compsData = await response.json(); //// (set global = whole object)
+        // Set global
+        compsData = await response.json();
     } catch(error) {
         alert("Error: Failed to pull comps from the server! \nThat's a pretty big 'OOPSIE'!")
         console.error("Error while pulling comps from the server: \n", error);
@@ -42,30 +43,32 @@ async function runCompsModule(latitude, longitude, radius="3.000") {
         console.log("Market Rents: \n" + JSON.stringify(compsRents));
         console.log("Market Avg Sq Ft: \n" + JSON.stringify(compsSqFts));
         console.log("Market Rents/Sq Ft: \n" + JSON.stringify(compsRentPerSqfts));
-    } catch (error) {
-        alert("Error: Failed while trying to get weighted averages from the comp set. \nWhoops!")
-        console.error("Error while trying to get weighted averages from the comp set: \n", error);        
-    }
+    
+        // Create and display market comps table
+        try {
+            displayCompsTable(compsData);
+        } catch (error) {
+            alert("Error: Failed to get/display the comp set's weighted averages. \nWhoops!")
+            console.error("Error while getting comp weighted avgs: \n", error);
+        }
+
+        // Add comp placemarks to the map
+        try {
+            addCompsMarkersToMap(compsDataFull);
+        } catch (error) {
+            alert("Error: Failed to add comp placemarks to the map. \nWhoops!")
+            console.error("Error while adding comp placemarks to map: \n", error);
+        }
+
+        // Return new array (?) of the weighted average sets
+        console.log("Comps module complete.");
+        return {compsUnitMixPct, compsRents, compsSqFts, compsRentPerSqfts};
         
-    // Create and display market comps table
-    try {
-        displayCompsTable(compsData);
     } catch (error) {
-        alert("Error: Failed to get/display the comp set's weighted averages. \nWhoops!")
-        console.error("Error while getting comp weighted avgs: \n", error);
+        alert("Error: Failed while trying to process the comp set. \nWhoops!")
+        console.error("Error while trying to process the comp set: \n", error);        
     }
 
-    // Add comp placemarks to the map
-    try {
-        addCompsMarkersToMap(compsDataFull);
-    } catch (error) {
-        alert("Error: Failed to add comp placemarks to the map. \nWhoops!")
-        console.error("Error while adding comp placemarks to map: \n", error);
-    }
-
-    // Done
-    console.log("Comps module complete.");
-    return {compsUnitMixPct, compsRents, compsSqFts, compsRentPerSqfts};
 }
 
 
