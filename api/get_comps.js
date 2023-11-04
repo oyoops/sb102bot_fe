@@ -102,76 +102,49 @@ module.exports = async (req, res) => {
     };
 
     result.rows.forEach(row => {
-        if (row.st_eff_rent_unit !== null && row.st_eff_rent_unit !== undefined && row.pct_st !== null && row.pct_st !== undefined) {
-            weightedSums.studio.rent += row.st_eff_rent_unit * row.pct_st / 100;
-            counts.studio.rent++;
-        }
-        if (row.st_avg_sf !== null && row.st_avg_sf !== undefined && row.pct_st !== null && row.pct_st !== undefined) {
-            weightedSums.studio.sqft += row.st_avg_sf * row.pct_st / 100;
-            counts.studio.sqft++;
-        }
-        if (row.st_eff_rent_sf !== null && row.st_eff_rent_sf !== undefined && row.pct_st !== null && row.pct_st !== undefined) {
-            weightedSums.studio.rentPerSqft += row.st_eff_rent_sf * row.pct_st / 100;
-            counts.studio.rentPerSqft++;
-        }
-    
-        if (row.one_bd_eff_rent_unit !== null && row.one_bd_eff_rent_unit !== undefined && row.pct_1bd !== null && row.pct_1bd !== undefined) {
-            weightedSums.oneBd.rent += row.one_bd_eff_rent_unit * row.pct_1bd / 100;
-            counts.oneBd.rent++;
-        }
-        if (row.one_bd_avg_sf !== null && row.one_bd_avg_sf !== undefined && row.pct_1bd !== null && row.pct_1bd !== undefined) {
-            weightedSums.oneBd.sqft += row.one_bd_avg_sf * row.pct_1bd / 100;
-            counts.oneBd.sqft++;
-        }
-        if (row.one_bd_eff_rent_sf !== null && row.one_bd_eff_rent_sf !== undefined && row.pct_1bd !== null && row.pct_1bd !== undefined) {
-            weightedSums.oneBd.rentPerSqft += row.one_bd_eff_rent_sf * row.pct_1bd / 100;
-            counts.oneBd.rentPerSqft++;
-        }
+        const totalUnits = row.num_of_units;
+        
+        const studioUnits = totalUnits * (row.pct_st || 0) / 100;
+        const oneBdUnits = totalUnits * (row.pct_1bd || 0) / 100;
+        const twoBdUnits = totalUnits * (row.pct_2bd || 0) / 100;
+        const threeBdUnits = totalUnits * (row.pct_3bd || 0) / 100;
 
-        if (row.two_bd_eff_rent_unit !== null && row.two_bd_eff_rent_unit !== undefined && row.pct_2bd !== null && row.pct_2bd !== undefined) {
-            weightedSums.twoBd.rent += row.two_bd_eff_rent_unit * row.pct_2bd / 100;
-            counts.twoBd.rent++;
-        }
-        if (row.two_bd_avg_sf !== null && row.two_bd_avg_sf !== undefined && row.pct_2bd !== null && row.pct_2bd !== undefined) {
-            weightedSums.twoBd.sqft += row.two_bd_avg_sf * row.pct_2bd / 100;
-            counts.twoBd.sqft++;
-        }
-        if (row.two_bd_eff_rent_sf !== null && row.two_bd_eff_rent_sf !== undefined && row.pct_2bd !== null && row.pct_2bd !== undefined) {
-            weightedSums.twoBd.rentPerSqft += row.two_bd_eff_rent_sf * row.pct_2bd / 100;
-            counts.twoBd.rentPerSqft++;
-        }
-
-        if (row.three_bd_eff_rent_unit !== null && row.three_bd_eff_rent_unit !== undefined && row.pct_3bd !== null && row.pct_3bd !== undefined) {
-            weightedSums.threeBd.rent += row.three_bd_eff_rent_unit * row.pct_3bd / 100;
-            counts.threeBd.rent++;
-        }
-        if (row.three_bd_avg_sf !== null && row.three_bd_avg_sf !== undefined && row.pct_3bd !== null && row.pct_3bd !== undefined) {
-            weightedSums.threeBd.sqft += row.three_bd_avg_sf * row.pct_3bd / 100;
-            counts.threeBd.sqft++;
-        }
-        if (row.three_bd_eff_rent_sf !== null && row.three_bd_eff_rent_sf !== undefined && row.pct_3bd !== null && row.pct_3bd !== undefined) {
-            weightedSums.threeBd.rentPerSqft += row.three_bd_eff_rent_sf * row.pct_3bd / 100;
-            counts.threeBd.rentPerSqft++;
-        }
+        weightedSums.studio.rent += (row.st_eff_rent_unit || 0) * studioUnits;
+        weightedSums.studio.sqft += (row.st_avg_sf || 0) * studioUnits;
+        weightedSums.studio.rentPerSqft += (row.st_eff_rent_sf || 0) * studioUnits;
+        
+        weightedSums.oneBd.rent += (row.one_bd_eff_rent_unit || 0) * oneBdUnits;
+        weightedSums.oneBd.sqft += (row.one_bd_avg_sf || 0) * oneBdUnits;
+        weightedSums.oneBd.rentPerSqft += (row.one_bd_eff_rent_sf || 0) * oneBdUnits;
+        
+        weightedSums.twoBd.rent += (row.two_bd_eff_rent_unit || 0) * twoBdUnits;
+        weightedSums.twoBd.sqft += (row.two_bd_avg_sf || 0) * twoBdUnits;
+        weightedSums.twoBd.rentPerSqft += (row.two_bd_eff_rent_sf || 0) * twoBdUnits;
+        
+        weightedSums.threeBd.rent += (row.three_bd_eff_rent_unit || 0) * threeBdUnits;
+        weightedSums.threeBd.sqft += (row.three_bd_avg_sf || 0) * threeBdUnits;
+        weightedSums.threeBd.rentPerSqft += (row.three_bd_eff_rent_sf || 0) * threeBdUnits;
     });
 
-    console.log('Weighted Effective Rents:');
-    console.log('Studio:', counts.studio.rent ? (weightedSums.studio.rent / counts.studio.rent) : 0);
-    console.log('1 Bed: ', counts.oneBd.rent ? (weightedSums.oneBd.rent / counts.oneBd.rent) : 0);
-    console.log('2 Bed: ', counts.twoBd.rent ? (weightedSums.twoBd.rent / counts.twoBd.rent) : 0);
-    console.log('3 Bed: ', counts.threeBd.rent ? (weightedSums.threeBd.rent / counts.threeBd.rent) : 0);
+    const totalUnitsInResult = result.rows.reduce((acc, row) => acc + row.num_of_units, 0);
 
+    console.log('Weighted Effective Rents:');
+    console.log('Studio:', totalUnitsInResult ? (weightedSums.studio.rent / totalUnitsInResult) : 0);
+    console.log('1 Bed: ', totalUnitsInResult ? (weightedSums.oneBd.rent / totalUnitsInResult) : 0);
+    console.log('2 Bed: ', totalUnitsInResult ? (weightedSums.twoBd.rent / totalUnitsInResult) : 0);
+    console.log('3 Bed: ', totalUnitsInResult ? (weightedSums.threeBd.rent / totalUnitsInResult) : 0);
+    
     console.log('\nWeighted Average Square Footages:');
-    console.log('Studio:', counts.studio.sqft ? (weightedSums.studio.sqft / counts.studio.sqft) : 0);
-    console.log('1 Bed: ', counts.oneBd.sqft ? (weightedSums.oneBd.sqft / counts.oneBd.sqft) : 0);
-    console.log('2 Bed: ', counts.twoBd.sqft ? (weightedSums.twoBd.sqft / counts.twoBd.sqft) : 0);
-    console.log('3 Bed: ', counts.threeBd.sqft ? (weightedSums.threeBd.sqft / counts.threeBd.sqft) : 0);
+    console.log('Studio:', totalUnitsInResult ? (weightedSums.studio.sqft / totalUnitsInResult) : 0);
+    console.log('1 Bed: ', totalUnitsInResult ? (weightedSums.oneBd.sqft / totalUnitsInResult) : 0);
+    console.log('2 Bed: ', totalUnitsInResult ? (weightedSums.twoBd.sqft / totalUnitsInResult) : 0);
+    console.log('3 Bed: ', totalUnitsInResult ? (weightedSums.threeBd.sqft / totalUnitsInResult) : 0);
 
     console.log('\nWeighted Effective Rent per Square Foot:');
-    console.log('Studio:', counts.studio.rentPerSqft ? (weightedSums.studio.rentPerSqft / counts.studio.rentPerSqft) : 0);
-    console.log('1 Bed: ', counts.oneBd.rentPerSqft ? (weightedSums.oneBd.rentPerSqft / counts.oneBd.rentPerSqft) : 0);
-    console.log('2 Bed: ', counts.twoBd.rentPerSqft ? (weightedSums.twoBd.rentPerSqft / counts.twoBd.rentPerSqft) : 0);
-    console.log('3 Bed: ', counts.threeBd.rentPerSqft ? (weightedSums.threeBd.rentPerSqft / counts.threeBd.rentPerSqft) : 0);
+    console.log('Studio:', totalUnitsInResult ? (weightedSums.studio.rentPerSqft / totalUnitsInResult) : 0);
+    console.log('1 Bed: ', totalUnitsInResult ? (weightedSums.oneBd.rentPerSqft / totalUnitsInResult) : 0);
+    console.log('2 Bed: ', totalUnitsInResult ? (weightedSums.twoBd.rentPerSqft / totalUnitsInResult) : 0);
+    console.log('3 Bed: ', totalUnitsInResult ? (weightedSums.threeBd.rentPerSqft / totalUnitsInResult) : 0);
 
     res.status(200).json(result.rows);
   } catch (err) {
