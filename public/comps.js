@@ -8,12 +8,12 @@ async function runCompsModule(latitude, longitude, radius="3.000") {
     const SEARCH_RESULTS_COMPS_LIMIT = 10;
     const searchLat = latitude.toFixed(6);
     const searchLng = longitude.toFixed(6);
-    const searchRadius = radius;
+    const searchRadius = radius; // default = 3.000 miles
 
     // Pull data from endpoint
     try {
         // Compose URL
-        const endpointUrl = "https://www.livelocal.guru/api/get_comps?lat=" + searchLat + "&lng=" + searchLng + "&radius=" + searchRadius + "&limit=" + searchRadius;
+        const endpointUrl = "https://www.livelocal.guru/api/get_comps?lat=" + searchLat + "&lng=" + searchLng + "&radius=" + searchRadius + "&limit=" + SEARCH_RESULTS_COMPS_LIMIT;
     
         // Pull comps data
         const response = await fetch(endpointUrl);
@@ -27,24 +27,19 @@ async function runCompsModule(latitude, longitude, radius="3.000") {
         console.error("Error while pulling comps from the server: \n", error);
     }
 
-    // Decompose compsData into its constituent parts (.percentages, .averages, etc.)
+    // Decompose compsData
     try {
-        // get full data set
-        const compsDataFull = compsData.data;        
-        // get weighted averages set
+        // Extract full data set
+        const compsDataFull = compsData.data;
+        // Extract weighted averages sets
         const compsAvgs = compsData.averages;
-        // extract all weighted avgs
+        // Extract each weighted avg set
         const compsUnitMixPct = compsData.percentages; // example structure: {"studio":"4.99","oneBd":"45.01","twoBd":"40.01","threeBd":"9.99"} (notice, not like percentages)
         const compsRents = compsData.averages.rents; // example structure: {"studio":2193,"oneBd":2379,"twoBd":3141,"threeBd":4007}
         const compsSqFts = compsData.averages.sqfts; // example structure: {"studio":550,"oneBd":775,"twoBd":1050,"threeBd":1300}
         const compsRentPerSqfts = compsData.averages.rentPerSqfts; // example structure: {"studio":3.75,"oneBd":3.50,"twoBd":3.21,"threeBd":3.33}
-        // log all weighted avgs
-        console.log("Market % Unit Mix: \n" + JSON.stringify(compsUnitMixPct));
-        console.log("Market Rents: \n" + JSON.stringify(compsRents));
-        console.log("Market Avg Sq Ft: \n" + JSON.stringify(compsSqFts));
-        console.log("Market Rents/Sq Ft: \n" + JSON.stringify(compsRentPerSqfts));
-    
-        // Create and display market comps table
+
+        // Generate and show the market comps table
         try {
             displayCompsTable(compsData);
         } catch (error) {
@@ -60,28 +55,27 @@ async function runCompsModule(latitude, longitude, radius="3.000") {
             console.error("Error while adding comp placemarks to map: \n", error);
         }
 
-        // Return new array (?) of the weighted average sets
+        // Return array (?) of the weighted avg. sets
         console.log("Comps module complete.");
         return {compsUnitMixPct, compsRents, compsSqFts, compsRentPerSqfts};
-        
     } catch (error) {
         alert("Error: Failed while trying to process the comp set. \nWhoops!")
         console.error("Error while trying to process the comp set: \n", error);        
     }
-
 }
 
 
-// Create and show the comps table
+// Create and show the market comps table
 function displayCompsTable(compsData) {
-    // Generate and show comps table
+    // Generate table
     const tableHTML = generateMarketRentsTableHTML(compsData);
+    // Show table
     document.getElementById('averagesTableContainer').innerHTML = tableHTML;
     document.getElementById('averagesTableContainer').style.display = 'block';
 }
 
 
-// Generate raw table HTML from comps data
+// Generate table HTML from data
 function generateMarketRentsTableHTML(compsData) {
     const averages = compsData.averages;
     const percentages = compsData.percentages;
