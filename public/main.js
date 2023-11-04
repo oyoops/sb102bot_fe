@@ -121,6 +121,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Populate comps table
                 populateCompsTable(compsData);
                 //document.getElementById("compsTable").style.display = 'block';
+                displayAverages(compsData);
+                //const tableHTML = generateAveragesTable(endpointData.averages);
+                //document.getElementById('averagesTableContainer').innerHTML = tableHTML;
+                
+                
 
             } catch (error) {
                 alert("An unknown error tragically befell me while pulling your comps.")

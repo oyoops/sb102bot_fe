@@ -11,3 +11,52 @@ function populateCompsTable(data) {
     
     });
 }
+
+// Fetch the data and populate the table (this is an example)
+function displayAverages(compsData) {
+    const tableHTML = generateAveragesTable(compsData.averages);
+    document.getElementById('averagesTableContainer').innerHTML = tableHTML;
+    document.getElementById('averagesTableContainer').style.display = 'block';
+}
+
+function generateAveragesTable(averages) {
+    const types = [
+        { key: 'studio', display: 'Studio' },
+        { key: 'oneBd', display: '1 Bed' },
+        { key: 'twoBd', display: '2 Bed' },
+        { key: 'threeBd', display: '3 Bed' },
+    ];
+
+    let tableHTML = `
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Average Rent ($)</th>
+                    <th>Average Sqft</th>
+                    <th>Average Rent per Sqft ($)</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    types.forEach(type => {
+        tableHTML += `
+            <tr>
+                <td>${type.display}</td>
+                <td>${averages.rents[type.key]}</td>
+                <td>${averages.sqfts[type.key]}</td>
+                <td>${averages.rentPerSqfts[type.key]}</td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `
+            </tbody>
+        </table>
+    `;
+
+    return tableHTML;
+}
+
+
