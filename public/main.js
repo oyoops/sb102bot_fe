@@ -166,13 +166,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 { key: '2bd', display: '2 Bed', marketKey: 'twoBd' },
                 { key: '3bd', display: '3 Bed', marketKey: 'threeBd' },
             ];
+
             let rentsRows = '';
-            types.forEach(type => {
+            unitTypes.forEach(type => {
                 const maxAffordableRent = parseFloat(countyData[`max_rent_${type.key}_120ami`]).toFixed(0);
                 const avgMarketRent = parseFloat(compsAvgs.rents[type.marketKey]).toFixed(0);
                 const diffDollar = (maxAffordableRent - avgMarketRent).toFixed(0);
                 const diffPercent = ((diffDollar / maxAffordableRent) * 100).toFixed(0);
-                    
+                
                 rentsRows += `
                     <tr>
                         <td>${type.display}</td>
@@ -182,7 +183,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     </tr>
                 `;
             });
-            rentsTableBody.innerHTML = rentsRow; // populate the rents table
+
+            rentsTableBody.innerHTML = rentsRows; // populate the rents table
             rentInfoContainer.style.display = 'table'; // show the rents container
             countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
             
