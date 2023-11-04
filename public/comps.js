@@ -28,17 +28,18 @@ function generateAveragesTable(averages, percentages) {
     ];
 
     let tableHTML = `
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Mix</th>
-                    <th>Sq. Ft.</th>
-                    <th>Eff. Rent</th>
-                    <th>Eff. Rent/Sq. Ft.</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="table-container">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Mix</th>
+                        <th>Sq. Ft.</th>
+                        <th>Eff. Rent</th>
+                        <th>Eff. Rent/Sq. Ft.</th>
+                    </tr>
+                </thead>
+                <tbody>
     `;
 
     let weightedRentSum = 0;
@@ -59,13 +60,13 @@ function generateAveragesTable(averages, percentages) {
         percentageSum += weight;
 
         tableHTML += `
-            <tr>
-                <td>${type.display}</td>
-                <td>${weight.toFixed(0)}%</td>
-                <td>${sqft.toFixed(0)} sf</td>
-                <td>$${rent.toFixed(0)}</td>
-                <td>$${rentPerSqft.toFixed(2)}/sf</td>
-            </tr>
+                <tr>
+                    <td>${type.display}</td>
+                    <td>${weight.toFixed(0)}%</td>
+                    <td>${sqft.toFixed(0)} sf</td>
+                    <td>$${rent.toFixed(0)}</td>
+                    <td>$${rentPerSqft.toFixed(2)}/sf</td>
+                </tr>
         `;
     });
 
@@ -76,18 +77,19 @@ function generateAveragesTable(averages, percentages) {
 
     // Append the weighted average row
     tableHTML += `
-        <tr>
-            <td><strong>Average</strong></td>
-            <td><strong>${percentageSum.toFixed(0)}%</strong></td>
-            <td><strong>${averageWeightedSqft}</strong></td>
-            <td><strong>${averageWeightedRent}</strong></td>
-            <td><strong>${averageWeightedRentPerSqft}</strong></td>
-        </tr>
+            <tr>
+                <td><strong>Average</strong></td>
+                <td><strong>${percentageSum.toFixed(0)}%</strong></td>
+                <td><strong>${averageWeightedSqft}</strong></td>
+                <td><strong>${averageWeightedRent}</strong></td>
+                <td><strong>${averageWeightedRentPerSqft}</strong></td>
+            </tr>
     `;
 
     tableHTML += `
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     `;
 
     return tableHTML;
