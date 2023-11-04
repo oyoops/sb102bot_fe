@@ -32,10 +32,10 @@ function generateAveragesTable(averages, percentages) {
             <thead>
                 <tr>
                     <th>Type</th>
-                    <th>Average Rent ($)</th>
-                    <th>Average Sqft</th>
-                    <th>Average Rent per Sqft ($)</th>
-                    <th>Weighted Percentage (%)</th>
+                    <th>%</th>
+                    <th>SqFt</th>
+                    <th>Rent ($)</th>
+                    <th>Rent/SqFt ($)</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,27 +61,27 @@ function generateAveragesTable(averages, percentages) {
         tableHTML += `
             <tr>
                 <td>${type.display}</td>
-                <td>${rent}</td>
-                <td>${sqft}</td>
-                <td>${rentPerSqft}</td>
-                <td>${weight.toFixed(2)}%</td>
+                <td>${weight.toFixed(0)}%</td>
+                <td>${sqft.toFixed(0)}</td>
+                <td>${rent.toFixed(0)}</td>
+                <td>${rentPerSqft.toFixed(2)}</td>
             </tr>
         `;
     });
 
     // Calculate the weighted averages
-    const averageWeightedRent = (weightedRentSum / 100).toFixed(2);
-    const averageWeightedSqft = (weightedSqftSum / 100).toFixed(2);
+    const averageWeightedRent = (weightedRentSum / 100).toFixed(0);
+    const averageWeightedSqft = (weightedSqftSum / 100).toFixed(0);
     const averageWeightedRentPerSqft = (weightedRentPerSqftSum / 100).toFixed(2);
 
     // Append the weighted average row
     tableHTML += `
         <tr>
             <td><strong>Average</strong></td>
-            <td><strong>${averageWeightedRent}</strong></td>
+            <td><strong>${percentageSum.toFixed(0)}%</strong></td>
             <td><strong>${averageWeightedSqft}</strong></td>
+            <td><strong>${averageWeightedRent}</strong></td>
             <td><strong>${averageWeightedRentPerSqft}</strong></td>
-            <td><strong>${percentageSum.toFixed(2)}%</strong></td>
         </tr>
     `;
 
@@ -92,5 +92,3 @@ function generateAveragesTable(averages, percentages) {
 
     return tableHTML;
 }
-
-
