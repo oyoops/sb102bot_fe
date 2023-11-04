@@ -9,6 +9,10 @@ const pool = new Pool({
 });
 
 module.exports = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
   const lat = parseFloat(req.query.lat);
   const lng = parseFloat(req.query.lng);
   const radius = parseFloat(req.query.radius);
