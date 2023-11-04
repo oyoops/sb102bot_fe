@@ -12,9 +12,9 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  
   // Check for preflight request
   if (req.method === 'OPTIONS') {
-    // Preflight request. Reply successfully:
     res.status(204).send();
     return;
   }
@@ -22,13 +22,25 @@ module.exports = async (req, res) => {
   const lat = parseFloat(req.query.lat);
   const lng = parseFloat(req.query.lng);
   const radius = parseFloat(req.query.radius);
+  const limit = parseInt(req.query.limit);  // New limit parameter
+
+  // Validate if latitude and longitude are within Florida bounds
+  if (lat < 24.396308 || lat > 31.001056 || lng < -87.634938 || lng > -80.031362) {
+    return res.status(400).send('Please provide a valid lat and long for Florida.');
+  }
 
   if (!lat || !lng || !radius) {
     return res.status(400).send('Please provide lat, long, and radius in miles as query parameters.');
   }
 
   try {
-    const query = `
+    const distanceFormula = `
+      EarthRadius * 2 * ASIN(SQRT(POWER(SIN((lat - $1) * PI() / 180 / 2), 2) + 
+      COS(lat * PI() / 180) * COS($1 * PI() / 180) * 
+      POWER(SIN((lng - $2) * PI() / 180 / 2), 2)))
+    `;
+
+    let query = `
       WITH Constants AS (
           SELECT 
               3959 AS EarthRadius -- in miles; use 6371 for kilometers
@@ -39,12 +51,17 @@ module.exports = async (req, res) => {
       FROM 
           public.comps_data, Constants
       WHERE 
-          EarthRadius * 2 * ASIN(SQRT(POWER(SIN((lat - $1) * PI() / 180 / 2), 2) + 
-          COS(lat * PI() / 180) * COS($1 * PI() / 180) * 
-          POWER(SIN((lng - $2) * PI() / 180 / 2), 2))) < $3
+          ${distanceFormula} < $3
+      ORDER BY 
+          ${distanceFormula} ASC  -- Sort by closest distance first
     `;
 
-    const result = await pool.query(query, [lat, lng, radius]);
+    if (limit) {
+      query += ` LIMIT $4`;
+    }
+
+    const queryParams = limit ? [lat, lng, radius, limit] : [lat, lng, radius];
+    const result = await pool.query(query, queryParams);
     res.status(200).json(result.rows);
   } catch (err) {
     res.status(500).send('Internal Server Error');
