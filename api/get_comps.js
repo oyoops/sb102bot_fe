@@ -71,12 +71,19 @@ module.exports = async (req, res) => {
     console.log('Database returned', result.rows.length, 'rows.');
     //console.log('Comp #1:\n', result.rows.slice(0, 1));
 
-    let counts = {
+    /*let counts = {
       studio: { rent: 0, sqft: 0, rentPerSqft: 0 },
       oneBd: { rent: 0, sqft: 0, rentPerSqft: 0 },
       twoBd: { rent: 0, sqft: 0, rentPerSqft: 0 },
       threeBd: { rent: 0, sqft: 0, rentPerSqft: 0 }
-    };
+    };*/
+
+    let totalUnitsByType = {
+      studio: 0,
+      oneBd: 0,
+      twoBd: 0,
+      threeBd: 0
+    };    
 
     let weightedSums = {
       studio: {
