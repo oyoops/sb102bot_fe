@@ -213,16 +213,29 @@ button:hover {
     border-bottom: 2px solid var(--accent-color);
 }
 
-#menuBar a {
-    color: var(--accent-color);
-    text-decoration: none;
-    padding: 0 5px;
-    transition: color 0.3s ease;
+#menuBar #logo {
+    width: 150px;  /* or whatever width you desire */
+    height: auto;  /* maintain the aspect ratio */
+    display: block; /* to handle vertical spacing better */
 }
 
-#menuBar a:hover {
-    color: var(--hover-color);
+#menuBar #logoMobile {
+    width: 100px;  /* or whatever width you desire for the mobile logo */
+    height: auto;  /* maintain the aspect ratio */
+    display: none; /* by default, hide it if you plan to show it only on smaller screens */
 }
+
+/* If you are planning to show the mobile logo on smaller screens using media queries: */
+@media only screen and (max-width: 768px) { /* or whatever breakpoint you use for mobile */
+    #menuBar #logo {
+        display: none;
+    }
+
+    #menuBar #logoMobile {
+        display: block;
+    }
+}
+
 
 /* UNUSED: */
 #sunIcon {
