@@ -93,11 +93,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // COMPS DATA
             try {
                 // Search Parameters:
-                //const exampleLat = "26.7056";
-                //const exampleLng = "-80.0364";
                 const exampleLat = lat.toFixed(6);
                 const exampleLng = lng.toFixed(6);
                 const exampleRadiusMiles = "3.000";
+
                 // Compose URL
                 const endpointUrl = "https://www.livelocal.guru/api/get_comps?lat=" + exampleLat + "&lng=" + exampleLng + "&radius=" + exampleRadiusMiles;
 
@@ -108,15 +107,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 const data = await response.json();
                 compsData = data; //// (hackily set global)
+                console.log("Comps: \n" + compsData);
+                
                 // Add placemarks to map
                 addCompsMarkersToMap(compsData, googlemap);
+
                 // Populate comps table
                 populateCompsTable(compsData);
-                document.getElementById("compsTable").style.display = 'block';
+                //document.getElementById("compsTable").style.display = 'block';
             } catch (error) {
                 alert("An unknown error tragically befell me while pulling your comps.")
                 console.error("Error while fetching comps: \n", error);
             }
+            console.log("Comps module complete.");
     
 
             // CITY / MUNI. DATA
