@@ -17,14 +17,26 @@ function populateCompsTable(data) {
 
 
 // Fetch the data and populate the table (this is an example)
-function displayAverages(compsAvgs, compsWeightedPercentages) {
-    const tableHTML = generateAveragesTable(compsAvgs, compsWeightedPercentages);
+function displayCompsTable(compsData) {
+    // extract components of comps data object
+    //const compsAvgs = compsData.averages; // avg rent, sq ft, and rent/sq ft by unit type
+    //const compsWeightedPercentages = compsData.percentages; // % mix by unit type
+    //const compsNames = compsData.names; // details of the properties within the comp set
+    // (...)
+    
+    // generate and show comps table
+    ////const tableHTML = generateMarketRentsTable(compsAvgs, compsWeightedPercentages);
+    const tableHTML = generateMarketRentsTable(compsData);
     document.getElementById('averagesTableContainer').innerHTML = tableHTML;
     document.getElementById('averagesTableContainer').style.display = 'block';
 }
 
 
-function generateAveragesTable(averages, percentages) {
+function generateMarketRentsTable(compsData) {
+    const averages = compsData.averages;
+    const percentages = compsData.percentages;
+    const names = compsData.names;
+
     const types = [
         { key: 'studio', display: 'Studio' },
         { key: 'oneBd', display: '1 Bed' },

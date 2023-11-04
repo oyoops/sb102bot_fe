@@ -106,28 +106,29 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error("Network response was not ok");
                 }
                 const compsDataObj = await response.json();
+                compsData = compsDataObj; //// (hackily set global)
                 
                 // Extract raw comps data
-                compsData = compsDataObj.data; //// (hackily set global)
-                ////console.log("Comps: \n" + JSON.stringify(compsData));
-                
-
-                
-                // Add placemarks to map
-                addCompsMarkersToMap(compsData);
-
-                // Populate comps table
-                populateCompsTable(compsData);
-                //document.getElementById("compsTable").style.display = 'block';
+                const compsDataRaw = compsData.data;
+                ////console.log("Comps Raw Data: \n" + JSON.stringify(compsDataRaw));
                 
                 // Extract comps averages
                 const compsAvgs = compsDataObj.averages;
                 const compsWeightedPercentages = compsDataObj.percentages;
                 console.log("Comps Averages: \n" + JSON.stringify(compsAvgs));
                 console.log("Market Unit Mix: \n" + JSON.stringify(compsWeightedPercentages));
-                displayAverages(compsAvgs, compsWeightedPercentages);
+                
+                // Add placemarks to map
+                addCompsMarkersToMap(compsDataRaw);
 
+                /*
+                // Populate comps table (old method)
+                populateCompsTable(compsDataRaw);
+                //document.getElementById("compsTable").style.display = 'block';
+                */
 
+                // Create and show comps table (v2)
+                displayCompsTable(compsData);
 
             } catch (error) {
                 alert("An unknown error tragically befell me while pulling your comps.")
