@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const exampleLng = lng.toFixed(6);
                 const exampleRadiusMiles = "3.000";
                 // Compose URL
-                const endpointUrl = "https://livelocal.guru/api/get_comps?lat=" + exampleLat + "&lng=" + exampleLng + "&radius=" + exampleRadiusMiles;
+                const endpointUrl = "https://www.livelocal.guru/api/get_comps?lat=" + exampleLat + "&lng=" + exampleLng + "&radius=" + exampleRadiusMiles;
 
                 // Pull comps data
                 const response = await fetch(endpointUrl);
