@@ -103,16 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
             displayMuniName = muniName //// (hackily set global)
             console.log("Municipality:", displayMuniName);
 
-            /*let muniNameProper;
-            if (cityNameProper.toLowerCase() === "unincorporated") {
-                muniNameProper = "Unincorporated " + countyNameProper + " County";
-            } else {
-                muniNameProper = cityNameProper;
-            }
-            displayMuniName = muniNameProper; //// (hackily set global)            
-            console.log("Municipality (OLD method):", displayMuniName);
-            */
-
             // MAX MUNI. DENSITY
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             maxMuniDensity = maxDensity; //// (hackily set global)
@@ -128,8 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = maxCapacity.toFixed(0);
             console.log("Parcel max unit capacity: \n", maxCapacity,"total units");
 
-            // ...
-
+            /* Do some things before the AI module takes ~30-60 seconds to complete */
 
             // Show try again button
             tryAgainButton.style.display = 'block';
@@ -149,12 +138,9 @@ document.addEventListener('DOMContentLoaded', function() {
             rentInfoContainer.style.display = 'table'; // show the container
             countyMaxRentsTable.style.display = 'table'; // show the table
 
-            // ...
-
-
             /* AI Module */
             try {
-                // Start building the supplemental data set for AI beginning with parcelData
+                // Start composing the supplemental data set for AI beginning with parcelData
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
                 
@@ -170,8 +156,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
 
-                /* Done! */
-
             } catch (error) {
                 console.error('Error:', error);
                 handleAIError(error);
@@ -180,10 +164,8 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 console.log(`Skipping Land Dev I/O Module...`);
                 /* Start: Land Development I/O Section
-                
                 // Run initial dev calcs
                 runInitialDevelopmentCalculations();
-
                 End: Land Development I/O Section */
 
             } catch(error) {
@@ -218,5 +200,3 @@ document.addEventListener('DOMContentLoaded', function() {
     loadGoogleMapsAPI();
 
 });
-
-
