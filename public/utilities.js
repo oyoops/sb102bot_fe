@@ -494,45 +494,6 @@ function initAutocomplete() {
 }
 */
   
-/* Loading animations */
-function animateLoadingText(element) {
-    const original = element.cloneNode(true);
-    element.innerHTML = '';
-
-    let textQueue = [];
-    let nodeQueue = Array.from(original.childNodes).map(child => ({ node: child, parent: element }));
-    let lastTextNode = null;
-
-    while (nodeQueue.length > 0) {
-        const { node, parent } = nodeQueue.shift();
-        
-        if (node.nodeName === "#text") {
-            for (let char of node.textContent) {
-                const span = document.createElement('span');
-                span.className = 'char';
-                span.innerHTML = char === ' ' ? '&nbsp;' : char;  // Replace space with non-breaking space
-                parent.appendChild(span);
-                textQueue.push(span);
-            }
-        } else {
-            const appendedNode = parent.appendChild(node.cloneNode(false));
-            if (node.childNodes.length > 0) {
-                for (let child of node.childNodes) {
-                    nodeQueue.push({ node: child, parent: appendedNode });
-                }
-            }
-        }
-    }
-
-    let interval = setInterval(() => {
-        if (textQueue.length > 0) {
-            const span = textQueue.shift();
-            span.classList.add('show');
-        } else {
-            clearInterval(interval);
-        }
-    }, 100); // adjust speed; ms between character iterations
-}
 
 
 function addLoadingLine(text) {
@@ -567,7 +528,21 @@ function updateLoadingBar() {
     }
   }
   
+
+
+// Run initial development calculations
+// UNUSED
+function runInitialDevelopmentCalculations() {
+    // Run initial calculations using loaded & default values
+    calculateMaximumUnits();
+    calculateWeightedAverageSizes();
+    updateRentPerSqFtTable();
+    updateTotalCosts();
+    calculateAbatement();
+}
+
 // Load main tables
+// UNUSED
 function loadMainTables() {
     // MANUAL MILLAGE ADJUSTMENT:
     fakeMillage = parseFloat(countyData.county_millage) + parseFloat(MILLAGE_ADJUSTMENT); // "rough estimate" using known county mills + a constant manual adjustment to approximate state (and perhaps local...) portion of grand total millage
@@ -659,12 +634,43 @@ function loadMainTables() {
 
 }
 
-// Run initial development calculations
-function runInitialDevelopmentCalculations() {
-    // Run initial calculations using loaded & default values
-    calculateMaximumUnits();
-    calculateWeightedAverageSizes();
-    updateRentPerSqFtTable();
-    updateTotalCosts();
-    calculateAbatement();
+// 
+// UNUSED
+function animateLoadingText(element) {
+    const original = element.cloneNode(true);
+    element.innerHTML = '';
+
+    let textQueue = [];
+    let nodeQueue = Array.from(original.childNodes).map(child => ({ node: child, parent: element }));
+    let lastTextNode = null;
+
+    while (nodeQueue.length > 0) {
+        const { node, parent } = nodeQueue.shift();
+        
+        if (node.nodeName === "#text") {
+            for (let char of node.textContent) {
+                const span = document.createElement('span');
+                span.className = 'char';
+                span.innerHTML = char === ' ' ? '&nbsp;' : char;  // Replace space with non-breaking space
+                parent.appendChild(span);
+                textQueue.push(span);
+            }
+        } else {
+            const appendedNode = parent.appendChild(node.cloneNode(false));
+            if (node.childNodes.length > 0) {
+                for (let child of node.childNodes) {
+                    nodeQueue.push({ node: child, parent: appendedNode });
+                }
+            }
+        }
+    }
+
+    let interval = setInterval(() => {
+        if (textQueue.length > 0) {
+            const span = textQueue.shift();
+            span.classList.add('show');
+        } else {
+            clearInterval(interval);
+        }
+    }, 100); // adjust speed; ms between character iterations
 }
