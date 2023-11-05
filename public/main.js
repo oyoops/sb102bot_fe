@@ -100,7 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
             // GET MUNI. NAME
             const muniName = getMunicipality(cityData, countyData);
-            console.log("Municipality:", muniName);
+            displayMuniName = muniName //// (hackily set global)
+            console.log("Municipality:", displayMuniName);
 
             /*let muniNameProper;
             if (cityNameProper.toLowerCase() === "unincorporated") {
@@ -108,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 muniNameProper = cityNameProper;
             }
-            displayMuniName = muniNameProper; // (hackily set global)            
+            displayMuniName = muniNameProper; //// (hackily set global)            
             console.log("Municipality (OLD method):", displayMuniName);
             */
 
