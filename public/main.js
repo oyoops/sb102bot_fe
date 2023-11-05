@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 muniName = cityNameProper;
             }
             displayMuniName = muniName; // (hackily set global)
-            console.log("Municipality (current): \n", displayMuniName);
+            console.log("Municipality: \n", displayMuniName);
             /* [Method A] NEW! Testing; not currently in use.
             const muniName = getMunicipality(cityData, countyData);
             console.log("Municipality (testing): \n", muniName); */
