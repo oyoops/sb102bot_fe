@@ -99,11 +99,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const countyData = await fetchCountyData(lat, lng);
     
             // MUNI. NAME
+            let muniName;
             if (cityNameProper.toLowerCase() === "unincorporated") {
-                displayMuniName = "Unincorporated " + countyNameProper + " County"; // (hackily set global)   
+                muniName = "Unincorporated " + countyNameProper + " County";
             } else {
-                displayMuniName = cityNameProper; // (hackily set global)   
+                muniName = cityNameProper;
             }
+            displayMuniName = muniName; // (hackily set global)
             console.log("Municipality (current): \n", displayMuniName);
             /* [Method A] NEW! Testing; not currently in use.
             const muniName = getMunicipality(cityData, countyData);
