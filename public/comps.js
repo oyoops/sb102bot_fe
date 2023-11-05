@@ -173,7 +173,7 @@ function generateAffordableTableHTML(countyData, compsData) {
         const maxAffordableRent = parseFloat(countyData[`max_rent_${type.key}_120ami`]).toFixed(0);
         const avgMarketRent = parseFloat(compsData.averages.rents[type.marketKey]).toFixed(0);
         const diffDollar = -(maxAffordableRent - avgMarketRent).toFixed(0);
-        const diffPercent = ((diffDollar / maxAffordableRent) * 100).toFixed(0);  
+        const diffPercent = -((diffDollar / maxAffordableRent) * 100).toFixed(0);  
         rentRowsHTML += `
             <tr>
                 <td>${type.display}</td>
