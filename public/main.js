@@ -92,8 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // COMPS DATA
             const compsModuleResult = await runCompsModule(lat, lng, COMPS_SEARCH_RADIUS_MILES);
-
-            console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
+            //console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
     
             // CITY DATA
             const cityData = await checkCity(geocodeData);        
@@ -112,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
             //     NEW method!
             //     Testing; Not currently in use
             const muniName = getMunicipality(cityData, countyData);
-            console.log("Municipality (NEW method):", muniName);
+            console.log("Municipality (testing):", muniName);
 
             // Get municipality name (B)
             //     OLD method!
@@ -124,30 +123,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 muniNameProper = cityNameProper;
             }
             displayMuniName = muniNameProper; // (hackily set global)            
-            console.log("Municipality (OLD method):", displayMuniName);
+            console.log("Municipality (current):", displayMuniName);
 
 
             // Get Max Municipal Density
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             maxMuniDensity = maxDensity; //// (hackily set global)
-            console.log("Max municipal density:", maxMuniDensity,"units/ac.");
+            console.log("Max municipal density: \n", maxMuniDensity,"units per acre");
             
 
             // PARCEL DATA
             const parcelData = await fetchParcelData(lat, lng, countyData.county_name);            
-            acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
+            acres = (parseFloat(parcelData.lnd_sqfoot) / 43560).toFixed(2);
+            console.log("Parcel area: \n", acres, "acres");
 
-            // Calculate parcel's maximum LLA unit capacity
+
+            // MAX UNIT CAPACITY
             maxCapacity = parseFloat(maxMuniDensity) * acres;
             maxCapacity = maxCapacity.toFixed(0);
-
+            console.log("Parcel max unit capacity: \n", maxCapacity,"total units");
 
 
             // Show try again button
             tryAgainButton.style.display = 'block';
-
-            
-
 
 
             // Set site colors based on Live Local eligibility
@@ -176,10 +174,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Compile all supplementary data
                 const dirtyData = await getDirtyData(aiSupplementalData);
-                ////const dirtyDataString = await getDirtyDataString(aiSupplementalData);
-                ////const cleanerData = await refineData(dirtyData, superAI); // refine, add globals, etc
-                const cleanerData = refineData(dirtyData, superAI); // refine, add globals, etc
-                console.log("AI will get this data: \n", cleanerData);
+                const cleanerData = refineData(dirtyData, superAI); // refine, add globals, etc.
+                console.log("Live Local Guru AI will receive this data: \n", cleanerData);
                 
                 // Send primary prompts, compile intermediate responses, and get SER response
                 aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData, superAI); // <-- Master prompt dispatch
