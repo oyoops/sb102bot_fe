@@ -92,79 +92,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // COMPS DATA
             const compsModuleResult = await runCompsModule(lat, lng, COMPS_SEARCH_RADIUS_MILES);
-            console.log(compsModuleResult);
-
-            /*
-            try {
-                // Search Parameters:
-                const exampleLat = lat.toFixed(6);
-                const exampleLng = lng.toFixed(6);
-                const exampleRadiusMiles = "3.000";
-
-                // Compose URL
-                const endpointUrl = "https://www.livelocal.guru/api/get_comps?lat=" + exampleLat + "&lng=" + exampleLng + "&radius=" + exampleRadiusMiles;
-
-                // Pull comps data
-                const response = await fetch(endpointUrl);
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                compsData = await response.json(); //// (hackily set global to entire object)
-                                
-                // Extract raw comps data
-                const compsDataFull = compsData.data;
-                
-                // Extract set of weighted averages
-                const compsAvgs = compsData.averages;
-                
-                // Add comp placemarks to the map
-                addCompsMarkersToMap(compsDataFull);
-
-                //
-                // Weighted Averages:
-                //
-
-                // Get all weighted averages by unit type for the comp set
-                const compsUnitMixPct = compsData.percentages; // example structure: {"studio":"4.99","oneBd":"45.01","twoBd":"40.01","threeBd":"9.99"} (notice, not like percentages)
-                const compsRents = compsData.averages.rents; // example structure: {"studio":2193,"oneBd":2379,"twoBd":3141,"threeBd":4007}
-                const compsSqFts = compsData.averages.sqfts; // example structure: {"studio":550,"oneBd":775,"twoBd":1050,"threeBd":1300}
-                const compsRentPerSqfts = compsData.averages.rentPerSqfts; // example structure: {"studio":3.75,"oneBd":3.50,"twoBd":3.21,"threeBd":3.33}
-                console.log("Market % Unit Mix: \n" + JSON.stringify(compsUnitMixPct));
-                console.log("Market Rents: \n" + JSON.stringify(compsRents));
-                console.log("Market Avg Sq Ft: \n" + JSON.stringify(compsSqFts));
-                console.log("Market Rents/Sq Ft: \n" + JSON.stringify(compsRentPerSqfts));
-
-                // Create and show comps table
-                displayCompsTable(compsData);
-
-            } catch (error) {
-                alert("An unknown error tragically befell me while pulling your comps.")
-                console.error("Error while fetching comps: \n", error);
-            }
-            console.log("Comps module complete.");
-            */
+            console.log("Comps Analysis: \n" + compsModuleResult);
     
-
+            /*
             // CITY / MUNI. DATA
             const cityData = await checkCity(geocodeData);
             cityNameProper = toProperCase(cityData.cityName);
-            
-
             // COUNTY DATA
             const countyData = await fetchCountyData(lat, lng);
             countyNameProper = specialCountyFormatting(countyData.county_name);
+            */
+
+            // CITY DATA
+            const cityData = await checkCity(geocodeData);        
+            // COUNTY DATA
+            const countyData = await fetchCountyData(lat, lng);
+            // MUNICIPALITY NAME
+            const muniName = getMunicipality(cityData, countyData);
+            console.log("Municipality:", muniName);
+
+            // Create and show the second table
+            showAffordableTable(countyData,compsData);
 
             /*
-            // Populate the max rents table
-            const rentsRow = `
-                <tr>
-                    <td>$${parseFloat(countyData.max_rent_0bd_120ami).toFixed(0)}</td>
-                    <td>$${parseFloat(countyData.max_rent_1bd_120ami).toFixed(0)}</td>
-                    <td>$${parseFloat(countyData.max_rent_2bd_120ami).toFixed(0)}</td>
-                    <td>$${parseFloat(countyData.max_rent_3bd_120ami).toFixed(0)}</td>
-                </tr>
-            `;
-            */
             // Mapping of market & affordable units (for the market/affordable rents comparison table)
             const unitTypes = [
                 { key: '0bd', display: 'Studio', marketKey: 'studio' },
@@ -190,7 +140,9 @@ document.addEventListener('DOMContentLoaded', function() {
             rentsTableBody.innerHTML = rentsRows; // populate the rents table
             rentInfoContainer.style.display = 'table'; // show the rents container
             countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
-            
+            */
+
+
 
             // Get Municipality
             let muniNameProper;
@@ -201,6 +153,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 muniNameProper = cityNameProper;
             }
             displayMuniName = muniNameProper; // (hackily set global)
+
+
+
+
+
 
             // Get Max Density
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
