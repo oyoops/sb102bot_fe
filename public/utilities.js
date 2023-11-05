@@ -76,8 +76,6 @@ function getMunicipality(cityData, countyData) {
 }
 
 
-
-
 /* AI-Related Functions: */
 
 // fetch set of AI responses given a supplemental dataset

@@ -130,7 +130,7 @@ function generateMarketRentsTableHTML(compsData) {
                 </tr>
         `;
 
-        console.log(`Successfully created table: 'Comps Analysis - Weighted Avgs. by Unit Type'`);
+        console.log(`Successfully created table: \n'Comps Analysis - Weighted Avgs. by Unit Type'`);
     });
 
     // Calculate the weighted averages
@@ -184,7 +184,7 @@ function generateAffordableTableHTML(countyData, compsData) {
         `;
     });
     
-    console.log(`Successfully created table: 'Comparison - Comps Avg. vs. Affordable Max. Rents'`);
+    console.log(`Successfully created table: \n'Comparison - Comps Avg. vs. Affordable Max. Rents'`);
     return rentRowsHTML;
     /*
     rentsTableBody.innerHTML = rentsRows; // populate the rents table

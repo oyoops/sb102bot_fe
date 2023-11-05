@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
             //     NEW method!
             //     Testing; Not currently in use
             const muniName = getMunicipality(cityData, countyData);
-            console.log("Municipality (testing):", muniName);
+            console.log("Municipality (testing): \n", muniName);
 
             // Get municipality name (B)
             //     OLD method!
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 muniNameProper = cityNameProper;
             }
             displayMuniName = muniNameProper; // (hackily set global)            
-            console.log("Municipality (current):", displayMuniName);
+            console.log("Municipality (current): \n", displayMuniName);
 
 
             // Get Max Municipal Density
@@ -144,10 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Parcel max unit capacity: \n", maxCapacity,"total units");
 
 
-            // Show try again button
-            tryAgainButton.style.display = 'block';
-
-
             // Set site colors based on Live Local eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
                 // Set site to red
@@ -161,7 +157,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
 
+            
+            // Show try again button
+            tryAgainButton.style.display = 'block';
+
+
             /* Generate AI */
+
             try {
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
@@ -172,29 +174,34 @@ document.addEventListener('DOMContentLoaded', function() {
                     enhanceWithCityData(aiSupplementalData, cityData);
                 }
 
-                // Compile all supplementary data
-                const dirtyData = await getDirtyData(aiSupplementalData);
-                const cleanerData = refineData(dirtyData, superAI); // refine, add globals, etc.
+                // Compile and clean the supplementary data set before sending to AI
+                const dirtyData = await getDirtyData(aiSupplementalData); // put into a workable form
+                const cleanerData = refineData(dirtyData, superAI); // refine (add globals, strip geom, replace nulls, etc.)
                 console.log("Live Local Guru AI will receive this data: \n", cleanerData);
                 
-                // Send primary prompts, compile intermediate responses, and get SER response
+                // Send primary prompts + supplementary data; compile intermediate responses; SER response is returned
                 aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData, superAI); // <-- Master prompt dispatch
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
 
+
+                /* Received final SER response! */
+
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
                 
                 // Get and show final AI content
-                summaryContent = composeAiResponsesCombined(aiGeneratedHTML); // show AI output only
-                eligibilityDiv.innerHTML = summaryContent;            
+                summaryContent = composeAiResponsesCombined(aiGeneratedHTML); // puts in HTML wrapper
+                eligibilityDiv.innerHTML = summaryContent;
                 eligibilityDiv.style.display = 'block';
                 window.scrollTo(0, 0);
 
                 // Fade in div
                 animateTextFadeIn(eligibilityDiv);
-                window.scrollTo(0, 0);
+
+                
+                /* Done! */
 
             } catch (error) {
                 if (error.message.startsWith("[CRITICAL]")) {
