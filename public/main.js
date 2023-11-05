@@ -101,70 +101,40 @@ document.addEventListener('DOMContentLoaded', function() {
             // COUNTY DATA
             const countyData = await fetchCountyData(lat, lng);
     
-            // Populate the Comps avg. vs Affordable max. rents comparison table
+            // Populate Table #2 (Comps avg. vs Affordable max. rent comparison)
             rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
+            // Show Table #2
             rentInfoContainer.style.display = 'table'; // show the container
             countyMaxRentsTable.style.display = 'table'; // show the table
+            
 
-            /*
-            // Show it
-            rentsTableBody.innerHTML = rentsRows; // populate the rents table
-            rentInfoContainer.style.display = 'table'; // show the rents container
-            countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
-            */
-
-            /*
-            // Mapping of market & affordable units (for the market/affordable rents comparison table)
-            const unitTypes = [
-                { key: '0bd', display: 'Studio', marketKey: 'studio' },
-                { key: '1bd', display: '1 Bed', marketKey: 'oneBd' },
-                { key: '2bd', display: '2 Bed', marketKey: 'twoBd' },
-                { key: '3bd', display: '3 Bed', marketKey: 'threeBd' },
-            ];
-            let rentsRows = '';
-            unitTypes.forEach(type => {
-                const maxAffordableRent = parseFloat(countyData[`max_rent_${type.key}_120ami`]).toFixed(0);
-                const avgMarketRent = parseFloat(compsData.averages.rents[type.marketKey]).toFixed(0);
-                const diffDollar = (maxAffordableRent - avgMarketRent).toFixed(0);
-                const diffPercent = ((diffDollar / maxAffordableRent) * 100).toFixed(0);  
-                rentsRows += `
-                    <tr>
-                        <td>${type.display}</td>
-                        <td>$${maxAffordableRent}</td>
-                        <td>$${avgMarketRent}</td>
-                        <td>$${diffDollar} (${diffPercent}%)</td>
-                    </tr>
-                `;
-            });
-            rentsTableBody.innerHTML = rentsRows; // populate the rents table
-            rentInfoContainer.style.display = 'table'; // show the rents container
-            countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
-            */
-
-
-            // Get MUNICIPALITY NAME (vA)
+            // Get municipality name (A)
+            //     NEW method!
+            //     Testing; Not currently in use
             const muniName = getMunicipality(cityData, countyData);
-            console.log("Municipality:", muniName);
+            console.log("Municipality (NEW method):", muniName);
 
-            // Get Municipality (vB)
+            // Get municipality name (B)
+            //     OLD method!
+            //     Reliable; Currently in use
             let muniNameProper;
             if (cityNameProper.toLowerCase() === "unincorporated") {
                 muniNameProper = "Unincorporated " + countyNameProper + " County";
             } else {
                 muniNameProper = cityNameProper;
             }
-            displayMuniName = muniNameProper; // (hackily set global)
+            displayMuniName = muniNameProper; // (hackily set global)            
+            console.log("Municipality (OLD method):", displayMuniName);
 
 
-            // Get Max Density
+            // Get Max Municipal Density
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             maxMuniDensity = maxDensity; //// (hackily set global)
+            console.log("Max municipal density:", maxMuniDensity,"units/ac.");
+            
 
-            console.log("Max muni. density:", maxMuniDensity,"units/ac.");
-            
             // PARCEL DATA
-            const parcelData = await fetchParcelData(lat, lng, countyData.county_name);
-            
+            const parcelData = await fetchParcelData(lat, lng, countyData.county_name);            
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
 
 
@@ -172,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function() {
             tryAgainButton.style.display = 'block';
 
             
-
             // Calculate parcel's maximum LLA unit capacity
             maxCapacity = parseFloat(maxMuniDensity) * acres;
             maxCapacity = maxCapacity.toFixed(0);
