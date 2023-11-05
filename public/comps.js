@@ -75,7 +75,7 @@ function displayCompsTable(compsData) {
 }
 
 
-// Generate table HTML from comps data
+// Generate Table #1 HTML from comps data
 function generateMarketRentsTableHTML(compsData) {
     const averages = compsData.averages;
     const percentages = compsData.percentages;
@@ -130,7 +130,6 @@ function generateMarketRentsTableHTML(compsData) {
                 </tr>
         `;
 
-        console.log(`Successfully created table: \n'Comps Analysis - Weighted Avgs. by Unit Type'`);
     });
 
     // Calculate the weighted averages
@@ -155,6 +154,7 @@ function generateMarketRentsTableHTML(compsData) {
         </div>
     `;
 
+    console.log(`Successfully created table: \n'Comps Analysis - Weighted Avgs. by Unit Type'`);
     return tableHTML;
 }
 
@@ -177,8 +177,8 @@ function generateAffordableTableHTML(countyData, compsData) {
         rentRowsHTML += `
             <tr>
                 <td>${type.display}</td>
-                <td>$${maxAffordableRent}</td>
                 <td>$${avgMarketRent}</td>
+                <td>$${maxAffordableRent}</td>
                 <td>$${diffDollar} (${diffPercent}%)</td>
             </tr>
         `;
@@ -186,9 +186,4 @@ function generateAffordableTableHTML(countyData, compsData) {
     
     console.log(`Successfully created table: \n'Comparison - Comps Avg. vs. Affordable Max. Rents'`);
     return rentRowsHTML;
-    /*
-    rentsTableBody.innerHTML = rentsRows; // populate the rents table
-    rentInfoContainer.style.display = 'table'; // show the rents container
-    countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
-    */
 }
