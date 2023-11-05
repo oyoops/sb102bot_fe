@@ -160,10 +160,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             /* Generate AI */
-
+            
             try {
+                // Start building the supplemental data set for AI beginning with parcelData
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
+
+                /*
                 if (countyData) {
                     enhanceWithCountyData(aiSupplementalData, countyData);
                 }
@@ -181,7 +184,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
                     throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
                 }
-
+                */
+                
+                // Generate AI HTML content
+                const aiContentHTML = await runAIModule(superAI, aiSupplementalData, countyData, cityData);
+                
+                // Show AI response
+                eligibilityDiv.innerHTML = aiContentHTML;
+                eligibilityDiv.style.display = 'block';
+                window.scrollTo(0, 0);
+                animateTextFadeIn(eligibilityDiv);
 
                 /* Received SER response! */
 
