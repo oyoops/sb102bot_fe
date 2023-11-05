@@ -658,3 +658,13 @@ function loadMainTables() {
     densityInput.value = maxMuniDensity.toFixed(0); // DENSITY AUTO/MANUAL INPUT
 
 }
+
+// Run initial development calculations
+function runInitialDevelopmentCalculations() {
+    // Run initial calculations using loaded & default values
+    calculateMaximumUnits();
+    calculateWeightedAverageSizes();
+    updateRentPerSqFtTable();
+    updateTotalCosts();
+    calculateAbatement();
+}

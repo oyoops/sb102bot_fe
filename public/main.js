@@ -100,18 +100,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // COUNTY DATA
             const countyData = await fetchCountyData(lat, lng);
     
-
             
-
-            // Get municipality name (A)
-            //     NEW method!
-            //     Testing; Not currently in use
+            // MUNI. NAME
+            /* [Method A] NEW! Testing; Not currently in use. */
             const muniName = getMunicipality(cityData, countyData);
             console.log("Municipality (testing): \n", muniName);
-
-            // Get municipality name (B)
-            //     OLD method!
-            //     Reliable; Currently in use
+            /* [Method B] OLD! Reliable; Currently in use. */
             let muniNameProper;
             if (cityNameProper.toLowerCase() === "unincorporated") {
                 muniNameProper = "Unincorporated " + countyNameProper + " County";
@@ -122,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Municipality (current): \n", displayMuniName);
 
 
-            // Get Max Municipal Density
+            // MAX MUNI. DENSITY
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             maxMuniDensity = maxDensity; //// (hackily set global)
             console.log("Max municipal density: \n", maxMuniDensity,"units per acre");
@@ -140,32 +134,29 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Parcel max unit capacity: \n", maxCapacity,"total units");
 
 
-            // Set site colors based on Live Local eligibility
+            // ...
+
+            
+            // Show try again button
+            tryAgainButton.style.display = 'block';
+
+            // Set colors based on Live Local eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
-                // Set site to red
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 //document.documentElement.style.setProperty('--hue', '25'); // orange
             } else if (eligibleCodes.includes(parcelData.dor_uc)) {
-                // Set site to green
                 document.documentElement.style.setProperty('--hue', '120'); // green
             } else {
-                // Set site to red
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
 
-
-
-            // Populate Table #2 (Comps avg. vs Affordable max. rent comparison)
+            // Populate and show Table #2 (Comps avg. vs Affordable max. rent comparison)
             rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
-            // Show Table #2
             rentInfoContainer.style.display = 'table'; // show the container
             countyMaxRentsTable.style.display = 'table'; // show the table
 
 
-
-            // Show try again button
-            tryAgainButton.style.display = 'block';
-
+            // ...
 
 
             /* Generate AI */
@@ -192,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
 
-                /* Received final SER response! */
+                /* Received SER response! */
 
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
@@ -205,8 +196,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Fade in div
                 animateTextFadeIn(eligibilityDiv);
-
                 
+
                 /* Done! */
 
             } catch (error) {
@@ -229,12 +220,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             /* Start: Land Development I/O Section */
-            // Run initial calculations using loaded & default values
-            //calculateMaximumUnits();
-            //calculateWeightedAverageSizes();
-            //updateRentPerSqFtTable();
-            //updateTotalCosts();
-            //calculateAbatement();
+            // Run initial development calculations
+            ////runInitialDevelopmentCalculations();
             /* End: Land Development I/O Section */    
             
         } catch (error) {
@@ -243,28 +230,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
-                alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 35 seconds.');
+                alert('Sorry, there was an error of the catastrophic variety. \n\nYour device will self-destruct in 35 seconds.');
                 //location.reload(); // Reload the page
             } else if (error.message.startsWith("Took too long")) {
                 console.error('Server error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
-                alert('Sorry, there was an unknown error of the fatal variety. \n\nYour device will self-destruct in 40 seconds.');
+                alert('Sorry, there was an error of the fatal variety. \n\nYour device will self-destruct in 40 seconds.');
                 //location.reload(); // Reload the page
             } else {
                 console.error('Error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
-                alert('Sorry, there was an unknown error of the cataclysmic variety. \n\nYour device will self-destruct in 45 seconds.');
+                alert('Sorry, there was an error of the cataclysmic variety. \n\nYour device will self-destruct in 45 seconds.');
                 //location.reload(); // Reload the page
             }
         }
-
     });
 
-    // dynamically load Google Maps & Places APIs
+    // Dynamically load Google Maps & Places APIs
     loadGoogleMapsAPI();
 
 });
