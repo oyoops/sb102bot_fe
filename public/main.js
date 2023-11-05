@@ -51,9 +51,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // ONE HUGE TRY BLOCK
         try {
-            console.log(`Submitting ${address} to Live Local Guru w/ SuperAI=${superAI}...`);
+            console.log(`Asking Live Local Guru about ${address}...`);
             
-            // hide header and initial content
+            // Hide header and initial content
             mainHeader.style.display = 'none';
             initialContent.style.display = 'none';
             navButtonsContainer.style.display = 'none';
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             currentBugsContainer.style.display = 'none';
             recentUpdatesContainer.style.display = 'none';
             futureUpdatesContainer.style.display = 'none';
-            // display fake loading progress bar
+            // Display fake loading progress bar
             updateLoadingBar();
             loadingContainer.style.display = 'block';
             window.scrollTo(0, 0);
@@ -77,18 +77,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // + initializes map
             const tallestBuildingData = await initializeMap(lat, lng);
 
-            // Get Max Height (& distance)
+            // MAX BLDG. HEIGHT
             const maxBH = tallestBuildingData.maxHeight.toFixed(0); // feet
             const maxBD = tallestBuildingData.maxDistance.toFixed(2); // miles
             //console.log("MaxBH =", maxBH, "ft.");
             //console.log("MaxBD =", maxBD, "mi.");
             buildingHeight = maxBH; //// (hackily set global)
 
-
-            // Display the map
+            // Display map
             googlemap.style.display = 'block';
             window.scrollTo(0, 0);
-
 
             // COMPS DATA
             const compsModuleResult = await runCompsModule(lat, lng, COMPS_SEARCH_RADIUS_MILES);
@@ -100,43 +98,35 @@ document.addEventListener('DOMContentLoaded', function() {
             // COUNTY DATA
             const countyData = await fetchCountyData(lat, lng);
     
-            
             // MUNI. NAME
-            /* [Method A] NEW! Testing; Not currently in use. */
-            const muniName = getMunicipality(cityData, countyData);
-            console.log("Municipality (testing): \n", muniName);
-            /* [Method B] OLD! Reliable; Currently in use. */
-            let muniNameProper;
             if (cityNameProper.toLowerCase() === "unincorporated") {
-                muniNameProper = "Unincorporated " + countyNameProper + " County";
+                displayMuniName = "Unincorporated " + countyNameProper + " County"; // (hackily set global)   
             } else {
-                muniNameProper = cityNameProper;
+                displayMuniName = cityNameProper; // (hackily set global)   
             }
-            displayMuniName = muniNameProper; // (hackily set global)            
             console.log("Municipality (current): \n", displayMuniName);
-
+            /* [Method A] NEW! Testing; not currently in use.
+            const muniName = getMunicipality(cityData, countyData);
+            console.log("Municipality (testing): \n", muniName); */
 
             // MAX MUNI. DENSITY
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             maxMuniDensity = maxDensity; //// (hackily set global)
             console.log("Max municipal density: \n", maxMuniDensity,"units per acre");
             
-
             // PARCEL DATA
             const parcelData = await fetchParcelData(lat, lng, countyData.county_name);            
             acres = (parseFloat(parcelData.lnd_sqfoot) / 43560).toFixed(2);
             console.log("Parcel area: \n", acres, "acres");
-
 
             // MAX UNIT CAPACITY
             maxCapacity = parseFloat(maxMuniDensity) * acres;
             maxCapacity = maxCapacity.toFixed(0);
             console.log("Parcel max unit capacity: \n", maxCapacity,"total units");
 
-
             // ...
 
-            
+
             // Show try again button
             tryAgainButton.style.display = 'block';
 
@@ -155,11 +145,10 @@ document.addEventListener('DOMContentLoaded', function() {
             rentInfoContainer.style.display = 'table'; // show the container
             countyMaxRentsTable.style.display = 'table'; // show the table
 
-
             // ...
 
 
-            /* Generate AI */
+            /* AI Module */
             try {
                 // Start building the supplemental data set for AI beginning with parcelData
                 verifyParcelData(parcelData);
@@ -183,13 +172,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
                 handleAIError(error);
             }
-
-            /* Done! */
             
-            /* Start: Land Development I/O Section */
-            // Run initial development calculations
-            ////runInitialDevelopmentCalculations();
-            /* End: Land Development I/O Section */ 
+            try {
+                console.log(`Skipping Land Dev I/O Module...`);
+                /* Start: Land Development I/O Section
+                
+                // Run initial dev calcs
+                runInitialDevelopmentCalculations();
+
+                End: Land Development I/O Section */
+
+            } catch(error) {
+                console.error('Error:', error);
+                handleAIError(error);
+            } 
             
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {
@@ -198,21 +194,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
                 alert('Sorry, there was an error of the catastrophic variety. \n\nYour device will self-destruct in 35 seconds.');
-                //location.reload(); // Reload the page
             } else if (error.message.startsWith("Took too long")) {
                 console.error('Server error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
                 alert('Sorry, there was an error of the fatal variety. \n\nYour device will self-destruct in 40 seconds.');
-                //location.reload(); // Reload the page
             } else {
                 console.error('Error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
                 alert('Sorry, there was an error of the cataclysmic variety. \n\nYour device will self-destruct in 45 seconds.');
-                //location.reload(); // Reload the page
             }
         }
     });
