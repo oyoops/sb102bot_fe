@@ -137,14 +137,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const parcelData = await fetchParcelData(lat, lng, countyData.county_name);            
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
 
+            // Calculate parcel's maximum LLA unit capacity
+            maxCapacity = parseFloat(maxMuniDensity) * acres;
+            maxCapacity = maxCapacity.toFixed(0);
+
+
 
             // Show try again button
             tryAgainButton.style.display = 'block';
 
             
-            // Calculate parcel's maximum LLA unit capacity
-            maxCapacity = parseFloat(maxMuniDensity) * acres;
-            maxCapacity = maxCapacity.toFixed(0);
+
 
 
             // Set site colors based on Live Local eligibility
