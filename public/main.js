@@ -100,11 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // COUNTY DATA
             const countyData = await fetchCountyData(lat, lng);
     
-            // Populate Table #2 (Comps avg. vs Affordable max. rent comparison)
-            rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
-            // Show Table #2
-            rentInfoContainer.style.display = 'table'; // show the container
-            countyMaxRentsTable.style.display = 'table'; // show the table
+
             
 
             // Get municipality name (A)
@@ -157,9 +153,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
 
-            
+
+
+            // Populate Table #2 (Comps avg. vs Affordable max. rent comparison)
+            rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
+            // Show Table #2
+            rentInfoContainer.style.display = 'table'; // show the container
+            countyMaxRentsTable.style.display = 'table'; // show the table
+
+
+
             // Show try again button
             tryAgainButton.style.display = 'block';
+
 
 
             /* Generate AI */
