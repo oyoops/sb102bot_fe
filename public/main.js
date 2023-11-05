@@ -98,18 +98,19 @@ document.addEventListener('DOMContentLoaded', function() {
             // COUNTY DATA
             const countyData = await fetchCountyData(lat, lng);
     
-            // MUNI. NAME
-            let muniName;
-            if (cityNameProper.toLowerCase() === "unincorporated") {
-                muniName = "Unincorporated " + countyNameProper + " County";
-            } else {
-                muniName = cityNameProper;
-            }
-            displayMuniName = muniName; // (hackily set global)
-            console.log("Municipality: \n", displayMuniName);
-            /* [Method A] NEW! Testing; not currently in use.
+            // GET MUNI. NAME
             const muniName = getMunicipality(cityData, countyData);
-            console.log("Municipality (testing): \n", muniName); */
+            console.log("Municipality:", muniName);
+
+            /*let muniNameProper;
+            if (cityNameProper.toLowerCase() === "unincorporated") {
+                muniNameProper = "Unincorporated " + countyNameProper + " County";
+            } else {
+                muniNameProper = cityNameProper;
+            }
+            displayMuniName = muniNameProper; // (hackily set global)            
+            console.log("Municipality (OLD method):", displayMuniName);
+            */
 
             // MAX MUNI. DENSITY
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);

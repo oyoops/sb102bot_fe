@@ -65,13 +65,17 @@ async function fetchAPI(url) {
 // get muni name
 function getMunicipality(cityData, countyData) {
     let muniName = "(error!)";
-    cityNameProper = toProperCase(cityData.cityName);
-    countyNameProper = specialCountyFormatting(countyData.county_name);
-    if (cityNameProper=="Unincorporated") {
-        muniName = countyNameProper;
+    const cityNamePropCase = toProperCase(cityData.cityName);
+    const countyNamePropCase = specialCountyFormatting(countyData.county_name);
+    if (cityNamePropCase.toLowerCase() === "unincorporated") {
+        muniName = "Unincorporated " + countyNamePropCase + " County";
     } else {
-        muniName = cityNameProper;
+        muniName = cityNamePropCase;
     }
+    //// (hackily set globals)
+    cityNameProper = cityNamePropCase;
+    countyNameProper = countyNamePropCase;
+
     return muniName;
 }
 
