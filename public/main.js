@@ -183,15 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
                 handleAIError(error);
             }
-            
-            // Get and show final AI content
-            summaryContent = composeAiResponsesCombined(aiGeneratedHTML); // puts in HTML wrapper
-            eligibilityDiv.innerHTML = summaryContent;
-            eligibilityDiv.style.display = 'block';
-            window.scrollTo(0, 0);
-
-            // Fade in div
-            animateTextFadeIn(eligibilityDiv);
 
             /* Done! */
             
