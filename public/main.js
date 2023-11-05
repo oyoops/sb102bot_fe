@@ -92,7 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // COMPS DATA
             const compsModuleResult = await runCompsModule(lat, lng, COMPS_SEARCH_RADIUS_MILES);
-            console.log("Comps Analysis: \n" + compsModuleResult);
+
+            console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
     
             // CITY DATA
             const cityData = await checkCity(geocodeData);        
