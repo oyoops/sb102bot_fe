@@ -93,11 +93,11 @@ function generateMarketRentsTableHTML(compsData) {
             <table border="1">
                 <thead>
                     <tr>
-                        <th>Type</th>
+                        <th></th>
                         <th>Mix</th>
-                        <th>Sq. Ft.</th>
-                        <th>Eff. Rent</th>
-                        <th>Eff. Rent/Sq. Ft.</th>
+                        <th>Avg. SF</th>
+                        <th>Market Rent</th>
+                        <th>Market Rent/SF</th>
                     </tr>
                 </thead>
                 <tbody>
