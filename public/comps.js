@@ -75,7 +75,7 @@ function displayCompsTable(compsData) {
 }
 
 
-// Generate table HTML from data
+// Generate table HTML from comps data
 function generateMarketRentsTableHTML(compsData) {
     const averages = compsData.averages;
     const percentages = compsData.percentages;
@@ -129,6 +129,8 @@ function generateMarketRentsTableHTML(compsData) {
                     <td>$${rentPerSqft.toFixed(2)}/sf</td>
                 </tr>
         `;
+
+        console.log(`Successfully created table: 'Comps Analysis - Weighted Avgs. by Unit Type'`);
     });
 
     // Calculate the weighted averages
@@ -157,3 +159,36 @@ function generateMarketRentsTableHTML(compsData) {
 }
 
 
+// Generate table HTML for Table #2 (Comp avg. rents vs. affordable max. rents by unit type)
+function generateAffordableTableHTML(countyData, compsData) {
+    // Mapping of market & affordable units (for the market/affordable rents comparison table)
+    const unitTypes = [
+        { key: '0bd', display: 'Studio', marketKey: 'studio' },
+        { key: '1bd', display: '1 Bed', marketKey: 'oneBd' },
+        { key: '2bd', display: '2 Bed', marketKey: 'twoBd' },
+        { key: '3bd', display: '3 Bed', marketKey: 'threeBd' },
+    ];
+    let rentRowsHTML = '';
+    unitTypes.forEach(type => {
+        const maxAffordableRent = parseFloat(countyData[`max_rent_${type.key}_120ami`]).toFixed(0);
+        const avgMarketRent = parseFloat(compsData.averages.rents[type.marketKey]).toFixed(0);
+        const diffDollar = (maxAffordableRent - avgMarketRent).toFixed(0);
+        const diffPercent = ((diffDollar / maxAffordableRent) * 100).toFixed(0);  
+        rentRowsHTML += `
+            <tr>
+                <td>${type.display}</td>
+                <td>$${maxAffordableRent}</td>
+                <td>$${avgMarketRent}</td>
+                <td>$${diffDollar} (${diffPercent}%)</td>
+            </tr>
+        `;
+    });
+    
+    console.log(`Successfully created table: 'Comparison - Comps Avg. vs. Affordable Max. Rents'`);
+    return rentRowsHTML;
+    /*
+    rentsTableBody.innerHTML = rentsRows; // populate the rents table
+    rentInfoContainer.style.display = 'table'; // show the rents container
+    countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
+    */
+}

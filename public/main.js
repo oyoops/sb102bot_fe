@@ -94,25 +94,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const compsModuleResult = await runCompsModule(lat, lng, COMPS_SEARCH_RADIUS_MILES);
             console.log("Comps Analysis: \n" + compsModuleResult);
     
-            /*
-            // CITY / MUNI. DATA
-            const cityData = await checkCity(geocodeData);
-            cityNameProper = toProperCase(cityData.cityName);
-            // COUNTY DATA
-            const countyData = await fetchCountyData(lat, lng);
-            countyNameProper = specialCountyFormatting(countyData.county_name);
-            */
-
             // CITY DATA
             const cityData = await checkCity(geocodeData);        
+    
             // COUNTY DATA
             const countyData = await fetchCountyData(lat, lng);
-            // MUNICIPALITY NAME
-            const muniName = getMunicipality(cityData, countyData);
-            console.log("Municipality:", muniName);
+    
+            // Populate the Comps avg. vs Affordable max. rents comparison table
+            rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
+            rentInfoContainer.style.display = 'table'; // show the container
+            countyMaxRentsTable.style.display = 'table'; // show the table
 
-            // Create and show the second table
-            showAffordableTable(countyData,compsData);
+            /*
+            // Show it
+            rentsTableBody.innerHTML = rentsRows; // populate the rents table
+            rentInfoContainer.style.display = 'table'; // show the rents container
+            countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
+            */
 
             /*
             // Mapping of market & affordable units (for the market/affordable rents comparison table)
@@ -143,30 +141,31 @@ document.addEventListener('DOMContentLoaded', function() {
             */
 
 
+            // Get MUNICIPALITY NAME (vA)
+            const muniName = getMunicipality(cityData, countyData);
+            console.log("Municipality:", muniName);
 
-            // Get Municipality
+            // Get Municipality (vB)
             let muniNameProper;
             if (cityNameProper.toLowerCase() === "unincorporated") {
                 muniNameProper = "Unincorporated " + countyNameProper + " County";
-                ////muniNameProper = "unincorporated " + countyNameProper + " County";
             } else {
                 muniNameProper = cityNameProper;
             }
             displayMuniName = muniNameProper; // (hackily set global)
 
 
-
-
-
-
             // Get Max Density
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             maxMuniDensity = maxDensity; //// (hackily set global)
+
             console.log("Max muni. density:", maxMuniDensity,"units/ac.");
             
             // PARCEL DATA
             const parcelData = await fetchParcelData(lat, lng, countyData.county_name);
+            
             acres = parseFloat(parcelData.lnd_sqfoot) / 43560;
+
 
             // Show try again button
             tryAgainButton.style.display = 'block';

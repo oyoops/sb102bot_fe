@@ -75,37 +75,7 @@ function getMunicipality(cityData, countyData) {
     return muniName;
 }
 
-// Create and show the second table (affordable rents)
-function showAffordableTable(countyData, compsData) {
-    // Mapping of market & affordable units (for the market/affordable rents comparison table)
-    const unitTypes = [
-        { key: '0bd', display: 'Studio', marketKey: 'studio' },
-        { key: '1bd', display: '1 Bed', marketKey: 'oneBd' },
-        { key: '2bd', display: '2 Bed', marketKey: 'twoBd' },
-        { key: '3bd', display: '3 Bed', marketKey: 'threeBd' },
-    ];
-    let rentsRows = '';
-    unitTypes.forEach(type => {
-        const maxAffordableRent = parseFloat(countyData[`max_rent_${type.key}_120ami`]).toFixed(0);
-        const avgMarketRent = parseFloat(compsData.averages.rents[type.marketKey]).toFixed(0);
-        const diffDollar = (maxAffordableRent - avgMarketRent).toFixed(0);
-        const diffPercent = ((diffDollar / maxAffordableRent) * 100).toFixed(0);  
-        rentsRows += `
-            <tr>
-                <td>${type.display}</td>
-                <td>$${maxAffordableRent}</td>
-                <td>$${avgMarketRent}</td>
-                <td>$${diffDollar} (${diffPercent}%)</td>
-            </tr>
-        `;
-    });
-    rentsTableBody.innerHTML = rentsRows; // populate the rents table
-    rentInfoContainer.style.display = 'table'; // show the rents container
-    countyMaxRentsTable.style.display = 'table'; // show the max affordable rents table
-    
-    console.log("Table #2 created successfully.");
-    return;
-}
+
 
 
 /* AI-Related Functions: */
