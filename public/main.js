@@ -160,31 +160,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             /* Generate AI */
-            
             try {
                 // Start building the supplemental data set for AI beginning with parcelData
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
-
-                /*
-                if (countyData) {
-                    enhanceWithCountyData(aiSupplementalData, countyData);
-                }
-                if (cityData) {
-                    enhanceWithCityData(aiSupplementalData, cityData);
-                }
-
-                // Compile and clean the supplementary data set before sending to AI
-                const dirtyData = await getDirtyData(aiSupplementalData); // put into a workable form
-                const cleanerData = refineData(dirtyData, superAI); // refine (add globals, strip geom, replace nulls, etc.)
-                console.log("Live Local Guru AI will receive this data: \n", cleanerData);
-                
-                // Send primary prompts + supplementary data; compile intermediate responses; SER response is returned
-                aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData, superAI); // <-- Master prompt dispatch
-                if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
-                    throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
-                }
-                */
                 
                 // Generate AI HTML content
                 const aiContentHTML = await runAIModule(superAI, aiSupplementalData, countyData, cityData);
@@ -195,46 +174,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.scrollTo(0, 0);
                 animateTextFadeIn(eligibilityDiv);
 
-                /* Received SER response! */
-
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
-                
-                // Get and show final AI content
-                summaryContent = composeAiResponsesCombined(aiGeneratedHTML); // puts in HTML wrapper
-                eligibilityDiv.innerHTML = summaryContent;
-                eligibilityDiv.style.display = 'block';
-                window.scrollTo(0, 0);
-
-                // Fade in div
-                animateTextFadeIn(eligibilityDiv);
-                
 
                 /* Done! */
 
             } catch (error) {
-                if (error.message.startsWith("[CRITICAL]")) {
-                    console.error('AI FAILURE!');
-                    document.documentElement.style.setProperty('--hue', '360'); // red
-                    tryAgainButton.style.display = 'block';
-                    loadingContainer.style.display = 'none';
-                    alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 20 seconds.');
-                    //location.reload(); // Reload the page    
-                } else {
-                    console.error('Unknown AI Error!');
-                    document.documentElement.style.setProperty('--hue', '360'); // red
-                    tryAgainButton.style.display = 'block';
-                    loadingContainer.style.display = 'none';
-                    alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 25 seconds.');
-                    //location.reload(); // Reload the page
-                }
-                return;
+                console.error('Error:', error);
+                handleAIError(error);
             }
+            
+            // Get and show final AI content
+            summaryContent = composeAiResponsesCombined(aiGeneratedHTML); // puts in HTML wrapper
+            eligibilityDiv.innerHTML = summaryContent;
+            eligibilityDiv.style.display = 'block';
+            window.scrollTo(0, 0);
+
+            // Fade in div
+            animateTextFadeIn(eligibilityDiv);
+
+            /* Done! */
             
             /* Start: Land Development I/O Section */
             // Run initial development calculations
             ////runInitialDevelopmentCalculations();
-            /* End: Land Development I/O Section */    
+            /* End: Land Development I/O Section */ 
             
         } catch (error) {
             if (error.message.startsWith("Server responded with")) {

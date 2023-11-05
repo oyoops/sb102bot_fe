@@ -79,34 +79,34 @@ function getMunicipality(cityData, countyData) {
 /* AI-Related Functions: */
 
 async function runAIModule(superAI, aiSupplementalData, countyData, cityData) {
-    try {
-        if (countyData) {
-            enhanceWithCountyData(aiSupplementalData, countyData);
-        }
-        if (cityData) {
-            enhanceWithCityData(aiSupplementalData, cityData);
-        }
-
-        const dirtyData = await getDirtyData(aiSupplementalData);
-        const cleanerData = refineData(dirtyData, superAI);
-        const aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData, superAI);
-
-        if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
-            throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
-        }
-
-        const summaryContent = composeAiResponsesCombined(aiGeneratedHTML);
-        return summaryContent;
-
-    } catch (error) {
-        console.error('AI Error:', error);
-        document.documentElement.style.setProperty('--hue', '360'); // red
-        tryAgainButton.style.display = 'block';
-        loadingContainer.style.display = 'none';
-        alert('AI processing error. Please try again.');
+    if (countyData) {
+        enhanceWithCountyData(aiSupplementalData, countyData);
     }
+    if (cityData) {
+        enhanceWithCityData(aiSupplementalData, cityData);
+    }
+
+    const dirtyData = await getDirtyData(aiSupplementalData);
+    const cleanerData = refineData(dirtyData, superAI);
+    const aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData, superAI);
+
+    if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
+        throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
+    }
+
+    return composeAiResponsesCombined(aiGeneratedHTML);
 }
 
+function handleAIError(error) {
+    document.documentElement.style.setProperty('--hue', '360'); // red
+    tryAgainButton.style.display = 'block';
+    loadingContainer.style.display = 'none';
+    if (error.message.startsWith("[CRITICAL]")) {
+        alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 20 seconds.');
+    } else {
+        alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 25 seconds.');
+    }
+}
 
 // fetch set of AI responses given a supplemental dataset
 async function fetchAiResponsesCombined(cleanData, superAI) {
