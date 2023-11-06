@@ -60,9 +60,9 @@ module.exports = async (req, res) => {
     const pa_uc = req.body.pa_uc;
 
     // Comps
-    const compsDataRaw = req.body.comps_data;
-    const compsAvgs = req.body.comps_averages;
-    const compsPcts = req.body.comps_percentages;
+    const compsDataRaw = JSON.stringify(req.body.comps_data);
+    const compsAvgs = JSON.stringify(req.body.comps_averages);
+    const compsPcts = JSON.stringify(req.body.comps_percentages);
 
     // Valuations
     const jv = req.body.jv;
@@ -320,7 +320,7 @@ module.exports = async (req, res) => {
                 Based on the info, you will produce intelligent insights, recommending a competitive strategy.
 
             FORMAT:
-                Your response must be 
+                Be intelligent, but intersperse emojis for effect.
         `
     }, {
         "role": "user",
