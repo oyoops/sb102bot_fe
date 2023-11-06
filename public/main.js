@@ -173,8 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
                 
                 // Generate AI summary HTML content
-                const aiContentHTML = await runAIModule(superAI, aiSupplementalData, countyData, cityData);
-                eligibilityDiv.innerHTML = aiContentHTML;
+                const aiContentHTML = await runAIModule(superAI, aiSupplementalData, countyData, cityData, compsData);
                 
                 // Hide primary AI responses
                 document.getElementById("primaryResponsesContainer").style.display = 'none';
@@ -183,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 loadingContainer.style.display = 'none'; 
                 
                 // Show AI summary response
+                eligibilityDiv.innerHTML = aiContentHTML;
                 eligibilityDiv.style.display = 'block';
                 window.scrollTo(0, 0);
                 animateTextFadeIn(eligibilityDiv);

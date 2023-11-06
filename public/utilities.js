@@ -85,13 +85,16 @@ function getMunicipality(cityData, countyData) {
 
 /* AI-Related Functions: */
 
-// Run entire AI module
-async function runAIModule(superAI, aiSupplementalData, countyData, cityData) {
+// Main AI module entry point
+async function runAIModule(superAI, aiSupplementalData, countyData, cityData, compsData) {
     if (countyData) {
         enhanceWithCountyData(aiSupplementalData, countyData);
     }
     if (cityData) {
         enhanceWithCityData(aiSupplementalData, cityData);
+    }
+    if (compsData) {
+        enhanceWithCompsData(aiSupplementalData, compsData);
     }
 
     const dirtyData = await getDirtyData(aiSupplementalData);
@@ -145,7 +148,6 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
   }
 
   // Map primary prompts to endpoints, then fetch all simultaneously
-  ////const queryString = new URLSearchParams(cleanData).toString();
   const fetchPromises = endpoints.map(endpoint => {
     return Promise.race([
         fetch(endpoint, {
@@ -153,7 +155,7 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(cleanData)  // Send the data as JSON in the request body
+            body: JSON.stringify(cleanData) // Send the data as JSON in the request body
         })
         .then(response => {
             if (!response.ok) {
@@ -187,6 +189,8 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
             }, i * 300); // delay each animation by 300ms
         }
   
+        console.log("Final Data: \n", cleanData);
+
         /* START STAGE 2: SER */
         const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(JSON.stringify(results))}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData))}&superAI=${superAI}`;
         const serResponse = await fetch('/api/ask_ai_part1SER', {
@@ -491,6 +495,13 @@ function enhanceWithCityData(aiSupplementalData, cityData) {
     }
     for (const [key, value] of Object.entries(cityData)) {
         aiSupplementalData[`subject_${key}`] = value;  // Prefixing with "subject_" to ensure uniqueness with globals
+    }
+}
+
+// Add compsData to supplemental data
+function enhanceWithCompsData(aiSupplementalData, compsData) {
+    for (const [key, value] of Object.entries(compsData)) {
+        aiSupplementalData[`comps_${key}`] = value;  // Prefixing with "comps_" to ensure uniqueness with globals
     }
 }
 
