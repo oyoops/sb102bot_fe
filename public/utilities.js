@@ -1,5 +1,10 @@
 // utilities.js - contains the utility functions for the SB102bot web app.
 
+// get DOM elements
+import {
+    loadingContainer
+} from './domElements.js';
+
 /*===========//
 // Functions //
 //    for    //
