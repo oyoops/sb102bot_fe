@@ -1,6 +1,11 @@
 // eventListeners.js - define all event listeners w/ DOM
 
+
 import {
+    tryAgainButton
+} from './domElements.js';
+
+/*import {
     tryAgainButton,
     affordablePercentageSlider,
     acreageInput,
@@ -14,9 +19,15 @@ import {
     landCostPerUnit,
     totalHCPerUnit,
     googlemap
-} from './domElements.js';
+} from './domElements.js';*/
 
 
+// on New Search button click:
+tryAgainButton.addEventListener("click", function() {
+    location.reload();
+});
+
+/*
 // on sliding the affordable percentage slider
 affordablePercentageSlider.oninput = function() {
     calculateWeightedAverageSizes();
@@ -84,14 +95,8 @@ matchAffordableSizesCheckbox.addEventListener('change', function() {
     updateRentPerSqFtTable();
 });
 
-// on cost inputs change:
-/*
-landCostPerUnit.addEventListener('input', updateTotalCosts);
-totalHCPerUnit.addEventListener('input', updateTotalCosts);
 */
 
-// on New Search button click:
-tryAgainButton.addEventListener("click", function() {
-    location.reload();
-});
-
+/*// on cost inputs change:
+landCostPerUnit.addEventListener('input', updateTotalCosts);
+totalHCPerUnit.addEventListener('input', updateTotalCosts);*/
