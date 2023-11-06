@@ -194,7 +194,6 @@ tbody tr:hover {
 }*/
 
 .primaryResponse {
-    display: none;
     width: 80%;
     max-width: 1200px;
     /* margin: 2% auto; */
