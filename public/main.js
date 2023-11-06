@@ -19,12 +19,12 @@ import {
 } from './domElements.js';
 
 
-/* once DOM is fully loaded: */
+// once DOM is fully loaded:
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
     //initAutocomplete(); // prepare Places API
     
-    // Manually add Supercharge AI switch event listener
+    // manually add Supercharge AI switch event listener
     let superAI = 'off';
     document.getElementById('superchargeSwitch').addEventListener('change', function() {
         this.value = this.checked ? 'on' : 'off';
@@ -32,24 +32,27 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`SuperAI=${superAI}`);
     });
 
-    // On form submit:
+    // on form submit:
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
         // Get user input (dirty address) 
         address = addressInput.value;
         if (!address) {
             alert('You might want to try typing an address first? Just a suggestion, though...');
             return;
         }
-        // Google Analytics -> capture address
+        
+        // Send address to Google Analytics
         gtag('event', 'Address Submission', {
             'event_category': 'Form',
             'event_label': 'Address Input',
             'value': address
         });
+
         // Main script
         try {
-            console.log(`Asking Live Local Guru about ${address}...`);
+            console.log(`Asking Live Local Guru about: \n${address}`);
             
             // Hide header and initial content
             mainHeader.style.display = 'none';
@@ -59,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             currentBugsContainer.style.display = 'none';
             recentUpdatesContainer.style.display = 'none';
             futureUpdatesContainer.style.display = 'none';
+
             // Display fake loading progress bar
             updateLoadingBar();
             loadingContainer.style.display = 'block';
@@ -72,14 +76,13 @@ document.addEventListener('DOMContentLoaded', function() {
             lat = geocodeData.results[0].geometry.location.lat;
             lng = geocodeData.results[0].geometry.location.lng;
 
-            // TALLEST BLDG. DATA
-            // (+ initializes map)
+            // TALLEST BLDG. DATA (+ initializes map)
             const tallestBuildingData = await initializeMap(lat, lng);
-            
+
             // Display map
             googlemap.style.display = 'block';
             window.scrollTo(0, 0);
-            
+
             // MAX BLDG. HEIGHT
             const maxBH = tallestBuildingData.maxHeight.toFixed(0); // feet tall
             const maxBD = tallestBuildingData.maxDistance.toFixed(2); // miles away
@@ -89,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // COMPS DATA
             const compsModuleResult = await runCompsModule(lat, lng, COMPS_SEARCH_RADIUS_MILES);
-            console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
+            //console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
     
             // CITY DATA
             const cityData = await checkCity(geocodeData);        
@@ -117,10 +120,16 @@ document.addEventListener('DOMContentLoaded', function() {
             maxCapacity = maxCapacity.toFixed(0);
             console.log("Parcel max unit capacity: \n", maxCapacity,"total units");
 
-            /* Do some things before the AI module takes ~30-60 seconds to complete */
+            /* End Data Collection Module */
 
-            // Show try again button
-            tryAgainButton.style.display = 'block';
+
+
+            /* Do some things before the AI module takes ~30-60 seconds to complete */
+                        
+            // Populate and show Table #2 (Comps avg. vs Affordable max. rent comparison)
+            rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
+            rentInfoContainer.style.display = 'table'; // show the container
+            countyMaxRentsTable.style.display = 'table'; // show the table
 
             // Set colors based on Live Local eligibility
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
@@ -132,12 +141,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
 
-            // Populate and show Table #2 (Comps avg. vs Affordable max. rent comparison)
-            rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
-            rentInfoContainer.style.display = 'table'; // show the container
-            countyMaxRentsTable.style.display = 'table'; // show the table
+            // Show try again button
+            tryAgainButton.style.display = 'block';
 
-            /* End Data Collection Module */
 
 
 
@@ -154,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
                         
             /* End: Land Development I/O Section */
+
 
 
 
@@ -184,11 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
             /* End AI Module */
 
 
-
-
-
-
-            /* End of script */
+            /* END SCRIPT */
 
         } catch (error) {
             /* Last-chance error catches */
