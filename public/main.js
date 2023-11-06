@@ -152,8 +152,9 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 // Run initial dev calcs
                 //runInitialDevelopmentCalculations();
-                console.log(`Showing Land Dev I/O Module...`);
-                developmentProgramInputSection.style.display = 'block'; // show the I/O section
+                console.log(`Skipping Land Dev I/O Module.`);
+                //console.log(`Showing Land Dev I/O Module...`);
+                //developmentProgramInputSection.style.display = 'block'; // show the I/O section
             } catch(error) {
                 console.error('Land Dev. I/O Error:', error);
                 handleAIError(error);
