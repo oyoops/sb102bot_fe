@@ -317,15 +317,18 @@ module.exports = async (req, res) => {
                 Today is November 6, 2023.
                 You are a real estate analyst creating a comps analysis for a potential ground-up multifamily development.
                 You will be given information about a subject site and the raw data about the comps within a 3-mile radius.
-                Based on the info, you will produce intelligent insights, recommending a competitive strategy for the write-up alongside the comps analysis. 
+                Based on the info, you will produce intelligent insights, recommending a competitive strategy.
+
+            FORMAT:
+                Your response must be 
         `
     }, {
         "role": "user",
         "content": `
             YOUR TASK:
-                Write a detailed write-up to accompany our comps analysis.
-                    First section: Recommend total unit count, unit mix (counts/percentages by unit type), unit sizes & rents by type, other quantitative aspects.
-                    Second section: Recommend a building style (garden/mid-rise/hi-rise), amenities, other qualitative aspects.
+                Write a detailed report about the comps.
+                    First section: Analyze data quantitatively.
+                    Second section: Considering comps, recommend plan for subject site. Include total unit count, unit mix (counts and percentages by unit type), sizes/rents/rents per SF by unit type, and building style (garden/mid-rise/hi-rise), etc.
             SUBJECT SITE:
                 Address: ${address}
                 Municipality: ${displayMuniName}
@@ -351,7 +354,7 @@ module.exports = async (req, res) => {
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
             useModel = 'gpt-3.5-turbo'; //'gpt-4';
-            useTokens = 300; //1000;
+            useTokens = 500; //1000;
         } else {
             console.log('[SuperAI is OFF]');
             useModel = 'gpt-3.5-turbo'; //process.env.AI_MODEL_PRIMARY_ANALYSES;
