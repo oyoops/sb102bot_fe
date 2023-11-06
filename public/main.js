@@ -140,18 +140,21 @@ document.addEventListener('DOMContentLoaded', function() {
             /* End Data Collection Module */
 
 
+
             /* Start: Land Development I/O Section */
             
             try {
                 // Run initial dev calcs
                 //runInitialDevelopmentCalculations();
-                //console.log(`Skipping Land Dev I/O Module...`);            
+                console.log(`Showing Land Dev I/O Module...`);
+                developmentProgramInputSection.style.display = 'block'; // show the I/O section
             } catch(error) {
                 console.error('Land Dev. I/O Error:', error);
                 handleAIError(error);
             }
                         
             /* End: Land Development I/O Section */
+
 
 
             /* Start AI Module */
