@@ -81,7 +81,7 @@ module.exports = async (req, res) => {
         "role": "user",
         "content": `
                 YOUR TASK:
-                    Write a succinct report about this property as it relates to potentially buying it and developing new multifamily under the Live Local Act, if it's eligible.
+                    Write a report about this property as it relates to potentially buying it and developing new multifamily under the Live Local Act, if it's eligible.
                     Do not go into excessive detail about Live Local Act itself.
                     
                     You must provide an intelligent analysis of the existing comps.
@@ -102,7 +102,7 @@ module.exports = async (req, res) => {
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
             useModel = 'gpt-4';
-            useTokens = 999;
+            useTokens = 800;
         } else {
             console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_SER_MODULE;
@@ -163,7 +163,7 @@ module.exports = async (req, res) => {
         htmlFormattedResponse = aiResponseText.replace(/<br>/g, '').replace(/\n/g, '<br>');
         
         // (log all available data)
-        console.log(jsonString);
+        //console.log(jsonString);
 
         // Send AI response to client
         res.status(200).json(htmlFormattedResponse);
