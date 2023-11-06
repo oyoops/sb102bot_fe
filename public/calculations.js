@@ -1,8 +1,6 @@
 // calculations.js - contains the functions for recalculating the proforma math live.
 
 
-
-
 /*=============//
 // Calculation //
 //  Functions  //

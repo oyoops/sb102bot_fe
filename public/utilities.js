@@ -1,9 +1,5 @@
 // utilities.js - contains the utility functions for the SB102bot web app.
 
-// get DOM elements
-import {
-    loadingContainer
-} from './domElements.js';
 
 /*===========//
 // Functions //
@@ -108,8 +104,8 @@ async function runAIModule(superAI, aiSupplementalData, countyData, cityData) {
 
 function handleAIError(error) {
     document.documentElement.style.setProperty('--hue', '360'); // red
-    tryAgainButton.style.display = 'block';
-    loadingContainer.style.display = 'none';
+    document.getElementById("tryAgainButton").style.display = 'block';
+    document.querySelector('.loading-container').style.display = 'none';
     if (error.message.startsWith("[CRITICAL]")) {
         alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 20 seconds.');
     } else {
