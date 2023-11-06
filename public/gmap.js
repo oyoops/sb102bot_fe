@@ -196,12 +196,13 @@ function addCompsMarkersToMap(responseData) {
 
         // Info window content
         const infoContent = `
-            <strong>${item.property_name}</strong><br>
-            ${item.property_address}<br>
-            by ${item.dev_name} (${item.yr_built})<br>
-            ${item.num_of_units} ${item.style} units; ${item.num_of_stories} stories<br><br>
+            <strong><u>${item.property_name}</u><br>
+            by ${item.dev_name} (${item.yr_built})</strong><br>
+            ${item.property_address}<br><br>
+
+            ${item.num_of_stories}-story ${item.style} (${item.num_of_units} units)<br>
             $${item.avg_eff_unit}/mo. = ${item.avg_unit_sf} SF @ $${item.avg_eff_sf}/SF<br>
-            ${(100-item.vacancy_pct)}% occupancy
+            Occupancy: ${(100-item.vacancy_pct)}%
         `;
 
         const infoWindow = new google.maps.InfoWindow({
