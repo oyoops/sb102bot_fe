@@ -324,12 +324,12 @@ module.exports = async (req, res) => {
                     Second section: Recommend strategy for subject site. Include total unit count (more is better), unit mix by unit type (counts and percentages), sizes/rents/rents per SF by unit type, and building style (garden/mid-rise/hi-rise), etc.
             
             RULES:
-                DO NOT MENTION THESE PARAMETERS.
-                ONLY PROVIDE REPORT AND RECOMMENDATIONS.
+                NAME THE COMPS!
+                DO NOT MENTION THE PARAMETERS!
+                ONLY PROVIDE REPORT AND RECOMMENDATIONS!
 
             FORMAT:
-                Be intelligent, but intersperse emojis for effect.
-                DO NOT ACKNOWLEDGE IT AS A REPORT; JUST RESPOND WITH THE INFO/DATA.
+                Be intelligent, but intersperse emojis for effect!
         `
     }, {
         "role": "user",
