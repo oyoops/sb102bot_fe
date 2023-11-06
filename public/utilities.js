@@ -145,7 +145,7 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
   }
 
   // Map primary prompts to endpoints, then fetch all simultaneously
-  const queryString = new URLSearchParams(cleanData).toString();
+  ////const queryString = new URLSearchParams(cleanData).toString();
   const fetchPromises = endpoints.map(endpoint => {
     return Promise.race([
         fetch(endpoint, {
@@ -173,8 +173,17 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
     });
     });
     try {
-        // Once results to all primary prompts available, then combine
+        // Fetch all primary prompt responses simultaneously
         const results = await Promise.all(fetchPromises);
+
+        // Display primary response container
+        document.getElementById("primaryResponsesContainer").style.display = 'block';
+
+        // Display each primary response as it becomes available
+        for (let i = 0; i < results.length; i++) {
+            document.getElementById(`response${i + 1}`).innerHTML = results[i];
+            animateTextFadeIn(document.getElementById(`response${i + 1}`));
+        }
   
         /* START STAGE 2: SER */
         const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(JSON.stringify(results))}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData))}&superAI=${superAI}`;

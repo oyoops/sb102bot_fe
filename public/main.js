@@ -172,17 +172,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
                 
-                // Generate AI HTML content
+                // Generate AI summary HTML content
                 const aiContentHTML = await runAIModule(superAI, aiSupplementalData, countyData, cityData);
-                
-                // Show AI response
                 eligibilityDiv.innerHTML = aiContentHTML;
-                eligibilityDiv.style.display = 'block';
-                window.scrollTo(0, 0);
-                animateTextFadeIn(eligibilityDiv);
+                
+                // Hide primary AI responses
+                document.getElementById("primaryResponsesContainer").style.display = 'none';
 
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
+                
+                // Show AI summary response
+                eligibilityDiv.style.display = 'block';
+                window.scrollTo(0, 0);
+                animateTextFadeIn(eligibilityDiv);
 
             } catch (error) {
                 console.error('Error:', error);
