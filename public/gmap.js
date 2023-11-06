@@ -198,6 +198,9 @@ function addCompsMarkersToMap(responseData) {
             icon: customIcon
         });
 
+        // Extend the bounds to include each marker's position
+        bounds.extend(markerPosition);
+
         // Info window content
         const infoContent = `
             <strong><u>${item.property_name}</u><br>
@@ -220,7 +223,7 @@ function addCompsMarkersToMap(responseData) {
 
     // Once all markers have been added, adjust the viewport
     map.fitBounds(bounds);
-    
+
 }
 
 
