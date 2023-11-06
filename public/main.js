@@ -204,19 +204,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
-                alert('Sorry, there was an error of the catastrophic variety. \n\nYour device will self-destruct in 35 seconds.');
+                alert('Sorry, there was an unknown critical error. \nYour device will now self-destruct.');
             } else if (error.message.startsWith("Took too long")) {
                 console.error('Server error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
-                alert('Sorry, there was an error of the fatal variety. \n\nYour device will self-destruct in 40 seconds.');
+                alert('Sorry, there was an unknown critical error. \nYour device will now self-destruct.');
             } else {
                 console.error('Error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
-                alert('Sorry, there was an error of the cataclysmic variety. \n\nYour device will self-destruct in 45 seconds.');
+                alert('Sorry, the AI server timed out...\n\nThis happens about 10% of the time. Just try again!\nNote: Timeouts occur more often in Concise Mode.');
             }
         }
     });
