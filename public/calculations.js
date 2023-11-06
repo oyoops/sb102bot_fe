@@ -1,4 +1,4 @@
-// calculations.js - contains the functions for recalculating the proforma math live.
+// calculations.js - contains the functions for recalculating Live Local Guru proforma math in real time.
 
 
 /*=============//

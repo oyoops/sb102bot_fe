@@ -168,20 +168,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             /* Start: Land Development I/O Section */
-
             try {
                 // Run initial dev calcs
-                runInitialDevelopmentCalculations();
+                //runInitialDevelopmentCalculations();
                 //console.log(`Skipping Land Dev I/O Module...`);            
             } catch(error) {
                 console.error('Land Dev. I/O Error:', error);
                 handleAIError(error);
             }
-            
             /* End: Land Development I/O Section */
-            
-            /* End of script */
 
+            /* End of script */
         } catch (error) {
             /* Last-chance error catches */
             if (error.message.startsWith("Server responded with")) {
