@@ -321,6 +321,7 @@ module.exports = async (req, res) => {
 
             FORMAT:
                 Be intelligent, but intersperse emojis for effect.
+                DO NOT ACKNOWLEDGE IT AS A REPORT; JUST RESPOND WITH THE INFO/DATA.
         `
     }, {
         "role": "user",
@@ -354,7 +355,7 @@ module.exports = async (req, res) => {
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
             useModel = 'gpt-3.5-turbo-16k'; //'gpt-4';
-            useTokens = 500; //1000;
+            useTokens = 600; //1000;
         } else {
             console.log('[SuperAI is OFF]');
             useModel = 'gpt-3.5-turbo-16k'; //process.env.AI_MODEL_PRIMARY_ANALYSES;
