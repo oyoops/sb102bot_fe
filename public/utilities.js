@@ -355,6 +355,12 @@ function animateTextFadeIn(element) {
         return;
     }
 
+    // Start the fade and slide animation for the container
+    setTimeout(() => {
+        element.style.opacity = "1";
+        element.style.transform = "translateY(0)";
+    }, 100); // slight delay to trigger the transition
+
     const original = element.cloneNode(true);
     element.innerHTML = '';
 
@@ -363,7 +369,6 @@ function animateTextFadeIn(element) {
     let orderedQueue = [];
     let lastTextNode = null;
 
-    // Adjust the order of the nodes based on priority
     while (nodeQueue.length > 0) {
         const { node } = nodeQueue.shift();
 
@@ -376,7 +381,7 @@ function animateTextFadeIn(element) {
             orderedQueue.push(node);
         }
     }
-    // Process nodes in the adjusted order
+
     nodeQueue = orderedQueue.map(child => ({ node: child, parent: element }));
     while (nodeQueue.length > 0) {
         const { node, parent } = nodeQueue.shift();
@@ -395,6 +400,7 @@ function animateTextFadeIn(element) {
             }
         }
     }
+
     let interval = setInterval(() => {
         if (textQueue.length > 0) {
             const { char, textNode } = textQueue.shift();
@@ -402,7 +408,7 @@ function animateTextFadeIn(element) {
         } else {
             clearInterval(interval);
         }
-    }, 2); // <---- adjust speed; ms between iterations
+    }, 2); // adjust speed; ms between iterations
 }
 
 // Create a timeout, putting a time limit on each AI endpoint

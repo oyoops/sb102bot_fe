@@ -188,9 +188,9 @@ tbody tr:hover {
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     background-color: #f7f9fc; 
-    opacity: 0; /* Start with an opacity of 0 to fade in */
-    transform: translateY(20px); /* Push it down a bit to slide it up */
-    transition: opacity 0.4s, transform 0.4s; /* Transition for fading and sliding */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s, transform 0.4s;
 }
 
 
