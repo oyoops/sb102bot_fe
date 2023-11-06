@@ -140,6 +140,20 @@ document.addEventListener('DOMContentLoaded', function() {
             /* End Data Collection Module */
 
 
+            /* Start: Land Development I/O Section */
+            
+            try {
+                // Run initial dev calcs
+                //runInitialDevelopmentCalculations();
+                //console.log(`Skipping Land Dev I/O Module...`);            
+            } catch(error) {
+                console.error('Land Dev. I/O Error:', error);
+                handleAIError(error);
+            }
+                        
+            /* End: Land Development I/O Section */
+
+
             /* Start AI Module */
 
             try {
@@ -167,18 +181,12 @@ document.addEventListener('DOMContentLoaded', function() {
             /* End AI Module */
 
 
-            /* Start: Land Development I/O Section */
-            try {
-                // Run initial dev calcs
-                //runInitialDevelopmentCalculations();
-                //console.log(`Skipping Land Dev I/O Module...`);            
-            } catch(error) {
-                console.error('Land Dev. I/O Error:', error);
-                handleAIError(error);
-            }
-            /* End: Land Development I/O Section */
+
+
+
 
             /* End of script */
+
         } catch (error) {
             /* Last-chance error catches */
             if (error.message.startsWith("Server responded with")) {
