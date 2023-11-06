@@ -87,8 +87,7 @@ module.exports = async (req, res) => {
                     Focus heavily on the comps analysis.
                     
                     You must provide an intelligent analysis of the existing comps.
-                        Analyze the competition and their rents, occupancies, etc.
-                        Determine which unit types are performing better/worse.
+                        Analyze the competition, focusing on their rents and sq. ft. by unit type and age of the property.
                     
                     Be advanced, but include emojis.
                 ---

@@ -317,11 +317,10 @@ module.exports = async (req, res) => {
                 Today is November 6, 2023.
                 You are a real estate analyst creating a comps analysis for a potential ground-up multifamily development.
 
-            
             YOUR TASK:
                 You will be given information about a subject site and the raw data about the comps within a 3-mile radius.
                 Based on the info, you will produce intelligent insights, recommending a competitive strategy.
-                    First section: Quantitatively analyze comps in detail.
+                    First section: Quantitatively analyze comps rents, unit sizes, and ages.
                     Second section: Recommend strategy for subject site. Include total unit count (more is better), unit mix by unit type (counts and percentages), sizes/rents/rents per SF by unit type, and building style (garden/mid-rise/hi-rise), etc.
             
             RULES:
