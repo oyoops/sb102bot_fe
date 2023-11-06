@@ -179,10 +179,12 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
         // Display primary response container
         document.getElementById("primaryResponsesContainer").style.display = 'block';
 
-        // Display each primary response as it becomes available
+        // Display each primary response as it becomes available (staggered)
         for (let i = 0; i < results.length; i++) {
             document.getElementById(`response${i + 1}`).innerHTML = results[i];
-            animateTextFadeIn(document.getElementById(`response${i + 1}`));
+            setTimeout(() => {
+                animateTextFadeIn(document.getElementById(`response${i + 1}`));
+            }, i * 300); // delay each animation by 300ms
         }
   
         /* START STAGE 2: SER */
