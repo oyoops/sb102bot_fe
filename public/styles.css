@@ -182,7 +182,7 @@ tbody tr:hover {
 }
 
 
-.primaryResponse {
+/*.primaryResponse {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #e0e0e0;
@@ -191,8 +191,38 @@ tbody tr:hover {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.4s, transform 0.4s;
-}
+}*/
 
+.primaryResponse {
+    display: none;
+    width: 80%;
+    max-width: 1200px;
+    /* margin: 2% auto; */
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+    padding: 10px; /* 1em 2em; */
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: rgb(14, 9, 88);
+    font-size: 1em;
+    line-height: 1.2;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s, transform 0.4s;
+    font-family: 'Arial', sans-serif;
+}
+.primaryResponse ul {
+    list-style-type: none; /* Removes bullet points */
+    padding-left: 0; /* Removes default padding */
+}
+.char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(1em);
+    transition: all 0.3s;
+}
 
 button {
     width: 100%;
