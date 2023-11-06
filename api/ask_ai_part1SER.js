@@ -84,6 +84,8 @@ module.exports = async (req, res) => {
                     Write a report about this property as it relates to potentially buying it and developing new multifamily under the Live Local Act, if it's eligible.
                     Do not go into excessive detail about Live Local Act itself.
                     
+                    Focus heavily on the comps analysis.
+                    
                     You must provide an intelligent analysis of the existing comps.
                         Analyze the competition and their rents, occupancies, etc.
                         Determine which unit types are performing better/worse.
@@ -102,7 +104,7 @@ module.exports = async (req, res) => {
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
             useModel = 'gpt-4';
-            useTokens = 800;
+            useTokens = 700;
         } else {
             console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_SER_MODULE;

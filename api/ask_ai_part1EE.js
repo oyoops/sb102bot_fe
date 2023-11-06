@@ -328,8 +328,8 @@ module.exports = async (req, res) => {
         "content": `
             YOUR TASK:
                 Write a detailed report about the comps.
-                    First section: Analyze data quantitatively.
-                    Second section: Considering comps, recommend plan for subject site. Include total unit count, unit mix (counts and percentages by unit type), sizes/rents/rents per SF by unit type, and building style (garden/mid-rise/hi-rise), etc.
+                    First section: Analyze data.
+                    Second section: Considering comps, recommend plan for subject site. Include total unit count (target 200-500 if possible; more = better), unit mix (counts and percentages by unit type), sizes/rents/rents per SF by unit type, and building style (garden/mid-rise/hi-rise), etc.
             SUBJECT SITE:
                 Address: ${address}
                 Municipality: ${displayMuniName}
@@ -355,7 +355,7 @@ module.exports = async (req, res) => {
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
             useModel = 'gpt-3.5-turbo-16k'; //'gpt-4';
-            useTokens = 600; //1000;
+            useTokens = 500; //1000;
         } else {
             console.log('[SuperAI is OFF]');
             useModel = 'gpt-3.5-turbo-16k'; //process.env.AI_MODEL_PRIMARY_ANALYSES;
