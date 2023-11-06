@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
     //initAutocomplete(); // prepare Places API
     
-    // manual add Supercharge AI switch event listener
+    // Manually add Supercharge AI switch event listener
     let superAI = 'off';
     document.getElementById('superchargeSwitch').addEventListener('change', function() {
         this.value = this.checked ? 'on' : 'off';
@@ -32,10 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`SuperAI=${superAI}`);
     });
 
-    // on form submit:
+    // On form submit:
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-
         // Get user input (dirty address) 
         address = addressInput.value;
         if (!address) {
@@ -48,8 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'event_label': 'Address Input',
             'value': address
         });
-
-        // ONE HUGE TRY BLOCK
+        // Main script
         try {
             console.log(`Asking Live Local Guru about ${address}...`);
             
@@ -66,7 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
             loadingContainer.style.display = 'block';
             window.scrollTo(0, 0);
 
-            /* API blocks: */
+
+            /* Start Data Collection Module */
 
             // GEO DATA
             const geocodeData = await geocodeAddress(address);
@@ -74,23 +73,23 @@ document.addEventListener('DOMContentLoaded', function() {
             lng = geocodeData.results[0].geometry.location.lng;
 
             // TALLEST BLDG. DATA
-            // + initializes map
+            // (+ initializes map)
             const tallestBuildingData = await initializeMap(lat, lng);
-
-            // MAX BLDG. HEIGHT
-            const maxBH = tallestBuildingData.maxHeight.toFixed(0); // feet
-            const maxBD = tallestBuildingData.maxDistance.toFixed(2); // miles
-            //console.log("MaxBH =", maxBH, "ft.");
-            //console.log("MaxBD =", maxBD, "mi.");
-            buildingHeight = maxBH; //// (hackily set global)
-
+            
             // Display map
             googlemap.style.display = 'block';
             window.scrollTo(0, 0);
-
+            
+            // MAX BLDG. HEIGHT
+            const maxBH = tallestBuildingData.maxHeight.toFixed(0); // feet tall
+            const maxBD = tallestBuildingData.maxDistance.toFixed(2); // miles away
+            buildingHeight = maxBH; //// (hackily set global)
+            //console.log("MaxBH =", maxBH, "ft.");
+            //console.log("MaxBD =", maxBD, "mi.");
+            
             // COMPS DATA
             const compsModuleResult = await runCompsModule(lat, lng, COMPS_SEARCH_RADIUS_MILES);
-            //console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
+            console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
     
             // CITY DATA
             const cityData = await checkCity(geocodeData);        
@@ -138,7 +137,11 @@ document.addEventListener('DOMContentLoaded', function() {
             rentInfoContainer.style.display = 'table'; // show the container
             countyMaxRentsTable.style.display = 'table'; // show the table
 
-            /* AI Module */
+            /* End Data Collection Module */
+
+
+            /* Start AI Module */
+
             try {
                 // Start composing the supplemental data set for AI beginning with parcelData
                 verifyParcelData(parcelData);
@@ -160,20 +163,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
                 handleAIError(error);
             }
-            
+
+            /* End AI Module */
+
+
+            /* Start: Land Development I/O Section */
+
             try {
-                console.log(`Skipping Land Dev I/O Module...`);
-                /* Start: Land Development I/O Section
                 // Run initial dev calcs
                 runInitialDevelopmentCalculations();
-                End: Land Development I/O Section */
-
+                //console.log(`Skipping Land Dev I/O Module...`);            
             } catch(error) {
-                console.error('Error:', error);
+                console.error('Land Dev. I/O Error:', error);
                 handleAIError(error);
-            } 
+            }
             
+            /* End: Land Development I/O Section */
+            
+            /* End of script */
+
         } catch (error) {
+            /* Last-chance error catches */
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
