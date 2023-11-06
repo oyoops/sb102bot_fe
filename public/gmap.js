@@ -175,9 +175,10 @@ function createStyledMarker(position, map, label) {
 
 // Adds each comp returned to a Google Map
 function addCompsMarkersToMap(responseData) {
+    // Create a new bounds object
+    let bounds = new google.maps.LatLngBounds();
+
     responseData.forEach(item => {
-        // Create a new bounds object
-        let bounds = new google.maps.LatLngBounds();
 
         // Custom icon using SVG for a smaller and different-colored marker
         const customIcon = {
