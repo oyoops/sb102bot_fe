@@ -59,6 +59,11 @@ module.exports = async (req, res) => {
     const dor_uc = req.body.dor_uc;
     const pa_uc = req.body.pa_uc;
 
+    // Comps
+    const compsDataRaw = req.body.comps_data;
+    const compsAvgs = req.body.comps_averages;
+    const compsPcts = req.body.comps_percentages;
+
     // Valuations
     const jv = req.body.jv;
     const lnd_val = req.body.lnd_val;
@@ -337,9 +342,8 @@ module.exports = async (req, res) => {
                         Distance: ${distanceInMilesToTallestBldg} mi. from subject
 
             INSTRUCTIONS:
-                    Write a concise summary of the max allowed unit density, max height limit, and minimum affordable unit requirements under the Live Local Act.
-                    Discuss the feasibility of this parcel meeting the affordable unit requirements (affordable units >= 70 *and* >= 40% of total units) given its area of ${acres} acres and max density of ${maxMuniDensity} units/acre (maximum total units = ${maxCapacity}).
-                    EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
+                    Write a summary of the max allowed unit density, max height limit, and minimum affordable unit requirements as they apply to the subject parcel.
+                    Discuss the feasibility of this parcel meeting the affordable unit requirements (affordable units >= 70 *and* >= 40% of total units) given its area of ${acres} acres and max density of ${maxMuniDensity} units/acre (therefore its absolute max unit capacity would be ${maxCapacity}).
                     Do not use HTML.
                     Use emojis for levity.
         `

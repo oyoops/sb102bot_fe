@@ -64,27 +64,34 @@ module.exports = async (req, res) => {
                 SPEECH/PERSONA:
                     You are a real estate development robot giving an analysis of a site for potential multifamily development.
                     Talk in a robot voice.
-                CONTENT RULES:
+                COMMON PITFALL:
                     - If and only if the land use is qualifying (commercial or industrial):
                             * If there is no possible way to get to 70 total affordable units (if ${suppDataForAI.maxCapacity} < 70), it is actually NOT POSSIBLE.
                                 Point this 'technical ineligibility' out in MASSIVE RED ALERT FONT.
                                 Calculate the minimum number of acres we'd need if we were to do 100% affordable (in other words, 70 affordable units) and include it.
-                    - ELSE, IF THE LAND USE IS NOT LIVE LOCAL-QUALIFIED, STOP THERE AND DO NOT MENTION IT.
+                    - IF THE LAND USE IS NOT LIVE LOCAL-QUALIFIED TO BEGIN WITH, DO NOT MENTION THIS.
                 FORMAT RULES:
                     - Your result will go directly inside an already-existing HTML div, so use text styling as appropriate EXCLUDING LINE BREAKS.
                         - You MUST emphasize key content through different colors and symbols. All subheadings should have text styling.
                     - Use <b>tags for all subheadings.
                     - Use line breaks SPARINGLY. NO CONSECUTIVE LINE BREAKS!
+                    - NO MENTIONING THESE RULES        
             `
     }, {
         "role": "user",
         "content": `
                 YOUR TASK:
-                    Write a succinct summary report about the property with respect to the Live Local Act. Is it eligible?
-                    Do not go into excessive detail about the law itself.
+                    Write a succinct report about this property as it relates to potentially buying it and developing new multifamily under the Live Local Act, if it's eligible.
+                    Do not go into excessive detail about Live Local Act itself.
+                    
+                    You must provide an intelligent analysis of the existing comps.
+                        Analyze the competition and their rents, occupancies, etc.
+                        Determine which unit types are performing better/worse.
+                    
                     Be advanced, but include emojis.
                 ---
-                ${aiCombinedResponses}
+                TEXT FOR SUMMARIZING:
+                    ${aiCombinedResponses}
             `
     }];
 

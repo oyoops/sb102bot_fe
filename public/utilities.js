@@ -186,7 +186,7 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
             document.getElementById(`response${i + 1}`).innerHTML = results[i];
             setTimeout(() => {
                 animateTextFadeIn(document.getElementById(`response${i + 1}`));
-            }, i * 300); // delay each animation by 300ms
+            }, i * 300); // delay each animation by 300ms (not sure this actually works)
         }
   
         console.log("Final Data: \n", cleanData);

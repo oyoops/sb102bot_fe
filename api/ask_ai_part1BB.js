@@ -59,6 +59,11 @@ module.exports = async (req, res) => {
     const dor_uc = req.body.dor_uc;
     const pa_uc = req.body.pa_uc;
 
+    // Comps
+    const compsDataRaw = req.body.comps_data;
+    const compsAvgs = req.body.comps_averages;
+    const compsPcts = req.body.comps_percentages;
+
     // Valuations
     const jv = req.body.jv;
     const lnd_val = req.body.lnd_val;
@@ -331,14 +336,13 @@ module.exports = async (req, res) => {
 
                 The parcel's current use:
                     ${useCodeLookup[dor_uc] || dor_uc}
-                The Live Local-eligibility of this use is:
+                The description of this parcel's Live Local eligibility is as follows:
                     ${eligibilityDescription}        
     
             INSTRUCTIONS:
-                Provide a concise overview of the parcel's current use, determining that use's eligibility for the Live Local Act.
-                EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
+                Determine this parcel's eligibility for the Live Local Act based on the information about its current use.
                 Do not use HTML.
-                Use emojis for levity.            
+                Use emojis for levity.
         `
     }];
 

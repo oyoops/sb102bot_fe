@@ -59,6 +59,11 @@ module.exports = async (req, res) => {
     const dor_uc = req.body.dor_uc;
     const pa_uc = req.body.pa_uc;
 
+    // Comps
+    const compsDataRaw = req.body.comps_data;
+    const compsAvgs = req.body.comps_averages;
+    const compsPcts = req.body.comps_percentages;
+
     // Valuations
     const jv = req.body.jv;
     const lnd_val = req.body.lnd_val;
@@ -321,7 +326,7 @@ module.exports = async (req, res) => {
         */
         `
             INSTRUCTIONS:
-                Provide a concise overview of the parcel and its ownership.
+                Provide an overview of the parcel from the information provided.
         `
     }, {
         "role": "user",
@@ -340,19 +345,14 @@ module.exports = async (req, res) => {
                 - Address: ${own_addr1}, ${own_city}, ${own_state} ${own_zipcd}
                 - Latest sale: ${sale_mo2}/${sale_yr2} for ${sale_prc2}
                 - Prior sale: ${sale_mo1}/${sale_yr1} for ${sale_prc1}
-                - Fiduciary name: ${fidu_cd}
+                - Fiduciary name, if any: ${fidu_cd}
             
             YOUR TASK:
-                Provide a concise summary of the property and and ownership history.
+                Provide an overview of the property.
                 EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
                 Do not use HTML.
                 Use emojis for levity.
         `
-        //    The parcel located at ${address} has the following description of its eligibility and benefits:
-        //        '''
-        //        ${descriptionOfLiveLocalEligibility}
-        //        '''
-        //`
     }];    
 
     try {

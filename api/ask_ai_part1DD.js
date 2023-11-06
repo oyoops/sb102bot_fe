@@ -59,6 +59,11 @@ module.exports = async (req, res) => {
     const dor_uc = req.body.dor_uc;
     const pa_uc = req.body.pa_uc;
 
+    // Comps
+    const compsDataRaw = req.body.comps_data;
+    const compsAvgs = req.body.comps_averages;
+    const compsPcts = req.body.comps_percentages;
+
     // Valuations
     const jv = req.body.jv;
     const lnd_val = req.body.lnd_val;
@@ -327,7 +332,7 @@ module.exports = async (req, res) => {
                 AFFORDABLE UNITS:
                     The big 'catch' of the Live Local Act is that AT LEAST 40% of total units must be 'affordable' AND the gross quantity of affordable units must be AT LEAST 70.
                     Affordable rent limits are set by the state and are relative to 120% of the Area Median Income of the county.
-                    In ${countyNameProper}, 'affordable' units must be rented to households with HH income of <= [120% * ${subject_county_amis_income}].
+                    In ${countyNameProper}, 'affordable' units must be rented to households with HH income at or below 120% of $${subject_county_amis_income}.
         `
     }, {
         "role": "user",
@@ -344,7 +349,6 @@ module.exports = async (req, res) => {
             
             INSTRUCTIONS:
                 Provide a concise summary of the tax abatement benefits and the affordable rent structure under the Live Local Act.
-                EXCLUDE ALL REFERENCES TO UNAVAILABLE AND "0" DATA
                 Do not use HTML.
                 Use emojis for levity.
         `

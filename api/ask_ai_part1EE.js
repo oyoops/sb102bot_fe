@@ -59,6 +59,11 @@ module.exports = async (req, res) => {
     const dor_uc = req.body.dor_uc;
     const pa_uc = req.body.pa_uc;
 
+    // Comps
+    const compsDataRaw = req.body.comps_data;
+    const compsAvgs = req.body.comps_averages;
+    const compsPcts = req.body.comps_percentages;
+
     // Valuations
     const jv = req.body.jv;
     const lnd_val = req.body.lnd_val;
@@ -309,76 +314,33 @@ module.exports = async (req, res) => {
         "role": "system",
         "content": `
             CONTEXT:
-                For your convenience, I've summarized below the sections of the Live Local Act of key concern to multifamily developers.
-                Florida's Live Local Act (went into effect July 1, 2023) revolutionizes multifamily development by overriding municipal restrictions.
-                On March 29, 2023, Governor Ron DeSantis signed it (previously known as Senate Bill 102) into law. It took effect on July 1, 2023.
-                
-                Today is October 22, 2023. It is currently under fierce litigatation by several municipalities (though to no avail thus far).
+                Today is November 6, 2023.
+                You are a real estate analyst creating a comps analysis for a potential ground-up multifamily development.
+                You will be given information about a subject site and the raw data about the comps within a 3-mile radius.
+                Based on the info, you will produce intelligent insights, recommending a competitive strategy for the write-up alongside the comps analysis. 
         `
     }, {
         "role": "user",
         "content": `
-            INSTRUCTIONS:                
-                Below is a summary.
-                Do not summarize too much further as most remaining sections and figures are very important.
-                Your task is simply to add emojis throughout.
-
-            SUMMARY:
-
-            '''
-            ** 'Live Local Act' (SB-102) Summary **
-                
-            MOST RELEVANT CHANGES FOR MULTIFAMILY DEVELOPERS:
-
-            I.  Approval for Affordable Housing (Section 3 of the Act):
-                The Live Local Act permits counties/cities/municipalities to bypass their comprehensive plan and zoning regulations when they approve developments with more than 10% of rental units dedicated to 'affordable housing' on parcels with zoning currently allowing for mixed-use, commercial, or industrial uses (note: residential not included), allowing them to bypass comprehensive plans and rezonings.
-                If more than 40% is affordable, then the county/city/municipality *MUST* approve such development proposals.
-                Amends Section 125.01055.
- 
-                Major Key Provisions:
-                    A municipality *CAN APPROVE* any proposed multifamily and mixed-use residential projects in any area  zoned as mixed-use, commercial, or industrial (note: residential not included) without the need to adhere to local rules, provided:
-                        - At least 10% of the units are used for affordable housing.
-                        - The developer has not sought or received SAIL (State Apartment Incentive Loan) funding.
-                    A municipality *MUST APPROVE* any proposed multifamily/mixed-use projects on any parcel zoned for commercial, industrial, or mixed-use (notice 'residential' is excluded) - no public hearings required - if:
-                        - The current zoning allows for mixed-use, commercial, or industrial (note: residential not included) uses.
-                        - At least 40% of the residential units are affordable.
-                            "Affordable" is defined as monthly rents (inclusive of taxes, insurance, and utilities) that do not exceed 30% of the AMI for different income categories such as ELI, VLI, LI, and MI.
-                            The affordability period is 30 years.
-                        - For mixed-use projects, at least 65% of the total square footage of the improvement must be used for residential purposes.
-                
-                Density and Building Height Provisions:
-                    - For eligible multifamily developments, municipalities can't require changes like rezoning, comprehensive plan amendment, etc., for building height and densities.
-                    - Regarding density and building height, municipalities cannot:
-                        Overrides density limits; allows a proposed development to go as dense as the highest allowed density permitted on any land in the county/city/municipality.
-                        Overrides height restrictions; allows a proposed development to build up to the height of the highest allowed height for a commercial or residential development located within a mile of the proposed site or three stories, whichever is taller.
-                        (As a proxy for "highest allowed height", I will provide you with the *tallest existing building* to be conservative.) 
-                
-                Other Notes:
-                    - Developments must still meet city/county/municipal land development regulations (like setbacks, design, parking) with the exceptions of those restricting land use, unit density, and building height.
-                    - Reduced parking requirements must be "considered" (whatever that truly means...) for projects with at least 40% affordable units if located within half a mile of a major transit stop.
-
-            II. Property Tax Discounts/Exemptions (Section 8 of the Act):
-                The bill introduces an ad-valorem property tax exemption for portions of property in a multifamily project up to:
-                    - 75% of the assessed value if housing is provided for households with income between 80% and 120% AMI.
-                    - 100% of the assessed value if housing is provided for households with income not exceeding 80% AMI.
-                
-                Requirements for Exemption:
-                    - The project should be newly constructed, defined as improvements substantially completed within five years before certain application dates. This can include substantial rehabilitation.
-                    - The project must have over 70 units dedicated to households with incomes not exceeding 120% AMI.
-                    - Rents for units should be the lesser of the amount specified by the most recent multifamily rental program income and rental limit chart posted by FHFC (derived from HUD) or 10% below market rate.
-                    - Units must not have an agreement with Florida Housing.
-                    - The affordability period is 30 years (equal to the tax abatement period).
-                
-                Compliance and Applicability:
-                    Property owners must submit an application along with a certification from Florida Housing by March 1st to avail the exemption.
-                    The exemption applies first to the 2024 tax roll and is valid until Dec. 31, 2059.
-                
-                Implication:
-                    Developers, including market-rate developers, can avail of substantial property tax exemptions for portions of their properties used for affordable housing, provided they meet the stipulated conditions.
-            '''
-
             YOUR TASK:
-                Summarize both sections, interspersing relevant emojis throughout.
+                Write a detailed write-up to accompany our comps analysis.
+                    First section: Recommend total unit count, unit mix (counts/percentages by unit type), unit sizes & rents by type, other quantitative aspects.
+                    Second section: Recommend a building style (garden/mid-rise/hi-rise), amenities, other qualitative aspects.
+            SUBJECT SITE:
+                Address: ${address}
+                Municipality: ${displayMuniName}
+                Acres: ${acres}
+                Max. buildable units: ${maxCapacity}
+                Max. buildable height: ${tallestBuildingHeight}'
+            --
+            COMPS RAW DATA SET:
+                ${compsDataRaw}
+
+            COMPS AVERAGES:
+                ${compsAvgs}
+
+            COMPS UNIT MIX (WEIGHTED AVERAGE %):
+                ${compsPcts}
         `
     }];
 
@@ -389,7 +351,7 @@ module.exports = async (req, res) => {
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
             useModel = 'gpt-3.5-turbo'; //'gpt-4';
-            useTokens = 300; //1000;
+            useTokens = 500; //1000;
         } else {
             console.log('[SuperAI is OFF]');
             useModel = 'gpt-3.5-turbo'; //process.env.AI_MODEL_PRIMARY_ANALYSES;
