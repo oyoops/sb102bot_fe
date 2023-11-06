@@ -176,6 +176,8 @@ function createStyledMarker(position, map, label) {
 // Adds each comp returned to a Google Map
 function addCompsMarkersToMap(responseData) {
     responseData.forEach(item => {
+        // Create a new bounds object
+        let bounds = new google.maps.LatLngBounds();
 
         // Custom icon using SVG for a smaller and different-colored marker
         const customIcon = {
@@ -187,8 +189,10 @@ function addCompsMarkersToMap(responseData) {
             strokeWeight: 2
         };
 
+        const markerPosition = new google.maps.LatLng(item.lat, item.lng);
+
         const marker = new google.maps.Marker({
-            position: { lat: item.lat, lng: item.lng }, // Comp location
+            position: markerPosition,
             map: map,
             title: item.property_name, // Comp name
             icon: customIcon
@@ -213,6 +217,10 @@ function addCompsMarkersToMap(responseData) {
             infoWindow.open(map, marker);
         });
     });
+
+    // Once all markers have been added, adjust the viewport
+    map.fitBounds(bounds);
+    
 }
 
 
