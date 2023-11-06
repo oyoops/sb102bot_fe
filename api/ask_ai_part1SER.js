@@ -84,7 +84,7 @@ module.exports = async (req, res) => {
                     Write a report about this property as it relates to potentially buying it and developing new multifamily under the Live Local Act, if it's eligible.
                     Do not go into excessive detail about Live Local Act itself.
                     
-                    Focus heavily on the comps analysis.
+                    Focus heavily on the comps analysis. NAME THE COMPS.
                     
                     You must provide an intelligent analysis of the existing comps.
                         Analyze the competition, focusing on their rents and sq. ft. by unit type and age of the property.
