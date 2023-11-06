@@ -40,6 +40,29 @@ body {
     }
 }
 
+.form-group {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.styled-table th, .styled-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.styled-table thead {
+    background-color: #f5f5f5;
+}
+
+
 h1 {
     font-family: 'Playfair Display', serif;
     font-size: 1.8em;
@@ -74,33 +97,34 @@ form {
     max-width: 600px; /* New addition: set a maximum width */
 }
 
+
 /* Generic table styling */
 .table-container {
     overflow: hidden;
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);  /* A more pronounced shadow around the tables */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    background-color: #f2f4f7;  /* A light background for container to give it some padding */
+    background-color: #f2f4f7;
 }
 
-table {
+table, .styled-table {
     width: 100%;
     max-width: 1000px;
     margin: 0 auto;
     border-collapse: collapse;
-    background-color: #ffffff;  /* White background for tables */
+    background-color: #ffffff;
 }
 
 th, td {
-    border: 1px solid #e0e0e0;  /* Lighter border color */
-    padding: 12px 15px;         /* Increased padding for cells */
+    border: 1px solid #e0e0e0;
+    padding: 12px 15px;
     text-align: left;
 }
 
 th {
-    background-color: #f7f9fc;  /* Light background for table header */
+    background-color: #f7f9fc;
     color: #333;
-    font-weight: 600;           /* Bold font for table header */
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -114,8 +138,9 @@ tbody tr:nth-child(odd) {
 }
 
 tbody tr:hover {
-    background-color: #e6ebf1; /* Hover effect for table rows */
+    background-color: #e6ebf1;
 }
+
 
 /* Responsive design: If the screen width is 600px or less, make the tables 95% width */
 @media (max-width: 600px) {

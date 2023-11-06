@@ -226,101 +226,249 @@
     <!-- START: PART 2 -- DEVELOPMENT PROGRAM I/O -->
     <div id="developmentProgramInputSection" style="display: none;">
         
-        <div class="form-group">
-            <h2>Property Details</h2>
-            <h4>How many acres will you use for multifamily?</h4>
-            <input type="number" id="acreageInput" placeholder="Acreage" value="10" step="0.25">
-            <i>Override</i> | <b>Automatic</b>
-            
-            <h4>What is the maximum unit density allowed by the municipality?</h4>
-            <input type="number" id="densityInput" placeholder="Units/ac." value="50" step="5">
-            <i>Override</i> | <b>Automatic</b>
-        </div>
+        <!-- Acreage Input -->
+        <br>
+        <h4>How many acres will you use for multifamily?</h4>
+        <input type="number" id="acreageInput" placeholder="Acreage" value="10" step="0.25">      <i>Override</i> | <b>Automatic</b>
         
-        <div class="form-group">
-            <h2>Unit Configuration</h2>
-            <h3>Affordable Units: <span id="affordablePctDisplay">40%</span></h3>
-            <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
-            
-            <table class="styled-table">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Market Size (sq. ft.)</th>
-                        <th>Affordable Size (sq. ft.)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Sample Row, repeat for Studio, 1BD, 2BD, 3BD -->
-                    <tr>
-                        <td>Studio</td>
-                        <td><input type="number" class="sizeInput marketSizeInput" id="marketStudioSize" value="500" step="25"></td>
-                        <td><input type="number" class="sizeInput affordableSizeInput" id="affordableStudioSize" value="500" step="25"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <!-- Density Input (Max. units/ac. allowed) -->
+        <br>
+        <h4>What is the maximum unit density allowed by the municipality?</h4>
+        <input type="number" id="densityInput" placeholder="Units/ac." value="50" step="5">      <i>Override</i> | <b>Automatic</b>
 
-        <div class="form-group">
-            <h2>Revenue</h2>
-            <table class="styled-table">
+        <!-- <br><br><h2><u>Development Program</u></h2> -->
+        
+        <!-- Affordable Units Percentage Slider -->
+        <br>
+        <label for="affordablePctSlider">
+            <h3>
+                Affordable Units: <span id="affordablePctDisplay">40%</span>
+            </h3>
+        </label>
+        <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
+        
+        <!-- Unit Count Outputs -->
+        <!-- <h4>Unit Counts</h4> -->
+        <br>
+        <table id="unitCalculationTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; display: none;">
+            <thead>
+                <tr>
+                    <th colspan="3">Unit Counts</th>
+                </tr>
+                <tr>
+                    <th>Affordable</th>
+                    <th>Market</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="unitCalculationTableBody">
+                <!-- Data will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+    
+        <!-- Warnings Container -->
+        <div id="warningContainer" style="display: none"></div>
+
+        <!-- Unit Size Inputs Section (Table + checkbox) -->
+        <h3>Unit Sizes</h3>
+        <label><input type="checkbox" id="matchAffordableSizes"> Match market-rate and affordable unit sizes?</label>
+        <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse;">
+            <thead>
+                <!-- <tr><th colspan="3">Avg. Unit Sizes</th></tr> -->
+                <tr>
+                    <th></th>
+                    <th>Market</th>
+                    <th>Affordable</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Studio</td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="marketStudioSize" placeholder="Size" value="500" step="25"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordableStudioSize" placeholder="Size" value="500" step="25"></td>
+                </tr>
+                <tr>
+                    <td>1BD</td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="market1BDSize" placeholder="Size" value="750" step="25"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable1BDSize" placeholder="Size" value="750" step="25"></td>
+                </tr>
+                <tr>
+                    <td>2BD</td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="market2BDSize" placeholder="Size" value="1000" step="25"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable2BDSize" placeholder="Size" value="1000" step="25"></td>
+                </tr>
+                <tr>
+                    <td>3BD</td>
+                    <td><input type="number" class="sizeInput marketSizeInput" id="market3BDSize" placeholder="Size" value="1250" step="25"></td>
+                    <td><input type="number" class="sizeInput affordableSizeInput" id="affordable3BDSize" placeholder="Size" value="1250" step="25"></td>
+                </tr>
+                <!-- <tr> -->
+                    <!-- <td><b>Avgs.</b></td> -->
+                    <!-- <td><b><span id="weightedAvgMarketSize">0</span> sq. ft.</b></td> -->
+                    <!-- <td><b><span id="weightedAvgAffordableSize">0</span> sq. ft.</b></td> -->
+                <!-- </tr> -->
+            </tbody>
+        </table>
+
+        <!-- Weighted Avg Unit Size Outputs -->
+        <h4>Weighted average sizes:</h4>
+        <p>Market:  <span id="avgMarketSizeDisplay">0</span> sq. ft.</p>
+        <p>Affordable:  <span id="avgAffordableSizeDisplay">0</span> sq. ft.</p>
+        <p><b>Blended:  <span id="avgBlendedSizeDisplay">0</span> sq. ft.</b></p>
+
+        <!-- Market Rate Rents Input Section -->
+        <br>
+        <section id="marketRateInputSection" style="display: none;">
+            <h2><u>Revenue</u></h2>
+            <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse;">
                 <thead>
+                    <!-- <tr><th colspan="2"></th></tr> -->
                     <tr>
-                        <th>Type</th>
+                        <th></th>
                         <th>Market Rents (all-in)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Sample Row, repeat for Studio, 1BD, 2BD, 3BD -->
                     <tr>
                         <td>Studio</td>
-                        <td><input type="number" class="marketRateInput" id="marketRateStudio" value="2000" step="100"></td>
+                        <td><input type="number" class="marketRateInput" id="marketRateStudio" placeholder="$2,000" value="2000" step="100"></td>
+                    </tr>
+                    <tr>
+                        <td>1BD</td>
+                        <td><input type="number" class="marketRateInput" id="marketRate1BD" placeholder="$2,400" value="2400" step="100"></td>
+                    </tr>
+                    <tr>
+                        <td>2BD</td>
+                        <td><input type="number" class="marketRateInput" id="marketRate2BD" placeholder="$2,800" value="2800" step="100"></td>
+                    </tr>
+                    <tr>
+                        <td>3BD</td>
+                        <td><input type="number" class="marketRateInput" id="marketRate3BD" placeholder="$3,200" value="3200" step="100"></td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-        
-        <div class="form-group">
-            <h2>Total Development Costs</h2>
-            <table class="styled-table">
+            <!-- <p><i>These placeholders are not representative of the subject.</i></p> -->
+        </section>
+
+        <!-- Rent per Sq. Ft. Table -->
+        <section id="rentPerSqFtTableSection" style="display: none;">
+            <!-- <br><h4>Rent per Sq. Ft.</h4> -->
+            <table id="rentPerSqFtTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse;">
                 <thead>
                     <tr>
+                        <th colspan="3">Rents (per Sq. Ft.)</th>
+                    </tr>
+                    <tr>
                         <th></th>
+                        <th>Market</th>
+                        <th>Affordable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Studio</td>
+                        <td id="marketRateStudioPerSqFt">-</td>
+                        <td id="affordableStudioPerSqFt">-</td>
+                    </tr>
+                    <tr>
+                        <td>1BD</td>
+                        <td id="marketRate1BDPerSqFt">-</td>
+                        <td id="affordable1BDPerSqFt">-</td>
+                    </tr>
+                    <tr>
+                        <td>2BD</td>
+                        <td id="marketRate2BDPerSqFt">-</td>
+                        <td id="affordable2BDPerSqFt">-</td>
+                    </tr>
+                    <tr>
+                        <td>3BD</td>
+                        <td id="marketRate3BDPerSqFt">-</td>
+                        <td id="affordable3BDPerSqFt">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Land + Total HC Inputs -->
+        <br>
+        <section id="landAndTotalHcInputSection" style="display: none;">
+            <h2><u>Total Development Costs</u></h2>
+            <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th colspan="2">Hard Costs (per unit)</th>
+                    </tr>
+                    <tr>
                         <th>Land</th>
                         <th>Construction</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Cost per unit</td>
-                        <td><input type="number" class="landInput" id="landCostPerUnitInput" value="25000" step="1000"></td>
-                        <td><input type="number" class="hcInput" id="totalHCPerUnitInput" value="200000" step="5000"></td>
+                        <td><input type="number" class="landInput" id="landCostPerUnitInput" placeholder="$25,000" value="25000" step="1000"></td>
+                        <td><input type="number" class="hcInput" id="totalHCPerUnitInput" placeholder="$200,000" value="200000" step="5000"></td>
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </section>
 
-        <div class="form-group">
-            <h2>Property Tax Abatement</h2>
-            <table class="styled-table">
+        <!-- Land + Total HC Outputs  -->
+        <section id="totalLandAndTotalHcOutputSection" style="display: none;">
+            <table id="totalLandAndTotalHcTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse;">
                 <thead>
-                    <tr>
-                        <th></th>
-                        <th>Savings (net)</th>
-                        <th>Δ Rent Equivalent</th>
+                <tr>
+                        <th>Land</th>
+                        <th>Construction</th>
+                        <th><b>Total</b></th>
                     </tr>
                 </thead>
-                <tbody id="abatementTableBody">
-                    <!-- Data will be inserted here by JavaScript -->
+                <tbody>
+                    <tr>
+                        <td id="totalLandCost">-</td>
+                        <td id="totalHcCost">-</td>
+                        <td id="totalLandAndTotalHc">-</td>
+                    </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">Per unit</th>
+                        <th id="totalLandAndTotalHcPerUnit">-</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Per sq. ft.</th>
+                        <th id="totalLandAndTotalHcPerSqFt">-</th>
+                    </tr>
+                </tfoot>
             </table>
-            <p>
-                The tax abatement contributes to Project NOI as much as a rent increase of <i><b>$Δ Rent Equivalent</b></i> would.
-                It runs for the same 30-year term as the deed restriction; applies to ad valorem taxes only (i.e., excludes any fire/waste/CDD assessments). 
-                Raising exit cap +15-25 bps should be sufficient to mitigate the restrictions, per my capital markets homies.
-            </p>
-        </div>
+        </section>
 
+        <!-- Property Tax Abatement Outputs -->
+        <br>
+        <h2><u>Property Tax Abatement</u></h2>
+        <table id="abatementTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; display: none;">
+            <thead>
+                <tr>
+                    <th colspan="2">Abatement Calculations</th>
+                </tr>
+                <tr>
+                    <th>
+                        Savings (net)
+                    </th>
+                    <th>
+                        Δ Rent Equivalent
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="abatementTableBody">
+                <!-- Data will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+        <p>
+            The tax abatement contributes to Project NOI as much as a rent increase of <i><b>$Δ Rent Equivalent</b></i> would.
+            </br>It runs for the same 30-year term as the deed restriction; applies to ad valorem taxes only (i.e., excludes any fire/waste/CDD assessments). 
+            </br>Raising exit cap +15-25 bps should be sufficient to mitigate the restrictions, per my capital markets homies.
+        </p>
+ 
     </div>
 
     <!-- Spacing -->
