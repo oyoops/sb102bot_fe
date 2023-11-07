@@ -198,7 +198,9 @@ tbody tr:hover {
     overflow: hidden; 
     font-size: 16px; /* Default font size */
     color: #757575; /* Lighter grey font color */
-    white-space: pre; /* preserve spaces */
+    white-space: pre-wrap; /* Wrap text and preserve spaces */
+    word-break: break-word; /* Break long words if needed */
+    overflow-wrap: break-word; /* Prefer breaking at the end of words */
 }
 /* Hover effect for non-touch devices */
 @media (hover: hover) {
