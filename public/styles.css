@@ -198,6 +198,7 @@ tbody tr:hover {
     overflow: hidden; 
     font-size: 16px; /* Default font size */
     color: #757575; /* Lighter grey font color */
+    white-space: pre; /* preserve spaces */
 }
 /* Hover effect for non-touch devices */
 @media (hover: hover) {
@@ -365,7 +366,7 @@ footer {
     width: 100%;
     text-align: center;
     font-weight: 400;
-    font-size: 0.9em;
+    font-size: 0.8em;
     border-top: 2px solid var(--accent-color);
 }
 
@@ -421,7 +422,7 @@ footer a:hover {
     width: 300px;
     padding: 5px 10px;
     font-weight: 500;
-    background-color: #163f85;
+    background-color: #1f54b0;
     color: #ffffff;
     opacity: 1;
     border-radius: 5px;
@@ -592,8 +593,8 @@ input:disabled {
 
 
 .spinner {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     margin: 0 auto 10px; /* centering and giving space below */
     border: 4px solid rgba(0, 123, 255, 0.2);
     border-top-color: var(--accent-color);
@@ -602,8 +603,8 @@ input:disabled {
 }
 
 .loading-text {
-    font-size: 1.1em;
-    font-weight: 600;
+    font-size: 0.9em;
+    font-weight: 500;
     color: var(--accent-color);
     margin-bottom: 10px;
 }
@@ -644,9 +645,11 @@ input:disabled {
     transform: translateX(0);
 }
 
+
+
 #infoSections {
     text-align: left;
-    font-size: 0.7em;
+    font-size: 0.6em;
     max-width: 800px;
     margin: auto;
     padding: 10px;
@@ -671,6 +674,8 @@ input:disabled {
     background-position: 0 50%;
     background-size: 10px;
 }
+
+
 
 .switchContainer {
     display: flex;
