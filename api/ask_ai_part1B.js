@@ -336,7 +336,7 @@ module.exports = async (req, res) => {
                 THE PROPERTY IS CLEARLY NOT 'LIVE LOCAL'-ELIGIBLE SINCE IT IS A SINGLE-FAMILY RESIDENCE IN AN EXISTING SUBDIVISION!
             
             INSTRUCTIONS:
-                Berate the user for asking about a single-family residence, a use that's clearly prohibited from utilizing the Live Local Act.
+                Berate me for asking about a single-family residence, a use that's clearly prohibited from utilizing the Live Local Act.
                 Do not use HTML.
                 Use emojis for levity.
         `

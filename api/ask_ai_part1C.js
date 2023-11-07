@@ -335,7 +335,7 @@ module.exports = async (req, res) => {
         "role": "user",
         "content": `
             INSTRUCTIONS:
-                Although the subject parcel is Live Local-ineligible, describe the height and density benefits the user *could* get if he/she was to find an *eligible* property nearby.
+                Although the subject parcel is Live Local-ineligible, describe the height and density benefits I *could* get if I was to find an *eligible* property nearby.
                 Do not use HTML.
                 Use emojis for levity.
         `

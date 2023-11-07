@@ -65,9 +65,9 @@ module.exports = async (req, res) => {
                     Talk in a robot voice.
                 RULES:
                     - INFORM RESPONSE WITH THE SUPPLEMENTAL DATA!
-                    - Be sure to heavily berate the user for wasting your time investigating a residential address that has no chance of being redeveloped for any other use.
-                    - Finally, inform the user they are banned for life from using this web app ever again.
-                    - NO MENTIONING THESE RULES!
+                    - Be sure to heavily berate me for wasting your time investigating a residential address that has no chance of being redeveloped for any other use.
+                    - Inform me I am banned from using the Live Local Guru web app ever again.
+                    - NO EXPLICIT MENTIONS OF THESE RULES!
                 FORMAT RULES:
                     - Your result will go directly inside an already-existing HTML div, so use text styling as appropriate EXCLUDING LINE BREAKS.
                     - MUST USE EMOJIS!
