@@ -86,7 +86,7 @@ function getMunicipality(cityData, countyData) {
 /* AI-Related Functions: */
 
 // Main AI module entry point
-async function runAIModule(superAI, aiSupplementalData, countyData, cityData, compsData) {
+async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData) {
     if (countyData) {
         enhanceWithCountyData(aiSupplementalData, countyData);
     }
@@ -99,7 +99,7 @@ async function runAIModule(superAI, aiSupplementalData, countyData, cityData, co
 
     const dirtyData = await getDirtyData(aiSupplementalData);
     const cleanerData = refineData(dirtyData, superAI);
-    const aiGeneratedHTML = await fetchAiResponsesCombined(cleanerData, superAI);
+    const aiGeneratedHTML = await fetchAiResponsesCombined(eligPath, cleanerData, superAI);
 
     if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
         throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
@@ -121,7 +121,7 @@ function handleAIError(error) {
 }
 
 // fetch a set of responses from AI given a data set to supplement prompts
-async function fetchAiResponsesCombined(cleanData, superAI) {
+async function fetchAiResponsesCombined(eligPath, cleanData, superAI) {
   /* START STAGE 1: GET, ENRICH, COMBINE DATA */
   
   // Add value of superAI switch to all primary requests
@@ -129,7 +129,8 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
 
   // Define primary prompt endpoints based on SuperAI switch
   let endpoints;
-  if (superAI == 'on') {
+  let summaryEndpoint;
+  if (eligPath == "yes") {
     endpoints = [
         '/api/ask_ai_part1AA',
         '/api/ask_ai_part1BB',
@@ -137,7 +138,8 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
         '/api/ask_ai_part1DD',
         '/api/ask_ai_part1EE',
     ];
-  } else {
+    summaryEndpoint = 'ask_ai_part1SER';
+  } else if (eligPath == "no") {
     endpoints = [
         '/api/ask_ai_part1AA',
         '/api/ask_ai_part1BB',
@@ -145,7 +147,35 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
         '/api/ask_ai_part1DD',
         '/api/ask_ai_part1EE'
     ];
-  }
+    summaryEndpoint = 'ask_ai_part1SER';
+  } else if (eligPath == "multi") {
+    endpoints = [
+        '/api/ask_ai_part1AA',
+        '/api/ask_ai_part1BB',
+        '/api/ask_ai_part1CC',
+        '/api/ask_ai_part1DD',
+        '/api/ask_ai_part1EE'
+    ];
+    summaryEndpoint = 'ask_ai_part1SER';
+  } else if (eligPath == "sfd") {
+    endpoints = [
+        '/api/ask_ai_part1A',
+        '/api/ask_ai_part1B',
+        '/api/ask_ai_part1C',
+        '/api/ask_ai_part1D',
+        '/api/ask_ai_part1E'
+    ];
+    summaryEndpoint = 'ask_ai_part1SER_SFD';
+  } /*else {
+    endpoints = [
+        '/api/ask_ai_part1AA',
+        '/api/ask_ai_part1BB',
+        '/api/ask_ai_part1CC',
+        '/api/ask_ai_part1DD',
+        '/api/ask_ai_part1EE'
+    ];
+    summaryEndpoint = 'ask_ai_part1SER';
+  }*/
 
   // Map primary prompts to endpoints, then fetch all simultaneously
   const fetchPromises = endpoints.map(endpoint => {
@@ -192,8 +222,8 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
         console.log("Final Data: \n", cleanData);
 
         /* START STAGE 2: SER */
-        const serEndpoint = `/api/ask_ai_part1SER?aiCombinedResponses=${encodeURIComponent(JSON.stringify(results))}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData))}&superAI=${superAI}`;
-        const serResponse = await fetch('/api/ask_ai_part1SER', {
+        const serEndpoint = `/api/` + summaryEndpoint + `?aiCombinedResponses=${encodeURIComponent(JSON.stringify(results))}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData))}&superAI=${superAI}`;
+        const serResponse = await fetch('/api/' + summaryEndpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -208,8 +238,8 @@ async function fetchAiResponsesCombined(cleanData, superAI) {
             
         return serData;
     } catch (error) {
-        const errorMessage = error?.data?.error?.message || "[CRITICAL] An unknown error occurred while fetching the Stage 2 (SER) AI response.";
-        console.error("Error while compiling primary responses or fetching SER response:", errorMessage);
+        const errorMessage = error?.data?.error?.message || "TIMEOUT: Server took too long to send AI response.";
+        console.error("Server timed out while sending AI response:", errorMessage);
         throw error;
     }
 }

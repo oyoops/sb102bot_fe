@@ -312,14 +312,14 @@ button:hover {
 }
 
 #menuBar #logo {
-    width: 150px;  /* or whatever width you desire */
+    width: 125px;  /* or whatever width you desire */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* to handle vertical spacing better */
     margin-left: 10px;
 }
 
 #menuBar #logoMobile {
-    width: 100px;  /* or whatever width you desire for the mobile logo */
+    width: 75px;  /* or whatever width you desire for the mobile logo */
     height: auto;  /* maintain the aspect ratio */
     display: none; /* by default, hide it if you plan to show it only on smaller screens */
     margin-left: 10px;

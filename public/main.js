@@ -125,21 +125,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             /* Do some things before the AI module takes ~30-60 seconds to complete */
-                        
-            // Populate and show Table #2 (Comps avg. vs Affordable max. rent comparison)
-            rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
-            rentInfoContainer.style.display = 'table'; // show the container
-            countyMaxRentsTable.style.display = 'table'; // show the table
 
-            // Set colors based on Live Local eligibility
+
+            // Determine LLA eligibility
+            let eligPath;
             if (maybeEligibleCodes.includes(parcelData.dor_uc)) {
+                // Multifamily 10+ units use
+                eligPath = "multi";
+            } else if (eligibleCodes.includes(parcelData.dor_uc)) {
+                // Commercial/industrial uses
+                eligPath = "yes";
+            } else if (parcelData.dor_uc == "000" || parcelData.dor_uc == "001") { 
+                // Single-family address
+                eligPath = "sfd";
+            } else {
+                // All other uses
+                eligPath = "no";
+            }
+
+            // Set site colors based on eligibility
+            if (eligPath == "multi") {
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 //document.documentElement.style.setProperty('--hue', '25'); // orange
-            } else if (eligibleCodes.includes(parcelData.dor_uc)) {
+            } else if (eligPath == "yes") {
                 document.documentElement.style.setProperty('--hue', '120'); // green
+            } else if (eligPath == "no") {
+                document.documentElement.style.setProperty('--hue', '360'); // red
             } else {
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
+
+            // If eligible, populate and show Table #2 (Comps avg. vs Affordable max. rent comparison)
+            if (eligPath == "yes") {
+                rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
+                rentInfoContainer.style.display = 'table'; // show the container
+                countyMaxRentsTable.style.display = 'table'; // show the table
+            } else {
+                console.log("LLA Ineligible!");
+            }
+            
 
             // Show try again button
             tryAgainButton.style.display = 'block';
@@ -173,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
                 
                 // Generate AI summary HTML content
-                const aiContentHTML = await runAIModule(superAI, aiSupplementalData, countyData, cityData, compsData);
+                const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData);
                 
                 // Hide primary AI responses
                 document.getElementById("primaryResponsesContainer").style.display = 'none';

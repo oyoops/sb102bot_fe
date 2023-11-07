@@ -165,7 +165,7 @@ module.exports = async (req, res) => {
         htmlFormattedResponse = aiResponseText.replace(/<br>/g, '').replace(/\n/g, '<br>');
         
         // (log all available data)
-        //console.log(jsonString);
+        console.log(jsonString);
 
         // Send AI response to client
         res.status(200).json(htmlFormattedResponse);
