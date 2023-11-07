@@ -161,9 +161,9 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI) {
     endpoints = [
         '/api/ask_ai_part1A',
         '/api/ask_ai_part1B',
+        '/api/ask_ai_part1E',
         '/api/ask_ai_part1C',
-        '/api/ask_ai_part1D',
-        '/api/ask_ai_part1E'
+        '/api/ask_ai_part1D'
     ];
     summaryEndpoint = 'ask_ai_part1SER_SFD';
   } /*else {
