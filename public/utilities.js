@@ -27,7 +27,7 @@ async function checkCity(geoData) {
     const muniCheckEndpoint = `/api/check_city?lat=${latitude}&lng=${longitude}`;
     const muniData = await fetchAPI(muniCheckEndpoint);
     if (muniData.isInCity) {
-        console.log(`Proeprty is within ${muniData.cityName} limits.`);
+        console.log(`Property is within ${muniData.cityName} limits.`);
     } else {
         muniData.cityName = 'unincorporated';
         console.log('Property is in unincorporated county area.');
@@ -114,9 +114,9 @@ function handleAIError(error) {
     document.getElementById("tryAgainButton").style.display = 'block';
     document.querySelector('.loading-container').style.display = 'none';
     if (error.message.startsWith("[CRITICAL]")) {
-        alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 20 seconds.');
+        alert('Down for maintenance.');
     } else {
-        alert('Sorry, there was an unknown error of the catastrophic variety. \n\nYour device will self-destruct in 25 seconds.');
+        alert('Down for maintenance.');
     }
 }
 
