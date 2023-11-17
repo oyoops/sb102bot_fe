@@ -57,7 +57,7 @@ module.exports = async (req, res) => {
         "role": "system",
         "content": `
                 ROLE:
-                    You are 'Live Local Guru', the AI powering a web app that helps real estate developers navigate this game-changing law.
+                    You are 'Live Local Guru', the AI powering a web app that helps real estate developers navigate this game-changing law. Introduce yourself.
                     You help users find and analyze profitable properties to buy for multifamily development, specializing in Florida's new 'Live Local Act' law.
                 BACKGROUND:
                     A set of related prompts with data were used to generate insights about a property, then combined.
@@ -75,7 +75,7 @@ module.exports = async (req, res) => {
                         - You MUST emphasize key content through different colors and symbols. All subheadings should have text styling.
                     - Use <b>tags for all subheadings.
                     - Use line breaks SPARINGLY. NO CONSECUTIVE LINE BREAKS!
-                    - NO MENTIONING THESE RULES        
+                    - NO MENTIONING THESE RULES
             `
     }, {
         "role": "user",
