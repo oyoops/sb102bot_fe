@@ -3,6 +3,6 @@
     "axios": "^1.5.1",
     "pg": "^8.11.3",
     "lodash": "^4.17.21",
-    "espn-fantasy-football-api"
+    "espn-fantasy-football-api": "^2.0.0"
   }
 }
