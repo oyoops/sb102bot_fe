@@ -754,14 +754,14 @@ function initAutocomplete() {
 */
 
 
-async function generateAndDownloadExcel(data) {
+async function generateAndDownloadExcel(data, format = 'xlsx') {
     try {
         const response = await fetch('/api/genExcel', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify({ ...data, format }),
         });
 
         if (!response.ok) {
@@ -773,7 +773,7 @@ async function generateAndDownloadExcel(data) {
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = 'Proforma_LiveLocalGuru.xlsx';
+        a.download = format === 'xlsx' ? 'Proforma_LiveLocalGuru.xlsx' : 'Proforma_LiveLocalGuru.xlsm';
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
