@@ -2,7 +2,7 @@
 _saves/
 _unused/
 public/_OLD/
-node_modules/ # FOR GH-VERCEL DEPLOYMENT
+node_modules/
 
 
 # Byte-compiled / optimized / DLL files

@@ -219,6 +219,20 @@ document.addEventListener('DOMContentLoaded', function() {
             /* End AI Module */
 
 
+            /* Start Excel Workbook Generation Module */
+
+            // Collect the data necessary for proforma workbook
+            const dataForExcel = {
+                acres: acres//,
+                //address: address,
+                // ... more relevant data ...
+            };
+            // Generate the proforma workbook 
+            await generateAndDownloadExcel(dataForExcel);
+
+            /* End Excel Workbook Generation Module */
+
+
             /* END SCRIPT */
 
         } catch (error) {

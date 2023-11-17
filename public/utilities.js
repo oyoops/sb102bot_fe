@@ -752,3 +752,33 @@ function initAutocomplete() {
   });
 }
 */
+
+
+async function generateAndDownloadExcel(data) {
+    try {
+        const response = await fetch('/api/generate-excel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'Proforma_LiveLocalGuru.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Error generating Excel file:', error);
+        alert('There was an error generating the Excel file.');
+    }
+}
