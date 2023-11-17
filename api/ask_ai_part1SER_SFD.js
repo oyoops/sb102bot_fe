@@ -95,12 +95,12 @@ module.exports = async (req, res) => {
         // Use SuperAI?
         if (superAI == 'on') {
             console.log('[SuperAI is ON]');
-            useModel = 'gpt-4';
-            useTokens = 500;
+            useModel = process.env.AI_MODEL_SER_MODULE;
+            useTokens = parseInt(process.env.AI_MAX_TOKENS_SER_SFD_MODULE, 10);
         } else {
             console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_SER_MODULE;
-            useTokens = parseInt(process.env.AI_MAX_TOKENS_SER_MODULE, 10);
+            useTokens = parseInt(process.env.AI_MAX_TOKENS_SER_SFD_MODULE, 10);
         }
         
         // Send fetch request from server to OpenAI API
