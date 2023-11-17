@@ -756,7 +756,7 @@ function initAutocomplete() {
 
 async function generateAndDownloadExcel(data) {
     try {
-        const response = await fetch('/api/generate-excel', {
+        const response = await fetch('/api/genExcel', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
