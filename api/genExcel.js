@@ -169,8 +169,8 @@ module.exports = async (req, res) => {
         await workbook.xlsx.write(res);
         res.end();
     } catch (error) {
-        console.error("Error generating Excel file:", error);
-        res.status(500).send("Internal Server Error");
+        console.error("Error generating Excel file:\n", error);
+        res.status(500).send("Internal Server Error\n", error);
     }
 };
 
