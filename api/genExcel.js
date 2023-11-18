@@ -95,11 +95,11 @@ module.exports = async (req, res) => {
         row++;
 
         worksheet.getCell(`A${row}`).value = "Loan Amount";
-        worksheet.getCell(`B${row}`).value = { formula: `B${row-1}/100*B${row-3}` }; // LTV % * Total Development Cost
+        worksheet.getCell(`B${row}`).value = { formula: `B${row-1}/100*B${row-4}` }; // LTV % * Total Development Cost
         row++;
 
         worksheet.getCell(`A${row}`).value = "Equity Investment";
-        worksheet.getCell(`B${row}`).value = { formula: `B${row-3}-B${row-1}` }; // Total Development Cost - Loan Amount
+        worksheet.getCell(`B${row}`).value = { formula: `B${row-5}-B${row-1}` }; // Total Development Cost - Loan Amount
         const equityInvestmentRow = row;
         row++;
 
