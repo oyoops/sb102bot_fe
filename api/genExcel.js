@@ -3,12 +3,45 @@ const ExcelJS = require('exceljs');
 
 module.exports = async (req, res) => {
     const workbook = new ExcelJS.Workbook();
+
+    // Create the 'Proforma' worksheet
     const worksheet = workbook.addWorksheet('Proforma');
 
-    // Inputs for each unit type
-    const unitTypes = ['Studio', '1BD', '2BD', '3BD'];
+    // Create the 'INPUT' worksheet for user inputs
+    const inputSheet = workbook.addWorksheet('INPUT');
 
-    // Set up the Inputs Section for Unit Mix
+    // Set up the Inputs on the INPUT sheet
+    inputSheet.getCell('A1').value = "Description";
+    inputSheet.getCell('B1').value = "Value";
+
+    const inputs = [
+        'Land Cost Per Unit',
+        'Construction Cost Per SF A/C',
+        'Indirect Cost Per Unit',
+        'Loan to Value (LTV %)',
+        'Interest Rate',
+        'Project Duration (Years)'
+    ];
+
+    inputs.forEach((input, index) => {
+        inputSheet.getCell(`A${index + 2}`).value = input;
+        inputSheet.getCell(`B${index + 2}`).value = 0; // Default values, to be filled in by the user
+    });
+
+    // Add unit types to the INPUT sheet
+    const unitTypes = ['Studio', '1BD', '2BD', '3BD'];
+    unitTypes.forEach((type, index) => {
+        inputSheet.getCell(`A${index + 8}`).value = `${type} - Quantity`;
+        inputSheet.getCell(`B${index + 8}`).value = 0;
+
+        inputSheet.getCell(`A${index + 12}`).value = `${type} - Average Rent`;
+        inputSheet.getCell(`B${index + 12}`).value = 0;
+
+        inputSheet.getCell(`A${index + 16}`).value = `${type} - Size (SF)`;
+        inputSheet.getCell(`B${index + 16}`).value = 0;
+    });
+
+    // Set up the Inputs Section for Unit Mix on the Proforma sheet
     worksheet.getCell('A1').value = "Unit Type";
     worksheet.getCell('B1').value = "Quantity";
     worksheet.getCell('C1').value = "Average Rent";
@@ -19,9 +52,9 @@ module.exports = async (req, res) => {
     let row = 2;
     unitTypes.forEach((type, index) => {
         worksheet.getCell(`A${row}`).value = type;
-        worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 2}` }; // Quantity from input sheet
-        worksheet.getCell(`C${row}`).value = { formula: `INPUT!C${index + 2}` }; // Average Rent from input sheet
-        worksheet.getCell(`D${row}`).value = { formula: `INPUT!D${index + 2}` }; // Size (SF) from input sheet
+        worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 8}` }; // Quantity from input sheet
+        worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 12}` }; // Average Rent from input sheet
+        worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 16}` }; // Size (SF) from input sheet
         worksheet.getCell(`E${row}`).formula = `C${row}/D${row}`; // Average Rent / Size (SF)
         worksheet.getCell(`F${row}`).formula = `B${row}*C${row}*12`; // Monthly rent * quantity * 12 months
         row++;
@@ -114,7 +147,7 @@ module.exports = async (req, res) => {
     worksheet.getCell(`A${row}`).value = "Estimated Return on Cost";
     worksheet.getCell(`B${row}`).formula = `B${row-3}`; // Return on Cost
 
-    // File Format Selection
+    // File Format Selection and Response
     const fileFormat = req.body.fileFormat || 'xlsx'; // Default to 'xlsx' if not specified
     const fileExtension = fileFormat === 'xlsm' ? 'xlsm' : 'xlsx';
     
