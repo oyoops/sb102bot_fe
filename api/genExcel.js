@@ -123,18 +123,19 @@ module.exports = async (req, res) => {
 
         // Calculations Section
         row += 2; // Skip a row for spacing
+
+        // Total Project Cost
         worksheet.getCell(`A${row}`).value = "Total Project Cost";
-        worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${totalProjectCostRow}` };
+        worksheet.getCell(`B${row}`).value = { formula: `B${totalProjectCostRow}` };
         const totalProjectCostRow = row;
         row++;
 
+        // Total Project Revenue
         worksheet.getCell(`A${row}`).value = "Total Project Revenue";
         const totalProjectRevenueRow = row;
-        ////worksheet.getCell(`B${row}`).formula = `F${totalRevenueRow}`; // Total Revenue from Units
-        ////worksheet.getCell(`B${row}`).value = { formula: `F${totalProjectRevenueRow}` }; // Total Revenue from Units
         worksheet.getCell(`B${row}`).value = { formula: `F${totalRevenueRow}` }; // Total Revenue from Units
-        ////worksheet.getCell(`B${row}`).formula = `F${totalRevenueRow}`; // Total Revenue from Units
         row++;
+
 
         // Return on Cost Calculation
         worksheet.getCell(`A${row}`).value = "Return on Cost";
