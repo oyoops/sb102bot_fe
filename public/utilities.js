@@ -114,9 +114,9 @@ function handleAIError(error) {
     document.getElementById("tryAgainButton").style.display = 'block';
     document.querySelector('.loading-container').style.display = 'none';
     if (error.message.startsWith("[CRITICAL]")) {
-        alert('Down for maintenance.');
+        alert('Server timeout. Refresh and try again. This happens randomly...');
     } else {
-        alert('Down for maintenance.');
+        alert('Server timeout. Refresh and try again. This happens ~10% of times!');
     }
 }
 
