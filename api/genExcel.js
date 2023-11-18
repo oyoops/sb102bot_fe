@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
         worksheet.getCell('C1').value = "Average Rent";
         worksheet.getCell('D1').value = "Size (SF)";
         worksheet.getCell('E1').value = "Rent per SF";
-        worksheet.getCell('F1').value = "Total Revenue";
+        worksheet.getCell('F1').value = "Annual Revenue";
 
         let row = 2;
         unitTypes.forEach((type, index) => {
@@ -91,7 +91,7 @@ module.exports = async (req, res) => {
         // LTV and Financing Section
         row += 2; // Skip a row for spacing
         worksheet.getCell(`A${row}`).value = "Loan to Value (LTV %)";
-        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B6' }; // LTV from input sheet
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B5' }; // LTV from input sheet
         row++;
 
         worksheet.getCell(`A${row}`).value = "Loan Amount";
@@ -103,10 +103,10 @@ module.exports = async (req, res) => {
         const equityInvestmentRow = row;
         row++;
 
-        // Calculating Total Revenue from Units
+        // Calculating Annual Revenue from Units
         worksheet.getCell(`A${row}`).value = "Annual Rental Revenue";
         worksheet.getCell(`F${row}`).value = { formula: `SUM(F2:F5)` };
-        const totalRevenueRow = row;
+        const annualRevenueRow = row;
         row++;
 
         // Other Financial Inputs
@@ -132,21 +132,21 @@ module.exports = async (req, res) => {
         row++;
 
         // Total Project Revenue
-        const totalProjectRevenueRow = row;
+        const annualProjectRevenueRow = row;
         worksheet.getCell(`A${row}`).value = "Annual Project Revenue";
-        worksheet.getCell(`B${row}`).value = { formula: `F${totalRevenueRow}` }; // Total Revenue from Units
+        worksheet.getCell(`B${row}`).value = { formula: `F${annualRevenueRow}` }; // Annual Revenue from Units
         row++;
 
 
         // Return on Cost Calculation
         worksheet.getCell(`A${row}`).value = "Return on Cost";
-        worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}/B${totalProjectCostRow})` }; // (Annual Revenue / TDC)
+        worksheet.getCell(`B${row}`).value = { formula: `(B${annualProjectRevenueRow}/B${totalProjectCostRow})` }; // (Annual Revenue / TDC)
         const returnOnCostRow = row;
         row++;
 
         // IRR Calculation
         worksheet.getCell(`A${row}`).value = "IRR";
-        worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${equityInvestmentRow}` };
+        worksheet.getCell(`B${row}`).value = { formula: `(B${annualProjectRevenueRow}-B${totalProjectCostRow})/B${equityInvestmentRow}` };
         const irrRow = row;
         row++;
 
