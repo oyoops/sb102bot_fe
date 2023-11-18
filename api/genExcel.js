@@ -5,13 +5,13 @@ module.exports = async (req, res) => {
     try {
         // Extract acreage from payload
         let acres = parseFloat(req.body.acres);
-        acres = parseFloat(acres.toFixed(2));
+        ////acres = parseFloat(acres.toFixed(2));
         // Validate acreage
         if (typeof acres !== 'number' || acres <= 0) {
             logger.sendLog(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
             acres = 9.99;
         }
-        logger.sendLog("Acres:", this.toString(acres));
+        logger.sendLog("Acres: " + this.toString(acres));
 
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Proforma');
@@ -144,7 +144,7 @@ module.exports = async (req, res) => {
         const returnOnCostRow = row;
         row++;
 
-        logger.sendLog("ROC%:", toString(worksheet.getCell(`B${row}`).value));
+        logger.sendLog("ROC %: " + toString(worksheet.getCell(`B${row}`).value));
 
         /*
         // IRR Calculation
@@ -178,8 +178,8 @@ module.exports = async (req, res) => {
         await workbook.xlsx.write(res);
         res.end();
     } catch (error) {
-        logger.sendLog("Error generating Excel file:", error.message);
-        logger.sendLog("Stack Trace:", error.stack);
+        logger.sendLog("Error generating Excel file: " + error.message);
+        logger.sendLog("Stack Trace: " + error.stack);
         res.status(500).send("Internal Server Error: " + error.message + "\n\nFull Details:\n" + error.stack);
     }
 };
@@ -274,7 +274,7 @@ function styleInputsSheet(inputSheet) {
             row.getCell(2).fill = cellFormat.fill;
         }
     } catch (error) {
-        logger.sendLog("Error applying styles:", error.message);
+        logger.sendLog("Error applying styles: " + error.message);
         // Handle the error appropriately
     }
 }
