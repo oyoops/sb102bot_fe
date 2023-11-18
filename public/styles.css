@@ -197,16 +197,12 @@ tbody tr:hover {
     border-radius: 8px;
     background-color: #f7f9fc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0; /* Initially hidden */
-    transform: translateY(20px); /* Positioned slightly lower */
-    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; /* Smooth transitions for opacity and position */
-    overflow: hidden;
+    display: none; /* Start with primary response not visible */
     font-size: 16px; /* Default font size */
     color: #757575; /* Lighter grey font color */
     white-space: pre-wrap; /* Preserve whitespace and line breaks */
     word-break: break-word; /* Break words to prevent overflow */
     overflow-wrap: break-word; /* Break words at appropriate points */
-    animation: fadeInUp 0.5s ease-out forwards;
 }
 /* Hover effect for non-touch devices */
 @media (hover: hover) {
@@ -459,8 +455,7 @@ input:disabled {
     z-index: 1;                 /* Ensure it's on top of other content */
     transition: opacity 1s, transform 0.2s;
     border-radius: 0;           /* Remove border radius for full edge-to-edge look */
-    opacity: 0;                   /* Initial opacity */
-    animation: fadeInSlideDown 0.2s forwards; /* Apply the animation; it runs for 1 second and the "forwards" value ensures the end state of the animation is retained */
+    display: none;               /* Start with map not visible */
 
     /* Desktop specific styles */
     @media (min-width: 768px) { /* Adjust breakpoint as needed */
