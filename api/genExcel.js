@@ -134,7 +134,7 @@ module.exports = async (req, res) => {
         // Total Project Revenue
         const annualProjectRevenueRow = row;
         worksheet.getCell(`A${row}`).value = "Annual Project Revenue";
-        worksheet.getCell(`B${row}`).value = { formula: `F${annualRevenueRow}` }; // Annual Revenue from Units
+        worksheet.getCell(`B${row}`).value = { formula: `B${annualRevenueRow}` }; // Annual Revenue from Units
         row++;
 
 
