@@ -140,7 +140,7 @@ module.exports = async (req, res) => {
 
         // Return on Cost Calculation
         worksheet.getCell(`A${row}`).value = "Return on Cost";
-        worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${totalProjectCostRow}` }; // (Total Revenue - Total Cost) / Total Cost
+        worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}/B${totalProjectCostRow})` }; // (Annual Revenue / TDC)
         const returnOnCostRow = row;
         row++;
 
