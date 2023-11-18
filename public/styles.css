@@ -529,6 +529,24 @@ input:disabled {
     background-color: green;
 }
 
+.loading-squares {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.loading-square {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    background-color: red;
+    transition: background-color 0.3s ease;
+}
+
+.loading-square.green {
+    background-color: green;
+}
+
 .animated-text {
     font-size: 16px;
     color: #333;
