@@ -84,7 +84,7 @@ module.exports = async (req, res) => {
         row++;
 
         worksheet.getCell(`A${row}`).value = "Total Development Cost";
-        worksheet.getCell(`B${row}`).value = { formula: `SUM(B${row-6},B${row-4},B${row-2})` }; // Sum of Land, Construction, and Indirect Costs
+        worksheet.getCell(`B${row}`).value = { formula: `SUM(B${row-5},B${row-3},B${row-1})` }; // Sum of Land, Construction, and Indirect Costs
         row++;
 
 
