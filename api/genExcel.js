@@ -125,14 +125,14 @@ module.exports = async (req, res) => {
         row += 2; // Skip a row for spacing
 
         // Total Project Cost
-        worksheet.getCell(`A${row}`).value = "Total Project Cost";
-        worksheet.getCell(`B${row}`).value = { formula: `B${totalProjectCostRow}` };
         const totalProjectCostRow = row;
+        worksheet.getCell(`A${row}`).value = "Total Project Cost";
+        worksheet.getCell(`B${row}`).value = { formula: `SUM(B${row-4},B${row-2},B${row})` }; // Sum of Land, Construction, and Indirect Costs
         row++;
 
         // Total Project Revenue
-        worksheet.getCell(`A${row}`).value = "Total Project Revenue";
         const totalProjectRevenueRow = row;
+        worksheet.getCell(`A${row}`).value = "Total Project Revenue";
         worksheet.getCell(`B${row}`).value = { formula: `F${totalRevenueRow}` }; // Total Revenue from Units
         row++;
 
