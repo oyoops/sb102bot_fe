@@ -1,176 +1,177 @@
-// api/genExcel.js
 const ExcelJS = require('exceljs');
 
 module.exports = async (req, res) => {
-    // Extract acreage from payload
-    let acres = req.body.acres;
-    console.log("Acres:", acres);
+    try {
+        // Extract acreage from payload
+        let acres = req.body.acres;
+        console.log("Acres:", acres);
 
-    // Validate 'acres' input
-    if (typeof acres !== 'number' || acres <= 0) {
-        console.log(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
-        acres = 9.99;
-    }
+        // Validate 'acres' input
+        if (typeof acres !== 'number' || acres <= 0) {
+            console.log(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
+            acres = 9.99;
+        }
 
-    const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Proforma');
-    const inputSheet = workbook.addWorksheet('INPUT');
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Proforma');
+        const inputSheet = workbook.addWorksheet('INPUT');
 
-    // Determine the building type (based on acres)
-    ////const acres = req.body.acres; // Assuming acres is received from the request body
-    let bldgType;
-    if (acres < 3) {
-        bldgType = "High-Rise";
-    } else if (acres <= 10) {
-        bldgType = "Midrise";
-    } else {
-        bldgType = "Garden";
-    }
+        // Determine the building type (based on acres)
+        let bldgType;
+        if (acres < 3) {
+            bldgType = "High-Rise";
+        } else if (acres <= 10) {
+            bldgType = "Midrise";
+        } else {
+            bldgType = "Garden";
+        }
 
-    // Set default input values based on building type
-    const defaults = getDefaults(bldgType);
+        // Set default input values based on building type
+        const defaults = getDefaults(bldgType);
 
-    // Initialize INPUT sheet with default values
-    initializeInputSheet(inputSheet, defaults);
+        // Initialize INPUT sheet with default values
+        initializeInputSheet(inputSheet, defaults);
 
-    // Define unit types
-    const unitTypes = ['Studio', '1BD', '2BD', '3BD'];
-    
-    // Set up the Inputs Section for Unit Mix on the Proforma sheet
-    worksheet.getCell('A1').value = "Unit Type";
-    worksheet.getCell('B1').value = "Quantity";
-    worksheet.getCell('C1').value = "Average Rent";
-    worksheet.getCell('D1').value = "Size (SF)";
-    worksheet.getCell('E1').value = "Rent per SF";
-    worksheet.getCell('F1').value = "Total Revenue";
+        // Define unit types
+        const unitTypes = ['Studio', '1BD', '2BD', '3BD'];
 
-    let row = 2;
-    unitTypes.forEach((type, index) => {
-        worksheet.getCell(`A${row}`).value = type;
-        worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 2}` };
-        worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 6}` };
-        worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 10}` };
-        worksheet.getCell(`E${row}`).value = { formula: `C${row}/D${row}` };
-        worksheet.getCell(`F${row}`).value = { formula: `B${row}*C${row}*12` };
+        
+        // Set up the Inputs Section for Unit Mix on the Proforma sheet
+        worksheet.getCell('A1').value = "Unit Type";
+        worksheet.getCell('B1').value = "Quantity";
+        worksheet.getCell('C1').value = "Average Rent";
+        worksheet.getCell('D1').value = "Size (SF)";
+        worksheet.getCell('E1').value = "Rent per SF";
+        worksheet.getCell('F1').value = "Total Revenue";
+
+        let row = 2;
+        unitTypes.forEach((type, index) => {
+            worksheet.getCell(`A${row}`).value = type;
+            worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 2}` };
+            worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 6}` };
+            worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 10}` };
+            worksheet.getCell(`E${row}`).value = { formula: `C${row}/D${row}` };
+            worksheet.getCell(`F${row}`).value = { formula: `B${row}*C${row}*12` };
+            row++;
+        });
+
+
+        // Add Development Cost Breakdown to Worksheet
+        row += 2; // Skip a row for spacing
+        worksheet.getCell(`A${row}`).value = "Land Cost Per Unit";
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B1' }; // Corrected formula reference
         row++;
-    });
+
+        worksheet.getCell(`A${row}`).value = "Total Land Cost";
+        worksheet.getCell(`B${row}`).formula = `B${row-1}*SUM(B2:B5)`; // Land Cost Per Unit * Total Units
+        row++;
+
+        worksheet.getCell(`A${row}`).value = "Construction Cost Per SF A/C";
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B2' }; // Corrected formula reference
+        row++;
+
+        worksheet.getCell(`A${row}`).value = "Total Construction Cost";
+        worksheet.getCell(`B${row}`).formula = `B${row-1}*SUMPRODUCT(B2:B5,D2:D5)`; // Construction Cost Per SF * Total SF
+        row++;
+
+        worksheet.getCell(`A${row}`).value = "Indirect Cost Per Unit";
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B3' }; // Corrected formula reference
+        row++;
+
+        worksheet.getCell(`A${row}`).value = "Total Indirect Cost";
+        worksheet.getCell(`B${row}`).formula = `B${row-1}*SUM(B2:B5)`; // Indirect Cost Per Unit * Total Units
+        row++;
+
+        worksheet.getCell(`A${row}`).value = "Total Development Cost";
+        worksheet.getCell(`B${row}`).formula = `SUM(B${row-4},B${row-2},B${row})`; // Sum of Land, Construction, and Indirect Costs
+        row++;
 
 
-    // Add Development Cost Breakdown to Worksheet
-    row += 2; // Skip a row for spacing
-    worksheet.getCell(`A${row}`).value = "Land Cost Per Unit";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B1' }; // Corrected formula reference
-    row++;
+        // LTV and Financing Section
+        row += 2; // Skip a row for spacing
+        worksheet.getCell(`A${row}`).value = "Loan to Value (LTV %)";
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B5' }; // LTV from input sheet
+        row++;
 
-    worksheet.getCell(`A${row}`).value = "Total Land Cost";
-    worksheet.getCell(`B${row}`).formula = `B${row-1}*SUM(B2:B5)`; // Land Cost Per Unit * Total Units
-    row++;
+        worksheet.getCell(`A${row}`).value = "Loan Amount";
+        worksheet.getCell(`B${row}`).value = { formula: `B${row-1}/100*B${row-3}` }; // LTV % * Total Development Cost
+        row++;
 
-    worksheet.getCell(`A${row}`).value = "Construction Cost Per SF A/C";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B2' }; // Corrected formula reference
-    row++;
+        worksheet.getCell(`A${row}`).value = "Equity Investment";
+        worksheet.getCell(`B${row}`).value = { formula: `B${row-3}-B${row-1}` }; // Total Development Cost - Loan Amount
+        const equityInvestmentRow = row;
+        row++;
 
-    worksheet.getCell(`A${row}`).value = "Total Construction Cost";
-    worksheet.getCell(`B${row}`).formula = `B${row-1}*SUMPRODUCT(B2:B5,D2:D5)`; // Construction Cost Per SF * Total SF
-    row++;
+        // Calculating Total Revenue from Units
+        worksheet.getCell(`A${row}`).value = "Total Revenue from Units";
+        worksheet.getCell(`F${row}`).value = { formula: `SUM(F2:F5)` };
+        const totalRevenueRow = row;
+        row++;
 
-    worksheet.getCell(`A${row}`).value = "Indirect Cost Per Unit";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B3' }; // Corrected formula reference
-    row++;
+        // Other Financial Inputs
+        worksheet.getCell(`A${row}`).value = "Interest Rate";
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B5' }; // Corrected formula reference
+        const interestRateRow = row;
+        row++;
 
-    worksheet.getCell(`A${row}`).value = "Total Indirect Cost";
-    worksheet.getCell(`B${row}`).formula = `B${row-1}*SUM(B2:B5)`; // Indirect Cost Per Unit * Total Units
-    row++;
-
-    worksheet.getCell(`A${row}`).value = "Total Development Cost";
-    worksheet.getCell(`B${row}`).formula = `SUM(B${row-4},B${row-2},B${row})`; // Sum of Land, Construction, and Indirect Costs
-    row++;
-
-
-    // LTV and Financing Section
-    row += 2; // Skip a row for spacing
-    worksheet.getCell(`A${row}`).value = "Loan to Value (LTV %)";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B5' }; // LTV from input sheet
-    row++;
-
-    worksheet.getCell(`A${row}`).value = "Loan Amount";
-    worksheet.getCell(`B${row}`).value = { formula: `B${row-1}/100*B${row-3}` }; // LTV % * Total Development Cost
-    row++;
-
-    worksheet.getCell(`A${row}`).value = "Equity Investment";
-    worksheet.getCell(`B${row}`).value = { formula: `B${row-3}-B${row-1}` }; // Total Development Cost - Loan Amount
-    const equityInvestmentRow = row;
-    row++;
-
-    // Calculating Total Revenue from Units
-    worksheet.getCell(`A${row}`).value = "Total Revenue from Units";
-    worksheet.getCell(`F${row}`).value = { formula: `SUM(F2:F5)` };
-    const totalRevenueRow = row;
-    row++;
-
-    // Other Financial Inputs
-    worksheet.getCell(`A${row}`).value = "Interest Rate";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B5' }; // Corrected formula reference
-    const interestRateRow = row;
-    row++;
-
-    worksheet.getCell(`A${row}`).value = "Project Duration (Years)";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B6' }; // Corrected formula reference
-    const projectDurationRow = row;
-    row++;
+        worksheet.getCell(`A${row}`).value = "Project Duration (Years)";
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B6' }; // Corrected formula reference
+        const projectDurationRow = row;
+        row++;
 
 
-    // Calculations Section
-    row += 2; // Skip a row for spacing
-    worksheet.getCell(`A${row}`).value = "Total Project Cost";
-    worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${totalProjectCostRow}` };
-    const totalProjectCostRow = row;
-    row++;
+        // Calculations Section
+        row += 2; // Skip a row for spacing
+        worksheet.getCell(`A${row}`).value = "Total Project Cost";
+        worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${totalProjectCostRow}` };
+        const totalProjectCostRow = row;
+        row++;
 
-    worksheet.getCell(`A${row}`).value = "Total Project Revenue";
-    const totalProjectRevenueRow = row;
-    ////worksheet.getCell(`B${row}`).formula = `F${totalRevenueRow}`; // Total Revenue from Units
-    worksheet.getCell(`B${row}`).value = { formula: `F${totalProjectRevenueRow}` }; // Total Revenue from Units
-    row++;
+        worksheet.getCell(`A${row}`).value = "Total Project Revenue";
+        const totalProjectRevenueRow = row;
+        ////worksheet.getCell(`B${row}`).formula = `F${totalRevenueRow}`; // Total Revenue from Units
+        ////worksheet.getCell(`B${row}`).value = { formula: `F${totalProjectRevenueRow}` }; // Total Revenue from Units
+        worksheet.getCell(`B${row}`).value = { formula: `F${totalRevenueRow}` }; // Total Revenue from Units
+        ////worksheet.getCell(`B${row}`).formula = `F${totalRevenueRow}`; // Total Revenue from Units
+        row++;
 
-    // Return on Cost Calculation
-    worksheet.getCell(`A${row}`).value = "Return on Cost";
-    worksheet.getCell(`B${row}`).formula = `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${totalProjectCostRow}`; // (Total Revenue - Total Cost) / Total Cost
-    const returnOnCostRow = row;
-    row++;
+        // Return on Cost Calculation
+        worksheet.getCell(`A${row}`).value = "Return on Cost";
+        worksheet.getCell(`B${row}`).formula = `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${totalProjectCostRow}`; // (Total Revenue - Total Cost) / Total Cost
+        const returnOnCostRow = row;
+        row++;
 
-    // IRR Calculation
-    worksheet.getCell(`A${row}`).value = "IRR";
-    worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${equityInvestmentRow}` };
-    const irrRow = row;
-    row++;
+        // IRR Calculation
+        worksheet.getCell(`A${row}`).value = "IRR";
+        worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${equityInvestmentRow}` };
+        const irrRow = row;
+        row++;
 
-    // Outputs Section
-    row += 2; // Skip a row for spacing
-    worksheet.getCell(`A${row}`).value = "Est. IRR";
-    worksheet.getCell(`B${row}`).value = { formula: `B${irrRow}` };
-    row++;
-    worksheet.getCell(`A${row}`).value = "Est. Return on Cost";
-    worksheet.getCell(`B${row}`).value = { formula: `B${returnOnCostRow}` };
+        // Outputs Section
+        row += 2; // Skip a row for spacing
+        worksheet.getCell(`A${row}`).value = "Est. IRR";
+        worksheet.getCell(`B${row}`).value = { formula: `B${irrRow}` };
+        row++;
+        worksheet.getCell(`A${row}`).value = "Est. Return on Cost";
+        worksheet.getCell(`B${row}`).value = { formula: `B${returnOnCostRow}` };
 
+        // Apply styling to the workbook
+        styleInputsSheet(inputSheet);
+        applyStyling(workbook);
 
-    // Apply styling to the workbook
-    styleInputsSheet(inputSheet);
-    applyStyling(workbook);
+        // File Format Selection and Response
+        const fileFormat = req.body.fileFormat || 'xlsx'; // Default to 'xlsx' if not specified
+        const fileExtension = fileFormat === 'xlsm' ? 'xlsm' : 'xlsx';
 
-    // File Format Selection and Response
-    const fileFormat = req.body.fileFormat || 'xlsx'; // Default to 'xlsx' if not specified
-    const fileExtension = fileFormat === 'xlsm' ? 'xlsm' : 'xlsx';
+        res.setHeader('Content-Type', `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`);
+        res.setHeader('Content-Disposition', `attachment; filename=Proforma.${fileExtension}`);
 
-    res.setHeader('Content-Type', `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`);
-    res.setHeader('Content-Disposition', `attachment; filename=Proforma.${fileExtension}`);
-
-    if (fileExtension === 'xlsm') {
         await workbook.xlsx.write(res);
-    } else {
-        await workbook.xlsx.write(res);
+        res.end();
+    } catch (error) {
+        console.error("Error generating Excel file:", error);
+        res.status(500).send("Internal Server Error");
     }
-    res.end();
 };
 
 function initializeInputSheet(inputSheet, defaults) {
