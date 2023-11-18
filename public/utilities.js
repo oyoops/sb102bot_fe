@@ -114,9 +114,9 @@ function handleAIError(error) {
     document.getElementById("tryAgainButton").style.display = 'block';
     document.querySelector('.loading-container').style.display = 'none';
     if (error.message.startsWith("[CRITICAL]")) {
-        alert('Server timeout. Refresh and try again. This happens randomly...');
+        alert('Server timed out... Simply refresh and try again.');
     } else {
-        alert('Server timeout. Refresh and try again. This happens ~10% of times!');
+        ////alert('Server timeout. Refresh and try again. This happens ~10% of times!');
     }
 }
 
