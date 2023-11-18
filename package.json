@@ -4,6 +4,8 @@
     "espn-fantasy-football-api": "^2.0.0",
     "exceljs": "^4.4.0",
     "lodash": "^4.17.21",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "winston": "^3.11.0",
+    "winston-papertrail": "^1.0.5"
   }
 }

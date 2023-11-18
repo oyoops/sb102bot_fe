@@ -1,4 +1,5 @@
 const ExcelJS = require('exceljs');
+const logger = require('./logger');
 
 module.exports = async (req, res) => {
     try {
@@ -7,10 +8,10 @@ module.exports = async (req, res) => {
         acres = parseFloat(acres.toFixed(2));
         // Validate acreage
         if (typeof acres !== 'number' || acres <= 0) {
-            console.log(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
+            logger.info(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
             acres = 9.99;
         }
-        console.log("Acres:", acres);
+        logger.info("Acres:", acres);
 
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Proforma');
@@ -169,8 +170,8 @@ module.exports = async (req, res) => {
         await workbook.xlsx.write(res);
         res.end();
     } catch (error) {
-        console.error("Error generating Excel file:", error.message);
-        console.error("Stack Trace:", error.stack);
+        logger.error("Error generating Excel file:", error.message);
+        logger.error("Stack Trace:", error.stack);
         res.status(500).send("Internal Server Error: " + error.message + "\n\nFull Details:\n" + error.stack);
     }
 };
@@ -265,7 +266,7 @@ function styleInputsSheet(inputSheet) {
             row.getCell(2).fill = cellFormat.fill;
         }
     } catch (error) {
-        console.error("Error applying styles:", error.message);
+        logger.error("Error applying styles:", error.message);
         // Handle the error appropriately
     }
 }
