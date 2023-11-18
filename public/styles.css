@@ -21,6 +21,8 @@ body {
     height: auto;  /* maintain the aspect ratio */
     display: block; /* centers the image if h1 text-align is centered */
     margin: 0 auto; /* centers the image */
+    opacity: 0;
+    animation: fadeIn 1s forwards 1s; /* Add animation */
 }
 
 /* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
