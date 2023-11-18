@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
             logger.sendLog(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
             acres = 9.99;
         }
-        logger.sendLog("Acres: " + toString(acres));
+        logger.sendLog("Acres: " + acres);
 
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Proforma');
@@ -139,8 +139,8 @@ module.exports = async (req, res) => {
         const returnOnCostRow = row;
         row++;
 
-        const rocValue = toString(worksheet.getCell(`B${returnOnCostRow}`).value);
-        logger.sendLog("ROC %: " + toString(rocValue*100).toFixed(2) + "%");
+        ////const rocValue = toString(worksheet.getCell(`B${returnOnCostRow}`).value);
+        ////logger.sendLog("ROC %: " + toString(rocValue*100).toFixed(2) + "%");
 
         // Apply styling to the workbook
         styleInputsSheet(inputSheet);
