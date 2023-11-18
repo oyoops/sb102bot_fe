@@ -7,36 +7,6 @@ module.exports = async (req, res) => {
 
     // Inputs for each unit type
     const unitTypes = ['Studio', '1BD', '2BD', '3BD'];
-    const unitInputs = {
-        'Studio': { quantity: 50, averageRent: 2100, size: 525, rentPerSF: 4.00 },
-        '1BD': { quantity: 100, averageRent: 2400, size: 700, rentPerSF: 3.43 },
-        '2BD': { quantity: 75, averageRent: 2700, size: 900, rentPerSF: 3.00 },
-        '3BD': { quantity: 25, averageRent: 3000, size: 1200, rentPerSF: 2.50 }
-    };
-
-    // Financial Inputs for Development Cost Calculation
-    const landCostPerUnit = 22500; // Land Cost per Unit ($)
-    const constructionCostPerSF = 175; // GMP per sq. ft. A/C ($)
-    const indirectCostPerUnit = 37500; // Indirect Costs per unit ($)
-
-    // Calculating Development Costs
-    const totalUnits = unitTypes.reduce((total, type) => total + unitInputs[type].quantity, 0);
-    const totalSF = unitTypes.reduce((total, type) => total + (unitInputs[type].quantity * unitInputs[type].size), 0);
-
-    const totalLandCost = landCostPerUnit * totalUnits;
-    const totalConstructionCost = constructionCostPerSF * totalSF;
-    const totalIndirectCost = indirectCostPerUnit * totalUnits;
-
-    const totalDevelopmentCost = totalLandCost + totalConstructionCost + totalIndirectCost;
-
-    // LTV Input and Calculation
-    const loanToValuePercentage = 0.55; // Default LTV 55%
-    const loanAmount = totalDevelopmentCost * loanToValuePercentage;
-    const equityInvestment = totalDevelopmentCost - loanAmount;
-
-
-    const interestRate = 0.06; // Interest Rate (6%)
-    const projectDurationYears = 4; // Project Duration in Years
 
     // Set up the Inputs Section for Unit Mix
     worksheet.getCell('A1').value = "Unit Type";
@@ -47,97 +17,83 @@ module.exports = async (req, res) => {
     worksheet.getCell('F1').value = "Total Revenue";
 
     let row = 2;
-    for (const type of unitTypes) {
-        const unit = unitInputs[type];
+    unitTypes.forEach((type, index) => {
         worksheet.getCell(`A${row}`).value = type;
-        worksheet.getCell(`B${row}`).value = unit.quantity;
-        worksheet.getCell(`C${row}`).value = unit.averageRent;
-        worksheet.getCell(`D${row}`).value = unit.size;
+        worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 2}` }; // Quantity from input sheet
+        worksheet.getCell(`C${row}`).value = { formula: `INPUT!C${index + 2}` }; // Average Rent from input sheet
+        worksheet.getCell(`D${row}`).value = { formula: `INPUT!D${index + 2}` }; // Size (SF) from input sheet
         worksheet.getCell(`E${row}`).formula = `C${row}/D${row}`; // Average Rent / Size (SF)
         worksheet.getCell(`F${row}`).formula = `B${row}*C${row}*12`; // Monthly rent * quantity * 12 months
         row++;
-    }
+    });
 
     // Add Development Cost Breakdown to Worksheet
     row += 2; // Skip a row for spacing
     worksheet.getCell(`A${row}`).value = "Land Cost Per Unit";
-    worksheet.getCell(`B${row}`).value = landCostPerUnit;
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B2' }; // Land Cost per Unit from input sheet
     row++;
 
     worksheet.getCell(`A${row}`).value = "Total Land Cost";
-    worksheet.getCell(`B${row}`).formula = `B${row-1}*${totalUnits}`;
+    worksheet.getCell(`B${row}`).formula = `B${row-1}*SUM(B2:B5)`; // Land Cost Per Unit * Total Units
     row++;
 
     worksheet.getCell(`A${row}`).value = "Construction Cost Per SF A/C";
-    worksheet.getCell(`B${row}`).value = constructionCostPerSF;
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!C2' }; // GMP per sq. ft. A/C from input sheet
     row++;
 
     worksheet.getCell(`A${row}`).value = "Total Construction Cost";
-    worksheet.getCell(`B${row}`).formula = `B${row-1}*${totalSF}`;
+    worksheet.getCell(`B${row}`).formula = `B${row-1}*SUMPRODUCT(B2:B5,D2:D5)`; // Construction Cost Per SF * Total SF
     row++;
 
     worksheet.getCell(`A${row}`).value = "Indirect Cost Per Unit";
-    worksheet.getCell(`B${row}`).value = indirectCostPerUnit;
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!D2' }; // Indirect Costs per unit from input sheet
     row++;
 
     worksheet.getCell(`A${row}`).value = "Total Indirect Cost";
-    worksheet.getCell(`B${row}`).formula = `B${row-1}*${totalUnits}`;
+    worksheet.getCell(`B${row}`).formula = `B${row-1}*SUM(B2:B5)`; // Indirect Cost Per Unit * Total Units
     row++;
 
     worksheet.getCell(`A${row}`).value = "Total Development Cost";
-    worksheet.getCell(`B${row}`).formula = `SUM(B${row-4},B${row-2},B${row})`;
+    worksheet.getCell(`B${row}`).formula = `SUM(B${row-4},B${row-2},B${row})`; // Sum of Land, Construction, and Indirect Costs
     row++;
 
-    // Adjustments for LTV and Financing
+    // LTV and Financing Section
     row += 2; // Skip a row for spacing
     worksheet.getCell(`A${row}`).value = "Loan to Value (LTV %)";
-    worksheet.getCell(`B${row}`).value = loanToValuePercentage * 100;
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!E2' }; // LTV from input sheet
     row++;
 
     worksheet.getCell(`A${row}`).value = "Loan Amount";
-    worksheet.getCell(`B${row}`).value = loanAmount;
+    worksheet.getCell(`B${row}`).formula = `B${row-1}/100*B${row-3}`; // LTV % * Total Development Cost
     row++;
 
     worksheet.getCell(`A${row}`).value = "Equity Investment";
-    worksheet.getCell(`B${row}`).value = equityInvestment;
+    worksheet.getCell(`B${row}`).formula = `B${row-3}-B${row-1}`; // Total Development Cost - Loan Amount
     row++;
 
     // Calculating Total Revenue from Units
     worksheet.getCell(`A${row}`).value = "Total Revenue from Units";
-    worksheet.getCell(`F${row}`).formula = `SUM(F2:F${row-1})`; // Sum of all unit revenues
-
+    worksheet.getCell(`F${row}`).formula = `SUM(F2:F5)`; // Sum of all unit revenues
     const totalRevenueRow = row;
 
     // Other Financial Inputs
     row += 2; // Skip a row for spacing
-    worksheet.getCell(`A${row}`).value = "Total Development Cost";
-    worksheet.getCell(`B${row}`).value = totalDevelopmentCost;
-    row++;
-
-    worksheet.getCell(`A${row}`).value = "Equity Investment";
-    worksheet.getCell(`B${row}`).value = equityInvestment;
-    row++;
-
-    worksheet.getCell(`A${row}`).value = "Loan Amount";
-    worksheet.getCell(`B${row}`).value = loanAmount;
-    row++;
-
     worksheet.getCell(`A${row}`).value = "Interest Rate";
-    worksheet.getCell(`B${row}`).value = interestRate;
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!F2' }; // Interest Rate from input sheet
     row++;
 
     worksheet.getCell(`A${row}`).value = "Project Duration (Years)";
-    worksheet.getCell(`B${row}`).value = projectDurationYears;
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!G2' }; // Project Duration from input sheet
     row++;
 
     // Calculations Section
     row += 2; // Skip a row for spacing
     worksheet.getCell(`A${row}`).value = "Total Project Cost";
-    worksheet.getCell(`B${row}`).formula = `SUM(B${totalRevenueRow+2}:B${totalRevenueRow+4})`; // Sum of Development Cost and Loan Amount
+    worksheet.getCell(`B${row}`).formula = `B${totalRevenueRow-1}+B${totalRevenueRow+1}`; // Total Development Cost + Loan Amount
     row++;
 
     worksheet.getCell(`A${row}`).value = "Total Project Revenue";
-    worksheet.getCell(`B${row}`).value = { formula: `F${totalRevenueRow}` };
+    worksheet.getCell(`B${row}`).formula = `F${totalRevenueRow}`; // Total Revenue from Units
     row++;
 
     worksheet.getCell(`A${row}`).value = "Return on Cost";
@@ -152,11 +108,11 @@ module.exports = async (req, res) => {
     // Outputs Section
     row += 2; // Skip a row for spacing
     worksheet.getCell(`A${row}`).value = "Estimated IRR";
-    worksheet.getCell(`B${row}`).value = { formula: `B${row-2}` };
+    worksheet.getCell(`B${row}`).formula = `B${row-2}`; // IRR
     row++;
 
     worksheet.getCell(`A${row}`).value = "Estimated Return on Cost";
-    worksheet.getCell(`B${row}`).value = { formula: `B${row-3}` };
+    worksheet.getCell(`B${row}`).formula = `B${row-3}`; // Return on Cost
 
     // File Format Selection
     const fileFormat = req.body.fileFormat || 'xlsx'; // Default to 'xlsx' if not specified
