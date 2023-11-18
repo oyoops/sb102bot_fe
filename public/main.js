@@ -117,11 +117,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // MAX UNIT CAPACITY
             maxCapacity = parseFloat(maxMuniDensity) * acres;
-            maxCapacity = maxCapacity.toFixed(0);
-            console.log("Parcel max unit capacity: \n", maxCapacity,"total units");
+            maxCapacity = Math.round(maxCapacity); // Round to the nearest integer
+
+            // Take the lesser of maxCapacity or 100
+            maxCapacity = Math.min(maxCapacity, 100);
+
+            console.log("Parcel max unit capacity: \n", maxCapacity, "total units");
 
             /* End Data Collection Module */
-
 
 
             /* Do some things before the AI module takes ~30-60 seconds to complete */
@@ -164,11 +167,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("LLA Ineligible!");
             }
             
-
             // Show try again button
             tryAgainButton.style.display = 'block';
-
-
 
 
             /* Start: Land Development I/O Section */
@@ -186,25 +186,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         
             /* End: Land Development I/O Section */
 
-
-
-
             /* Start AI Module */
 
             try {
                 // Start composing the supplemental data set for AI beginning with parcelData
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
-                
                 // Generate AI summary HTML content
                 const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData);
-                
                 // Hide primary AI responses
                 document.getElementById("primaryResponsesContainer").style.display = 'none';
-
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
-                
                 // Show AI summary response
                 eligibilityDiv.innerHTML = aiContentHTML;
                 eligibilityDiv.style.display = 'block';
@@ -233,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
             /* End Excel Workbook Generation Module */
 
 
-            /* END SCRIPT */
+            /* END MAIN SCRIPT */
 
         } catch (error) {
             /* Last-chance error catches */
