@@ -2,8 +2,10 @@
 const ExcelJS = require('exceljs');
 
 module.exports = async (req, res) => {
-
+    // Extract acreage from payload
     let acres = req.body.acres;
+    console.log("Acres:", acres);
+
     // Validate 'acres' input
     if (typeof acres !== 'number' || acres <= 0) {
         console.log(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);

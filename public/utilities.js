@@ -779,6 +779,6 @@ async function generateAndDownloadExcel(data, format = 'xlsx') {
         window.URL.revokeObjectURL(url);
     } catch (error) {
         console.error('Error generating Excel file:', error);
-        alert('There was an error generating the Excel file.');
+        ////alert('There was an error generating the Excel file.');
     }
 }
