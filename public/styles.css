@@ -22,7 +22,7 @@ body {
     display: block; /* centers the image if h1 text-align is centered */
     margin: 0 auto; /* centers the image */
     opacity: 0;
-    animation: fadeIn 1s forwards 1s; /* Add animation */
+    animation: fadeIn 1s forwards 1.5s; /* Add animation */
 }
 
 /* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
@@ -56,10 +56,10 @@ h1 {
 p {
     color: #666;
     font-weight: 300;
-    transform: translateY(-10px);
-    transition: opacity 1s, transform 1s;
     margin-left: 10px;
     margin-right: 10px;
+    opacity: 0;
+    animation: fadeIn 1s forwards 2.5s; /* Add animation */
 }
 
 form {
@@ -75,6 +75,8 @@ form {
     margin-bottom: 20px;
     width: 80%; /* Increased from 60% to 80% */
     max-width: 600px; /* New addition: set a maximum width */
+    opacity: 0;
+    animation: fadeIn 1s forwards 2s; /* Add animation */
 }
 
 
@@ -421,15 +423,9 @@ input:disabled {
     cursor: not-allowed;
 }
 
-@keyframes fadeInSlideDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 /* Google Map container */
@@ -574,6 +570,8 @@ input:disabled {
     max-width: 800px;
     margin: auto;
     padding: 10px;
+    opacity: 0;
+    animation: fadeIn 1s forwards 3s; /* Add animation */
 }
 
 #infoSections h2 {
