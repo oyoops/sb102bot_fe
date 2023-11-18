@@ -53,12 +53,11 @@ module.exports = async (req, res) => {
         worksheet.getCell(`B${row}`).value = unit.quantity;
         worksheet.getCell(`C${row}`).value = unit.averageRent;
         worksheet.getCell(`D${row}`).value = unit.size;
-        worksheet.getCell(`E${row}`).value = unit.rentPerSF;
+        worksheet.getCell(`E${row}`).formula = `C${row}/D${row}`; // Average Rent / Size (SF)
         worksheet.getCell(`F${row}`).formula = `B${row}*C${row}*12`; // Monthly rent * quantity * 12 months
         row++;
     }
 
-    
     // Add Development Cost Breakdown to Worksheet
     row += 2; // Skip a row for spacing
     worksheet.getCell(`A${row}`).value = "Land Cost Per Unit";
