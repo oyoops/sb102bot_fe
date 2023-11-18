@@ -105,7 +105,7 @@ module.exports = async (req, res) => {
 
         // Calculating Annual Revenue from Units
         worksheet.getCell(`A${row}`).value = "Annual Rental Revenue";
-        worksheet.getCell(`F${row}`).value = { formula: `SUM(F2:F5)` };
+        worksheet.getCell(`B${row}`).value = { formula: `SUM(F2:F5)` };
         const annualRevenueRow = row;
         row++;
 
@@ -144,12 +144,15 @@ module.exports = async (req, res) => {
         const returnOnCostRow = row;
         row++;
 
+        /*
         // IRR Calculation
         worksheet.getCell(`A${row}`).value = "IRR";
         worksheet.getCell(`B${row}`).value = { formula: `(B${annualProjectRevenueRow}-B${totalProjectCostRow})/B${equityInvestmentRow}` };
         const irrRow = row;
         row++;
+        */
 
+        /*
         // Outputs Section
         row += 2; // Skip a row for spacing
         worksheet.getCell(`A${row}`).value = "Est. IRR";
@@ -157,6 +160,7 @@ module.exports = async (req, res) => {
         row++;
         worksheet.getCell(`A${row}`).value = "Est. Return on Cost";
         worksheet.getCell(`B${row}`).value = { formula: `B${returnOnCostRow}` };
+        */
 
         // Apply styling to the workbook
         styleInputsSheet(inputSheet);
