@@ -170,8 +170,8 @@ module.exports = async (req, res) => {
         await workbook.xlsx.write(res);
         res.end();
     } catch (error) {
-        logger.error("Error generating Excel file:", error.message);
-        logger.error("Stack Trace:", error.stack);
+        logger.sendLog("Error generating Excel file:", error.message);
+        logger.sendLog("Stack Trace:", error.stack);
         res.status(500).send("Internal Server Error: " + error.message + "\n\nFull Details:\n" + error.stack);
     }
 };
@@ -266,7 +266,7 @@ function styleInputsSheet(inputSheet) {
             row.getCell(2).fill = cellFormat.fill;
         }
     } catch (error) {
-        logger.error("Error applying styles:", error.message);
+        logger.sendLog("Error applying styles:", error.message);
         // Handle the error appropriately
     }
 }
