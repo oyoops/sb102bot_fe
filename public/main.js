@@ -66,6 +66,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Display fake loading progress bar
             updateLoadingBar();
             loadingContainer.style.display = 'block';
+            // Add class to loading squares to trigger transition
+            const loadingSquares = document.querySelectorAll('.loading-square');
+            loadingSquares.forEach((square, index) => {
+                // Delay each square's color change by an increasing multiple of 300ms
+                setTimeout(() => square.classList.add('green'), index * 300);
+            });
             window.scrollTo(0, 0);
 
 
