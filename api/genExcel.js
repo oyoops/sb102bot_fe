@@ -127,7 +127,8 @@ module.exports = async (req, res) => {
         // Total Project Cost
         const totalProjectCostRow = row;
         worksheet.getCell(`A${row}`).value = "Total Project Cost";
-        worksheet.getCell(`B${row}`).value = { formula: `SUM(B${row-5},B${row-3},B${row-1})` }; // Sum of Land, Construction, and Indirect Costs
+        ////worksheet.getCell(`B${row}`).value = { formula: `SUM(B${row-5},B${row-3},B${row-1})` }; // Sum of Land, Construction, and Indirect Costs
+        worksheet.getCell(`B${row}`).value = { formula: `ROUND(B${row-11}, -3)` }; // Sum of Land, Construction, and Indirect Costs
         row++;
 
         // Total Project Revenue
