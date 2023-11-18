@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // ... more relevant data ...
             };
             // Generate the proforma workbook 
-            await generateAndDownloadExcel(dataForExcel, "xlsx");
+            await generateAndDownloadExcel(dataForExcel);
 
             /* End Excel Workbook Generation Module */
 
