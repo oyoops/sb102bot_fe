@@ -3,7 +3,7 @@ const ExcelJS = require('exceljs');
 module.exports = async (req, res) => {
     try {
         // Extract acreage from payload
-        let acres = req.body.acres;
+        let acres = parseFloat(req.body.acres).toFixed(2);
         console.log("Acres:", acres);
 
         // Validate 'acres' input
