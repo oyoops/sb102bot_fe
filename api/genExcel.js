@@ -1,5 +1,5 @@
 const ExcelJS = require('exceljs');
-const logger = require('./logger');
+const logger = require('../logger');
 
 module.exports = async (req, res) => {
     try {
