@@ -449,7 +449,7 @@ input:disabled {
     }
 }
 
-/* Deprecated? 
+
 #eligibilityStatus {
     display: none;
     width: 80%;
@@ -480,7 +480,7 @@ input:disabled {
     color: #555;
     margin-bottom: 10px;
 }
-*/
+
 
 .loading-container {
     display: none;
