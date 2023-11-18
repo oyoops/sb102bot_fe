@@ -521,7 +521,7 @@ input:disabled {
     width: 20px;
     height: 20px;
     margin: 0 5px;
-    background-color: red;
+    background-color: #ccc; /* Initial gray color */
     transition: background-color 0.3s ease;
 }
 
