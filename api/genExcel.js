@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
     worksheet.getCell('F1').value = "Total Revenue";
 
     let row = 2;
-    unitTypes.forEach((type, index) => {
+    /*unitTypes.forEach((type, index) => {
         worksheet.getCell(`A${row}`).value = type;
         worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 8}` }; // Quantity from input sheet
         worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 12}` }; // Average Rent from input sheet
@@ -51,12 +51,22 @@ module.exports = async (req, res) => {
         worksheet.getCell(`E${row}`).formula = `C${row}/D${row}`; // Average Rent / Size (SF)
         worksheet.getCell(`F${row}`).formula = `B${row}*C${row}*12`; // Monthly rent * quantity * 12 months
         row++;
+    });*/
+    unitTypes.forEach((type, index) => {
+        worksheet.getCell(`A${row}`).value = type;
+        // Adjusting formula references to match INPUT sheet
+        worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 2}` }; // Adjusted to correct row
+        worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 6}` }; // Adjusted to correct row
+        worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 10}` }; // Adjusted to correct row
+        worksheet.getCell(`E${row}`).formula = `C${row}/D${row}`; 
+        worksheet.getCell(`F${row}`).formula = `B${row}*C${row}*12`;
+        row++;
     });
 
     // Add Development Cost Breakdown to Worksheet
     row += 2; // Skip a row for spacing
     worksheet.getCell(`A${row}`).value = "Land Cost Per Unit";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B2' }; // Land Cost per Unit from input sheet
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B1' }; // Corrected formula reference
     row++;
 
     worksheet.getCell(`A${row}`).value = "Total Land Cost";
@@ -64,7 +74,7 @@ module.exports = async (req, res) => {
     row++;
 
     worksheet.getCell(`A${row}`).value = "Construction Cost Per SF A/C";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B3' }; // GMP per sq. ft. A/C from input sheet
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B2' }; // Corrected formula reference
     row++;
 
     worksheet.getCell(`A${row}`).value = "Total Construction Cost";
@@ -72,7 +82,7 @@ module.exports = async (req, res) => {
     row++;
 
     worksheet.getCell(`A${row}`).value = "Indirect Cost Per Unit";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B4' }; // Indirect Costs per unit from input sheet
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B3' }; // Corrected formula reference
     row++;
 
     worksheet.getCell(`A${row}`).value = "Total Indirect Cost";
@@ -82,6 +92,7 @@ module.exports = async (req, res) => {
     worksheet.getCell(`A${row}`).value = "Total Development Cost";
     worksheet.getCell(`B${row}`).formula = `SUM(B${row-4},B${row-2},B${row})`; // Sum of Land, Construction, and Indirect Costs
     row++;
+
 
     // LTV and Financing Section
     row += 2; // Skip a row for spacing
@@ -106,14 +117,15 @@ module.exports = async (req, res) => {
 
     // Other Financial Inputs
     worksheet.getCell(`A${row}`).value = "Interest Rate";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B6' }; // Interest Rate from input sheet
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B5' }; // Corrected formula reference
     const interestRateRow = row;
     row++;
 
     worksheet.getCell(`A${row}`).value = "Project Duration (Years)";
-    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B7' }; // Project Duration from input sheet
+    worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B6' }; // Corrected formula reference
     const projectDurationRow = row;
     row++;
+
 
     // Calculations Section
     row += 2; // Skip a row for spacing
@@ -146,6 +158,7 @@ module.exports = async (req, res) => {
 
     worksheet.getCell(`A${row}`).value = "Estimated Return on Cost";
     worksheet.getCell(`B${row}`).formula = `B${returnOnCostRow}`; // Return on Cost
+
 
     // Apply styling to the workbook
     styleInputsSheet(inputSheet);
