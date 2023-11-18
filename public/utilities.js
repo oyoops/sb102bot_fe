@@ -753,10 +753,9 @@ function initAutocomplete() {
 }
 */
 
-
 async function generateAndDownloadExcel(data, format = 'xlsx') {
     // Prompt user for confirmation
-    const userConfirmation = confirm("Do you want to download an Excel proforma financial model populated with inputs specific to this property?");
+    const userConfirmation = confirm(`Do you want to download an Excel financial model based upon this property?`);
     
     if (!userConfirmation) {
         console.log('Declined an Excel proforma.');
