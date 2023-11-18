@@ -5,8 +5,7 @@ module.exports = async (req, res) => {
     try {
         // Extract acreage from payload
         let acres = parseFloat(req.body.acres);
-        ////acres = parseFloat(acres.toFixed(2));
-        // Validate acreage
+        // Validate
         if (typeof acres !== 'number' || acres <= 0) {
             logger.sendLog(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
             acres = 9.99;
@@ -36,7 +35,6 @@ module.exports = async (req, res) => {
         // Define unit types
         const unitTypes = ['Studio', '1BD', '2BD', '3BD'];
 
-        
         // Set up the Inputs Section for Unit Mix on the Proforma sheet
         worksheet.getCell('A1').value = "Unit Type";
         worksheet.getCell('B1').value = "Quantity";
@@ -55,7 +53,6 @@ module.exports = async (req, res) => {
             worksheet.getCell(`F${row}`).value = { formula: `B${row}*C${row}*12` };
             row++;
         });
-
 
         // Add Development Cost Breakdown to Worksheet
         row += 2; // Skip a row for spacing
@@ -86,7 +83,6 @@ module.exports = async (req, res) => {
         worksheet.getCell(`A${row}`).value = "Total Development Cost";
         worksheet.getCell(`B${row}`).value = { formula: `SUM(B${row-5},B${row-3},B${row-1})` }; // Sum of Land, Construction, and Indirect Costs
         row++;
-
 
         // LTV and Financing Section
         row += 2; // Skip a row for spacing
@@ -120,7 +116,6 @@ module.exports = async (req, res) => {
         const projectDurationRow = row;
         row++;
 
-
         // Calculations Section
         row += 2; // Skip a row for spacing
 
@@ -145,24 +140,6 @@ module.exports = async (req, res) => {
         row++;
 
         logger.sendLog("ROC %: " + toString(worksheet.getCell(`B${row}`).value));
-
-        /*
-        // IRR Calculation
-        worksheet.getCell(`A${row}`).value = "IRR";
-        worksheet.getCell(`B${row}`).value = { formula: `(B${annualProjectRevenueRow}-B${totalProjectCostRow})/B${equityInvestmentRow}` };
-        const irrRow = row;
-        row++;
-        */
-
-        /*
-        // Outputs Section
-        row += 2; // Skip a row for spacing
-        worksheet.getCell(`A${row}`).value = "Est. IRR";
-        worksheet.getCell(`B${row}`).value = { formula: `B${irrRow}` };
-        row++;
-        worksheet.getCell(`A${row}`).value = "Est. Return on Cost";
-        worksheet.getCell(`B${row}`).value = { formula: `B${returnOnCostRow}` };
-        */
 
         // Apply styling to the workbook
         styleInputsSheet(inputSheet);
