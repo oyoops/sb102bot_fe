@@ -2,12 +2,20 @@
 const ExcelJS = require('exceljs');
 
 module.exports = async (req, res) => {
+
+    let acres = req.body.acres;
+    // Validate 'acres' input
+    if (typeof acres !== 'number' || acres <= 0) {
+        console.log(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
+        acres = 9.99;
+    }
+
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Proforma');
     const inputSheet = workbook.addWorksheet('INPUT');
 
-    // Determine the building type based on acres
-    const acres = req.body.acres; // Assuming acres is received from the request body
+    // Determine the building type (based on acres)
+    ////const acres = req.body.acres; // Assuming acres is received from the request body
     let bldgType;
     if (acres < 3) {
         bldgType = "High-Rise";
@@ -17,70 +25,14 @@ module.exports = async (req, res) => {
         bldgType = "Garden";
     }
 
-    // Default values based on building type
-    const defaults = {
-        'Garden': {
-            "Land Cost Per Unit": 25000,
-            "Construction Cost Per SF A/C": 180,
-            "Indirect Cost Per Unit": 35000,
-            "Loan to Value (LTV %)": 60,
-            "Interest Rate": 6.50,
-            "Project Duration (Years)": 4,
-            "Studio - Quantity": 25,
-            "1BD - Quantity": 125,
-            "2BD - Quantity": 100,
-            "3BD - Quantity": 50,
-            "Studio - Average Rent": 1900,
-            "1BD - Average Rent": 2200,
-            "2BD - Average Rent": 2500,
-            "3BD - Average Rent": 2800,
-            "Studio - Size (SF)": 600,
-            "1BD - Size (SF)": 800,
-            "2BD - Size (SF)": 1050,
-            "3BD - Size (SF)": 1350
-        },
-        'Midrise': {
-            "Land Cost Per Unit": 25000,
-            "Construction Cost Per SF A/C": 240,
-            "Indirect Cost Per Unit": 30000,
-            "Loan to Value (LTV %)": 55,
-            "Interest Rate": 6.50,
-            "Project Duration (Years)": 4,
-            "Studio - Quantity": 50,
-            "1BD - Quantity": 150,
-            "2BD - Quantity": 75,
-            "3BD - Quantity": 25,
-            "Studio - Average Rent": 2100,
-            "1BD - Average Rent": 2400,
-            "2BD - Average Rent": 2700,
-            "3BD - Average Rent": 3000,
-            "Studio - Size (SF)": 550,
-            "1BD - Size (SF)": 725,
-            "2BD - Size (SF)": 900,
-            "3BD - Size (SF)": 1150
-        },
-        'High-Rise': {
-            "Land Cost Per Unit": 35000,
-            "Construction Cost Per SF A/C": 325,
-            "Indirect Cost Per Unit": 25000,
-            "Loan to Value (LTV %)": 50,
-            "Interest Rate": 6.50,
-            "Project Duration (Years)": 4,
-            "Studio - Quantity": 75,
-            "1BD - Quantity": 150,
-            "2BD - Quantity": 50,
-            "3BD - Quantity": 25,
-            "Studio - Average Rent": 2300,
-            "1BD - Average Rent": 2600,
-            "2BD - Average Rent": 2900,
-            "3BD - Average Rent": 3200,
-            "Studio - Size (SF)": 525,
-            "1BD - Size (SF)": 700,
-            "2BD - Size (SF)": 875,
-            "3BD - Size (SF)": 1125
-        }
-    };
+    // Set default input values based on building type
+    const defaults = getDefaults(bldgType);
 
+    // Initialize INPUT sheet with default values
+    initializeInputSheet(inputSheet, defaults);
+
+    // Define unit types
+    const unitTypes = ['Studio', '1BD', '2BD', '3BD'];
     
     // Set up the Inputs Section for Unit Mix on the Proforma sheet
     worksheet.getCell('A1').value = "Unit Type";
@@ -195,13 +147,17 @@ module.exports = async (req, res) => {
     worksheet.getCell(`A${row}`).value = "Estimated Return on Cost";
     worksheet.getCell(`B${row}`).formula = `B${returnOnCostRow}`; // Return on Cost
 
+    // Apply styling to the workbook
+    styleInputsSheet(inputSheet);
+    applyStyling(workbook);
+
     // File Format Selection and Response
     const fileFormat = req.body.fileFormat || 'xlsx'; // Default to 'xlsx' if not specified
     const fileExtension = fileFormat === 'xlsm' ? 'xlsm' : 'xlsx';
-    
+
     res.setHeader('Content-Type', `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`);
     res.setHeader('Content-Disposition', `attachment; filename=Proforma.${fileExtension}`);
-    
+
     if (fileExtension === 'xlsm') {
         await workbook.xlsx.write(res);
     } else {
@@ -209,3 +165,160 @@ module.exports = async (req, res) => {
     }
     res.end();
 };
+
+
+function getDefaults(bldgType) {
+    // Default values based on building type
+    const defaults = {
+        'Garden': {
+            "Land Cost Per Unit": 25000,
+            "Construction Cost Per SF A/C": 180,
+            "Indirect Cost Per Unit": 35000,
+            "Loan to Value (LTV %)": 60,
+            "Interest Rate": 6.50,
+            "Project Duration (Years)": 4,
+            "Studio - Quantity": 25,
+            "1BD - Quantity": 125,
+            "2BD - Quantity": 100,
+            "3BD - Quantity": 50,
+            "Studio - Average Rent": 1900,
+            "1BD - Average Rent": 2200,
+            "2BD - Average Rent": 2500,
+            "3BD - Average Rent": 2800,
+            "Studio - Size (SF)": 600,
+            "1BD - Size (SF)": 800,
+            "2BD - Size (SF)": 1050,
+            "3BD - Size (SF)": 1350
+        },
+        'Midrise': {
+            "Land Cost Per Unit": 25000,
+            "Construction Cost Per SF A/C": 240,
+            "Indirect Cost Per Unit": 30000,
+            "Loan to Value (LTV %)": 55,
+            "Interest Rate": 6.50,
+            "Project Duration (Years)": 4,
+            "Studio - Quantity": 50,
+            "1BD - Quantity": 150,
+            "2BD - Quantity": 75,
+            "3BD - Quantity": 25,
+            "Studio - Average Rent": 2100,
+            "1BD - Average Rent": 2400,
+            "2BD - Average Rent": 2700,
+            "3BD - Average Rent": 3000,
+            "Studio - Size (SF)": 550,
+            "1BD - Size (SF)": 725,
+            "2BD - Size (SF)": 900,
+            "3BD - Size (SF)": 1150
+        },
+        'High-Rise': {
+            "Land Cost Per Unit": 35000,
+            "Construction Cost Per SF A/C": 325,
+            "Indirect Cost Per Unit": 25000,
+            "Loan to Value (LTV %)": 50,
+            "Interest Rate": 6.50,
+            "Project Duration (Years)": 4,
+            "Studio - Quantity": 75,
+            "1BD - Quantity": 150,
+            "2BD - Quantity": 50,
+            "3BD - Quantity": 25,
+            "Studio - Average Rent": 2300,
+            "1BD - Average Rent": 2600,
+            "2BD - Average Rent": 2900,
+            "3BD - Average Rent": 3200,
+            "Studio - Size (SF)": 525,
+            "1BD - Size (SF)": 700,
+            "2BD - Size (SF)": 875,
+            "3BD - Size (SF)": 1125
+        }
+    };
+    return defaults[bldgType];
+}
+
+function initializeInputSheet(inputSheet, defaults) {
+    let row = 1;
+    for (const [key, value] of Object.entries(defaults)) {
+        inputSheet.getCell(`A${row}`).value = key;
+        inputSheet.getCell(`B${row}`).value = value;
+        row++;
+    }
+}
+
+function applyStyling(workbook) {
+    // Loop through sheets
+    workbook.eachSheet((sheet, id) => {
+        // Set 1st column width
+        sheet.getColumn('A').width = 30;
+
+        // Style header row
+        sheet.getRow(1).font = { bold: true };
+        sheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
+
+        // Add border to header cells
+        sheet.getRow(1).eachCell((cell) => {
+            cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' }
+            };
+        });
+
+        // Style rest of rows
+        sheet.eachRow((row, rowNumber) => {
+            if (rowNumber !== 1) { // Skip header row
+                row.eachCell((cell) => {
+                    cell.alignment = { vertical: 'middle', horizontal: 'left' };
+                });
+            }
+        });
+    });
+}
+
+// Apply advanced styling to the Workbook
+function styleInputsSheet(inputSheet) {
+    // Set column widths
+    inputSheet.getColumn('A').width = 25; // Description column
+    inputSheet.getColumn('B').width = 15; // Value column
+
+    // Apply styles to each row based on the type of data
+    const rows = inputSheet.getRows(2, 18); // Assuming there are 18 data rows
+    rows.forEach((row, index) => {
+        let cellFormat;
+        switch (index) {
+            case 0:
+            case 2:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+                // Currency format, no decimals
+                cellFormat = { numFmt: '$#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                break;
+            case 3:
+            case 4:
+                // Percentage format, no decimals
+                cellFormat = { numFmt: '0%', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                break;
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 14:
+            case 15:
+            case 16:
+            case 17:
+                // Number format, no decimals
+                cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                break;
+            case 1:
+                // Number format (for construction cost), no decimals
+                cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                break;
+        }
+
+        row.getCell(2).numFmt = cellFormat.numFmt;
+        row.getCell(2).font = cellFormat.font;
+        row.getCell(2).fill = cellFormat.fill;
+    });
+}
