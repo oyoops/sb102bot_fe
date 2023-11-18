@@ -756,10 +756,10 @@ function initAutocomplete() {
 
 async function generateAndDownloadExcel(data, format = 'xlsx') {
     // Prompt user for confirmation
-    const userConfirmation = confirm("Do you want to download the Excel proforma?");
+    const userConfirmation = confirm("Do you want to download an Excel proforma financial model populated with inputs specific to this property?");
     
     if (!userConfirmation) {
-        console.log('User cancelled the download.');
+        console.log('Declined an Excel proforma.');
         return; // Exit the function if user doesn't confirm
     }
 
