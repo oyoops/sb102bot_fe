@@ -169,6 +169,8 @@ module.exports = async (req, res) => {
         // (log all available data)
         console.log(jsonString);
 
+        console.log(modelName);
+
         // Send AI response to client
         res.status(200).json(htmlFormattedResponse);
     
