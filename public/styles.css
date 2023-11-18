@@ -187,7 +187,7 @@ tbody tr:hover {
 .primaryResponse {
     padding: 20px; 
     margin: 20px auto; 
-    max-width: 90%; /* Responsive width */
+    max-width: 70%; /* Responsive width */
     border: 1px solid #d1d9e6;
     border-radius: 8px; 
     background-color: #f7f9fc;
@@ -211,6 +211,7 @@ tbody tr:hover {
 /* Smaller devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .primaryResponse {
+        max-width: 90%; /* Responsive width */
         padding: 15px; /* Reduced padding */
         margin: 10px auto; /* Reduced margin */
         font-size: 14px; /* Smaller font size */
@@ -219,55 +220,12 @@ tbody tr:hover {
 /* Tablets and smaller desktops */
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
     .primaryResponse {
+        max-width: 90%; /* Responsive width */
         padding: 18px; /* Slightly larger padding than mobile */
         margin: 15px auto; /* Slightly larger margin than mobile */
-        font-size: 15px; /* Slightly larger font size than mobile */
+        font-size: 14px; /* Slightly larger font size than mobile */
     }
 }
-
-
-/* WORKING:
-.primaryResponse {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    background-color: #f7f9fc; 
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s, transform 0.4s;
-}
-*/
-
-/*.primaryResponse {
-    width: 80%;
-    max-width: 1200px;
-    margin: 2% auto;
-    margin-bottom: 10px;
-    border: 1px solid #e0e0e0;
-    padding: 10px; /* 1em 2em;
-    background-color: #f2f2f2;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: rgb(14, 9, 88);
-    font-size: 1em;
-    line-height: 1.2;
-    text-align: left;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s, transform 0.4s;
-    font-family: 'Arial', sans-serif;
-}
-.primaryResponse ul {
-    list-style-type: none;
-    padding-left: 0; 
-}
-.char {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(1em);
-    transition: all 0.3s;
-}*/
 
 button {
     width: 100%;
@@ -287,10 +245,9 @@ button:hover {
     background-color: #044b98;
 }
 
-
 :root {
     /* Default blue hue */
-    --hue: 210; 
+    --hue: 220; 
 
     /* Computed colors */
     --primary-color: hsl(var(--hue), 60%, 80%); 
