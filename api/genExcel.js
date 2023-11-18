@@ -48,9 +48,9 @@ module.exports = async (req, res) => {
         let row = 2;
         unitTypes.forEach((type, index) => {
             worksheet.getCell(`A${row}`).value = type;
-            worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 2}` };
-            worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 6}` };
-            worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 10}` };
+            worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 2 + 6}` };
+            worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 6 + 6}` };
+            worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 10 + 6}` };
             worksheet.getCell(`E${row}`).value = { formula: `C${row}/D${row}` };
             worksheet.getCell(`F${row}`).value = { formula: `B${row}*C${row}*12` };
             row++;
@@ -60,7 +60,7 @@ module.exports = async (req, res) => {
         // Add Development Cost Breakdown to Worksheet
         row += 2; // Skip a row for spacing
         worksheet.getCell(`A${row}`).value = "Land Cost Per Unit";
-        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B1' }; // Corrected formula reference
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B2' }; // Corrected formula reference
         row++;
 
         worksheet.getCell(`A${row}`).value = "Total Land Cost";
@@ -68,7 +68,7 @@ module.exports = async (req, res) => {
         row++;
 
         worksheet.getCell(`A${row}`).value = "Construction Cost Per SF A/C";
-        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B2' }; // Corrected formula reference
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B3' }; // Corrected formula reference
         row++;
 
         worksheet.getCell(`A${row}`).value = "Total Construction Cost";
@@ -76,7 +76,7 @@ module.exports = async (req, res) => {
         row++;
 
         worksheet.getCell(`A${row}`).value = "Indirect Cost Per Unit";
-        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B3' }; // Corrected formula reference
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B4' }; // Corrected formula reference
         row++;
 
         worksheet.getCell(`A${row}`).value = "Total Indirect Cost";
@@ -91,7 +91,7 @@ module.exports = async (req, res) => {
         // LTV and Financing Section
         row += 2; // Skip a row for spacing
         worksheet.getCell(`A${row}`).value = "Loan to Value (LTV %)";
-        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B5' }; // LTV from input sheet
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B6' }; // LTV from input sheet
         row++;
 
         worksheet.getCell(`A${row}`).value = "Loan Amount";
@@ -111,12 +111,12 @@ module.exports = async (req, res) => {
 
         // Other Financial Inputs
         worksheet.getCell(`A${row}`).value = "Interest Rate";
-        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B5' }; // Corrected formula reference
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B6' }; // Corrected formula reference
         const interestRateRow = row;
         row++;
 
         worksheet.getCell(`A${row}`).value = "Project Duration (Years)";
-        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B6' }; // Corrected formula reference
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B7' }; // Corrected formula reference
         const projectDurationRow = row;
         row++;
 
@@ -215,7 +215,7 @@ function styleInputsSheet(inputSheet) {
     inputSheet.getColumn('B').width = 15; // Value column
 
     // Assuming the header is in the first row, start styling from the second row.
-    let startRow = 3;  // Data starts from the third row (including header and a sub-header or title)
+    let startRow = 2;  // Data starts from the third row (including header and a sub-header or title)
     let endRow = inputSheet.rowCount; // Adjust based on the actual number of rows
 
     // Apply styles to each row based on the type of data
