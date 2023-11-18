@@ -761,7 +761,8 @@ async function generateAndDownloadExcel(data, format = 'xlsx') {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ ...data, format }),
+            //body: JSON.stringify({ ...data, format }),
+            body: JSON.stringify({ ...data }),
         });
 
         if (!response.ok) {
