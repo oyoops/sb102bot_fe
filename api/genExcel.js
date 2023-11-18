@@ -212,12 +212,18 @@ function styleInputsSheet(inputSheet) {
     inputSheet.getColumn('A').width = 25; // Description column
     inputSheet.getColumn('B').width = 15; // Value column
 
+    // Assuming the header is in the first row, start styling from the second row.
+    let startRow = 3;  // Data starts from the third row (including header and a sub-header or title)
+    let endRow = inputSheet.rowCount; // Adjust based on the actual number of rows
+
     // Apply styles to each row based on the type of data
-    const rows = inputSheet.getRows(2, 18); // Assuming there are 18 data rows
     try {
-        rows.forEach((row, index) => {
+        for (let i = startRow; i <= endRow; i++) {
             let cellFormat;
-            switch (index) {
+            let row = inputSheet.getRow(i);
+            
+            // Adjust the switch-case logic as per your requirements
+            switch (i - startRow) { // Adjust the index to start from 0
                 case 0:
                 case 2:
                 case 10:
@@ -248,16 +254,19 @@ function styleInputsSheet(inputSheet) {
                     // Number format (for construction cost), no decimals
                     cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
                     break;
+                default:
+                    // Default format for other rows
+                    cellFormat = { numFmt: '@', font: { color: { argb: 'FF000000' } }, fill: { type: 'pattern', pattern: 'none' } };
+                    break;
             }
     
             row.getCell(2).numFmt = cellFormat.numFmt;
             row.getCell(2).font = cellFormat.font;
             row.getCell(2).fill = cellFormat.fill;
-        });
+        }
     } catch (error) {
-        console.error("Error generating Excel file:", error.message);
-        console.error("Stack Trace:", error.stack);
-        res.status(500).send("Internal Server Error: " + error.message);
+        console.error("Error applying styles:", error.message);
+        // Handle the error appropriately
     }
 }
 
