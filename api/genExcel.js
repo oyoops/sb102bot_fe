@@ -213,45 +213,51 @@ function styleInputsSheet(inputSheet) {
 
     // Apply styles to each row based on the type of data
     const rows = inputSheet.getRows(2, 18); // Assuming there are 18 data rows
-    rows.forEach((row, index) => {
-        let cellFormat;
-        switch (index) {
-            case 0:
-            case 2:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-                // Currency format, no decimals
-                cellFormat = { numFmt: '$#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
-                break;
-            case 3:
-            case 4:
-                // Percentage format, no decimals
-                cellFormat = { numFmt: '0%', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
-                break;
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 14:
-            case 15:
-            case 16:
-            case 17:
-                // Number format, no decimals
-                cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
-                break;
-            case 1:
-                // Number format (for construction cost), no decimals
-                cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
-                break;
-        }
+    try {
+        rows.forEach((row, index) => {
+            let cellFormat;
+            switch (index) {
+                case 0:
+                case 2:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                    // Currency format, no decimals
+                    cellFormat = { numFmt: '$#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                    break;
+                case 3:
+                case 4:
+                    // Percentage format, no decimals
+                    cellFormat = { numFmt: '0%', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 14:
+                case 15:
+                case 16:
+                case 17:
+                    // Number format, no decimals
+                    cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                    break;
+                case 1:
+                    // Number format (for construction cost), no decimals
+                    cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                    break;
+            }
+    
+            row.getCell(2).numFmt = cellFormat.numFmt;
+            row.getCell(2).font = cellFormat.font;
+            row.getCell(2).fill = cellFormat.fill;
+        });
+    } catch (error) {
+        console.error("Error styling Excel file:\n", error);
+        res.status(500).send("Internal Server Error\n", error);
+    }
 
-        row.getCell(2).numFmt = cellFormat.numFmt;
-        row.getCell(2).font = cellFormat.font;
-        row.getCell(2).fill = cellFormat.fill;
-    });
 }
 
 
