@@ -755,13 +755,20 @@ function initAutocomplete() {
 
 
 async function generateAndDownloadExcel(data, format = 'xlsx') {
+    // Prompt user for confirmation
+    const userConfirmation = confirm("Do you want to download the Excel proforma?");
+    
+    if (!userConfirmation) {
+        console.log('User cancelled the download.');
+        return; // Exit the function if user doesn't confirm
+    }
+
     try {
         const response = await fetch('/api/genExcel', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            //body: JSON.stringify({ ...data, format }),
             body: JSON.stringify({ ...data }),
         });
 
@@ -774,7 +781,7 @@ async function generateAndDownloadExcel(data, format = 'xlsx') {
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = format === 'xlsx' ? 'Proforma_LiveLocalGuru.xlsx' : 'Proforma_LiveLocalGuru.xlsm';
+        a.download = format === 'xlsx' ? 'LiveLocalGuru_Proforma.xlsx' : 'LiveLocalGuru_Proforma.xlsm';
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
