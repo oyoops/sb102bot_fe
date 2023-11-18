@@ -63,7 +63,7 @@ module.exports = async (req, res) => {
         row++;
 
         worksheet.getCell(`A${row}`).value = "Total Land Cost";
-        worksheet.getCell(`B${row}`).formula = `B${row-1}*SUM(B2:B5)`; // Land Cost Per Unit * Total Units
+        worksheet.getCell(`B${row}`).value = { formula: `B${row-1}*SUM(B2:B5)` }; // Land Cost Per Unit * Total Units
         row++;
 
         worksheet.getCell(`A${row}`).value = "Construction Cost Per SF A/C";
@@ -71,7 +71,7 @@ module.exports = async (req, res) => {
         row++;
 
         worksheet.getCell(`A${row}`).value = "Total Construction Cost";
-        worksheet.getCell(`B${row}`).formula = `B${row-1}*SUMPRODUCT(B2:B5,D2:D5)`; // Construction Cost Per SF * Total SF
+        worksheet.getCell(`B${row}`).value = { formula: `B${row-1}*SUMPRODUCT(B2:B5,D2:D5)` }; // Construction Cost Per SF * Total SF
         row++;
 
         worksheet.getCell(`A${row}`).value = "Indirect Cost Per Unit";
@@ -79,11 +79,11 @@ module.exports = async (req, res) => {
         row++;
 
         worksheet.getCell(`A${row}`).value = "Total Indirect Cost";
-        worksheet.getCell(`B${row}`).formula = `B${row-1}*SUM(B2:B5)`; // Indirect Cost Per Unit * Total Units
+        worksheet.getCell(`B${row}`).value = { formula: `B${row-1}*SUM(B2:B5)` }; // Indirect Cost Per Unit * Total Units
         row++;
 
         worksheet.getCell(`A${row}`).value = "Total Development Cost";
-        worksheet.getCell(`B${row}`).formula = `SUM(B${row-4},B${row-2},B${row})`; // Sum of Land, Construction, and Indirect Costs
+        worksheet.getCell(`B${row}`).value = { formula: `SUM(B${row-4},B${row-2},B${row})` }; // Sum of Land, Construction, and Indirect Costs
         row++;
 
 
@@ -137,7 +137,7 @@ module.exports = async (req, res) => {
 
         // Return on Cost Calculation
         worksheet.getCell(`A${row}`).value = "Return on Cost";
-        worksheet.getCell(`B${row}`).formula = `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${totalProjectCostRow}`; // (Total Revenue - Total Cost) / Total Cost
+        worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${totalProjectCostRow}` }; // (Total Revenue - Total Cost) / Total Cost
         const returnOnCostRow = row;
         row++;
 
