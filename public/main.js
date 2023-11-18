@@ -107,8 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // MAX MUNI. DENSITY
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
-            maxMuniDensity = maxDensity; //// (hackily set global)
-            console.log("Max municipal density: \n", maxMuniDensity,"units per acre");
+            maxMuniDensity = Math.min(maxDensity, 100); // Takes the lesser of maxDensity or 100
+            console.log("Max municipal density: \n", maxMuniDensity, "units per acre");
             
             // PARCEL DATA
             const parcelData = await fetchParcelData(lat, lng, countyData.county_name);            
@@ -118,10 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // MAX UNIT CAPACITY
             maxCapacity = parseFloat(maxMuniDensity) * acres;
             maxCapacity = Math.round(maxCapacity); // Round to the nearest integer
-
-            // Take the lesser of maxCapacity or 100
-            maxCapacity = Math.min(maxCapacity, 100);
-
             console.log("Parcel max unit capacity: \n", maxCapacity, "total units");
 
             /* End Data Collection Module */
