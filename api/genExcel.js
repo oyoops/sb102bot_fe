@@ -171,7 +171,7 @@ module.exports = async (req, res) => {
     } catch (error) {
         console.error("Error generating Excel file:", error.message);
         console.error("Stack Trace:", error.stack);
-        res.status(500).send("Internal Server Error: " + error.message);
+        res.status(500).send("Internal Server Error: " + error.message + "\n\nFull Details:\n" + error.stack);
     }
 };
 
