@@ -250,7 +250,7 @@ function applyStyling(workbook) {
         sheet.getColumn('A').width = 30;
 
         // Style header row
-        sheet.getRow(1).font = { bold: true };
+        /*sheet.getRow(1).font = { bold: true };
         sheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
 
         // Add border to header cells
@@ -261,7 +261,7 @@ function applyStyling(workbook) {
                 bottom: { style: 'thin' },
                 right: { style: 'thin' }
             };
-        });
+        });*/
 
         // Style rest of rows
         sheet.eachRow((row, rowNumber) => {
