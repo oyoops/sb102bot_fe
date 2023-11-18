@@ -295,26 +295,6 @@ button:hover {
     }
 }
 
-
-/* UNUSED: */
-#sunIcon {
-    display: inline-block;
-    background-color: #2b18b8;
-    border-radius: 50%;
-    width: 50x;
-    height: 50px;
-    position: relative;
-}
-#sunIcon::before {
-    content: "☀️";
-    font-size: 2.0em;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-
 footer {
     padding: 5px 5px;
     background-color: var(--primary-color);
@@ -391,23 +371,6 @@ footer a:hover {
     text-align: center;
 }
 
-/* UNUSED: */
-#runAIButton {
-    font-weight: 500;
-    background-color: #163f85;
-    color: #ffffff;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 300px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    opacity: 1; /* Made it fully visible */
-}
-
 .unitCalculationText {
     font-weight: 300;
     color: #666;
@@ -423,11 +386,9 @@ footer a:hover {
     opacity: 0.7;
     transition: opacity 0.2s;
 }
-
 .slider:hover {
     opacity: 1;
 }
-
 /* Style for the slider */
 input[type="range"] {
     width: 80%;
@@ -487,13 +448,13 @@ input:disabled {
 
     /* Mobile specific styles */
     @media (max-width: 767px) {
-        height: 40vh;          /* Adjust height for mobile; change as needed */
+        height: 30vh;          /* Adjust height for mobile; change as needed */
     }
 }
 
-/* Deprecated? */
+/* Deprecated? 
 #eligibilityStatus {
-    display: none; /* General styling for the eligibilityStatus div */
+    display: none;
     width: 80%;
     max-width: 1200px;
     margin: 2% auto;
@@ -508,8 +469,8 @@ input:disabled {
     font-family: 'Arial', sans-serif;
 }
 #eligibilityStatus ul {
-    list-style-type: none; /* Removes bullet points */
-    padding-left: 0; /* Removes default padding */
+    list-style-type: none;
+    padding-left: 0;
 }
 .char {
     display: inline-block;
@@ -518,18 +479,17 @@ input:disabled {
     transition: all 0.3s;
 }
 
-/* deprecated? */
 #eligibilityStatus li {
     color: #555;
     margin-bottom: 10px;
 }
+*/
 
 .loading-container {
     display: none;
     text-align: center;
     font-family: 'Orbitron', sans-serif;
 }
-
 
 .animated-text {
     font-size: 16px;
@@ -549,7 +509,6 @@ input:disabled {
 .animated-text .char.show {
     opacity: 1;
 }
-
 
 .spinner {
     width: 20px;
@@ -604,8 +563,6 @@ input:disabled {
     transform: translateX(0);
 }
 
-
-
 #infoSections {
     text-align: left;
     font-size: 0.6em;
@@ -633,8 +590,6 @@ input:disabled {
     background-position: 0 50%;
     background-size: 10px;
 }
-
-
 
 .switchContainer {
     display: flex;
