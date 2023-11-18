@@ -166,16 +166,7 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI) {
         '/api/ask_ai_part1D'
     ];
     summaryEndpoint = 'ask_ai_part1SER_SFD';
-  } /*else {
-    endpoints = [
-        '/api/ask_ai_part1AA',
-        '/api/ask_ai_part1BB',
-        '/api/ask_ai_part1CC',
-        '/api/ask_ai_part1DD',
-        '/api/ask_ai_part1EE'
-    ];
-    summaryEndpoint = 'ask_ai_part1SER';
-  }*/
+  }
 
   // Map primary prompts to endpoints, then fetch all simultaneously
   const fetchPromises = endpoints.map(endpoint => {
