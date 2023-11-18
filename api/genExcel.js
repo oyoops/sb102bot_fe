@@ -43,15 +43,6 @@ module.exports = async (req, res) => {
     worksheet.getCell('F1').value = "Total Revenue";
 
     let row = 2;
-    /*unitTypes.forEach((type, index) => {
-        worksheet.getCell(`A${row}`).value = type;
-        worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 8}` }; // Quantity from input sheet
-        worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 12}` }; // Average Rent from input sheet
-        worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 16}` }; // Size (SF) from input sheet
-        worksheet.getCell(`E${row}`).formula = `C${row}/D${row}`; // Average Rent / Size (SF)
-        worksheet.getCell(`F${row}`).formula = `B${row}*C${row}*12`; // Monthly rent * quantity * 12 months
-        row++;
-    });*/
     unitTypes.forEach((type, index) => {
         worksheet.getCell(`A${row}`).value = type;
         // Adjusting formula references to match INPUT sheet
@@ -179,6 +170,81 @@ module.exports = async (req, res) => {
     res.end();
 };
 
+function initializeInputSheet(inputSheet, defaults) {
+    let row = 1;
+    for (const [key, value] of Object.entries(defaults)) {
+        inputSheet.getCell(`A${row}`).value = key;
+        inputSheet.getCell(`B${row}`).value = value;
+        row++;
+    }
+}
+
+function applyStyling(workbook) {
+    // Loop through sheets
+    workbook.eachSheet((sheet, id) => {
+        // Set 1st column width
+        sheet.getColumn('A').width = 30;
+
+        // Style rest of rows
+        sheet.eachRow((row, rowNumber) => {
+            if (rowNumber !== 1) { // Skip header row
+                row.eachCell((cell) => {
+                    cell.alignment = { vertical: 'middle', horizontal: 'left' };
+                });
+            }
+        });
+    });
+}
+
+// Apply advanced styling to the Workbook
+function styleInputsSheet(inputSheet) {
+    // Set column widths
+    inputSheet.getColumn('A').width = 25; // Description column
+    inputSheet.getColumn('B').width = 15; // Value column
+
+    // Apply styles to each row based on the type of data
+    const rows = inputSheet.getRows(2, 18); // Assuming there are 18 data rows
+    rows.forEach((row, index) => {
+        let cellFormat;
+        switch (index) {
+            case 0:
+            case 2:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+                // Currency format, no decimals
+                cellFormat = { numFmt: '$#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                break;
+            case 3:
+            case 4:
+                // Percentage format, no decimals
+                cellFormat = { numFmt: '0%', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                break;
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 14:
+            case 15:
+            case 16:
+            case 17:
+                // Number format, no decimals
+                cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                break;
+            case 1:
+                // Number format (for construction cost), no decimals
+                cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
+                break;
+        }
+
+        row.getCell(2).numFmt = cellFormat.numFmt;
+        row.getCell(2).font = cellFormat.font;
+        row.getCell(2).fill = cellFormat.fill;
+    });
+}
+
 
 function getDefaults(bldgType) {
     // Default values based on building type
@@ -245,93 +311,4 @@ function getDefaults(bldgType) {
         }
     };
     return defaults[bldgType];
-}
-
-function initializeInputSheet(inputSheet, defaults) {
-    let row = 1;
-    for (const [key, value] of Object.entries(defaults)) {
-        inputSheet.getCell(`A${row}`).value = key;
-        inputSheet.getCell(`B${row}`).value = value;
-        row++;
-    }
-}
-
-function applyStyling(workbook) {
-    // Loop through sheets
-    workbook.eachSheet((sheet, id) => {
-        // Set 1st column width
-        sheet.getColumn('A').width = 30;
-
-        // Style header row
-        /*sheet.getRow(1).font = { bold: true };
-        sheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
-
-        // Add border to header cells
-        sheet.getRow(1).eachCell((cell) => {
-            cell.border = {
-                top: { style: 'thin' },
-                left: { style: 'thin' },
-                bottom: { style: 'thin' },
-                right: { style: 'thin' }
-            };
-        });*/
-
-        // Style rest of rows
-        sheet.eachRow((row, rowNumber) => {
-            if (rowNumber !== 1) { // Skip header row
-                row.eachCell((cell) => {
-                    cell.alignment = { vertical: 'middle', horizontal: 'left' };
-                });
-            }
-        });
-    });
-}
-
-// Apply advanced styling to the Workbook
-function styleInputsSheet(inputSheet) {
-    // Set column widths
-    inputSheet.getColumn('A').width = 25; // Description column
-    inputSheet.getColumn('B').width = 15; // Value column
-
-    // Apply styles to each row based on the type of data
-    const rows = inputSheet.getRows(2, 18); // Assuming there are 18 data rows
-    rows.forEach((row, index) => {
-        let cellFormat;
-        switch (index) {
-            case 0:
-            case 2:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-                // Currency format, no decimals
-                cellFormat = { numFmt: '$#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
-                break;
-            case 3:
-            case 4:
-                // Percentage format, no decimals
-                cellFormat = { numFmt: '0%', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
-                break;
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 14:
-            case 15:
-            case 16:
-            case 17:
-                // Number format, no decimals
-                cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
-                break;
-            case 1:
-                // Number format (for construction cost), no decimals
-                cellFormat = { numFmt: '#,##0', font: { color: { argb: 'FF0000FF' } }, fill: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFF99' } } };
-                break;
-        }
-
-        row.getCell(2).numFmt = cellFormat.numFmt;
-        row.getCell(2).font = cellFormat.font;
-        row.getCell(2).fill = cellFormat.fill;
-    });
 }
