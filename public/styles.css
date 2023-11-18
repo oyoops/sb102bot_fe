@@ -23,19 +23,21 @@ body {
     margin: 0 auto; /* centers the image */
 }
 
-/* Hide mobile logo by default */
+/* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
 #logoMobile {
     display: none;
+    visibility: hidden;
 }
-/* Media query to switch logos based on screen size */
+/* Media query to switch logos based on screen size, with improved readability */
 @media (max-width: 800px) {
+    /* Hide desktop logo */
     #logo {
-        align-items: center; /* Center children elements */
         display: none;
     }
+    /* Show mobile logo */
     #logoMobile {
-        align-items: center; /* Center children elements */
         display: block;
+        visibility: visible; /* Make it accessible to screen readers */
     }
 }
 
@@ -118,14 +120,15 @@ tbody tr:hover {
 }
 
 
-/* Responsive design: If the screen width is 600px or less, make the tables 95% width */
+/* Responsive design: Adjust table styles for better readability on small screens */
 @media (max-width: 600px) {
     table {
-        font-size: 0.8em;
-        width: 90%;
+        font-size: 0.8em; /* Smaller font size for table content */
+        width: 95%; /* Adjusted width for better edge spacing */
+        margin: 0 auto; /* Center tables within the container */
     }
     th, td {
-        padding: 8px 10px;
+        padding: 8px; /* Uniform padding for table cells */
     }
 }
 
@@ -181,23 +184,24 @@ tbody tr:hover {
 
 /* TESTING */
 
+/* Style for primary response containers with improved comments and organization */
 .primaryResponse {
-    padding: 20px; 
-    margin: 20px auto; 
+    padding: 20px;
+    margin: 20px auto;
     max-width: 70%; /* Responsive width */
     border: 1px solid #d1d9e6;
-    border-radius: 8px; 
+    border-radius: 8px;
     background-color: #f7f9fc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-    overflow: hidden; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0; /* Initially hidden */
+    transform: translateY(20px); /* Positioned slightly lower */
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; /* Smooth transitions for opacity and position */
+    overflow: hidden;
     font-size: 16px; /* Default font size */
     color: #757575; /* Lighter grey font color */
-    white-space: pre-wrap; /* Wrap text and preserve spaces */
-    word-break: break-word; /* Break long words if needed */
-    overflow-wrap: break-word; /* Prefer breaking at the end of words */
+    white-space: pre-wrap; /* Preserve whitespace and line breaks */
+    word-break: break-word; /* Break words to prevent overflow */
+    overflow-wrap: break-word; /* Break words at appropriate points */
 }
 /* Hover effect for non-touch devices */
 @media (hover: hover) {
