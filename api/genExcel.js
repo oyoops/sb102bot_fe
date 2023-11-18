@@ -47,14 +47,14 @@ module.exports = async (req, res) => {
     let row = 2;
     unitTypes.forEach((type, index) => {
         worksheet.getCell(`A${row}`).value = type;
-        // Adjusting formula references to match INPUT sheet
-        worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 2}` }; // Adjusted to correct row
-        worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 6}` }; // Adjusted to correct row
-        worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 10}` }; // Adjusted to correct row
-        worksheet.getCell(`E${row}`).formula = `C${row}/D${row}`; 
-        worksheet.getCell(`F${row}`).formula = `B${row}*C${row}*12`;
+        worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 2}` };
+        worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 6}` };
+        worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 10}` };
+        worksheet.getCell(`E${row}`).value = { formula: `C${row}/D${row}` };
+        worksheet.getCell(`F${row}`).value = { formula: `B${row}*C${row}*12` };
         row++;
     });
+
 
     // Add Development Cost Breakdown to Worksheet
     row += 2; // Skip a row for spacing
@@ -94,17 +94,17 @@ module.exports = async (req, res) => {
     row++;
 
     worksheet.getCell(`A${row}`).value = "Loan Amount";
-    worksheet.getCell(`B${row}`).formula = `B${row-1}/100*B${row-3}`; // LTV % * Total Development Cost
+    worksheet.getCell(`B${row}`).value = { formula: `B${row-1}/100*B${row-3}` }; // LTV % * Total Development Cost
     row++;
 
     worksheet.getCell(`A${row}`).value = "Equity Investment";
-    worksheet.getCell(`B${row}`).formula = `B${row-3}-B${row-1}`; // Total Development Cost - Loan Amount
+    worksheet.getCell(`B${row}`).value = { formula: `B${row-3}-B${row-1}` }; // Total Development Cost - Loan Amount
     const equityInvestmentRow = row;
     row++;
 
     // Calculating Total Revenue from Units
     worksheet.getCell(`A${row}`).value = "Total Revenue from Units";
-    worksheet.getCell(`F${row}`).formula = `SUM(F2:F5)`; // Sum of all unit revenues
+    worksheet.getCell(`F${row}`).value = { formula: `SUM(F2:F5)` };
     const totalRevenueRow = row;
     row++;
 
@@ -123,34 +123,35 @@ module.exports = async (req, res) => {
     // Calculations Section
     row += 2; // Skip a row for spacing
     worksheet.getCell(`A${row}`).value = "Total Project Cost";
-    worksheet.getCell(`B${row}`).formula = `B${totalRevenueRow-1}+B${equityInvestmentRow}`; // Total Development Cost + Equity Investment
+    worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${totalProjectCostRow}` };
     const totalProjectCostRow = row;
     row++;
 
     worksheet.getCell(`A${row}`).value = "Total Project Revenue";
-    worksheet.getCell(`B${row}`).formula = `F${totalRevenueRow}`; // Total Revenue from Units
     const totalProjectRevenueRow = row;
+    ////worksheet.getCell(`B${row}`).formula = `F${totalRevenueRow}`; // Total Revenue from Units
+    worksheet.getCell(`B${row}`).value = { formula: `F${totalProjectRevenueRow}` }; // Total Revenue from Units
     row++;
 
+    // Return on Cost Calculation
     worksheet.getCell(`A${row}`).value = "Return on Cost";
     worksheet.getCell(`B${row}`).formula = `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${totalProjectCostRow}`; // (Total Revenue - Total Cost) / Total Cost
     const returnOnCostRow = row;
     row++;
 
     // IRR Calculation
-    worksheet.getCell(`A${row}`).value = "Internal Rate of Return (IRR)";
-    worksheet.getCell(`B${row}`).formula = `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${equityInvestmentRow}`; // (Total Revenue - Total Cost) / Equity Investment
+    worksheet.getCell(`A${row}`).value = "IRR";
+    worksheet.getCell(`B${row}`).value = { formula: `(B${totalProjectRevenueRow}-B${totalProjectCostRow})/B${equityInvestmentRow}` };
     const irrRow = row;
     row++;
 
     // Outputs Section
     row += 2; // Skip a row for spacing
-    worksheet.getCell(`A${row}`).value = "Estimated IRR";
-    worksheet.getCell(`B${row}`).formula = `B${irrRow}`; // IRR
+    worksheet.getCell(`A${row}`).value = "Est. IRR";
+    worksheet.getCell(`B${row}`).value = { formula: `B${irrRow}` };
     row++;
-
-    worksheet.getCell(`A${row}`).value = "Estimated Return on Cost";
-    worksheet.getCell(`B${row}`).formula = `B${returnOnCostRow}`; // Return on Cost
+    worksheet.getCell(`A${row}`).value = "Est. Return on Cost";
+    worksheet.getCell(`B${row}`).value = { formula: `B${returnOnCostRow}` };
 
 
     // Apply styling to the workbook
@@ -173,7 +174,12 @@ module.exports = async (req, res) => {
 };
 
 function initializeInputSheet(inputSheet, defaults) {
-    let row = 1;
+    // Add headers
+    inputSheet.getCell('A1').value = "Proforma Input";
+    inputSheet.getCell('B1').value = "Value";
+
+    // Start adding data from the second row
+    let row = 2;
     for (const [key, value] of Object.entries(defaults)) {
         inputSheet.getCell(`A${row}`).value = key;
         inputSheet.getCell(`B${row}`).value = value;
