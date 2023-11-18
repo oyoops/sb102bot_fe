@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
             logger.sendLog(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
             acres = 9.99;
         }
-        logger.sendLog("Acres:", acres);
+        logger.sendLog("Acres:", this.toString(acres));
 
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Proforma');
@@ -143,6 +143,8 @@ module.exports = async (req, res) => {
         worksheet.getCell(`B${row}`).value = { formula: `(B${annualProjectRevenueRow}/B${totalProjectCostRow})` }; // (Annual Revenue / TDC)
         const returnOnCostRow = row;
         row++;
+
+        logger.sendLog("ROC%:", toString(worksheet.getCell(`B${row}`).value));
 
         /*
         // IRR Calculation
