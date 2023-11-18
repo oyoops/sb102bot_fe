@@ -1,23 +1,21 @@
-const winston = require('winston');
-require('winston-papertrail').Papertrail;
+const axios = require('axios');
 
-const papertrailTransport = new winston.transports.Papertrail({
-  host: 'logsN.papertrailapp.com', // Your Papertrail log destination host
-  port: 12345,                     // Your Papertrail log destination port
-  program: 'YourAppName',          // Optional: A name for your app
-  colorize: true
-});
+const PAPERTRAIL_ENDPOINT = "https://logs.collector.na-02.cloud.solarwinds.com/v1/logs";
+const PAPERTRAIL_TOKEN = "LIkUhxScFpKERDvQaIj1NNPB3xgQZzw33gbCbhEgck4pThgkZO0xVhnjaJEOBVA1bPAKaxQ";
 
-const logger = winston.createLogger({
-  transports: [papertrailTransport]
-});
-
-papertrailTransport.on('error', function(err) {
-  // Handle logging errors here
-});
-
-papertrailTransport.on('connect', function(message) {
-  console.log('Connected to Papertrail:', message);
-});
+const logger = {
+  sendLog: async (message) => {
+    try {
+      await axios.post(PAPERTRAIL_ENDPOINT, message, {
+        headers: {
+          'Content-Type': 'application/octet-stream',
+          'Authorization': `Bearer ${PAPERTRAIL_TOKEN}`
+        }
+      });
+    } catch (error) {
+      console.error("Failed to send log to Papertrail:", error);
+    }
+  }
+};
 
 module.exports = logger;

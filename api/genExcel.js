@@ -8,10 +8,10 @@ module.exports = async (req, res) => {
         acres = parseFloat(acres.toFixed(2));
         // Validate acreage
         if (typeof acres !== 'number' || acres <= 0) {
-            logger.info(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
+            logger.sendLog(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
             acres = 9.99;
         }
-        logger.info("Acres:", acres);
+        logger.sendLog("Acres:", acres);
 
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Proforma');
