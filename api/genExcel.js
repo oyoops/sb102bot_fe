@@ -104,7 +104,7 @@ module.exports = async (req, res) => {
         row++;
 
         // Calculating Total Revenue from Units
-        worksheet.getCell(`A${row}`).value = "Total Revenue from Units";
+        worksheet.getCell(`A${row}`).value = "Annual Rental Revenue";
         worksheet.getCell(`F${row}`).value = { formula: `SUM(F2:F5)` };
         const totalRevenueRow = row;
         row++;
@@ -133,7 +133,7 @@ module.exports = async (req, res) => {
 
         // Total Project Revenue
         const totalProjectRevenueRow = row;
-        worksheet.getCell(`A${row}`).value = "Total Project Revenue";
+        worksheet.getCell(`A${row}`).value = "Annual Project Revenue";
         worksheet.getCell(`B${row}`).value = { formula: `F${totalRevenueRow}` }; // Total Revenue from Units
         row++;
 
