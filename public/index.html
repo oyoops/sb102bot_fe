@@ -45,29 +45,29 @@
     <!-- Initial Content: Address Input -->
     <div id="initialContent">
 
-        <!-- Text below title and above address input -->  
-        <!-- <p>Give me an address, and I'll tell you if you can Live Local on it.<br>I'll also give you an overview of nearby apartment comps.</p> -->
-
         <!-- Address input form -->
         <form id="searchForm">
             <!-- <input type="text" id="addressInput" placeholder="Address..."> -->
             <input type="text" id="addressInput" value="11240 biscayne blvd, miami FL">
+            
+            <!-- Download in Excel switch -->
             <br>
-            <div class="switchContainer" style="display: none">
-                <label class="switchBox" style="display: none">
-                    <input type="checkbox" id="superchargeSwitch" name="supercharge" value="off" style="display: none">
+            <div class="switchContainer">
+                <label class="switchBox">
+                    <input type="checkbox" id="superchargeSwitch" name="supercharge" value="off">
                     <span class="toggle round"></span>
                 </label>
-                <p><i>Concise Mode</i></p>
+                <p>Download in <i>Excel</i></p>
             </div>
+
             <!-- Submit button -->
-            <button type="submit">Give me the scoop</button>
+            <button type="submit">Ask the Guru</button>
         </form>
 
         <!-- Text below form and above Latest Updates -->  
         <p>
             <br>Find out if your Florida property is <u><a href="https://floridahousing.org/live-local-act">Live Local Act</a></u>-eligible.
-            <br>If so, I'll help you determine its new potential for development.
+            <br>If so, I'll help you determine its increased development potential.
             <br>Read more about the game-changing new state law on the <a href="https://cresunshine.com/"><u>blog</u></a>.
         </p>
     </div>
@@ -130,6 +130,7 @@
 
     <!-- Loading Indicator -->
     <div class="loading-container">
+        <br>
         <div class="loading-squares">
             <div class="loading-square" id="loadingSquare1"></div>
             <div class="loading-square" id="loadingSquare2"></div>
@@ -137,17 +138,19 @@
             <div class="loading-square" id="loadingSquare4"></div>
             <div class="loading-square" id="loadingSquare5"></div>
         </div>
+
         <div class="loading-text">
             Conducting due diligence. 
             <br><i>Please wait...</i>
         </div>
+        
         <div class="loading-bar">
             <div class="loading-fill"></div>
             <div class="loading-percentage">0%</div>
         </div>
+        
         <div class="spinner"></div>
     </div>
-
 
     <!-- Primary AI Response Container -->
     <div id="primaryResponsesContainer" style="display: none">
@@ -158,64 +161,12 @@
         <div id="response5" class="primaryResponse"></div>
     </div>
 
-
-    <!-- Comps -->
-    <table id="compsTable" style="display: none">
-        <thead>
-            <tr>
-                <th>Comp Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Rows will be populated here -->
-        </tbody>
-    </table>
-
+    <!-- Umm table of "average" whats!? -->
     <div id="averagesTableContainer" style="display: none">
         <!-- The averages table will be rendered here -->
     </div>
 
-
-    <!-- Parcel data table -->
-    <!-- <br> -->
-    <!-- <table id="parcelDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;"> -->
-    <!--     <thead> -->
-    <!--         <tr> -->
-    <!--             <th colspan="4">Property</th> -->
-    <!--         </tr> -->
-    <!--         <tr> -->
-    <!--             <th>Owner</th> -->
-    <!--             <th>Parcel ID</th> -->
-    <!--             <th>Acreage</th> -->
-    <!--             <th>Current Use</th> -->
-    <!--         </tr> -->
-    <!--     </thead> -->
-    <!--     <tbody> -->
-    <!--         Data will be inserted here by JavaScript -->
-    <!--     </tbody> -->
-    <!-- </table> -->
-    
-
-    <!-- County data table -->
-    <table id="countyDataTable" border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; display: none;">
-        <thead>
-            <tr>
-                <th colspan="4">Municipality</th>
-            </tr>
-            <tr>
-                <th>City</th>
-                <th>County</th>
-                <th>Area Median Income</th>
-                <th>Millage (Est.)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be inserted here by JavaScript -->
-        </tbody>
-    </table>
-
-
-    <!-- Rents comparison table container -->
+    <!-- Rents comparison table (container) -->
     <div id="rentInfoContainer" style="display: none;">
         <br>
         <div class="table-container">
@@ -233,19 +184,19 @@
                     <!-- Data will be inserted here by JavaScript -->
                 </tbody>
             </table>
+
             <p>
                 <i>These are the Live Local affordable rent limits (120% AMI)
                 <br>Limits must include any direct billing of electric/water/insurance/taxes</i>
             </p>
+
         </div>
     </div>
     
-
-    <!-- New Search Button (aka 'Try Again') -->
+    <!-- New Search Button (aka Try Again) -->
     <br>
     <button id="tryAgainButton" style="display: none;">New Search</button>
     <br>
-
 
     <!-- START: PART 2 -- DEVELOPMENT PROGRAM I/O -->
     <div id="developmentProgramInputSection" style="display: none;">
@@ -365,6 +316,7 @@
     <script src="./gmap.js"></script>
     <script src="./gsheet.js"></script>
     <script src="./useCodes.js"></script>
+
     <script type="module" src="main.js"></script>
 </body>
 </html>
