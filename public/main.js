@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add class to loading squares to trigger transition
             const loadingSquares = document.querySelectorAll('.loading-square');
             loadingSquares.forEach((square, index) => {
-                // Delay each square's color change by an increasing multiple of 6000ms
-                setTimeout(() => square.classList.add('green'), index * 6000);
+                // Delay each square's color change by an increasing multiple of 8000ms
+                setTimeout(() => square.classList.add('green'), index * 8000);
             });
             window.scrollTo(0, 0);
 
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             /* End Data Collection Module */
 
 
-            /* Do some things before the AI module takes ~30-45 seconds to complete */
+            /* Do a few more things before the AI module takes ~30-45 seconds to complete */
 
 
             // Determine LLA eligibility
