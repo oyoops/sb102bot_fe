@@ -197,11 +197,15 @@ function createStyledMarker(position, map, label) {
 /* Maps + Comps Database */
 
 // Adds each comp returned to a Google Map
-function addCompsMarkersToMap(responseData) {
+function addCompsMarkersToMap(responseData, map) { // Add 'map' as a parameter
+    if (!map) {
+        console.error('Error: Map is not defined.');
+        return;
+    }
     // Create a new bounds object
     let bounds = new google.maps.LatLngBounds();
 
-    responseData.forEach(item => {
+    responseData.forEach((item, index) => { // Add 'index' to the parameters of the forEach callback
 
         // Custom icon using SVG for a smaller and different-colored marker
         const customIcon = {
