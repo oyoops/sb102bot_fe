@@ -1,6 +1,5 @@
 // gmap.js - Functions for the Google Map
 
-
 /* FUNCTIONS */
 
 // Load the Google Maps API dynamically
@@ -14,23 +13,6 @@ function loadGoogleMapsAPI() {
     script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&libraries=places,geometry&callback=initMap";
     document.body.appendChild(script);
 }
-
-/*
-// For address autocomplete (not really map, per se...)
-// Load the Google Places API dynamically
-function loadGooglePlacesAPI() {
-    const script = document.createElement('script');
-    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&libraries=geometry&callback=initPlaces";
-    document.body.appendChild(script);
-    // Places API is now loaded and can be used.
-    console.log("Ring-ring... Places API called back for you on Line 2!");
-}
-function initPlaces() {
-    const script = document.createElement('script');
-    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&libraries=geometry&callback=initPlaces";
-    document.body.appendChild(script);
-}
-*/
 
 // Initialize the Google Map
 async function initializeMap(lat, lng) {
@@ -60,7 +42,7 @@ async function initializeMap(lat, lng) {
     const bounds = new google.maps.LatLngBounds();
     bounds.extend(new google.maps.LatLng(lat, lng));
 
-    // Keep track of the tallest one
+    // Keep track
     let maxDistance = 0;
     let maxHeight = 0;
 
@@ -112,26 +94,26 @@ async function initializeMap(lat, lng) {
                 map: map
             });
 
-            // distance between subject-building
+            // distance between building and subject site
             const distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(
                 new google.maps.LatLng(lat, lng),
                 new google.maps.LatLng(buildingLat, buildingLng)
             );
-            distanceInMilesToTallestBldg = distanceInMeters * 0.000621371;
+            distanceInMilesToTallestBldg = distanceInMeters * 0.000621371; // convert to miles
 
-            ///// NEW: Keep track of tallest
+            // Keep track of tallest bldg across iterations
             const currentBuildingHeight = parseFloat(buildingHeight);
+            /* This could cause an error if zero tall buildings are found within radius. */
             if (currentBuildingHeight > maxHeight) {
                 maxHeight = currentBuildingHeight;
                 maxDistance = distanceInMilesToTallestBldg;
-                //console.log(`New tallest = ${maxHeight}'`);
             }
-            /////
-
-            // distance line label
+            
+            // create distance label (subject -> tallest bldg)
             const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
-            createStyledMarker(lineLabelPos, map, `${buildingHeight.toFixed(0)} feet tall\n${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
+            createStyledMarker(lineLabelPos, map, `${buildingHeight.toFixed(0)}' max. height\n${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
 
+            // extend map boundaries to include tallest building
             bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));
 
             window.scrollTo(0, 0);
@@ -185,13 +167,12 @@ function addCompsMarkersToMap(responseData) {
             path: google.maps.SymbolPath.CIRCLE,
             fillColor: 'orange', // Change this color as needed
             fillOpacity: 0.8,
-            scale: 10,  // Adjust the size using the scale property
+            scale: 14,  // Adjust the size using the scale property
             strokeColor: 'white',
             strokeWeight: 2
         };
-
+        
         const markerPosition = new google.maps.LatLng(item.lat, item.lng);
-
         const marker = new google.maps.Marker({
             position: markerPosition,
             map: map,
@@ -199,7 +180,8 @@ function addCompsMarkersToMap(responseData) {
             icon: customIcon
         });
 
-        // Extend the bounds to include each marker's position
+        // Extend the bounds to include each comp marker
+        /* Probably will cause an error if zero comps within radius... */
         bounds.extend(markerPosition);
 
         // Info window content
@@ -222,9 +204,7 @@ function addCompsMarkersToMap(responseData) {
         });
     });
 
-    // Once all markers have been added, adjust the viewport
+    // Once all markers have been added, adjust viewport to show all
+    /* This probably causes an error if zero comps are available (again...) */
     map.fitBounds(bounds);
-
 }
-
-

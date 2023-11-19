@@ -1,16 +1,16 @@
 // main.js - primary script for the sb102bot web app
 
-// get event listeners
+// Get event listeners
 import './eventListeners.js';
-// get DOM elements
+// Get DOM elements
 import {
+    // In use:
     mainHeader, initialContent, form, addressInput, navButtonsContainer, loadingContainer,
-    eligibilityDiv, tryAgainButton, 
+    googlemap, eligibilityDiv, tryAgainButton,
     currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections,
-    googlemap, compsTable,
-    developmentProgramInputSection,
+    // To be deleted: 
+    compsTable, developmentProgramInputSection,
     marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
-    ////parcelDataTable, parcelDataTableBody, 
     rentInfoContainer, countyDataTable, countyTableBody, countyMaxRentsTable, rentsTableBody,
     unitCalculationTable, abatementTable,
     affordablePercentageSlider, affordablePctDisplay, acreageInput, densityInput,
@@ -18,11 +18,9 @@ import {
     sizeInputs, marketInputs, affordableSizeInputs, marketRateInputs
 } from './domElements.js';
 
-
 // once DOM is fully loaded:
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
-    //initAutocomplete(); // prepare Places API
     
     // manually add Supercharge AI switch event listener
     let superAI = 'off';
@@ -66,11 +64,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Display fake loading progress bar
             updateLoadingBar();
             loadingContainer.style.display = 'block';
+
             // Add class to loading squares to trigger transition
             const loadingSquares = document.querySelectorAll('.loading-square');
+            loadingSquares.style.display = 'block';
             loadingSquares.forEach((square, index) => {
-                // Delay each square's color change by an increasing multiple of 300ms
-                setTimeout(() => square.classList.add('green'), index * 300);
+                // Delay each square's color change by an increasing multiple of 3000ms
+                setTimeout(() => square.classList.add('green'), index * 3000);
             });
             window.scrollTo(0, 0);
 
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // TALLEST BLDG. DATA (+ initializes map)
             const tallestBuildingData = await initializeMap(lat, lng);
 
-            // Display map
+            // Display the map
             googlemap.style.display = 'block';
             window.scrollTo(0, 0);
 
@@ -93,12 +93,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const maxBH = tallestBuildingData.maxHeight.toFixed(0); // feet tall
             const maxBD = tallestBuildingData.maxDistance.toFixed(2); // miles away
             buildingHeight = maxBH; //// (hackily set global)
-            //console.log("MaxBH =", maxBH, "ft.");
-            //console.log("MaxBD =", maxBD, "mi.");
             
             // COMPS DATA
             const compsModuleResult = await runCompsModule(lat, lng, COMPS_SEARCH_RADIUS_MILES);
-            //console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
+            console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
     
             // CITY DATA
             const cityData = await checkCity(geocodeData);        
@@ -113,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // MAX MUNI. DENSITY
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
-            maxMuniDensity = Math.min(maxDensity, 100); // Takes the lesser of maxDensity or 100
+            maxMuniDensity = Math.min(maxDensity, 100); // Takes the lesser of maxDensity or 100 (rough limit of feasibility)
             console.log("Max municipal density: \n", maxMuniDensity, "units per acre");
             
             // PARCEL DATA
@@ -129,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
             /* End Data Collection Module */
 
 
-            /* Do some things before the AI module takes ~30-60 seconds to complete */
+            /* Do some things before the AI module takes ~30-45 seconds to complete */
 
 
             // Determine LLA eligibility
@@ -169,12 +167,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("LLA Ineligible!");
             }
             
-            // Show try again button
+            // Show the Try Again button
             tryAgainButton.style.display = 'block';
 
 
             /* Start: Land Development I/O Section */
-            
             try {
                 // Run initial dev calcs
                 //runInitialDevelopmentCalculations();
@@ -185,7 +182,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Land Dev. I/O Error:', error);
                 handleAIError(error);
             }
-                        
             /* End: Land Development I/O Section */
 
 
@@ -195,18 +191,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Start composing the supplemental data set for AI beginning with parcelData
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
+                
                 // Generate AI summary HTML content
                 const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData);
+                
                 // Hide primary AI responses
                 document.getElementById("primaryResponsesContainer").style.display = 'none';
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
+
                 // Show AI summary response
                 eligibilityDiv.innerHTML = aiContentHTML;
                 eligibilityDiv.style.display = 'block';
                 window.scrollTo(0, 0);
                 animateTextFadeIn(eligibilityDiv);
-
             } catch (error) {
                 console.error('Error:', error);
                 handleAIError(error);
@@ -214,26 +212,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
             /* End AI Module */
 
-
             
             /* Start Excel Workbook Generation Module */
-
             // Collect the data necessary for proforma workbook
             const dataForExcel = {
                 acres: acres//,
                 //address: address,
-                // ... more relevant data ...
+                // many more!
+                // ... put all available variables in here!
             };
             // Generate the proforma workbook 
             await generateAndDownloadExcel(dataForExcel, "xlsx");
-
             /* End Excel Workbook Generation Module */
-
 
             /* END MAIN SCRIPT */
 
         } catch (error) {
-            /* Last-chance error catches */
+            /* Last-chance error catching */
             if (error.message.startsWith("Server responded with")) {
                 console.error('Server error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
@@ -255,8 +250,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-
     // Dynamically load Google Maps & Places APIs
     loadGoogleMapsAPI();
-
 });

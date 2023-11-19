@@ -1,6 +1,5 @@
 // domElements.js
 
-
 /* (Option 1) ES6 Module Syntax */
 
 // Div sections/containers
