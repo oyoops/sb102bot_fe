@@ -246,16 +246,16 @@ tbody tr:hover {
 
 .submit-button {
     width: 100%;
-    padding: 20px;
+    padding: 10px;
     border: none;
     background-color: #007bff; /* Bootstrap primary color */
     color: #fff;
-    border-radius: 8px;
+    border-radius: 16px;
     cursor: pointer;
     font-weight: bold;
     text-align: center;
     transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
-    margin-top: 15px;
+    margin-top: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .submit-button:hover {
