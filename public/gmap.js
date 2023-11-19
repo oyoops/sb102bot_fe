@@ -28,7 +28,7 @@ async function initializeMap(lat, lng) {
         center: { lat: lat, lng: lng },
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.SATELLITE,
-        styles: [],
+        styles: [/* Add custom map styles here */],
         gestureHandling: 'greedy', // Allows map to be moved with one finger on mobile
         streetViewControl: false, // Disable Street View control
         fullscreenControl: false, // Disable Fullscreen control
