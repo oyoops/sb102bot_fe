@@ -50,7 +50,7 @@ async function runCompsModule(latitude, longitude, radius="3.000") {
 
         // Add comp placemarks to the map
         try {
-            addCompsMarkersToMap(compsDataFull);
+            addCompsMarkersToMap(compsDataFull, map);
         } catch (error) {
             alert("Error: Failed to add comp placemarks to the map. \nWhoops!")
             console.error("Error while adding comp placemarks to map: \n", error);
