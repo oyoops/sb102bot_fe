@@ -56,9 +56,7 @@ async function initializeMap(lat, lng) {
     });
 
     // Delay the animation of the tallest building and comps markers
-    setTimeout(() => {
-        // Code for animating tallest building-related elements will go here
-    }, 2000); // 2 seconds after the subject site marker
+    // If you need to wait for the timeout to complete before continuing, consider using a custom promise-based delay function
 
     const userInfowindow = new google.maps.InfoWindow({
         content: `<div style="text-align:center;"><strong>Subject</strong></div>`
@@ -97,11 +95,11 @@ async function initializeMap(lat, lng) {
                 console.warn(`Building #${index} missing valid lat/lng. Skipping...`);
                 return;
             }
-            buildingLat = parseFloat(buildingData.lat);
-            buildingLng = parseFloat(buildingData.lng);
-            buildingHeight = buildingData.height || "Uncertain";
-            buildingName = buildingData.name || `#${index + 1} tallest building`;
-            buildingAddress = buildingData.address || "-";
+            let buildingLat = parseFloat(buildingData.lat);
+            let buildingLng = parseFloat(buildingData.lng);
+            let buildingHeight = buildingData.height || "Uncertain";
+            let buildingName = buildingData.name || `#${index + 1} tallest building`;
+            let buildingAddress = buildingData.address || "-";
 
             const buildingMarker = new google.maps.Marker({
                 position: { lat: buildingLat, lng: buildingLng },
@@ -140,7 +138,7 @@ async function initializeMap(lat, lng) {
                 new google.maps.LatLng(lat, lng),
                 new google.maps.LatLng(buildingLat, buildingLng)
             );
-            distanceInMilesToTallestBldg = distanceInMeters * 0.000621371; // convert to miles
+            let distanceInMilesToTallestBldg = distanceInMeters * 0.000621371; // convert to miles
 
             // Keep track of tallest bldg across iterations
             const currentBuildingHeight = parseFloat(buildingHeight);
@@ -205,7 +203,7 @@ function addCompsMarkersToMap(responseData, map) { // Add 'map' as a parameter
     // Create a new bounds object
     let bounds = new google.maps.LatLngBounds();
 
-    responseData.forEach((item, index) => { // Add 'index' to the parameters of the forEach callback
+    responseData.forEach((item, index) => { // Ensure 'index' is used if needed
 
         // Custom icon using SVG for a smaller and different-colored marker
         const customIcon = {
@@ -272,6 +270,10 @@ function addCompsMarkersToMap(responseData, map) { // Add 'map' as a parameter
     });
 
     // Once all markers have been added, adjust viewport to show all
-    /* This probably causes an error if zero comps are available (again...) */
-    map.fitBounds(bounds);
+    // Check if there are comps to fit bounds to
+    if (responseData.length > 0) {
+        map.fitBounds(bounds);
+    } else {
+        console.warn('No comps available to fit bounds to.');
+    }
 }
