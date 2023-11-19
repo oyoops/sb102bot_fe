@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
     const lat = parseFloat(req.query.lat);
     const lng = parseFloat(req.query.lng);
     const county_name = req.query.county_name;
-    console.log(`Received coordinates: Latitude = ${lat}, Longitude = ${lng}, County = ${county_name}`);
+    //console.log(`Received coordinates: Latitude = ${lat}, Longitude = ${lng}, County = ${county_name}`);
     
     // Check if lat and lng are valid numbers
     if (isNaN(lat) || isNaN(lng)) {
@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
     }
 
     try {
-        console.log('Starting PARCEL DATA query...');
+        //console.log('Starting PARCEL DATA query...');
         const parcelDataQuery = `
             WITH input_point AS (
                 SELECT ST_SetSRID(ST_MakePoint($1, $2), 4326) AS geom
@@ -44,12 +44,12 @@ module.exports = async (req, res) => {
         `;
         
         const parcelDataResult = await pool.query(parcelDataQuery, [lng, lat, county_name]);
-        console.log('Parcel data query complete.');
-        console.log(`Parcel data query returned ${parcelDataResult.rowCount} rows.\nResponse: ${JSON.stringify(parcelDataResult.rows[0])}`);
+        //console.log('Parcel data query complete.');
+        //console.log(`Parcel data query returned ${parcelDataResult.rowCount} rows.\nResponse: ${JSON.stringify(parcelDataResult.rows[0])}`);
         
         // ...
         
-        console.log('Sending response to client.');
+        //console.log('Sending response to client.');
         res.status(200).json(parcelDataResult.rows[0]);
     } catch (err) {
         console.error(`Error encountered: ${err.message}`);

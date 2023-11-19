@@ -38,9 +38,9 @@ module.exports = async (req, res) => {
             LIMIT 1;
         `;
         
-        console.log('County query starting...');
+        //console.log('County query starting...');
         const countyResult = await pool.query(countyQuery, [lng, lat, 0.01]);
-        console.log('County query complete.');
+        //console.log('County query complete.');
 
         if (countyResult.rows.length === 0) {
             console.log('ERROR! No parcels found within ~0.25 mi. of input address.');
@@ -48,9 +48,9 @@ module.exports = async (req, res) => {
         }
         
         const countyName = countyResult.rows[0].county_name;
-        console.log("COUNTY:",countyName);
+        //console.log("COUNTY:",countyName);
 
-        console.log('Starting COUNTY DATA query...');
+        //console.log('Starting COUNTY DATA query...');
         const dataQuery = `
             SELECT 
                 fc.county_name, 
@@ -68,12 +68,12 @@ module.exports = async (req, res) => {
             WHERE fc.county_name = $1;
         `;
         const dataResult = await pool.query(dataQuery, [countyName]);
-        console.log('Data query complete.');
-        console.log(`Data query returned ${dataResult.rowCount} rows.\nResponse: ${JSON.stringify(dataResult.rows[0])}`);
+        //console.log('Data query complete.');
+        //console.log(`Data query returned ${dataResult.rowCount} rows.\nResponse: ${JSON.stringify(dataResult.rows[0])}`);
         
         // ...
 
-        console.log('Starting PARCEL DATA query...');
+        //console.log('Starting PARCEL DATA query...');
         const parcelDataQuery = `
             WITH input_point AS (
                 SELECT ST_SetSRID(ST_MakePoint($1, $2), 4326) AS geom
@@ -90,13 +90,13 @@ module.exports = async (req, res) => {
         `;
         
         const parcelDataResult = await pool.query(parcelDataQuery, [lng, lat, countyName]);
-        console.log('Parcel data query complete.');
-        console.log(`Parcel data query returned ${parcelDataResult.rowCount} rows.\nResponse: ${JSON.stringify(parcelDataResult.rows[0])}`);
+        //console.log('Parcel data query complete.');
+        //console.log(`Parcel data query returned ${parcelDataResult.rowCount} rows.\nResponse: ${JSON.stringify(parcelDataResult.rows[0])}`);
         
 
         // ...
         
-        console.log('Sending response to client.');
+        //console.log('Sending response to client.');
         res.status(200).json(dataResult.rows[0]);
     } catch (err) {
         console.error(`Error encountered: ${err.message}`);

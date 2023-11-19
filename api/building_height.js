@@ -1,6 +1,5 @@
 const axios = require('axios');
-
-const NUM_TALLEST_BLDGS = 1;
+const NUM_TALLEST_BLDGS = 1; // N=1
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -55,17 +54,18 @@ module.exports = async (req, res) => {
             return null;
         }).filter(b => b !== null);
 
-        // Sort buildings by height in descending order and take the top 3
-        const topThreeTallestBuildings = buildingsWithHeight.sort((a, b) => b.height - a.height).slice(0, NUM_TALLEST_BLDGS);
+        // Sort buildings by height in descending order and take the top N
+        const topNTallestBuildings = buildingsWithHeight.sort((a, b) => b.height - a.height).slice(0, NUM_TALLEST_BLDGS);
 
-        if (topThreeTallestBuildings.length === 0) {
+        if (topNTallestBuildings.length === 0) {
             console.log("No buildings found with a height value.");
+            // THIS CAUSES A CLIENT ERROR:
             return res.status(404).send('No buildings found with a height value.');
         }
 
-        // Fetch coordinates for each of the top 3 tallest buildings
+        // Fetch coordinates for each of the top N tallest buildings
         const results = [];
-        for (const building of topThreeTallestBuildings) {
+        for (const building of topNTallestBuildings) {
             // Fetch geometry (coordinates) using OpenStreetMap API
             const geometryUrl = `https://api.openstreetmap.org/api/0.6/way/${building.id}.json`;
             const geometryResponse = await axios.get(geometryUrl);
@@ -83,9 +83,7 @@ module.exports = async (req, res) => {
 
             const avgLat = sumLat / nodeResponse.data.elements.length;
             const avgLon = sumLon / nodeResponse.data.elements.length;
-
             const addressString = `${building.address.housenumber} ${building.address.street}, ${building.address.city}`;
-
             results.push({
                 lat: avgLat,
                 lng: avgLon,

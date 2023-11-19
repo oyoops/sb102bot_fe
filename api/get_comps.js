@@ -12,7 +12,9 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  
+
+  const COMPS_COUNT_CAP = 10;
+
   // Check for preflight request
   if (req.method === 'OPTIONS') {
     res.status(204).send();
@@ -23,7 +25,6 @@ module.exports = async (req, res) => {
   const lng = parseFloat(req.query.lng);
   const radius = parseFloat(req.query.radius);
   const limit = parseInt(req.query.limit);
-  const COMPS_COUNT_CAP = 10;
   
   // Validate and cap the comps quantity
   if (limit > COMPS_COUNT_CAP) {
@@ -32,12 +33,14 @@ module.exports = async (req, res) => {
   }
   /* still will produce unlimited results if no limit provided (potentially a huge problem) */
 
+  /*
   console.log('Received new comps request:\n', {
     lat: lat,
     lng: lng,
     radius: radius,
     limit: limit
   });
+  */
 
   if (lat < 24.396308 || lat > 31.001056 || lng < -87.634938 || lng > -80.031362) {
     return res.status(400).send('Please provide a valid lat and long for Florida.');
@@ -77,8 +80,7 @@ module.exports = async (req, res) => {
 
     const queryParams = limit ? [lat, lng, radius, limit] : [lat, lng, radius];
     const result = await pool.query(query, queryParams);
-    console.log('Database returned', result.rows.length, 'rows.');
-    //console.log('Comp #1:\n', result.rows.slice(0, 1));
+    //console.log('Database returned', result.rows.length, 'rows.');
 
     let totalUnitsByType = {
       studio: 0,
@@ -124,7 +126,7 @@ module.exports = async (req, res) => {
         totalUnitsByType.twoBd += twoBdUnits;
         totalUnitsByType.threeBd += threeBdUnits;
         
-        console.log(`\nProperty: ${row.property_name}\n  - Total Units: ${totalUnits.toFixed(0)}\n  - Studio Units: ${studioUnits.toFixed(0)}\n  - One Bedroom Units: ${oneBdUnits.toFixed(0)}\n  - Two Bedroom Units: ${twoBdUnits.toFixed(0)}\n  - Three Bedroom Units: ${threeBdUnits.toFixed(0)}\n`);
+        //console.log(`\nProperty: ${row.property_name}\n  - Total Units: ${totalUnits.toFixed(0)}\n  - Studio Units: ${studioUnits.toFixed(0)}\n  - One Bedroom Units: ${oneBdUnits.toFixed(0)}\n  - Two Bedroom Units: ${twoBdUnits.toFixed(0)}\n  - Three Bedroom Units: ${threeBdUnits.toFixed(0)}\n`);
 
         weightedSums.studio.rent += (row.st_eff_rent_unit || 0) * studioUnits;
         weightedSums.studio.sqft += (row.st_avg_sf || 0) * studioUnits;

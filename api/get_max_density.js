@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
     const county = req.query.county;
     const city = req.query.city;
 
-    console.log('Received request for max_density with county:', county, 'and city:', city);
+    //console.log('Received request for max_density with county:', county, 'and city:', city);
 
     // Setup database connection
     const client = new Client({
@@ -27,10 +27,10 @@ module.exports = async (req, res) => {
         const result = await client.query(query, [county, city]);
 
         if (result.rows.length > 0) {
-            console.log('Fetched max_density for', county, city, 'is:', result.rows[0].max_density);
+            //console.log('Fetched max_density for', county, city, 'is:', result.rows[0].max_density);
             res.json({ max_density: result.rows[0].max_density });
         } else {
-            console.log('No max_density found for', county, city);
+            //console.log('No max_density found for', county, city);
             res.json({ error: "Not found" });
         }
     } catch (error) {
