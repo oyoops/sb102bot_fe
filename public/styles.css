@@ -216,20 +216,31 @@ tbody tr:hover {
 }
 /* Smaller devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    .primaryResponse {
-        max-width: 90%; /* Responsive width */
-        padding: 15px; /* Reduced padding */
-        margin: 10px auto; /* Reduced margin */
-        font-size: 14px; /* Smaller font size */
+    #infoSections {
+        font-size: 0.8em; /* Smaller font size for better readability on mobile */
+        padding: 15px; /* Adjust padding for smaller screens */
+        margin: 10px auto; /* Adjust margin for smaller screens */
+    }
+
+    #infoSections h2 {
+        font-size: 1em; /* Adjust heading size for smaller screens */
+    }
+
+    #infoSections ul li {
+        padding-left: 15px; /* Adjust list item padding for smaller screens */
     }
 }
+
 /* Tablets and smaller desktops */
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
-    .primaryResponse {
-        max-width: 90%; /* Responsive width */
-        padding: 18px; /* Slightly larger padding than mobile */
-        margin: 15px auto; /* Slightly larger margin than mobile */
-        font-size: 14px; /* Slightly larger font size than mobile */
+    #infoSections {
+        font-size: 0.95em; /* Adjust font size for tablets and smaller desktops */
+        padding: 18px; /* Adjust padding for medium screens */
+        margin: 15px auto; /* Adjust margin for medium screens */
+    }
+
+    #infoSections h2 {
+        font-size: 1.1em; /* Adjust heading size for medium screens */
     }
 }
 
@@ -633,32 +644,48 @@ input:disabled {
 
 #infoSections {
     text-align: left;
-    font-size: 0.6em;
+    font-size: 0.9em; /* Adjusted font size for better readability */
     max-width: 800px;
-    margin: auto;
-    padding: 10px;
-    opacity: 0;
-    animation: fadeIn 1s forwards 3s; /* Add animation */
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f7f9fc; /* Light background color for the container */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    opacity: 1; /* Make it visible */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
 }
 
 #infoSections h2 {
     text-align: center;
-    font-size: 1.0em;
-    margin-bottom: 7px;
+    font-size: 1.2em; /* Slightly larger font size for headings */
+    color: #333; /* Darker color for headings */
+    margin-bottom: 15px; /* Increased bottom margin */
+    font-weight: 600; /* Bold font weight for headings */
 }
 
 #infoSections ul {
     margin: 0;
     padding: 0;
-    list-style-type: none;
+    list-style-type: none; /* No bullets */
 }
 
 #infoSections ul li {
-    margin-bottom: 5px;
-    padding-left: 10px;
-    background: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwIiB3aWR0aD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBvbHlnb24gcG9pbnRzPSI1LDIgMiw1IDUsOCIgc3R5bGU9ImZpbGw6YmxhY2siLz48L3N2Zz4=) no-repeat;
-    background-position: 0 50%;
-    background-size: 10px;
+    margin-bottom: 10px; /* Increased bottom margin for list items */
+    padding-left: 20px; /* Increased left padding for list items */
+    position: relative; /* Position relative for pseudo-elements */
+    line-height: 1.4; /* Increased line height for better readability */
+    color: #555; /* Lighter color for list items */
+}
+
+#infoSections ul li::before {
+    content: '•'; /* Bullet symbol */
+    color: var(--accent-color); /* Use accent color for bullets */
+    position: absolute; /* Absolute position for pseudo-element */
+    left: 0; /* Align to the left */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center vertically */
+    font-size: 1.2em; /* Larger size for bullet symbol */
+    font-weight: bold; /* Bold bullet symbol */
 }
 
 .switchContainer {
