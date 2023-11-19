@@ -17,10 +17,15 @@ function loadGoogleMapsAPI() {
 // Initialize the Google Map
 async function initializeMap(lat, lng) {
     console.log('Centering map on lat:', lat, ', lng:', lng);
+    // Adjust map options for better mobile interaction and apply color scheme styling
     const mapOptions = {
         center: { lat: lat, lng: lng },
         zoom: 15,
-        mapTypeId: google.maps.MapTypeId.SATELLITE
+        mapTypeId: google.maps.MapTypeId.SATELLITE,
+        styles: [/* Add custom map styles here */],
+        gestureHandling: 'greedy', // Allows map to be moved with one finger on mobile
+        streetViewControl: false, // Disable Street View control
+        fullscreenControl: false, // Disable Fullscreen control
     };
 
     map = new google.maps.Map(mapDisplay, mapOptions);
@@ -34,13 +39,19 @@ async function initializeMap(lat, lng) {
         anchor: new google.maps.Point(20, 40) // Anchor point of the icon
     };
 
-    // Create a marker for the subject site with the custom icon
+    // Create an animated marker for the subject site with the custom icon
     const userMarker = new google.maps.Marker({
         position: { lat: lat, lng: lng },
         map: map,
         icon: subjectSiteIcon, // Use the custom icon
-        zIndex: google.maps.Marker.MAX_ZINDEX + 1 // Ensure it's on top of other markers
+        zIndex: google.maps.Marker.MAX_ZINDEX + 1, // Ensure it's on top of other markers
+        animation: google.maps.Animation.DROP // Add drop animation
     });
+
+    // Delay the animation of the tallest building and comps markers
+    setTimeout(() => {
+        // Code for animating tallest building-related elements will go here
+    }, 2000); // 2 seconds after the subject site marker
 
     const userInfowindow = new google.maps.InfoWindow({
         content: `<div style="text-align:center;"><strong>Subject</strong></div>`
@@ -187,12 +198,34 @@ function addCompsMarkersToMap(responseData) {
         };
         
         const markerPosition = new google.maps.LatLng(item.lat, item.lng);
-        const marker = new google.maps.Marker({
-            position: markerPosition,
-            map: map,
-            title: item.property_name, // Comp name
-            icon: customIcon
-        });
+        // Add a delay between each comps marker animation for a fancy effect
+        setTimeout(() => {
+            const marker = new google.maps.Marker({
+                position: markerPosition,
+                map: map,
+                title: item.property_name, // Comp name
+                icon: customIcon,
+                animation: google.maps.Animation.DROP // Add drop animation
+            });
+
+            // Add a label above the marker with the property name
+            const label = new google.maps.Marker({
+                position: markerPosition,
+                map: map,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: 'transparent', // Transparent fill
+                    fillOpacity: 0,
+                    scale: 0, // No scale
+                    strokeWeight: 0
+                },
+                label: {
+                    text: item.property_name, // Property name
+                    color: 'black', // Text color
+                    fontSize: '10px', // Smaller font size
+                }
+            });
+        }, index * 200); // Small delay between each marker
 
         // Extend the bounds to include each comp marker
         /* Probably will cause an error if zero comps within radius... */
