@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add class to loading squares to trigger transition
             const loadingSquares = document.querySelectorAll('.loading-square');
             loadingSquares.forEach((square, index) => {
-                // Delay each square's color change by an increasing multiple of 3000ms
-                setTimeout(() => square.classList.add('green'), index * 3000);
+                // Delay each square's color change by an increasing multiple of 6000ms
+                setTimeout(() => square.classList.add('green'), index * 6000);
             });
             window.scrollTo(0, 0);
 
