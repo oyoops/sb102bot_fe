@@ -45,23 +45,21 @@
     <!-- Initial Content: Address Input -->
     <div id="initialContent">
 
-        <!-- Address input form -->
-        <form id="searchForm">
-            <input type="text" id="addressInput" placeholder="11240 biscayne blvd, miami FL">
-            <!-- <input type="text" id="addressInput" value="11240 biscayne blvd, miami FL"> -->
-
-            <!-- Submit button -->
-            <button type="submit">Ask the Guru</button>
-
-            <!-- Download Excel switch -->
-            <div class="switchContainer">
-                <label class="switchBox">
+        <!-- Address input form with enhanced styling -->
+        <div class="form-wrapper">
+            <form id="searchForm" class="address-form">
+                <h2 class="form-title">Discover Your Property's Potential</h2>
+                <input type="text" id="addressInput" class="address-input" placeholder="Enter your property address">
+                <button type="submit" class="submit-button">Analyze Property</button>
+                <label class="switch-label">
                     <input type="checkbox" id="superchargeSwitch" name="supercharge" value="off">
-                    <span class="toggle round"></span>
+                    <div class="toggle-switch">
+                        <span class="switch-slider"></span>
+                    </div>
+                    <span class="switch-text">Generate Excel Report</span>
                 </label>
-                <p>Download in Excel once complete</p>
-            </div>
-        </form>
+            </form>
+        </div>
 
         <!-- Text below form and above Latest Updates -->  
         <p>
