@@ -4,10 +4,10 @@
 
 // Load the Google Maps API dynamically
 function initMap() {
-    // Maps and Places APIs are now loaded and can be used.
+    // Maps API is now loaded and can be used.
 }
 
-// Load the Google Maps and Places APIs dynamically
+// Load the Google Maps API dynamically
 function loadGoogleMapsAPI() {
     const script = document.createElement('script');
     script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDJlvljO-CVH5ax4paudEnj9RoERL6Xhbc&libraries=places,geometry&callback=initMap";
