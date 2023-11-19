@@ -17,6 +17,12 @@ function loadGoogleMapsAPI() {
 // Initialize the Google Map
 async function initializeMap(lat, lng) {
     console.log('Centering map on lat:', lat, ', lng:', lng);
+    // Ensure mapDisplay element is defined
+    const mapDisplay = document.getElementById('map');
+    if (!mapDisplay) {
+        console.error('Map display element not found');
+        return;
+    }
     // Adjust map options for better mobile interaction and apply color scheme styling
     const mapOptions = {
         center: { lat: lat, lng: lng },
@@ -28,7 +34,8 @@ async function initializeMap(lat, lng) {
         fullscreenControl: false, // Disable Fullscreen control
     };
 
-    map = new google.maps.Map(mapDisplay, mapOptions);
+    // Define the map variable locally within the function
+    const map = new google.maps.Map(mapDisplay, mapOptions);
     console.log('Map generated!');
 
     // Define a custom icon for the subject site marker
@@ -71,8 +78,17 @@ async function initializeMap(lat, lng) {
     let maxDistance = 0;
     let maxHeight = 0;
 
+    // Define LIVE_LOCAL_BLDG_RADIUS_MILES if not already defined
+    const LIVE_LOCAL_BLDG_RADIUS_MILES = 3; // Example radius, adjust as needed
+
     // Fetch data on tallest buildings within radius
-    tallestBuildingsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
+    let tallestBuildingsData;
+    try {
+        tallestBuildingsData = await fetchTallestBuilding(lat, lng, LIVE_LOCAL_BLDG_RADIUS_MILES);
+    } catch (error) {
+        console.error('Error fetching tallest buildings:', error);
+        return;
+    }
 
     // Parse building(s) and add to map
     (tallestBuildingsData || []).forEach((buildingData, index) => {
