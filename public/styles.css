@@ -137,15 +137,22 @@ tbody tr:hover {
 }
 
 .address-input {
-    padding: 15px;
-    border-radius: 5px;
-    border: 2px solid #ddd;
-    width: calc(100% - 30px);
-    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    border: none;
+    width: calc(100% - 40px);
+    margin-bottom: 25px;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     color: #333;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+.address-input:focus {
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 /* Responsive styles for smaller screen widths */
 @media (max-width: 800px) {
@@ -228,20 +235,27 @@ tbody tr:hover {
 
 .submit-button {
     width: 100%;
-    padding: 15px;
+    padding: 20px;
     border: none;
-    background-color: #4CAF50;
+    background-color: #007bff; /* Bootstrap primary color */
     color: #fff;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
     text-align: center;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-top: 10px;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    margin-top: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .submit-button:hover {
-    background-color: #45a049;
-    transform: scale(1.02);
+    background-color: #0056b3; /* Darken on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+.submit-button:active {
+    background-color: #003d82; /* Even darker on active/focus */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
 }
 
 :root {
