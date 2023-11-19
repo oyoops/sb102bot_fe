@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Add class to loading squares to trigger transition
             const loadingSquares = document.querySelectorAll('.loading-square');
-            loadingSquares.style.display = 'block';
             loadingSquares.forEach((square, index) => {
                 // Delay each square's color change by an increasing multiple of 3000ms
                 setTimeout(() => square.classList.add('green'), index * 3000);
@@ -229,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             /* End Excel Workbook Generation Module */
 
-            
+
             /* END MAIN SCRIPT */
 
         } catch (error) {
