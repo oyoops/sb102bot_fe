@@ -588,16 +588,16 @@ function updateLoadingBar() {
     }
 }
 
-// Generate Excel workbook and download it
+// Generate and download Excel workbook
 async function generateAndDownloadExcel(data, format = 'xlsx') {
-
-    // Prompt user for confirmation
+    /* Prompt user for confirmation
     const userConfirmation = confirm(`Do you want to download an Excel financial model template for this property?`);
     if (!userConfirmation) {
         console.log('Declined an Excel proforma.');
         return;
-    }
-    // Generate and download workbook
+    }*/
+
+    // Generate and download
     try {
         const response = await fetch('/api/genExcel', {
             method: 'POST',
