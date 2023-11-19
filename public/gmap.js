@@ -26,9 +26,20 @@ async function initializeMap(lat, lng) {
     map = new google.maps.Map(mapDisplay, mapOptions);
     console.log('Map generated!');
 
+    // Define a custom icon for the subject site marker
+    const subjectSiteIcon = {
+        url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png', // A blue icon to stand out
+        scaledSize: new google.maps.Size(40, 40), // Size of the icon
+        origin: new google.maps.Point(0, 0), // Origin of the icon
+        anchor: new google.maps.Point(20, 40) // Anchor point of the icon
+    };
+
+    // Create a marker for the subject site with the custom icon
     const userMarker = new google.maps.Marker({
         position: { lat: lat, lng: lng },
-        map: map
+        map: map,
+        icon: subjectSiteIcon, // Use the custom icon
+        zIndex: google.maps.Marker.MAX_ZINDEX + 1 // Ensure it's on top of other markers
     });
 
     const userInfowindow = new google.maps.InfoWindow({
