@@ -1,43 +1,38 @@
-# Live Local Guru :house_with_garden: :construction_worker:
+# Live Local Guru :house_with_garden:
 
-`This whole description was 100% written by ChatGPT`
-
-**Florida Multifamily Development Calculator**
+**Real Estate Development Potential Analysis Tool**
 
 ## Overview
-Live Local Guru is a web app designed to assist real estate developers and property owners in Florida in evaluating the maximum allowable development intensity for multifamily constructions. The application uses a variety of data sources including county and parcel databases to provide a comprehensive report. The report includes unit counts, affordable housing options, tax abatements, and more.
+Live Local Guru is a web application that provides real estate developers and investors with insights into the development potential of properties in Florida. It integrates various data sources to analyze and report on factors such as zoning, allowable unit counts, and potential tax benefits.
 
 ## Project Structure
-- `/api`: Contains JavaScript files for serverless functions that handle API endpoints.
-- `/public`: Holds the frontend HTML, CSS, and JavaScript files.
-  - `index.html`: Main HTML file that serves as the entry point of the application.
-  - `main.js`: Contains the core JavaScript logic to handle form submissions and API interactions.
-  - `styles.css`: Stylesheet for the frontend.
-  - `acreageCalculation.js`: Contains JavaScript functions related to acreage calculations.
-- `server.py`: Main Flask file that initializes the server and routes.
-- `database.py`: Handles database connections and queries.
-- `utils.py`: Utility functions for data processing and calculations.
-- `package.json`: Lists package dependencies for the Node.js environment.
-- `requirements.txt`: Lists package dependencies for the Python environment.
-- `vercel.json`: Configuration file for Vercel deployment.
+- `/public`: Contains the frontend assets and scripts for the web application.
+  - `index.html`: The main entry point for the web application.
+  - `styles.css`: The stylesheet for styling the web application.
+  - `main.js`: The main JavaScript file that includes the application logic.
+- `/api`: (Not present in the provided files, but typically contains serverless functions for API endpoints.)
+- `server.py`: A Flask server file that may include API routes and server initialization. (Not provided)
+- `database.py`: A Python file for database interactions. (Not provided)
+- `utils.py`: A Python file for utility functions. (Not provided)
 
 ## Features
-- Accepts an address as input and performs geocoding.
-- Queries a PostgreSQL database to retrieve parcel and county data.
-- Calculates the maximum number of units that can be developed, including both market-rate and affordable housing.
-- Provides real-time updates based on user input for parameters like acreage, unit sizes, and affordable housing percentages.
-- Displays the results in a detailed HTML report that includes tables and Google Maps integration.
-- Provides tax abatement information based on the percentage of affordable units.
+- Geocoding of property addresses to determine precise locations.
+- Analysis of property data to assess development potential under current regulations.
+- Interactive map to visualize property location and surrounding area.
+- Calculation of potential development metrics, such as unit counts and tax abatements.
+- Generation of detailed reports with actionable insights.
 
 ## Setup
-1. Clone the repository.
-2. Install Python dependencies: `pip install -r requirements.txt`.
-3. Install Node.js dependencies: `npm install`.
-4. Set up your PostgreSQL database and update the database configuration in `database.py`.
-5. Deploy the application with Vercel or run it locally using `flask run`.
+1. Clone the repository to your local machine.
+2. Install the necessary dependencies for the frontend and backend (if applicable).
+3. Configure the environment with the necessary API keys and database connections.
+4. Run the application locally or deploy it to a hosting service.
 
 ## Usage
-1. Open the application in a web browser.
-2. Enter an address in the search bar and click "What can I do?".
-3. Review the generated report for maximum allowable development intensity.
+1. Navigate to the web application using a web browser.
+2. Input a property address to analyze its development potential.
+3. View the generated report and use the insights for investment or development planning.
+
+## Note
+This README is based on the provided code and file structure. Some backend files such as `server.py`, `database.py`, and `utils.py` are mentioned but not provided. The actual functionality may vary based on the complete codebase.
 
