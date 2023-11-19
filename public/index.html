@@ -49,19 +49,18 @@
         <form id="searchForm">
             <!-- <input type="text" id="addressInput" placeholder="Address..."> -->
             <input type="text" id="addressInput" value="11240 biscayne blvd, miami FL">
-            
-            <!-- Download in Excel switch -->
-            <!-- <br> -->
+
+            <!-- Submit button -->
+            <button type="submit">Ask the Guru</button>
+
+            <!-- Download Excel switch -->
             <div class="switchContainer">
                 <label class="switchBox">
                     <input type="checkbox" id="superchargeSwitch" name="supercharge" value="off">
                     <span class="toggle round"></span>
                 </label>
-                <p>Download Excel</p>
+                <p>Download in Excel once complete</p>
             </div>
-
-            <!-- Submit button -->
-            <button type="submit">Ask the Guru</button>
         </form>
 
         <!-- Text below form and above Latest Updates -->  
@@ -135,12 +134,6 @@
             <div class="loading-square" id="loadingSquare4"></div>
             <div class="loading-square" id="loadingSquare5"></div>
         </div>
-
-        <div class="loading-text">
-            <i>Conducting due diligence</i>
-            <br><b>Please wait...</b>
-            <br>
-        </div>
         
         <div class="loading-bar">
             <div class="loading-fill"></div>
@@ -148,6 +141,12 @@
         </div>
         <br>
         <div class="spinner" style="display: none;"></div>
+
+        <div class="loading-text">
+            <i>Conducting due diligence</i>
+            <br><b>Please wait...</b>
+            <br>
+        </div>
     </div>
 
     <!-- Primary AI Response Container -->
