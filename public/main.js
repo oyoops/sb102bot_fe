@@ -212,19 +212,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
             /* End AI Module */
 
-            
+
             /* Start Excel Workbook Generation Module */
-            // Collect the data necessary for proforma workbook
-            const dataForExcel = {
-                acres: acres//,
-                //address: address,
-                // many more!
-                // ... put all available variables in here!
-            };
-            // Generate the proforma workbook 
-            await generateAndDownloadExcel(dataForExcel, "xlsx");
+            if (superAI=="on") {
+                // Collect the data necessary for proforma workbook
+                const dataForExcel = {
+                    acres: acres//,
+                    //address: address,
+                    // ...many more!
+                    // put ALL available variables in here!
+                };
+                // Generate the proforma workbook 
+                await generateAndDownloadExcel(dataForExcel, "xlsx");
+            } else {
+                console.log("Skipping Excel workbook generation module...")
+            }
             /* End Excel Workbook Generation Module */
 
+            
             /* END MAIN SCRIPT */
 
         } catch (error) {

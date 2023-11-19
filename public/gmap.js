@@ -35,6 +35,9 @@ async function initializeMap(lat, lng) {
         content: `<div style="text-align:center;"><strong>Subject</strong></div>`
     });
 
+    // New test...
+    userInfowindow.open(map, userMarker);
+
     userMarker.addListener('click', function() {
         userInfowindow.open(map, userMarker);
     });
