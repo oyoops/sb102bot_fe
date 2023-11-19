@@ -14,7 +14,7 @@ async function runCompsModule(latitude, longitude, radius="3.000") {
     // Pull data from endpoint
     try {
         // Compose URL
-        const endpointUrl = "https://www.livelocal.guru/api/get_comps?lat=" + searchLat + "&lng=" + searchLng + "&radius=" + searchRadius + "&limit=" + SEARCH_RESULTS_COMPS_LIMIT;
+        const endpointUrl = "/api/get_comps?lat=" + searchLat + "&lng=" + searchLng + "&radius=" + searchRadius + "&limit=" + SEARCH_RESULTS_COMPS_LIMIT;
     
         // Pull comps data
         const response = await fetch(endpointUrl);

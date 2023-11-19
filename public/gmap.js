@@ -195,8 +195,8 @@ function createStyledMarker(position, map, label) {
 /* Maps + Comps Database */
 
 // Adds each comp returned to a Google Map
-function addCompsMarkersToMap(responseData, map) { // Add 'map' as a parameter
-    if (!map) {
+function addCompsMarkersToMap(responseData, gmap) { // Add 'map' as a parameter
+    if (!gmap) {
         console.error('Error: Map is not defined.');
         return;
     }
@@ -220,7 +220,7 @@ function addCompsMarkersToMap(responseData, map) { // Add 'map' as a parameter
         setTimeout(() => {
             const marker = new google.maps.Marker({
                 position: markerPosition,
-                map: map,
+                map: gmap,
                 title: item.property_name, // Comp name
                 icon: customIcon,
                 animation: google.maps.Animation.DROP // Add drop animation
@@ -229,7 +229,7 @@ function addCompsMarkersToMap(responseData, map) { // Add 'map' as a parameter
             // Add a label above the marker with the property name
             const label = new google.maps.Marker({
                 position: markerPosition,
-                map: map,
+                map: gmap,
                 icon: {
                     path: google.maps.SymbolPath.CIRCLE,
                     fillColor: 'transparent', // Transparent fill
@@ -272,7 +272,7 @@ function addCompsMarkersToMap(responseData, map) { // Add 'map' as a parameter
     // Once all markers have been added, adjust viewport to show all
     // Check if there are comps to fit bounds to
     if (responseData.length > 0) {
-        map.fitBounds(bounds);
+        gmap.fitBounds(bounds);
     } else {
         console.warn('No comps available to fit bounds to.');
     }
