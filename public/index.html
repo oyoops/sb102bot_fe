@@ -93,7 +93,7 @@
                 <li><b>11/05/23</b>  <b>Comps!</b> All responses now analyze the rent comps within 3 miles.</li>
                 <li><b>11/16/23</b>  Removed Concise Mode. Responses are now sized automatically.</li>
                 <li><b>10/31/23</b>  Squashed tons of bugs!</li>
-                <li><b>10/30/23</b>  First draft. Tons of bugs.</li>
+                <li><b>10/30/23</b>  Initial drop with tons of bugs.</li>
             </ul>
             <br>
         </div>
@@ -114,7 +114,7 @@
         <div id="currentBugs">
             <h2><u>Current Bugs</u></h2>
             <ul>
-                <li>About 10% of searches fail, timing out after 30 seconds. <b>Just refresh!</b></li>
+                <li>~5% of searches fail, timing out after 30 seconds. <i>Just refresh!</i></li>
             </ul>
         </div>
     </div>
@@ -137,8 +137,9 @@
         </div>
 
         <div class="loading-text">
-            <b>Conducting due diligence.</b>
+            <b>Conducting due diligence</b>
             <br><i>Please wait...</i>
+            <br>
         </div>
         
         <div class="loading-bar">
@@ -158,16 +159,16 @@
         <div id="response5" class="primaryResponse"></div>
     </div>
 
-    <!-- Umm table of "average" WHATS? -->
+    <!-- Table: Rent Comps Weight Avgs by Unit Type -->
     <div id="averagesTableContainer" style="display: none">
         <!-- The averages table will be rendered here -->
     </div>
 
-    <!-- Rents comparison table (container) -->
-    <div id="rentInfoContainer" style="display: none;">
+    <!-- Table: Market Rents vs. Max Live Local Rents -->
+    <div id="rentInfoContainer" style="display: none;"> <!-- container 1 -->
         <br>
-        <div class="table-container">
-            <!-- Comps Avg vs Max Affordable comparison table -->
+        <div class="table-container"> <!-- container 2 -->
+            <!-- table -->
             <table id="countyMaxRentsTable">
                 <thead>
                     <tr>
@@ -190,12 +191,12 @@
         </div>
     </div>
     
-    <!-- New Search Button (aka Try Again) -->
+    <!-- New Search (aka Try Again) button -->
     <br>
     <button id="tryAgainButton" style="display: none;">New Search</button>
     <br>
 
-    <!-- START: PART 2 -- DEVELOPMENT PROGRAM I/O -->
+    <!-- START: Development Program I/O Module -->
     <div id="developmentProgramInputSection" style="display: none;">
         
         <div class="form-group">
@@ -312,7 +313,6 @@
     <script src="./calculations.js"></script>
     <script src="./gmap.js"></script>
     <script src="./useCodes.js"></script>
-
     <script type="module" src="main.js"></script>
 </body>
 </html>
