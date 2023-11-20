@@ -178,11 +178,11 @@ function getStyleShape(style) {
         },
         'Mid-Rise': {
             path: 'M 0 -3 L -3 3 L 3 3 z', // Triangle shape for Mid-Rise
-            scale: 1
+            scale: 0.8 // Reduced scale for Mid-Rise
         },
         'Hi-Rise': {
             path: 'M -2 0 L 0 -2 L 2 0 L 0 2 z', // Diamond shape for Hi-Rise
-            scale: 1
+            scale: 1.2 // Increased scale for Hi-Rise
         }
     };
     return shapes[style] || shapes['Garden']; // Default to Garden shape if style is not recognized
