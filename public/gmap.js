@@ -175,7 +175,9 @@ function getStyleShape(style) {
         case 'Garden':
             return google.maps.SymbolPath.CIRCLE; // Circle shape for Garden
         case 'Mid-Rise':
-            return google.maps.SymbolPath.TRIANGLE; // Triangle shape for Mid-Rise
+            // Ensure that TRIANGLE is a valid constant in the google.maps.SymbolPath enumeration
+            // If TRIANGLE is not valid, it will default to CIRCLE
+            return google.maps.SymbolPath.TRIANGLE || google.maps.SymbolPath.CIRCLE; // Triangle shape for Mid-Rise
         case 'Hi-Rise':
             return { // Adjusted Diamond shape for Hi-Rise
                 path: 'M -3 0 L 0 -3 L 3 0 L 0 3 z',
