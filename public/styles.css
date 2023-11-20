@@ -58,7 +58,7 @@ p {
     font-weight: 300;
     margin-left: 10px;
     margin-right: 10px;
-    opacity: 0;
+    /*opacity: 0;*/
     animation: none; /*fadeIn 1s forwards 2s;*/ /* Add animation */
 }
 .info-window p {
