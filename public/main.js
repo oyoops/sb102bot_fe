@@ -10,25 +10,27 @@ import {
     mainHeader, initialContent, form, addressInput, navButtonsContainer, loadingContainer,
     googlemap, eligibilityDiv, tryAgainButton,
     currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections,
-    compsTable, developmentProgramInputSection,
-    marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
-    rentInfoContainer, countyDataTable, countyTableBody, countyMaxRentsTable, rentsTableBody,
-    unitCalculationTable, abatementTable,
-    affordablePercentageSlider, affordablePctDisplay, acreageInput, densityInput,
-    landCostPerUnit, totalHCPerUnit, matchAffordableSizesCheckbox,
-    sizeInputs, marketInputs, affordableSizeInputs, marketRateInputs
+    rentInfoContainer, countyMaxRentsTable, rentsTableBody,
+    compsTable,
+    //developmentProgramInputSection,
+    //marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
+    //countyDataTable, countyTableBody,
+    //unitCalculationTable, abatementTable,
+    //affordablePercentageSlider, affordablePctDisplay, acreageInput, densityInput,
+    //landCostPerUnit, totalHCPerUnit, matchAffordableSizesCheckbox,
+    //sizeInputs, marketInputs, affordableSizeInputs, marketRateInputs
 } from './domElements.js';
 
     // once DOM is fully loaded:
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
     
-    // manually add Supercharge AI switch event listener
+    // manually add Excel workbook switch event listener
     let superAI = 'off';
     document.getElementById('superchargeSwitch').addEventListener('change', function() {
         this.value = this.checked ? 'on' : 'off';
         superAI = this.value;
-        console.log(`SuperAI=${superAI}`);
+        console.log(`Download in Excel=${superAI}`);
     });
 
     // manually add debug mode switch event listener
@@ -46,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get user input (dirty address) 
         address = addressInput.value;
         if (!address) {
-            alert('You might want to try typing an address first? Just a suggestion, though...');
+            alert('Type an address first. Just a suggestion...');
             return;
         }
         
@@ -59,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Main script
         try {
-            console.log(`Asking Live Local Guru about: \n${address}`);
+            console.log(`Asking the Guru about \n${address}`);
             
             // Hide header and initial content
             mainHeader.style.display = 'none';
@@ -77,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add class to loading squares to trigger transition
             const loadingSquares = document.querySelectorAll('.loading-square');
             loadingSquares.forEach((square, index) => {
-                // Delay each square's color change by an increasing multiple of 8000ms
-                setTimeout(() => square.classList.add('green'), index * 8000);
+                // Delay each square's color change by an increasing multiple of 10000ms
+                setTimeout(() => square.classList.add('green'), (index+1) * 10000);
             });
             window.scrollTo(0, 0);
 
@@ -118,22 +120,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // GET MUNI. NAME
             const muniName = getMunicipality(cityData, countyData);
             displayMuniName = muniName //// (hackily set global)
-            console.log("Municipality:", displayMuniName);
+            //console.log("Municipality:", displayMuniName);
 
             // MAX MUNI. DENSITY
             const maxDensity = await getMaxDensity(countyData.county_name, cityData.cityName);
             maxMuniDensity = Math.min(maxDensity, 100); // Takes the lesser of maxDensity or 100 (rough limit of feasibility)
-            console.log("Max municipal density: \n", maxMuniDensity, "units per acre");
+            //console.log("Max municipal density: \n", maxMuniDensity, "units per acre");
             
             // PARCEL DATA
             const parcelData = await fetchParcelData(lat, lng, countyData.county_name);            
             acres = (parseFloat(parcelData.lnd_sqfoot) / 43560).toFixed(2);
-            console.log("Parcel area: \n", acres, "acres");
+            //console.log("Parcel area: \n", acres, "acres");
 
             // MAX UNIT CAPACITY
             maxCapacity = parseFloat(maxMuniDensity) * acres;
             maxCapacity = Math.round(maxCapacity); // Round to the nearest integer
-            console.log("Parcel max unit capacity: \n", maxCapacity, "total units");
+            //console.log("Parcel max unit capacity: \n", maxCapacity, "total units");
 
             /* End Data Collection Module */
 
@@ -156,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // All other uses
                 eligPath = "no";
             }
-
             // Set site colors based on eligibility
             if (eligPath == "multi") {
                 document.documentElement.style.setProperty('--hue', '360'); // red
@@ -168,8 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
-
             // If eligible, populate and show Table #2 (Comps avg. vs Affordable max. rent comparison)
+            /*
             if (eligPath == "yes") {
                 rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
                 rentInfoContainer.style.display = 'table'; // show the container
@@ -177,7 +178,9 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.log("LLA Ineligible!");
             }
-            
+            */
+
+
             // Show the Try Again button
             tryAgainButton.style.display = 'block';
 
@@ -238,10 +241,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     // ^dup?
                     ...aiSupplementalData
                 };
-                // Generate the proforma workbook 
                 await generateAndDownloadExcel(dataForExcel, "xlsx");
             } else {
-                console.log("Skipping Excel workbook generation module...")
+                //console.log("Skipping Excel workbook generation module...")
             }
             /* End Excel Workbook Generation Module */
 
@@ -267,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
-                alert('Sorry, the AI server timed out...\n\nThis happens about 10% of times. Refresh and try again.');
+                alert('The AI server took too long to respond. \n\nThis happens randomly. \n Please refresh and try again.');
             }
         }
     });
