@@ -35,7 +35,7 @@ async function initializeMap(lat, lng) {
     };
 
     // Define the map variable locally within the function
-    const map = new google.maps.Map(mapDisplay, mapOptions);
+    const gmap = new google.maps.Map(mapDisplay, mapOptions);
     console.log('Map generated!');
 
     // Define a custom icon for the subject site marker
@@ -49,7 +49,7 @@ async function initializeMap(lat, lng) {
     // Create an animated marker for the subject site with the custom icon
     const userMarker = new google.maps.Marker({
         position: { lat: lat, lng: lng },
-        map: map,
+        map: gmap,
         icon: subjectSiteIcon, // Use the custom icon
         zIndex: google.maps.Marker.MAX_ZINDEX + 1, // Ensure it's on top of other markers
         animation: google.maps.Animation.DROP // Add drop animation
@@ -63,10 +63,10 @@ async function initializeMap(lat, lng) {
     });
 
     // New test...
-    userInfowindow.open(map, userMarker);
+    userInfowindow.open(gmap, userMarker);
 
     userMarker.addListener('click', function() {
-        userInfowindow.open(map, userMarker);
+        userInfowindow.open(gmap, userMarker);
     });
 
     const bounds = new google.maps.LatLngBounds();
@@ -103,7 +103,7 @@ async function initializeMap(lat, lng) {
 
             const buildingMarker = new google.maps.Marker({
                 position: { lat: buildingLat, lng: buildingLng },
-                map: map,
+                map: gmap,
             });
 
             const buildingInfoContent = `
@@ -119,7 +119,7 @@ async function initializeMap(lat, lng) {
             });
 
             buildingMarker.addListener('click', function () {
-                buildingInfowindow.open(map, buildingMarker);
+                buildingInfowindow.open(gmap, buildingMarker);
             });
 
             const line = new google.maps.Polyline({
@@ -130,7 +130,7 @@ async function initializeMap(lat, lng) {
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.7,
                 strokeWeight: 2,
-                map: map
+                map: gmap
             });
 
             // distance between building and subject site
@@ -150,7 +150,7 @@ async function initializeMap(lat, lng) {
             
             // create distance label (subject -> tallest bldg)
             const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
-            createStyledMarker(lineLabelPos, map, `${buildingHeight.toFixed(0)}' max. height\n${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
+            createStyledMarker(lineLabelPos, gmap, `${buildingHeight.toFixed(0)}' max. height\n${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
 
             // extend map boundaries to include tallest building
             bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));
@@ -163,7 +163,7 @@ async function initializeMap(lat, lng) {
     });
 
     if (bounds.getNorthEast() !== bounds.getSouthWest()) {
-        map.fitBounds(bounds);
+        gmap.fitBounds(bounds);
     }
     
     return {maxHeight, maxDistance};
