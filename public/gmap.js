@@ -192,8 +192,8 @@ function getStyleShape(style) {
 function getCompMarkerScale(num_of_units) {
     const minUnits = 200;
     const maxUnits = 400;
-    const minScale = 3; // Smallest size for the icon
-    const maxScale = 6; // Largest size for the icon
+    const minScale = 5; // Smallest size for the icon, increased from 3 to 5
+    const maxScale = 10; // Largest size for the icon, increased from 6 to 10
 
     // Ensure num_of_units is within the expected range
     num_of_units = Math.max(minUnits, Math.min(num_of_units, maxUnits));
