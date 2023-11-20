@@ -290,9 +290,9 @@ function getDefaults(bldgType) {
     // Default values based on building type
     const defaults = {
         'Garden': {
-            "Land Cost Per Unit": 25000,
-            "Construction Cost Per SF A/C": 180,
-            "Indirect Cost Per Unit": 35000,
+            "Land Cost Per Unit": 30000,
+            "Construction Cost Per SF A/C": 200,
+            "Indirect Cost Per Unit": 50000,
             "Loan to Value (LTV %)": 60,
             "Interest Rate": 6.50,
             "Project Duration (Years)": 4,
@@ -310,9 +310,9 @@ function getDefaults(bldgType) {
             "3BD - Size (SF)": 1350
         },
         'Midrise': {
-            "Land Cost Per Unit": 25000,
-            "Construction Cost Per SF A/C": 240,
-            "Indirect Cost Per Unit": 30000,
+            "Land Cost Per Unit": 30000,
+            "Construction Cost Per SF A/C": 275,
+            "Indirect Cost Per Unit": 50000,
             "Loan to Value (LTV %)": 55,
             "Interest Rate": 6.50,
             "Project Duration (Years)": 4,
@@ -330,9 +330,9 @@ function getDefaults(bldgType) {
             "3BD - Size (SF)": 1150
         },
         'High-Rise': {
-            "Land Cost Per Unit": 35000,
-            "Construction Cost Per SF A/C": 325,
-            "Indirect Cost Per Unit": 25000,
+            "Land Cost Per Unit": 30000,
+            "Construction Cost Per SF A/C": 350,
+            "Indirect Cost Per Unit": 50000,
             "Loan to Value (LTV %)": 50,
             "Interest Rate": 6.50,
             "Project Duration (Years)": 4,
