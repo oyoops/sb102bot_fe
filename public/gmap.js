@@ -34,8 +34,8 @@ async function initializeMap(lat, lng) {
         fullscreenControl: false, // Disable Fullscreen control
     };
 
-    if (!map) {
-        map = new google.maps.Map(mapDisplay, mapOptions);
+    if (!window.map) {
+        window.map = new google.maps.Map(mapDisplay, mapOptions);
         console.log('Map generated!');
     }
 
@@ -70,7 +70,7 @@ async function initializeMap(lat, lng) {
     userInfowindow.open(window.map, userMarker);
 
     userMarker.addListener('click', function() {
-        userInfowindow.open(map, userMarker);
+        userInfowindow.open(window.map, userMarker);
     });
 
     bounds.extend(new google.maps.LatLng(lat, lng));
