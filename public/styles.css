@@ -209,7 +209,7 @@ tbody tr:hover {
     border-radius: 8px;
     background-color: #f7f9fc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: none; /* Start with primary response not visible */
+    display: block; /* Start with primary response not visible */
     font-size: 16px; /* Default font size */
     color: #757575; /* Lighter grey font color */
     white-space: pre-wrap; /* Preserve whitespace and line breaks */
@@ -496,7 +496,7 @@ input:disabled {
 
     /* Mobile specific styles */
     @media (max-width: 767px) {
-        height: 30vh;          /* Adjust height for mobile; change as needed */
+        height: 50vh;          /* Adjust height for mobile; change as needed */
     }
 }
 
