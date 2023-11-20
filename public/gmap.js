@@ -242,15 +242,15 @@ function addCompsMarkersToMap(responseData) {
         const avgRent = responseData.reduce((sum, comp) => sum + comp.avg_eff_unit, 0) / responseData.length;
         const fillColor = getRentColor(item.avg_eff_unit, avgRent);
 
-        // Calculate the scale for the marker based on num_of_units
-        const scale = getCompMarkerScale(item.num_of_units);
+        // Use the scale from the shape object for the marker
+        const scale = shape.scale;
 
         // Custom icon using the determined shape, color, and scale for the marker
         const customIcon = {
-            path: (shape && shape.path) ? shape.path : (shape || google.maps.SymbolPath.CIRCLE), // Use the determined shape path, predefined shape, or default to circle
+            path: shape.path, // Use the determined shape path
             fillColor: fillColor, // Use the determined color
             fillOpacity: 0.65,
-            scale: scale, // Use the calculated scale based on num_of_units
+            scale: scale, // Use the scale from the shape object
             strokeColor: 'white',
             strokeWeight: 2
         };
