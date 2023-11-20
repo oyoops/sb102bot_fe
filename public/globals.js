@@ -1,139 +1,66 @@
-// globals.js - Centralized global variable declarations for SB102bot web app.
+// globals.js - Centralized declarations of (most) constants and global variables.
 
 
-//let dirtyData;
+/* CONSTANTS */
+// Comps:
+const COMPS_SEARCH_RADIUS_MILES = "3.0000"; // miles (must be in string form)
+const COMPS_SEARCH_RESULTS_LIMIT = 10; // max # of comps returned
+// Max Bldg. Height:
+const LIVE_LOCAL_BLDG_RADIUS_MILES = 1.02; // building height search radius (note the buffer!)
 
-/* GLOBAL VARIABLES related to main.js */
+
+/* MAIN SCRIPT GLOBALS */
 let intervalTimeLoading = 250; // loading indicator - estimated time to reach 99%
-let percentageLoading = 0; // loading indicator - % value text
-let address;
-let geocodeData;
-//let countyData;
-//let parcelData;
-let cityData;
+let percentageLoading = 0; // loading indicator % value text
 let lat;
 let lng;
-let acres;
-//let fakeMillage;
-let maxMuniDensity;
+let address;
+let geocodeData;
+let compsData;
+let cityData;
 let cityNameProper;
 let countyNameProper;
 let displayMuniName;
-//let totalUnits;
-//let marketUnits;
-//let affordableUnits;
+let maxMuniDensity;
+let acres;
 let maxCapacity = 0;
-//let affordablePct = 0.40; // match the affordable slider default value (=40%)
-let summaryContent = "";
 let aiSupplementalData;
 let aiResponses;
+let summaryContent = "";
 
-let compsData;
-const COMPS_SEARCH_RADIUS_MILES = "3.0000"; // miles (must be a string)
-
-/* GLOBAL VARIABLES related to calculations.js */
-//const MILLAGE_ADJUSTMENT = 9.999;
-
-/*
-let acreageValue;
-let densityValue;
-let abatementValue = 0;
-let marketStudioSize;
-let market1BDSize;
-let market2BDSize;
-let market3BDSize;
-let affordableStudioSize;
-let affordable1BDSize;
-let affordable2BDSize;
-let affordable3BDSize;
-let avgMarketSize;
-let avgAffordableSize;
-let avgBlendedSize;
-let maxRent0bd;
-let maxRent1bd;
-let maxRent2bd;
-let maxRent3bd;
-let affordablerent;
-let affordableunitsize;
-let mktrent;
-let mktunitsize;
-// cost inputs
-let landCostPerUnit;
-let totalHCPerUnit;
-// cost outputs
-let totalLandCost;
-let totalHcCost;
-let totalLandAndTotalHc;
-let totalLandAndTotalHcPerUnit;  
-let totalLandAndTotalHcPerSqFt;
-// abatement outputs
-let abatementEstimate = 0;
-*/
-
-/* MAP GLOBALS */
-
-// Globals related to tallest building details (*** May break if tallestBuilding array size >1! ***)
-const LIVE_LOCAL_BLDG_RADIUS_MILES = 1.02;
+/* MAX BLDG. HEIGHT GLOBALS
+   (all of these could break if tallestBuilding array size is increased >1 in the future) */
 let tallestBuildingsData;
-let distanceInMilesToTallestBldg;
 let buildingLat;
 let buildingLng;
 let buildingHeight;
-let buildingAddress;
-let buildingName; // may not work...
+let buildingAddress; // (not 100% reliable)
+let buildingName; // (not even close to 100% reliable)
+let distanceInMilesToTallestBldg;
 
-/* AI GLOBALS */
-////let hmmm;
-
-/* MAP GLOBALS */
-let map = null; // THE ACTUAL MAP, initialized to null
-const mapDisplay = document.getElementById('map'); // unused?
-
-/* CALCULATIONS.JS GLOBALS (DOM stuff)
-// acreage & density inputs
-const acreageInputDisplay = document.getElementById('acreageInput');
-const densityInputDisplay = document.getElementById('densityInput');
-// affordable percentage input/output
-const affordablePctSliderDisplay = document.getElementById('affordablePctSlider');
-const affordablePctDisplay = document.getElementById('affordablePctDisplay');
-// unit count outputs
-const unitCountTableBody = document.getElementById('unitCalculationTableBody');
-const warningContainer = document.getElementById('warningContainer');
-// unit size outputs
-const marketStudioSizeDisplay = document.getElementById('marketStudioSize');
-const market1BDSizeDisplay = document.getElementById('market1BDSize');
-const market2BDSizeDisplay = document.getElementById('market2BDSize');
-const market3BDSizeDisplay = document.getElementById('market3BDSize');
-const affordableStudioSizeDisplay = document.getElementById('affordableStudioSize');
-const affordable1BDSizeDisplay = document.getElementById('affordable1BDSize');
-const affordable2BDSizeDisplay = document.getElementById('affordable2BDSize');
-const affordable3BDSizeDisplay = document.getElementById('affordable3BDSize');
-const avgAffordableSizeDisplay = document.getElementById('avgAffordableSizeDisplay');
-const avgMarketSizeDisplay = document.getElementById('avgMarketSizeDisplay');
-const avgBlendedSizeDisplay = document.getElementById('avgBlendedSizeDisplay');
-// cost inputs
-const landCostPerUnitInputDisplay = document.getElementById('landCostPerUnitInput');
-const totalHCPerUnitInputDisplay = document.getElementById('totalHCPerUnitInput');
-// cost outputs
-const totalLandCostDisplay = document.getElementById('totalLandCost');
-const totalHcCostDisplay = document.getElementById('totalHcCost');
-const totalLandAndTotalHcDisplay = document.getElementById('totalLandAndTotalHc');
-const totalLandAndTotalHcPerUnitDisplay = document.getElementById('totalLandAndTotalHcPerUnit');
-const totalLandAndTotalHcPerSqFtDisplay = document.getElementById('totalLandAndTotalHcPerSqFt');
-// abatement output
-const abatementTableBody = document.getElementById('abatementTableBody');
-*/
+/* MAP GLOBALS 
+   (mapDisplay should be moved to domElements.js eventually) */
+let map = null; // ACTUAL MAP OBJECT; initialized to null
+const mapDisplay = document.getElementById('map'); // MAP DOM OBJECT; used in gmap.js
 
 
-
-// Exclude these irrelevant columns which, if provided, would only serve to confuse the AI
-const unwantedColumns = ["geom", "descriptionOfLiveLocalEligibility", "JV_HMSTD", "AV_HMSTD"];
-// ADD MORE
-// ..... & MORE
-// ......... & MORE
+// ----------------------------------
 
 
-// Map parcelData to variable names that are intelligible 
+/* Exclude these columns during the (dirtyData -> cleanData) conversion process.
+   These are irrelevant to us and would degrade response quality if included in the AI supplemental data set. */
+const unwantedColumns = [
+    "geom",
+    "descriptionOfLiveLocalEligibility",
+    "JV_HMSTD",
+    "AV_HMSTD"
+    //
+    // EXCLUDE MORE!!
+    //
+];
+
+/* Map parcelData columns to new columns with improved and more self-explanatory names.
+   (DOES THIS EVEN WORK!?) */ 
 const renameMap = {
     "CO_NO": "CountyNumber",
     "PARCEL_ID": "ParcelIdentificationCode",
@@ -253,10 +180,3 @@ const renameMap = {
     "SPC_CIR_YR": "SpecialCircumstancesYear",
     "SPC_CIR_TXT": "SpecialCircumstancesText"
 };
-
-
-// These globals will certainly NOT be available until after the data refinement process
-/*
-let refinedDataset;
-let aiGeneratedHTML;
-*/

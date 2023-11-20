@@ -1,45 +1,44 @@
 // comps.js -  Functions related to managing and displaying comps data
 
-/* FUNCTIONS: */
 
-async function runCompsModule(latitude, longitude, radius="3.000") {
-    // Hard manual results limit (ten closest comps within radius in miles)
-    const SEARCH_RESULTS_COMPS_LIMIT = 10;
-
-    // Search Parameters:
+// Comps module main entry point
+async function runCompsModule(latitude, longitude, radius=COMPS_SEARCH_RADIUS_MILES, compsLimit=COMPS_SEARCH_RESULTS_LIMIT) {
+    // Comps search parameters:
     const searchLat = latitude.toFixed(6);
     const searchLng = longitude.toFixed(6);
-    const searchRadius = radius; // default = 3.000 miles
-
-    // Pull data from endpoint
-    try {
-        // Compose URL
-        const endpointUrl = "/api/get_comps?lat=" + searchLat + "&lng=" + searchLng + "&radius=" + searchRadius + "&limit=" + SEARCH_RESULTS_COMPS_LIMIT;
+    const searchRadius = radius; // global default = 3.000 miles
+    const searchResultsLimit = compsLimit; // global default = 10 comps
     
-        // Pull comps data
+    // Query the comps endpoint
+    try {
+        const endpointUrl = "/api/get_comps?lat=" + searchLat + "&lng=" + searchLng + "&radius=" + searchRadius + "&limit=" + searchResultsLimit;    
         const response = await fetch(endpointUrl);
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }
-        // Set global
-        compsData = await response.json();
+        compsData = await response.json(); // Set global
     } catch(error) {
         alert("Error: Failed to pull comps from the server! \nThat's a pretty big 'OOPSIE'!")
         console.error("Error while pulling comps from the server: \n", error);
     }
 
-    // Decompose compsData
+    // Decompose compsData object
     try {
-        // Extract full data set
+        // Full data set
         const compsDataFull = compsData.data;
-        // Extract weighted averages sets
+        // Extract WAvg sets
         const compsAvgs = compsData.averages;
-        // Extract each weighted average set
-        const compsUnitMixPct = compsData.percentages; // example: {"studio":"4.99","oneBd":"45.01","twoBd":"40.01","threeBd":"9.99"} (notice, not like percentages)
-        const compsRents = compsData.averages.rents; // example: {"studio":2193,"oneBd":2379,"twoBd":3141,"threeBd":4007}
-        const compsSqFts = compsData.averages.sqfts; // example: {"studio":550,"oneBd":775,"twoBd":1050,"threeBd":1300}
-        const compsRentPerSqfts = compsData.averages.rentPerSqfts; // example: {"studio":3.75,"oneBd":3.50,"twoBd":3.21,"threeBd":3.33}
-
+        // Extract each WAvg set
+        const compsUnitMixPct = compsData.percentages;
+        const compsRents = compsAvgs.rents;
+        const compsSqFts = compsAvgs.sqfts;
+        const compsRentPerSqfts = compsAvgs.rentPerSqfts;
+        /*  EXAMPLE WAVG SETS:
+                compsUnitMixPct     {"studio":"4.99","oneBd":"45.01","twoBd":"40.01","threeBd":"9.99"} (notice, not like percentages)
+                compsRents          {"studio":2193,"oneBd":2379,"twoBd":3141,"threeBd":4007}
+                compsSqFts          {"studio":550,"oneBd":775,"twoBd":1050,"threeBd":1300}
+                compsRentPerSqfts   {"studio":3.75,"oneBd":3.50,"twoBd":3.21,"threeBd":3.33} */
+        
         // Generate and show the market comps table
         try {
             displayCompsTable(compsData);
@@ -56,9 +55,12 @@ async function runCompsModule(latitude, longitude, radius="3.000") {
             console.error("Error while adding comp placemarks to map: \n", error);
         }
 
-        // Return array (?) of the weighted avg. sets
-        console.log("Comps module complete.");
         return {compsUnitMixPct, compsRents, compsSqFts, compsRentPerSqfts};
+        /*  Return one object containing all comps data:
+                (1) Full data set (every comp, every column)
+                (2) WAvg rent, SF, and rent/SF
+                (3) WAvg % mix */
+
     } catch (error) {
         alert("Error: Failed while trying to process the comp set. \nWhoops!")
         console.error("Error while trying to process the comp set: \n", error);        
