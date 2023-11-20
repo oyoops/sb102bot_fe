@@ -203,7 +203,7 @@ function addCompsMarkersToMap(responseData, gmap) {
     // Create a new bounds object
     let bounds = new google.maps.LatLngBounds();
 
-    responseData.forEach((item, index) => { // Ensure 'index' is used if needed
+    responseData.forEach((item) => { // Removed 'index' as it's no longer needed
 
         // Custom icon using SVG for a smaller and different-colored marker
         const customIcon = {
@@ -214,39 +214,35 @@ function addCompsMarkersToMap(responseData, gmap) {
             strokeColor: 'white',
             strokeWeight: 2
         };
-        
-        const markerPosition = new google.maps.LatLng(item.lat, item.lng);
-        // Add a delay between each comps marker animation for a fancy effect
-        setTimeout(() => {
-            const marker = new google.maps.Marker({
-                position: markerPosition,
-                map: gmap,
-                title: item.property_name, // Comp name
-                icon: customIcon,
-                animation: google.maps.Animation.DROP // Add drop animation
-            });
 
-            // Add a label above the marker with the property name
-            const label = new google.maps.Marker({
-                position: markerPosition,
-                map: gmap,
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    fillColor: 'transparent', // Transparent fill
-                    fillOpacity: 0,
-                    scale: 0, // No scale
-                    strokeWeight: 0
-                },
-                label: {
-                    text: item.property_name, // Property name
-                    color: 'black', // Text color
-                    fontSize: '10px', // Smaller font size
-                }
-            });
-        }, index * 200); // Small delay between each marker
+        const markerPosition = new google.maps.LatLng(item.lat, item.lng);
+        const marker = new google.maps.Marker({
+            position: markerPosition,
+            map: gmap,
+            title: item.property_name, // Comp name
+            icon: customIcon,
+            animation: google.maps.Animation.DROP // Add drop animation
+        });
+
+        // Add a label above the marker with the property name
+        const label = new google.maps.Marker({
+            position: markerPosition,
+            map: gmap,
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: 'transparent', // Transparent fill
+                fillOpacity: 0,
+                scale: 0, // No scale
+                strokeWeight: 0
+            },
+            label: {
+                text: item.property_name, // Property name
+                color: 'black', // Text color
+                fontSize: '10px', // Smaller font size
+            }
+        });
 
         // Extend the bounds to include each comp marker
-        /* Probably will cause an error if zero comps within radius... */
         bounds.extend(markerPosition);
 
         // Info window content
@@ -263,12 +259,12 @@ function addCompsMarkersToMap(responseData, gmap) {
         const infoWindow = new google.maps.InfoWindow({
             content: infoContent
         });
-        
+
         marker.addListener('click', () => {
-            infoWindow.open(map, marker);
+            infoWindow.open(gmap, marker);
         });
     });
-
+    
     // Once all markers have been added, adjust viewport to show all
     // Check if there are comps to fit bounds to
     if (responseData.length > 0) {
