@@ -280,7 +280,7 @@ function addCompsMarkersToMap(responseData) {
                 <p class="info-window" style="margin: 4px 0; font-size: 14px;"><strong>${(100-item.vacancy_pct)}%</strong> occupied</p>
             </div>
             <div style="margin-top: 15px;">
-                <h3 style="font-size: 16px; margin-bottom: 10px;">Unit Types</h3>
+                <!-- <h3 style="font-size: 16px; margin-bottom: 10px;">Unit Types</h3> -->
                 ${
                     item.st_ask_rent_unit ? `
                     <div style="background-color: #eef2f7; border-radius: 5px; padding: 8px; margin-bottom: 10px;">
