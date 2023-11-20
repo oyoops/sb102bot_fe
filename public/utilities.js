@@ -123,7 +123,7 @@ function handleAIError(error) {
 async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=false) {
   // (super secret debug method)
   if (debug) {
-    return "<h2>Comps Analysis</h2> <br><p>[Placeholder]</p>"
+    return "<h2>Comps Analysis</h2> <p>[Placeholder]</p>"
   }
     
   // Add value of superAI switch to all primary requests
