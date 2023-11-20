@@ -31,6 +31,13 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`SuperAI=${superAI}`);
     });
 
+    // manually add debug mode switch event listener
+    document.getElementById('debugModeCheckbox').addEventListener('change', function() {
+        this.value = this.checked ? 'on' : 'off';
+        debugModeCheckbox = this.value;
+        console.log(`Debug Mode=${debugModeCheckbox}`);
+    });
+
     // on form submit:
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -189,20 +196,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             /* Start AI Module */
-
             try {
                 // Start composing the supplemental data set for AI beginning with parcelData
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
-                
+            } catch (error) {
+                console.error('Parcel Data Error:', error);
+                handleAIError(error);
+            }
+
+            let debugMode = false;
+            if (debugModeCheckbox=='on') {
+                debugMode = true;
+            }
+
+            try {
                 // Generate AI summary HTML content
-                const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData);
-                
+                const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode);
                 // Hide primary AI responses
                 document.getElementById("primaryResponsesContainer").style.display = 'none';
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
-
                 // Show AI summary response
                 eligibilityDiv.innerHTML = aiContentHTML;
                 eligibilityDiv.style.display = 'block';
@@ -212,7 +226,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
                 handleAIError(error);
             }
-
             /* End AI Module */
 
 

@@ -6,6 +6,7 @@
 //  main.js  //
 //===========*/
 
+
 /* API Calling Functions */
 
 // geocode v2
@@ -85,7 +86,7 @@ function getMunicipality(cityData, countyData) {
 /* AI-Related Functions: */
 
 // Main AI module entry point
-async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData) {
+async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode=false) {
     if (countyData) {
         enhanceWithCountyData(aiSupplementalData, countyData);
     }
@@ -98,7 +99,7 @@ async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, ci
 
     const dirtyData = await getDirtyData(aiSupplementalData);
     const cleanerData = refineData(dirtyData, superAI);
-    const aiGeneratedHTML = await fetchAiResponsesCombined(eligPath, cleanerData, superAI);
+    const aiGeneratedHTML = await fetchAiResponsesCombined(eligPath, cleanerData, superAI, debugMode);
 
     if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
         throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
@@ -119,9 +120,12 @@ function handleAIError(error) {
 }
 
 // fetch combined set of primary AI responses
-async function fetchAiResponsesCombined(eligPath, cleanData, superAI) {
-  /* START: Data Collection Module */
-  
+async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=false) {
+  // (super secret debug method)
+  if (debug) {
+    return "debug mode = ON"
+  }
+    
   // Add value of superAI switch to all primary requests
   cleanData.superAI = superAI;
 
@@ -194,6 +198,8 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI) {
     });
     });
     try {
+        /* STAGE 1: PRIMARY RESPONSES */
+
         // Fetch all primary prompt responses simultaneously
         const results = await Promise.all(fetchPromises);
 
@@ -211,7 +217,7 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI) {
         console.log("Final Data: \n", cleanData);
 
         /* START STAGE 2: SER */
-        const serEndpoint = `/api/` + summaryEndpoint + `?aiCombinedResponses=${encodeURIComponent(JSON.stringify(results))}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData))}&superAI=${superAI}`;
+        ////const serEndpoint = `/api/` + summaryEndpoint + `?aiCombinedResponses=${encodeURIComponent(JSON.stringify(results))}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData))}&superAI=${superAI}`;
         const serResponse = await fetch('/api/' + summaryEndpoint, {
             method: 'POST',
             headers: {

@@ -1,5 +1,6 @@
 // gmap.js - Functions for the Google Map
 
+
 /* FUNCTIONS */
 
 // Load the Google Maps API dynamically
@@ -24,11 +25,11 @@ async function initializeMap(lat, lng) {
     };
 
     map = new google.maps.Map(mapDisplay, mapOptions);
-    console.log('Map generated!');
+    ////console.log('Map initialized');
 
     // Define a custom icon for the subject site marker
     const subjectSiteIcon = {
-        url: 'http://maps.google.com/mapfiles/ms/icons/white-dot.png', // A blue icon to stand out
+        url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png', // A blue icon to stand out
         scaledSize: new google.maps.Size(40, 40), // Size of the icon
         origin: new google.maps.Point(0, 0), // Origin of the icon
         anchor: new google.maps.Point(20, 40) // Anchor point of the icon
@@ -152,14 +153,14 @@ function createStyledMarker(position, map, label) {
         icon: {
             labelOrigin: new google.maps.Point(11, 50),
             url: 'data:image/svg+xml;charset=utf-8,' +
-                encodeURIComponent('<svg width="18" height="18" xmlns="http://www.w3.org/2000/svg"></svg>'),
+                encodeURIComponent('<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"></svg>'),
             size: new google.maps.Size(20, 20),
         },
         label: {
             text: label,
             color: "yellow",
             fontWeight: "bold",
-            fontSize: "18px"
+            fontSize: "20px"
         }
     });
     return marker;
@@ -249,10 +250,10 @@ function addCompsMarkersToMap(responseData) {
         const customIcon = {
             path: shape.path, // Use the determined shape path
             fillColor: fillColor, // Use the determined color
-            fillOpacity: 0.60,
+            fillOpacity: 0.70,
             scale: scale,
             strokeColor: 'white',
-            strokeWeight: 2
+            strokeWeight: 1.5
         };
 
         const markerPosition = new google.maps.LatLng(item.lat, item.lng);
@@ -266,15 +267,6 @@ function addCompsMarkersToMap(responseData) {
         // Extend the bounds to include each comp marker
         bounds.extend(markerPosition);
 
-        /*// Info window content
-        const infoContent = `
-            <strong><u>${item.property_name}</u></strong><br>
-            Developed by ${item.dev_name} (${item.yr_built})<br>
-            ${item.property_address}<br><br>
-            <strong>${item.num_of_stories}-story ${item.style} (${item.num_of_units} units)</strong><br>
-            <strong>$${item.avg_eff_unit}</strong>/mo. = ${item.avg_unit_sf} SF @ <strong>$${item.avg_eff_sf}</strong>/SF<br>
-            <strong>${(100-item.vacancy_pct)}%</strong> occupied
-        `;*/
         // Assuming 'item' is your data object
         const infoContent = `
         <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; border-radius: 8px; padding: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
@@ -327,7 +319,6 @@ function addCompsMarkersToMap(responseData) {
             </div>
         </div>
         `;
-
 
         const infoWindow = new google.maps.InfoWindow({
             content: infoContent

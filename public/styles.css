@@ -59,10 +59,10 @@ p {
     margin-left: 10px;
     margin-right: 10px;
     opacity: 0;
-    animation: fadeIn 0.3s; /* Add animation */
+    animation: fadeIn 0.3s;
 }
 .info-window p {
-    animation: none;
+    animation: fadeIn 0.3s;
 }
 
 form {
