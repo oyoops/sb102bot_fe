@@ -234,10 +234,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (superAI=="on") {
                 // Collect the data necessary for proforma workbook
                 const dataForExcel = {
-                    acres: acres//,
+                    acres: acres,
                     //address: address,
+                    ...aiSupplementalData
                     // ...many more!
-                    // put ALL available variables in here!
                 };
                 // Generate the proforma workbook 
                 await generateAndDownloadExcel(dataForExcel, "xlsx");

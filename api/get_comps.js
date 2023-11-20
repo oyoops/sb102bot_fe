@@ -33,15 +33,6 @@ module.exports = async (req, res) => {
   }
   /* still will produce unlimited results if no limit provided (potentially a huge problem) */
 
-  /*
-  console.log('Received new comps request:\n', {
-    lat: lat,
-    lng: lng,
-    radius: radius,
-    limit: limit
-  });
-  */
-
   if (lat < 24.396308 || lat > 31.001056 || lng < -87.634938 || lng > -80.031362) {
     return res.status(400).send('Please provide a valid lat and long for Florida.');
   }
@@ -152,10 +143,10 @@ module.exports = async (req, res) => {
 
     // Calculate the weighted percentages by unit type
     const weightedPercentages = {
-      studio: (totalUnitsByType.studio / totalUnitsAllProperties * 100).toFixed(2),
-      oneBd: (totalUnitsByType.oneBd / totalUnitsAllProperties * 100).toFixed(2),
-      twoBd: (totalUnitsByType.twoBd / totalUnitsAllProperties * 100).toFixed(2),
-      threeBd: (totalUnitsByType.threeBd / totalUnitsAllProperties * 100).toFixed(2)
+      studio: (totalUnitsByType.studio / totalUnitsAllProperties * 100).toFixed(0),
+      oneBd: (totalUnitsByType.oneBd / totalUnitsAllProperties * 100).toFixed(0),
+      twoBd: (totalUnitsByType.twoBd / totalUnitsAllProperties * 100).toFixed(0),
+      threeBd: (totalUnitsByType.threeBd / totalUnitsAllProperties * 100).toFixed(0)
     };
 
     console.log('\nWeighted Percentages by Unit Type:');
@@ -164,7 +155,7 @@ module.exports = async (req, res) => {
     console.log('2 Bed: ' + weightedPercentages.twoBd + '%');
     console.log('3 Bed: ' + weightedPercentages.threeBd + '%');
 
-    console.log('Weighted Effective Rents:');
+    console.log('\nWeighted Effective Rents:');
     console.log('Studio:', totalUnitsByType.studio ? parseFloat((weightedSums.studio.rent / totalUnitsByType.studio).toFixed(0)) : 0);
     console.log('1 Bed: ', totalUnitsByType.oneBd ? parseFloat((weightedSums.oneBd.rent / totalUnitsByType.oneBd).toFixed(0)) : 0);
     console.log('2 Bed: ', totalUnitsByType.twoBd ? parseFloat((weightedSums.twoBd.rent / totalUnitsByType.twoBd).toFixed(0)) : 0);

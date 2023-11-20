@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
     try {
         // Extract acreage from payload
         let acres = parseFloat(req.body.acres);
-        // Validate
+        // Validate acreage
         if (typeof acres !== 'number' || acres <= 0) {
             logger.sendLog(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
             acres = 9.99;
@@ -32,6 +32,36 @@ module.exports = async (req, res) => {
         // Initialize INPUT sheet with default values
         initializeInputSheet(inputSheet, defaults);
 
+        // Override initial INPUT sheet values wherever possible
+        // -- Comp rents, unit sizes, and % mix:
+        worksheet.getCell('W1').value = "[Subject Property]";
+        worksheet.getCell('W2').value = req.body.phy_addr1;
+        worksheet.getCell('W3').value = req.body.phy_city;
+
+        worksheet.getCell('W5').value = parseFloat(req.body.comps_percentages.studio)/100;
+        worksheet.getCell('W6').value = parseFloat(req.body.comps_percentages.oneBd)/100;
+        worksheet.getCell('W7').value = parseFloat(req.body.comps_percentages.twoBd)/100;
+        worksheet.getCell('W8').value = parseFloat(req.body.comps_percentages.threeBd)/100;
+
+        worksheet.getCell('C2').value = parseFloat(req.body.comps_averages.rents.studio);
+        worksheet.getCell('C3').value = parseFloat(req.body.comps_averages.rents.oneBd);
+        worksheet.getCell('C4').value = parseFloat(req.body.comps_averages.rents.twoBd);
+        worksheet.getCell('C5').value = parseFloat(req.body.comps_averages.rents.threeBd);
+        
+        worksheet.getCell('D2').value = parseFloat(req.body.comps_averages.sqfts.studio);
+        worksheet.getCell('D3').value = parseFloat(req.body.comps_averages.sqfts.oneBd);
+        worksheet.getCell('D4').value = parseFloat(req.body.comps_averages.sqfts.twoBd);
+        worksheet.getCell('D5').value = parseFloat(req.body.comps_averages.sqfts.threeBd);
+        
+        worksheet.getCell('Z5').value = parseFloat(req.body.comps_averages.rentPerSqfts.studio);
+        worksheet.getCell('Z6').value = parseFloat(req.body.comps_averages.rentPerSqfts.oneBd);
+        worksheet.getCell('Z7').value = parseFloat(req.body.comps_averages.rentPerSqfts.twoBd);
+        worksheet.getCell('Z8').value = parseFloat(req.body.comps_averages.rentPerSqfts.threeBd);
+        
+        
+        console.log("ALL AVAILABLE DATA:", req.body);
+
+
         // Define unit types
         const unitTypes = ['Studio', '1BD', '2BD', '3BD'];
 
@@ -46,9 +76,9 @@ module.exports = async (req, res) => {
         let row = 2;
         unitTypes.forEach((type, index) => {
             worksheet.getCell(`A${row}`).value = type;
-            worksheet.getCell(`B${row}`).value = { formula: `INPUT!B${index + 2 + 6}` };
-            worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 6 + 6}` };
-            worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 10 + 6}` };
+            worksheet.getCell(`B${row}`).value = { formula: `W${index + 5}*300` }; //{ formula: `INPUT!B${index + 2 + 6}` };
+            ////worksheet.getCell(`C${row}`).value = { formula: `INPUT!B${index + 6 + 6}` };
+            ////worksheet.getCell(`D${row}`).value = { formula: `INPUT!B${index + 10 + 6}` };
             worksheet.getCell(`E${row}`).value = { formula: `C${row}/D${row}` };
             worksheet.getCell(`F${row}`).value = { formula: `B${row}*C${row}*12` };
             row++;
@@ -57,7 +87,7 @@ module.exports = async (req, res) => {
         // Add Development Cost Breakdown to Worksheet
         row += 2; // Skip a row for spacing
         worksheet.getCell(`A${row}`).value = "Land Cost Per Unit";
-        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B2' }; // Corrected formula reference
+        worksheet.getCell(`B${row}`).value = { formula: 'INPUT!B2' };
         row++;
 
         worksheet.getCell(`A${row}`).value = "Total Land Cost";
@@ -193,7 +223,6 @@ function applyStyling(workbook) {
     });
 }
 
-// Apply advanced styling to the Workbook
 function styleInputsSheet(inputSheet) {
     // Set column widths
     inputSheet.getColumn('A').width = 25; // Description column
@@ -256,7 +285,6 @@ function styleInputsSheet(inputSheet) {
         // Handle the error appropriately
     }
 }
-
 
 function getDefaults(bldgType) {
     // Default values based on building type
