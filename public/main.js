@@ -84,14 +84,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // TALLEST BLDG. DATA (+ initializes map)
             const tallestBuildingData = await initializeMap(lat, lng);
-
+            
             // Display the map with a smooth fade-in effect
             googlemap.style.display = 'block';
+            window.scrollTo(0, 0);
             setTimeout(() => {
                 googlemap.style.opacity = 1; // Trigger the fade-in effect
             }, 100); // Start the transition 100ms after display change
-            window.scrollTo(0, 0);
-
+            
             // MAX BLDG. HEIGHT
             const maxBH = tallestBuildingData.maxHeight.toFixed(0); // feet tall
             const maxBD = tallestBuildingData.maxDistance.toFixed(2); // miles away

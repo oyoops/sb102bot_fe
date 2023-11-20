@@ -28,7 +28,7 @@ async function initializeMap(lat, lng) {
 
     // Define a custom icon for the subject site marker
     const subjectSiteIcon = {
-        url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png', // A blue icon to stand out
+        url: 'http://maps.google.com/mapfiles/ms/icons/white-dot.png', // A blue icon to stand out
         scaledSize: new google.maps.Size(40, 40), // Size of the icon
         origin: new google.maps.Point(0, 0), // Origin of the icon
         anchor: new google.maps.Point(20, 40) // Anchor point of the icon
@@ -43,7 +43,7 @@ async function initializeMap(lat, lng) {
     });
 
     const userInfowindow = new google.maps.InfoWindow({
-        content: `<div style="text-align:center;"><strong>Subject</strong></div>`
+        content: `<div style="text-align:center;"><strong>You</strong></div>`
     });
 
     userMarker.addListener('click', function() {
@@ -103,7 +103,7 @@ async function initializeMap(lat, lng) {
                     { lat: buildingLat, lng: buildingLng }
                 ],
                 strokeColor: '#FF0000',
-                strokeOpacity: 0.7,
+                strokeOpacity: 0.8,
                 strokeWeight: 2,
                 map: map
             });
@@ -178,11 +178,11 @@ function getStyleShape(style) {
         },
         'Mid-Rise': {
             path: 'M 0 -3 L -3 3 L 3 3 z', // Triangle shape for Mid-Rise
-            scale: 0.5
+            scale: 1
         },
         'Hi-Rise': {
             path: 'M -2 0 L 0 -2 L 2 0 L 0 2 z', // Diamond shape for Hi-Rise
-            scale: 1.5 // Reverted scale for Hi-Rise
+            scale: 1 // Reverted scale for Hi-Rise
         }
     };
     return shapes[style] || shapes['Garden']; // Default to Garden shape if style is not recognized
@@ -190,10 +190,10 @@ function getStyleShape(style) {
 
 // Define a function to calculate the scale of the icon based on num_of_units
 function getCompMarkerScale(num_of_units) {
-    const minUnits = 200;
-    const maxUnits = 400;
-    const minScale = 5; // Smallest size for the icon, increased from 3 to 5
-    const maxScale = 10; // Largest size for the icon, increased from 6 to 10
+    const minUnits = 150;
+    const maxUnits = 450;
+    const minScale = 2; // Smallest size for the icon
+    const maxScale = 5; // Largest size for the icon
 
     // Ensure num_of_units is within the expected range
     num_of_units = Math.max(minUnits, Math.min(num_of_units, maxUnits));
@@ -205,7 +205,7 @@ function getCompMarkerScale(num_of_units) {
 
 // Define a function to get the color based on the average effective rent
 function getRentColor(avg_eff_unit, avgRent) {
-    const threshold = 0.10; // 10% threshold for variance
+    const threshold = 0.15; // 10% threshold for variance
     const maxIntensity = 255;
     let color = '#FFFFFF'; // Default to white for mid-point rent
 
@@ -229,8 +229,8 @@ function getRentColor(avg_eff_unit, avgRent) {
     return color;
 }
 
- // Adds each comp returned to a Google Map with unique color
- function addCompsMarkersToMap(responseData) {
+// Adds each comp returned to a Google Map with unique color
+function addCompsMarkersToMap(responseData) {
     // Create a new bounds object
     let bounds = new google.maps.LatLngBounds();
 
@@ -242,15 +242,15 @@ function getRentColor(avg_eff_unit, avgRent) {
         const avgRent = responseData.reduce((sum, comp) => sum + comp.avg_eff_unit, 0) / responseData.length;
         const fillColor = getRentColor(item.avg_eff_unit, avgRent);
 
-        // Use the scale from the shape object for the marker
-        const scale = shape.scale;
+        // Get the scale for the marker based on unit count
+        const scale = getCompMarkerScale(item.num_of_units);
 
         // Custom icon using the determined shape, color, and scale for the marker
         const customIcon = {
             path: shape.path, // Use the determined shape path
             fillColor: fillColor, // Use the determined color
-            fillOpacity: 0.65,
-            scale: scale, // Use the scale from the shape object
+            fillOpacity: 0.60,
+            scale: scale,
             strokeColor: 'white',
             strokeWeight: 2
         };
@@ -266,17 +266,68 @@ function getRentColor(avg_eff_unit, avgRent) {
         // Extend the bounds to include each comp marker
         bounds.extend(markerPosition);
 
-        // Info window content
+        /*// Info window content
         const infoContent = `
-            <strong><u>${item.property_name}</u> (${item.yr_built})</strong><br>
-            Developer: ${item.dev_name}<br><br>
-
+            <strong><u>${item.property_name}</u></strong><br>
+            Developed by ${item.dev_name} (${item.yr_built})<br>
+            ${item.property_address}<br><br>
             <strong>${item.num_of_stories}-story ${item.style} (${item.num_of_units} units)</strong><br>
             <strong>$${item.avg_eff_unit}</strong>/mo. = ${item.avg_unit_sf} SF @ <strong>$${item.avg_eff_sf}</strong>/SF<br>
-            Occupancy: ${(100-item.vacancy_pct)}% <br><br>
-
-            <i>${item.property_address}</i><br>
+            <strong>${(100-item.vacancy_pct)}%</strong> occupied
+        `;*/
+        // Assuming 'item' is your data object
+        const infoContent = `
+        <div style="font-family: Arial, sans-serif; color: #333; background-color: #f9f9f9; border-radius: 8px; padding: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+            <h2 style="margin: 0; color: #007bff; font-size: 18px;">${item.property_name}</h2>
+            <p class="info-window" style="margin: 5px 0; color: #666;">Developed by ${item.dev_name} (${item.yr_built})</p>
+            <p class="info-window" style="margin: 5px 0; color: #666;">${item.property_address}</p>
+            <div style="background-color: #fff; border-radius: 5px; padding: 8px; margin-top: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);">
+                <p class="info-window" style="margin: 4px 0; font-size: 14px;"><strong>${item.num_of_stories}-story ${item.style}</strong> with ${item.num_of_units} units</p>
+                <p class="info-window" style="margin: 4px 0; font-size: 14px;"><strong>$${item.avg_eff_unit}/month</strong> - ${item.avg_unit_sf} SF at <strong>$${item.avg_eff_sf}/SF</strong></p>
+                <p class="info-window" style="margin: 4px 0; font-size: 14px;"><strong>${(100-item.vacancy_pct)}%</strong> occupied</p>
+            </div>
+            <div style="margin-top: 15px;">
+                <h3 style="font-size: 16px; margin-bottom: 10px;">Unit Types</h3>
+                ${
+                    item.st_ask_rent_unit ? `
+                    <div style="background-color: #eef2f7; border-radius: 5px; padding: 8px; margin-bottom: 10px;">
+                        <h4 style="margin: 0 0 5px 0; color: #4a90e2;">Studio</h4>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent: $${item.st_ask_rent_unit}/mo</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Average Size: ${item.st_avg_sf} SF</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent/SF: $${item.st_ask_rent_sf}/SF</p>
+                    </div>` : ''
+                }
+                ${
+                    item.one_bd_ask_rent_unit ? `
+                    <div style="background-color: #eef2f7; border-radius: 5px; padding: 8px; margin-bottom: 10px;">
+                        <h4 style="margin: 0 0 5px 0; color: #4a90e2;">1-Bedroom</h4>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent: $${item.one_bd_ask_rent_unit}/mo</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Average Size: ${item.one_bd_avg_sf} SF</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent/SF: $${item.one_bd_ask_rent_sf}/SF</p>
+                    </div>` : ''
+                }
+                ${
+                    item.two_bd_ask_rent_unit ? `
+                    <div style="background-color: #eef2f7; border-radius: 5px; padding: 8px; margin-bottom: 10px;">
+                        <h4 style="margin: 0 0 5px 0; color: #4a90e2;">2-Bedroom</h4>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent: $${item.two_bd_ask_rent_unit}/mo</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Average Size: ${item.two_bd_avg_sf} SF</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent/SF: $${item.two_bd_ask_rent_sf}/SF</p>
+                    </div>` : ''
+                }
+                ${
+                    item.three_bd_ask_rent_unit ? `
+                    <div style="background-color: #eef2f7; border-radius: 5px; padding: 8px; margin-bottom: 10px;">
+                        <h4 style="margin: 0 0 5px 0; color: #4a90e2;">3-Bedroom</h4>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent: $${item.three_bd_ask_rent_unit}/mo</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Average Size: ${item.three_bd_avg_sf} SF</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent/SF: $${item.three_bd_ask_rent_sf}/SF</p>
+                    </div>` : ''
+                }
+            </div>
+        </div>
         `;
+
 
         const infoWindow = new google.maps.InfoWindow({
             content: infoContent
