@@ -84,7 +84,7 @@ let buildingAddress; // may not work
 let hmmm;
 
 /* MAP GLOBALS */
-let map; // THE ACTUAL MAP
+let map = null; // THE ACTUAL MAP, initialized to null
 const mapDisplay = document.getElementById('map');
 
 /* CALCULATIONS.JS GLOBALS (DOM stuff) */
