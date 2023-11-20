@@ -216,10 +216,10 @@ function addCompsMarkersToMap(responseData) {
 
         // Custom icon using the determined shape and color for the marker
         const customIcon = {
-            path: shape.path || shape || google.maps.SymbolPath.CIRCLE, // Use the determined shape path, predefined shape, or default to circle
+            path: (shape && shape.path) ? shape.path : (shape || google.maps.SymbolPath.CIRCLE), // Use the determined shape path, predefined shape, or default to circle
             fillColor: fillColor, // Use the determined color
             fillOpacity: 0.65,
-            scale: shape.scale || 10, // Use the determined scale or default
+            scale: (shape && shape.scale) ? shape.scale : 10, // Use the determined scale or default
             strokeColor: 'white',
             strokeWeight: 2
         };
