@@ -34,8 +34,10 @@ async function initializeMap(lat, lng) {
         fullscreenControl: false, // Disable Fullscreen control
     };
 
-    map = new google.maps.Map(mapDisplay, mapOptions);
-    console.log('Map generated!');
+    if (!window.map) {
+        window.map = new google.maps.Map(mapDisplay, mapOptions);
+        console.log('Map generated!');
+    }
 
     // Define a custom icon for the subject site marker
     const subjectSiteIcon = {
@@ -44,6 +46,9 @@ async function initializeMap(lat, lng) {
         origin: new google.maps.Point(0, 0), // Origin of the icon
         anchor: new google.maps.Point(20, 40) // Anchor point of the icon
     };
+
+    // Ensure the bounds variable is accessible and defined
+    let bounds = new google.maps.LatLngBounds();
 
     // Create an animated marker for the subject site with the custom icon
     const userMarker = new google.maps.Marker({
