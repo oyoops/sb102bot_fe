@@ -166,17 +166,23 @@ function createStyledMarker(position, map, label) {
 
 /* Maps + Comps Database */
 
-// Adds each comp returned to a Google Map
+// Define an array of colors for the comp markers
+const compMarkerColors = ['#FF5733', '#33FF57', '#3357FF', '#FF33F6', '#F6FF33', '#33FFF6', '#F633FF', '#FF3333'];
+
+// Adds each comp returned to a Google Map with unique color
 function addCompsMarkersToMap(responseData) {
     // Create a new bounds object
     let bounds = new google.maps.LatLngBounds();
 
-    responseData.forEach(item => {
+    responseData.forEach((item, index) => {
+        // Determine the color for the marker
+        const colorIndex = index % compMarkerColors.length;
+        const fillColor = compMarkerColors[colorIndex];
 
-        // Custom icon using SVG for a smaller and different-colored marker
+        // Custom icon using SVG for a smaller and uniquely-colored marker
         const customIcon = {
             path: google.maps.SymbolPath.CIRCLE,
-            fillColor: 'orange', // Change this color as needed
+            fillColor: fillColor, // Use the determined color
             fillOpacity: 0.65,
             scale: 10,  // Adjust the size using the scale property
             strokeColor: 'white',
@@ -192,7 +198,6 @@ function addCompsMarkersToMap(responseData) {
         });
 
         // Extend the bounds to include each comp marker
-        /* Probably will cause an error if zero comps within radius... */
         bounds.extend(markerPosition);
 
         // Info window content
@@ -217,6 +222,5 @@ function addCompsMarkersToMap(responseData) {
     });
 
     // Once all markers have been added, adjust viewport to show all
-    /* This probably causes an error if zero comps are available (again...) */
     map.fitBounds(bounds);
 }
