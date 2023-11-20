@@ -178,11 +178,11 @@ function getStyleShape(style) {
         },
         'Mid-Rise': {
             path: 'M 0 -3 L -3 3 L 3 3 z', // Triangle shape for Mid-Rise
-            scale: 0.8 // Reduced scale for Mid-Rise
+            scale: 1 // Reverted scale for Mid-Rise
         },
         'Hi-Rise': {
             path: 'M -2 0 L 0 -2 L 2 0 L 0 2 z', // Diamond shape for Hi-Rise
-            scale: 1.2 // Increased scale for Hi-Rise
+            scale: 1 // Reverted scale for Hi-Rise
         }
     };
     return shapes[style] || shapes['Garden']; // Default to Garden shape if style is not recognized
@@ -212,17 +212,18 @@ function getRentColor(avg_eff_unit, avgRent) {
     // Calculate the percentage difference from the average rent
     const percentageDifference = (avg_eff_unit - avgRent) / avgRent;
 
-    if (Math.abs(percentageDifference) <= threshold) {
-        // Within +/-10% range, interpolate between green and red
-        const intensity = Math.round(maxIntensity * Math.abs(percentageDifference) / threshold);
-        color = percentageDifference > 0
-            ? `rgb(0, ${maxIntensity - intensity}, 0)` // Greenish
-            : `rgb(${maxIntensity - intensity}, 0, 0)`; // Reddish
+    // Calculate the intensity based on the absolute percentage difference
+    const intensity = Math.round(maxIntensity * Math.abs(percentageDifference) / threshold);
+    // Determine the color based on the percentage difference
+    if (percentageDifference > 0) {
+        // Above average rent, interpolate between white and green
+        color = `rgb(${255 - intensity}, ${255}, ${255 - intensity})`; // Greenish to white gradient
+    } else if (percentageDifference < 0) {
+        // Below average rent, interpolate between white and red
+        color = `rgb(${255}, ${255 - intensity}, ${255 - intensity})`; // Reddish to white gradient
     } else {
-        // Beyond +/-10% range, cap the color intensity
-        color = percentageDifference > 0
-            ? `rgb(0, ${maxIntensity}, 0)` // Vivid green
-            : `rgb(${maxIntensity}, 0, 0)`; // Vivid red
+        // Exactly average rent, use white
+        color = `rgb(255, 255, 255)`; // White
     }
 
     return color;
