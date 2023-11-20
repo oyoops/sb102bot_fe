@@ -85,12 +85,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // TALLEST BLDG. DATA (+ initializes map)
             const tallestBuildingData = await initializeMap(lat, lng);
 
-            // Fade in the map with a smooth transition
-            googlemap.style.opacity = 0;
+            // Display the map with a smooth fade-in effect
             googlemap.style.display = 'block';
             setTimeout(() => {
-                googlemap.style.transition = 'opacity 1s ease-in-out';
-                googlemap.style.opacity = 1;
+                googlemap.style.opacity = 1; // Trigger the fade-in effect
             }, 100); // Start the transition 100ms after display change
             window.scrollTo(0, 0);
 

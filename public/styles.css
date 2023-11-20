@@ -469,15 +469,16 @@ input:disabled {
 
 /* Google Map container */
 #map {
-    width: 100%;                 /* Take up the full width of its container */
-    height: 40vh;                /* Make it shorter vertically; adjust as needed */
-    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);   /* Slight shadow underneath */
+    width: 100%;
+    height: 40vh;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
     position: relative;
-    top: 0px;                  /* Push it down by 0 pixels; adjust as needed */
-    z-index: 1;                 /* Ensure it's on top of other content */
-    transition: opacity 1s, transform 0.2s;
-    border-radius: 0;           /* Remove border radius for full edge-to-edge look */
-    display: none;               /* Start with map not visible */
+    top: 0px;
+    z-index: 1;
+    transition: opacity 1s ease-in-out; /* Smooth transition for opacity */
+    opacity: 0; /* Start with map fully transparent */
+    border-radius: 0;
+    display: none; /* Start with map not visible */
 
     /* Desktop specific styles */
     @media (min-width: 768px) { /* Adjust breakpoint as needed */
