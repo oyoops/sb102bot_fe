@@ -34,8 +34,8 @@ async function initializeMap(lat, lng) {
         fullscreenControl: false, // Disable Fullscreen control
     };
 
-    if (!window.map) {
-        window.map = new google.maps.Map(mapDisplay, mapOptions);
+    if (!map) {
+        map = new google.maps.Map(mapDisplay, mapOptions);
         console.log('Map generated!');
     }
 
@@ -67,7 +67,7 @@ async function initializeMap(lat, lng) {
     });
 
     // New test...
-    userInfowindow.open(map, userMarker);
+    userInfowindow.open(window.map, userMarker);
 
     userMarker.addListener('click', function() {
         userInfowindow.open(map, userMarker);
@@ -264,7 +264,7 @@ function addCompsMarkersToMap(responseData, gmap) {
         });
 
         marker.addListener('click', () => {
-            infoWindow.open(map, marker);
+            infoWindow.open(window.map, marker);
         });
     });
     
