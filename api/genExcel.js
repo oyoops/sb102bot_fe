@@ -165,7 +165,7 @@ module.exports = async (req, res) => {
 
         // Return on Cost Calculation
         worksheet.getCell(`A${row}`).value = "Return on Cost";
-        worksheet.getCell(`B${row}`).value = { formula: `(B${annualProjectRevenueRow}/B${totalProjectCostRow})` }; // (Annual Revenue / TDC)
+        worksheet.getCell(`B${row}`).value = { formula: `(B${annualProjectRevenueRow}*0.601)/B${totalProjectCostRow}` }; // (Annual Revenue / TDC)
         const returnOnCostRow = row;
         row++;
 
@@ -311,7 +311,7 @@ function getDefaults(bldgType) {
         },
         'Midrise': {
             "Land Cost Per Unit": 30000,
-            "Construction Cost Per SF A/C": 275,
+            "Construction Cost Per SF A/C": 260,
             "Indirect Cost Per Unit": 50000,
             "Loan to Value (LTV %)": 55,
             "Interest Rate": 6.50,
@@ -331,7 +331,7 @@ function getDefaults(bldgType) {
         },
         'High-Rise': {
             "Land Cost Per Unit": 30000,
-            "Construction Cost Per SF A/C": 350,
+            "Construction Cost Per SF A/C": 325,
             "Indirect Cost Per Unit": 50000,
             "Loan to Value (LTV %)": 50,
             "Interest Rate": 6.50,
