@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
     console.warn('Comps limit exceeds the allowed value; capping to ' + COMPS_COUNT_CAP + '.');
     limit = COMPS_COUNT_CAP;
   }
-  /* still will produce unlimited results if no limit provided (potentially a huge problem) */
+  /* (still will produce unlimited results if no limit provided - potentially a huge problem) */
 
   if (lat < 24.396308 || lat > 31.001056 || lng < -87.634938 || lng > -80.031362) {
     return res.status(400).send('Please provide a valid lat and long for Florida.');

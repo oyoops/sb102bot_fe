@@ -1,27 +1,16 @@
-// main.js - primary script for the sb102bot web app
+// main.js
 
 // Get event listeners
 import './eventListeners.js';
-// Import the loadGoogleMapsAPI function
-//import { loadGoogleMapsAPI } from './gmap.js';
 // Get DOM elements
 import {
     // In use:
-    mainHeader, initialContent, form, addressInput, navButtonsContainer, loadingContainer,
-    googlemap, eligibilityDiv, tryAgainButton,
-    currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections,
-    rentInfoContainer, countyMaxRentsTable, rentsTableBody,
-    compsTable,
-    //developmentProgramInputSection,
-    //marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
-    //countyDataTable, countyTableBody,
-    //unitCalculationTable, abatementTable,
-    //affordablePercentageSlider, affordablePctDisplay, acreageInput, densityInput,
-    //landCostPerUnit, totalHCPerUnit, matchAffordableSizesCheckbox,
-    //sizeInputs, marketInputs, affordableSizeInputs, marketRateInputs
+    mainHeader, initialContent, form, addressInput, currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections,
+    loadingContainer, googlemap, eligibilityDiv, tryAgainButton, rentInfoContainer, countyMaxRentsTable, rentsTableBody, compsTable,
 } from './domElements.js';
 
-    // once DOM is fully loaded:
+
+// once DOM is fully loaded:
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
     
@@ -66,11 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Hide header and initial content
             mainHeader.style.display = 'none';
             initialContent.style.display = 'none';
-            navButtonsContainer.style.display = 'none';
             infoSections.style.display = 'none';
-            currentBugsContainer.style.display = 'none';
             recentUpdatesContainer.style.display = 'none';
-            futureUpdatesContainer.style.display = 'none';
+            //futureUpdatesContainer.style.display = 'none';
+            //currentBugsContainer.style.display = 'none';
 
             // Display fake loading progress bar
             updateLoadingBar();
@@ -170,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
             // If eligible, populate and show Table #2 (Comps avg. vs Affordable max. rent comparison)
-            /*
             if (eligPath == "yes") {
                 rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
                 rentInfoContainer.style.display = 'table'; // show the container
@@ -178,25 +165,10 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.log("LLA Ineligible!");
             }
-            */
 
 
             // Show the Try Again button
             tryAgainButton.style.display = 'block';
-
-
-            /* Start: Land Development I/O Section */
-            try {
-                // Run initial dev calcs
-                //runInitialDevelopmentCalculations();
-                console.log(`Skipping Land Dev I/O Module.`);
-                //console.log(`Showing Land Dev I/O Module...`);
-                //developmentProgramInputSection.style.display = 'block'; // show the I/O section
-            } catch(error) {
-                console.error('Land Dev. I/O Error:', error);
-                handleAIError(error);
-            }
-            /* End: Land Development I/O Section */
 
 
             /* Start AI Module */
@@ -273,6 +245,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-    // Dynamically load Google Maps & Places APIs
+    // Dynamically load Google Maps APIs
     loadGoogleMapsAPI();
 });

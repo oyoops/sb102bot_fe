@@ -1,8 +1,6 @@
 // gmap.js - Functions for the Google Map
 
 
-/* FUNCTIONS */
-
 // Load the Google Maps API dynamically
 function initMap() {
     // Maps API is now loaded and can be used.
@@ -167,8 +165,7 @@ function createStyledMarker(position, map, label) {
 }
 
 
-
-/* Maps + Comps Database */
+/* Comps Placemarks */
 
 // Define a function to get the shape based on the building style
 function getStyleShape(style) {
@@ -183,7 +180,7 @@ function getStyleShape(style) {
         },
         'Hi-Rise': {
             path: 'M -2 0 L 0 -2 L 2 0 L 0 2 z', // Diamond shape for Hi-Rise
-            scale: 1 // Reverted scale for Hi-Rise
+            scale: 1
         }
     };
     return shapes[style] || shapes['Garden']; // Default to Garden shape if style is not recognized
@@ -191,10 +188,10 @@ function getStyleShape(style) {
 
 // Define a function to calculate the scale of the icon based on num_of_units
 function getCompMarkerScale(num_of_units) {
-    const minUnits = 150;
-    const maxUnits = 450;
+    const minUnits = 100;
+    const maxUnits = 500;
     const minScale = 2; // Smallest size for the icon
-    const maxScale = 5; // Largest size for the icon
+    const maxScale = 6; // Largest size for the icon
 
     // Ensure num_of_units is within the expected range
     num_of_units = Math.max(minUnits, Math.min(num_of_units, maxUnits));
@@ -206,7 +203,7 @@ function getCompMarkerScale(num_of_units) {
 
 // Define a function to get the color based on the average effective rent
 function getRentColor(avg_eff_unit, avgRent) {
-    const threshold = 0.15; // 10% threshold for variance
+    const threshold = 0.15; // 15% threshold for variance
     const maxIntensity = 255;
     let color = '#FFFFFF'; // Default to white for mid-point rent
 
@@ -239,11 +236,10 @@ function addCompsMarkersToMap(responseData) {
     responseData.forEach((item, index) => {
         // Get the shape for the marker based on the building style
         const shape = getStyleShape(item.style);
-        // Get the color for the marker based on the average effective rent
         // Calculate the average rent of all comps
         const avgRent = responseData.reduce((sum, comp) => sum + comp.avg_eff_unit, 0) / responseData.length;
+        // Get the color for the marker based on the average effective rent
         const fillColor = getRentColor(item.avg_eff_unit, avgRent);
-
         // Get the scale for the marker based on unit count
         const scale = getCompMarkerScale(item.num_of_units);
 
@@ -253,7 +249,7 @@ function addCompsMarkersToMap(responseData) {
             fillColor: fillColor, // Use the determined color
             fillOpacity: 0.85,
             scale: scale,
-            strokeColor: 'white',
+            strokeColor: 'black',
             strokeWeight: 1.5
         };
 

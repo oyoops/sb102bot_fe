@@ -104,7 +104,7 @@ async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, ci
     if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
         throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
     }
-    return composeAiResponsesCombined(aiGeneratedHTML);
+    return composeFormattedAiResponse(aiGeneratedHTML);
 }
 
 // handle AI module errors
@@ -206,18 +206,17 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
         // Display primary response container
         document.getElementById("primaryResponsesContainer").style.display = 'block';
 
-        // Display each primary response as it becomes available (staggered)
+        // Display primary responses once they are available
         for (let i = 0; i < results.length; i++) {
             document.getElementById(`response${i + 1}`).innerHTML = results[i];
             setTimeout(() => {
                 animateTextFadeIn(document.getElementById(`response${i + 1}`));
-            }, i * 300); // delay each animation by 300ms (not sure this even works)
+            }, i * 300); // delay each animation by 300ms (not sure this actually works...)
         }
   
-        console.log("Final Data: \n", cleanData);
+        console.log("Clean Data: \n", cleanData);
 
         /* START STAGE 2: SER */
-        ////const serEndpoint = `/api/` + summaryEndpoint + `?aiCombinedResponses=${encodeURIComponent(JSON.stringify(results))}&suppDataForAI=${encodeURIComponent(JSON.stringify(cleanData))}&superAI=${superAI}`;
         const serResponse = await fetch('/api/' + summaryEndpoint, {
             method: 'POST',
             headers: {
@@ -229,24 +228,24 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
                 superAI: superAI
             })
         });
-        const serData = await serResponse.json();
-            
+        const serData = await serResponse.json();    
         return serData;
     } catch (error) {
         const errorMessage = error?.data?.error?.message || "TIMEOUT: Server took too long to send AI response.";
         console.error("Server timed out while sending AI response:", errorMessage);
+        alert(`The AI server timed out while responding. \nThis happens... Please refresh and try again.`)
         throw error;
     }
 }
 
 // Compose final output by prepending it with a title and calling it a day
-function composeAiResponsesCombined(aiResponse, titleLine = `🌞 Living Local in ${displayMuniName} 😎`) {
+function composeFormattedAiResponse(aiResponse, titleLine = `🌞 Living Local in ${displayMuniName} 😎`) {
     if (!aiResponse || typeof aiResponse !== 'string') {
-        console.error("Error: Invalid or no AI response received!");
+        console.error("Error: Invalid or no AI response was received!");
         return;
     }
     // Preface final AI content with a custom introduction
-    let combinedResponse = 
+    let formattedResponse = 
     /*`<h2 style="color:black;" align="center">
             <b><i>${titleLine}</i></b>
         </h2>*/
@@ -255,100 +254,52 @@ function composeAiResponsesCombined(aiResponse, titleLine = `🌞 Living Local i
             ${aiResponse}
         </ul>
     `;
-    return combinedResponse;
+    return formattedResponse;
 }
 
 // Add globals to dataset and apply final super-enhancements
 function refineData(rawData, superAI) {
     let refinedData = {};
-    // Attach key globals to dataset
+    // Attach key globals to the supplementary dataset
     rawData = {
-        // Model data
+        // Parameters
         superAI: superAI,
-
-        // Display Data
-        //descriptionOfLiveLocalEligibility: summaryContent,
 
         // Location Data
         address: address,
         lat: lat,
         lng: lng,
-        ////////geocodeData: geocodeData,
-        ////////countyData: countyData,
-        ////////parcelData: parcelData,
-        ////////cityData: cityData,
         cityNameProper: cityNameProper,
         countyNameProper: countyNameProper,
         displayMuniName: displayMuniName,
 
-        // Housing and Unit Data
+        // Unit Density Data
         acres: acres,
-        ////////fakeMillage: fakeMillage,
         maxMuniDensity: maxMuniDensity,
-        ////////totalUnits: totalUnits,
-        ////////marketUnits: marketUnits,
-        ////////affordableUnits: affordableUnits,
         maxCapacity: maxCapacity,
-        ////////affordablePct: affordablePct,
-
-        /*
-        // AI Data
-        aiSupplementalData: aiSupplementalData,
-        aiResponses: aiResponses,
-        */
-
-        /*
-        // Cost Data
-        MILLAGE_ADJUSTMENT: MILLAGE_ADJUSTMENT,
-        landCostPerUnit: landCostPerUnit,
-        totalHCPerUnit: totalHCPerUnit,
-        totalLandCost: totalLandCost,
-        totalHcCost: totalHcCost,
-        totalLandAndTotalHc: totalLandAndTotalHc,
-        totalLandAndTotalHcPerUnit: totalLandAndTotalHcPerUnit,
-        totalLandAndTotalHcPerSqFt: totalLandAndTotalHcPerSqFt,
-        */
-        
-        // Housing Unit Sizes & Rents
-        /*
-        marketStudioSize: marketStudioSize,
-        market1BDSize: market1BDSize,
-        market2BDSize: market2BDSize,
-        market3BDSize: market3BDSize,
-        affordableStudioSize: affordableStudioSize,
-        affordable1BDSize: affordable1BDSize,
-        affordable2BDSize: affordable2BDSize,
-        affordable3BDSize: affordable3BDSize,
-        avgMarketSize: avgMarketSize,
-        avgAffordableSize: avgAffordableSize,
-        avgBlendedSize: avgBlendedSize,
-        maxRent0bd: maxRent0bd,
-        maxRent1bd: maxRent1bd,
-        maxRent2bd: maxRent2bd,
-        maxRent3bd: maxRent3bd,
-        affordablerent: affordablerent,
-        affordableunitsize: affordableunitsize,
-        mktrent: mktrent,
-        mktunitsize: mktunitsize,
-        */
-
-        // Abatement Data
-        acreageValue: acreageValue,
-        densityValue: densityValue,
-        ////////abatementValue: abatementValue,
-        ////////abatementEstimate: abatementEstimate,
 
         // Map & Building Data
-        ////////LIVE_LOCAL_BLDG_RADIUS_MILES: LIVE_LOCAL_BLDG_RADIUS_MILES,
-        ////////tallestBuildingsData: tallestBuildingsData,
+        //LIVE_LOCAL_BLDG_RADIUS_MILES: LIVE_LOCAL_BLDG_RADIUS_MILES,
+        //tallestBuildingLat: buildingLat,
+        //tallestBuildingLng: buildingLng,
         distanceInMilesToTallestBldg: distanceInMilesToTallestBldg,
-        ////////tallestBuildingLat: buildingLat,
-        ////////tallestBuildingLng: buildingLng,
         tallestBuildingHeight: buildingHeight,
         tallestBuildingName: buildingName,
         tallestBuildingAddress: buildingAddress,
 
-        // (existing) Parcel/County/City Data
+        // Custom Data
+        //descriptionOfLiveLocalEligibility: summaryContent,
+
+        /* Cost Data */
+        // ...
+        
+        /* Housing Unit Sizes & Rents */
+        // ...
+
+        /* Abatement Data */
+        // ...
+
+        // Pre-existing Parcel-County-City Data
         ...rawData
     };
 
@@ -438,6 +389,46 @@ function animateTextFadeIn(element) {
             clearInterval(interval);
         }
     }, 2); // adjust speed; ms between iterations
+}
+
+// Animate in the AI response for fancy effect
+function animateLoadingText(element) {
+    const original = element.cloneNode(true);
+    element.innerHTML = '';
+
+    let textQueue = [];
+    let nodeQueue = Array.from(original.childNodes).map(child => ({ node: child, parent: element }));
+    let lastTextNode = null;
+
+    while (nodeQueue.length > 0) {
+        const { node, parent } = nodeQueue.shift();
+        
+        if (node.nodeName === "#text") {
+            for (let char of node.textContent) {
+                const span = document.createElement('span');
+                span.className = 'char';
+                span.innerHTML = char === ' ' ? '&nbsp;' : char;  // Replace space with non-breaking space
+                parent.appendChild(span);
+                textQueue.push(span);
+            }
+        } else {
+            const appendedNode = parent.appendChild(node.cloneNode(false));
+            if (node.childNodes.length > 0) {
+                for (let child of node.childNodes) {
+                    nodeQueue.push({ node: child, parent: appendedNode });
+                }
+            }
+        }
+    }
+
+    let interval = setInterval(() => {
+        if (textQueue.length > 0) {
+            const span = textQueue.shift();
+            span.classList.add('show');
+        } else {
+            clearInterval(interval);
+        }
+    }, 100); // adjust speed; ms between character iterations
 }
 
 // Create a timeout, putting a time limit on each AI endpoint
@@ -539,46 +530,6 @@ function getDirtyDataString(aiSupplementalData) {
     return JSON.stringify(dirtyData, null, 2);
 }
 
-// Animate in the AI response for fancy effect
-function animateLoadingText(element) {
-    const original = element.cloneNode(true);
-    element.innerHTML = '';
-
-    let textQueue = [];
-    let nodeQueue = Array.from(original.childNodes).map(child => ({ node: child, parent: element }));
-    let lastTextNode = null;
-
-    while (nodeQueue.length > 0) {
-        const { node, parent } = nodeQueue.shift();
-        
-        if (node.nodeName === "#text") {
-            for (let char of node.textContent) {
-                const span = document.createElement('span');
-                span.className = 'char';
-                span.innerHTML = char === ' ' ? '&nbsp;' : char;  // Replace space with non-breaking space
-                parent.appendChild(span);
-                textQueue.push(span);
-            }
-        } else {
-            const appendedNode = parent.appendChild(node.cloneNode(false));
-            if (node.childNodes.length > 0) {
-                for (let child of node.childNodes) {
-                    nodeQueue.push({ node: child, parent: appendedNode });
-                }
-            }
-        }
-    }
-
-    let interval = setInterval(() => {
-        if (textQueue.length > 0) {
-            const span = textQueue.shift();
-            span.classList.add('show');
-        } else {
-            clearInterval(interval);
-        }
-    }, 100); // adjust speed; ms between character iterations
-}
-
 // Update the fake loading progress bar
 function updateLoadingBar() {
     const loadingFill = document.querySelector('.loading-fill');
@@ -631,7 +582,6 @@ async function generateAndDownloadExcel(data, format = 'xlsx') {
         ////alert('There was an error while generating the Excel workbook.');
     }
 }
-
 
 // (UNUSED) Run initial development calculations
 function runInitialDevelopmentCalculations() {

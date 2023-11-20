@@ -14,16 +14,16 @@ let cityData;
 let lat;
 let lng;
 let acres;
-let fakeMillage;
+//let fakeMillage;
 let maxMuniDensity;
 let cityNameProper;
 let countyNameProper;
 let displayMuniName;
-let totalUnits;
-let marketUnits;
-let affordableUnits;
+//let totalUnits;
+//let marketUnits;
+//let affordableUnits;
 let maxCapacity = 0;
-let affordablePct = 0.40; // match the affordable slider default value (=40%)
+//let affordablePct = 0.40; // match the affordable slider default value (=40%)
 let summaryContent = "";
 let aiSupplementalData;
 let aiResponses;
@@ -32,8 +32,9 @@ let compsData;
 const COMPS_SEARCH_RADIUS_MILES = "3.0000"; // miles (must be a string)
 
 /* GLOBAL VARIABLES related to calculations.js */
-const MILLAGE_ADJUSTMENT = 9.999;
+//const MILLAGE_ADJUSTMENT = 9.999;
 
+/*
 let acreageValue;
 let densityValue;
 let abatementValue = 0;
@@ -67,27 +68,28 @@ let totalLandAndTotalHcPerUnit;
 let totalLandAndTotalHcPerSqFt;
 // abatement outputs
 let abatementEstimate = 0;
+*/
 
 /* MAP GLOBALS */
-const LIVE_LOCAL_BLDG_RADIUS_MILES = 1.02;
 
 // Globals related to tallest building details (*** May break if tallestBuilding array size >1! ***)
+const LIVE_LOCAL_BLDG_RADIUS_MILES = 1.02;
 let tallestBuildingsData;
 let distanceInMilesToTallestBldg;
 let buildingLat;
 let buildingLng;
 let buildingHeight;
-let buildingName; // may not work
-let buildingAddress; // may not work
+let buildingAddress;
+let buildingName; // may not work...
 
 /* AI GLOBALS */
-let hmmm;
+////let hmmm;
 
 /* MAP GLOBALS */
 let map = null; // THE ACTUAL MAP, initialized to null
-const mapDisplay = document.getElementById('map');
+const mapDisplay = document.getElementById('map'); // unused?
 
-/* CALCULATIONS.JS GLOBALS (DOM stuff) */
+/* CALCULATIONS.JS GLOBALS (DOM stuff)
 // acreage & density inputs
 const acreageInputDisplay = document.getElementById('acreageInput');
 const densityInputDisplay = document.getElementById('densityInput');
@@ -120,12 +122,15 @@ const totalLandAndTotalHcPerUnitDisplay = document.getElementById('totalLandAndT
 const totalLandAndTotalHcPerSqFtDisplay = document.getElementById('totalLandAndTotalHcPerSqFt');
 // abatement output
 const abatementTableBody = document.getElementById('abatementTableBody');
+*/
 
 
 
-/*    parcelData ----> [__data refinement process__] ----> clean dataset, ready to be fed into AI    */
-
-
+// Exclude these irrelevant columns which, if provided, would only serve to confuse the AI
+const unwantedColumns = ["geom", "descriptionOfLiveLocalEligibility", "JV_HMSTD", "AV_HMSTD"];
+// ADD MORE
+// ..... & MORE
+// ......... & MORE
 
 
 // Map parcelData to variable names that are intelligible 
@@ -249,16 +254,9 @@ const renameMap = {
     "SPC_CIR_TXT": "SpecialCircumstancesText"
 };
 
-// Exclude these irrelevant columns which, if provided, would only serve to confuse the AI
-const unwantedColumns = ["geom", "descriptionOfLiveLocalEligibility", "JV_HMSTD", "AV_HMSTD"];
-// ADD MORE
-// ..... & MORE
-// ......... & MORE
-// ............ & MORE
-// ............... & MORE
-// .................. & MORE
 
 // These globals will certainly NOT be available until after the data refinement process
+/*
 let refinedDataset;
-//let cleanData;
 let aiGeneratedHTML;
+*/

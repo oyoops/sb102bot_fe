@@ -36,33 +36,32 @@
         <a href="https://livelocal.guru"><img src="./imgs/logoMobile.png" alt="Live Local Guru Mobile Logo" id="logoMobile"></a>
     </div>
 
-    <!-- Main header -->
+    <!-- Main header (??) -->
     <h1 id="mainHeader">
         <br><a href="https://livelocal.guru"><img src="./imgs/logo.png" alt="Live Local Guru Main Logo" id="mainLogo"></a>
     </h1>
 
-
-    <!-- Initial Content: Address Input -->
+    <!-- Initial Content -->
     <div id="initialContent">
-
         <!-- Address input form  -->
         <div class="form-wrapper">
             <form id="searchForm" class="address-form">
                 <input type="text" id="addressInput" class="address-input" placeholder="11240 Biscayne Blvd, Miami, FL">
+                
                 <label class="switch-label">
-                    <input type="checkbox" id="superchargeSwitch" name="supercharge" value="off">
-                    <div class="toggle-switch">
-                        <span class="switch-slider"></span>
-                    </div>
-                    <span class="switch-text">Download in Excel</span>
-                </label>
-
-                <label class="switch-label">
-                    <input type="checkbox" id="debugModeCheckbox" name="debugMode" value="off">
+                    <input type="checkbox" id="debugModeCheckbox" name="debugMode" value="on">
                     <div class="toggle-switch">
                         <span class="switch-slider"></span>
                     </div>
                     <span class="switch-text">Comps Analysis only</span>
+                </label>
+                
+                <label class="switch-label">
+                    <input type="checkbox" id="superchargeSwitch" name="supercharge" value="on">
+                    <div class="toggle-switch">
+                        <span class="switch-slider"></span>
+                    </div>
+                    <span class="switch-text">Download in Excel</span>
                 </label>
 
                 <button type="submit" class="submit-button">Ask the Guru</button>
@@ -77,19 +76,9 @@
         </p>
     </div>
 
-
-    <!-- Navigation Buttons -->
-    <div class="nav-buttons" id="navButtonsContainer" style="display: none">
-        <a href="https://livelocal.guru/index.html" class="fancy-button">About</a>
-        <a href="https://cresunshine.com" class="fancy-button">Blog</a>
-        <a href="https://livelocal.guru/index.html" class="fancy-button">Contact</a>
-    </div>
-
-
     <!-- Info Sections -->
     <div id="infoSections">
-        
-        <!-- Most recent updates -->
+        <!-- Recent updates -->
         <div id="recentUpdates">
             <h2><u>Latest Updates</u></h2>
             <ul>
@@ -101,26 +90,6 @@
                 <li><b>10/30/23</b>  Initial drop with tons of bugs.</li>
             </ul>
             <br>
-        </div>
-
-        <!-- Future updates -->
-        <div id="futureUpdates" style="display: none;">
-            <h2><u>To-Do List</u></h2>
-            <ul>
-                <li><b></b><b>Solve for land value</b> using unit mix/revenue/expenses inputs.</li>
-                <li><b></b>Build out <b>comps database</b> integration.</li>
-                <li><b></b>Add knowledge of <b>nearby attractions</b> to AI responses.</li>
-                <li><b></b>Select a property by <b>clicking a map</b>, not typing an address.</li>
-            </ul>
-            <br>
-        </div>
-
-        <!-- Current bugs -->
-        <div id="currentBugs" style="display: none;">
-            <h2><u>Current Bugs</u></h2>
-            <ul>
-                <li>~5% of searches fail, timing out after 30 seconds. <i>Just refresh!</i></li>
-            </ul>
         </div>
     </div>
 
@@ -145,17 +114,23 @@
             <div class="loading-fill"></div>
             <div class="loading-percentage">0%</div>
         </div>
+        
         <br>
         <div class="spinner" style="display: none;"></div>
 
         <div class="loading-text">
-            <i>Conducting due diligence</i>
+            Conducting due diligence
             <br><b>Please wait...</b>
             <br><br>
         </div>
     </div>
 
-    <!-- Primary AI Response Container -->
+    <!-- New Search (aka Try Again) button -->
+    <br>
+    <button id="tryAgainButton" style="display: none;">New Search</button>
+    <br>
+
+    <!-- Primary AI Responses Container -->
     <div id="primaryResponsesContainer" style="display: none">
         <div id="response1" class="primaryResponse"></div>
         <div id="response2" class="primaryResponse"></div>
@@ -192,122 +167,14 @@
                 <i>These are the Live Local affordable rent limits (120% AMI)
                 <br>Limits must include any direct billing of electric/water/insurance/taxes</i>
             </p>
-
         </div>
-    </div>
-    
-    <!-- New Search (aka Try Again) button -->
-    <br>
-    <button id="tryAgainButton" style="display: none;">New Search</button>
-    <br>
-
-    <!-- START: Development Program I/O Module -->
-    <div id="developmentProgramInputSection" style="display: none;">
-        
-        <div class="form-group">
-            <h2>Property Details</h2>
-            <h4>How many acres will you use for multifamily?</h4>
-            <input type="number" id="acreageInput" placeholder="Acreage" value="10" step="0.25">
-            <i>Override</i> | <b>Automatic</b>
-            
-            <h4>What is the maximum unit density allowed by the municipality?</h4>
-            <input type="number" id="densityInput" placeholder="Units/ac." value="50" step="5">
-            <i>Override</i> | <b>Automatic</b>
-        </div>
-        
-        <div class="form-group">
-            <h2>Unit Configuration</h2>
-            <h3>Affordable Units: <span id="affordablePctDisplay">40%</span></h3>
-            <input type="range" id="affordablePctSlider" min="0" max="100" value="40" step="1">
-            
-            <table class="styled-table">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Market Size (sq. ft.)</th>
-                        <th>Affordable Size (sq. ft.)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Sample Row, repeat for Studio, 1BD, 2BD, 3BD -->
-                    <tr>
-                        <td>Studio</td>
-                        <td><input type="number" class="sizeInput marketSizeInput" id="marketStudioSize" value="500" step="25"></td>
-                        <td><input type="number" class="sizeInput affordableSizeInput" id="affordableStudioSize" value="500" step="25"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="form-group">
-            <h2>Revenue</h2>
-            <table class="styled-table">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Market Rents (all-in)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Sample Row, repeat for Studio, 1BD, 2BD, 3BD -->
-                    <tr>
-                        <td>Studio</td>
-                        <td><input type="number" class="marketRateInput" id="marketRateStudio" value="2000" step="100"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="form-group">
-            <h2>Total Development Costs</h2>
-            <table class="styled-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Land</th>
-                        <th>Construction</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Cost per unit</td>
-                        <td><input type="number" class="landInput" id="landCostPerUnitInput" value="25000" step="1000"></td>
-                        <td><input type="number" class="hcInput" id="totalHCPerUnitInput" value="200000" step="5000"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="form-group">
-            <h2>Property Tax Abatement</h2>
-            <table class="styled-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Savings (net)</th>
-                        <th>Δ Rent Equivalent</th>
-                    </tr>
-                </thead>
-                <tbody id="abatementTableBody">
-                    <!-- Data will be inserted here by JavaScript -->
-                </tbody>
-            </table>
-            <p>
-                The tax abatement contributes to Project NOI as much as a rent increase of <i><b>$Δ Rent Equivalent</b></i> would.
-                It runs for the same 30-year term as the deed restriction; applies to ad valorem taxes only (i.e., excludes any fire/waste/CDD assessments). 
-                Raising exit cap +15-25 bps should be sufficient to mitigate the restrictions, per my capital markets homies.
-            </p>
-        </div>
-
-    </div>
-
-    <!-- Spacing -->
-    <br>
+        <br>
+    </div> 
 
     <!-- Footer -->
     <footer>
         <p>
-            Created by <b>Nick</b> |<a href="cresunshine.com/" target="_blank"><b>CRE☀️</b></a>| Last update: 11/20/23
+            Created by <b>Nick</b> |<a href="cresunshine.com/" target="_blank"><b>CRE☀️</b></a>| Last update: <b>11/20/23</b>
         </p>
     </footer>
 
@@ -315,9 +182,9 @@
     <script src="./globals.js"></script>
     <script src="./utilities.js"></script>
     <script src="./comps.js"></script>
-    <script src="./calculations.js"></script>
     <script src="./gmap.js"></script>
     <script src="./useCodes.js"></script>
+    <!-- <script src="./calculations.js"></script> -->
     <script type="module" src="main.js"></script>
 </body>
 </html>
