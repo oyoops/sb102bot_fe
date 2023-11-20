@@ -73,7 +73,6 @@ async function initializeMap(lat, lng) {
         userInfowindow.open(map, userMarker);
     });
 
-    const bounds = new google.maps.LatLngBounds();
     bounds.extend(new google.maps.LatLng(lat, lng));
 
     // Keep track
