@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // manually add debug mode switch event listener
+    let debugModeCheckbox = 'off'
     document.getElementById('debugModeCheckbox').addEventListener('change', function() {
         this.value = this.checked ? 'on' : 'off';
         debugModeCheckbox = this.value;
