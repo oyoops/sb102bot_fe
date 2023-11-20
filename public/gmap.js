@@ -234,6 +234,7 @@ function getRentColor(avg_eff_unit, avgRent) {
 function addCompsMarkersToMap(responseData) {
     // Create a new bounds object
     let bounds = new google.maps.LatLngBounds();
+    let openInfoWindows = [];
 
     responseData.forEach((item, index) => {
         // Get the shape for the marker based on the building style
@@ -324,12 +325,29 @@ function addCompsMarkersToMap(responseData) {
             content: infoContent
         });
 
-        marker.addListener('mouseover', () => {
+        // Click listener for marker
+        marker.addListener('click', () => {
+            // Close all open info windows
+            openInfoWindows.forEach(iw => iw.close());
+            openInfoWindows = []; // Reset the array
+
+            // Open the clicked info window
+            infoWindow.open(map, marker);
+            openInfoWindows.push(infoWindow); // Add this info window to the array
+        });
+
+        /*marker.addListener('mouseover', () => {
             infoWindow.open(map, marker);
         });
         marker.addListener('mouseout', () => {
             infoWindow.close();
-        });
+        });*/
+    });
+
+    // Click listener for the map to close all info windows
+    map.addListener('click', () => {
+        openInfoWindows.forEach(iw => iw.close());
+        openInfoWindows = [];
     });
 
     // Once all markers have been added, adjust viewport to show all

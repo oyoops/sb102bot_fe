@@ -58,12 +58,17 @@ p {
     font-weight: 300;
     margin-left: 10px;
     margin-right: 10px;
-    opacity: 0;
-    animation: fadeIn 0.3s;
+    opacity: 0.1; /* Start almost fully transparent */
+    animation: fadeIn 1.0s forwards; /* Ensure the final state persists */
 }
 .info-window p {
-    animation: fadeIn 0.3s;
+    animation: fadeIn 1.0s forwards; /* Ensure the final state persists */
 }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; } /* End at full opacity */
+}
+
 
 form {
     display: flex;
