@@ -34,7 +34,7 @@ async function initializeMap(lat, lng) {
         fullscreenControl: false, // Disable Fullscreen control
     };
 
-    window.map = new google.maps.Map(mapDisplay, mapOptions);
+    map = new google.maps.Map(mapDisplay, mapOptions);
     console.log('Map generated!');
 
     // Define a custom icon for the subject site marker
@@ -161,7 +161,7 @@ async function initializeMap(lat, lng) {
         }
     });
 
-    if (bounds.getNorthEast() !== bounds.getSouthWest()) {
+    if (map && bounds.getNorthEast() !== bounds.getSouthWest()) {
         map.fitBounds(bounds);
     }
     
