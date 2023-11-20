@@ -171,21 +171,21 @@ function createStyledMarker(position, map, label) {
 
 // Define a function to get the shape based on the building style
 function getStyleShape(style) {
-    switch (style) {
-        case 'Garden':
-            return google.maps.SymbolPath.CIRCLE; // Circle shape for Garden
-        case 'Mid-Rise':
-            // Ensure that TRIANGLE is a valid constant in the google.maps.SymbolPath enumeration
-            // If TRIANGLE is not valid, it will default to CIRCLE
-            return google.maps.SymbolPath.TRIANGLE || google.maps.SymbolPath.CIRCLE; // Triangle shape for Mid-Rise
-        case 'Hi-Rise':
-            return { // Adjusted Diamond shape for Hi-Rise
-                path: 'M -3 0 L 0 -3 L 3 0 L 0 3 z',
-                // scale is now dynamically set based on num_of_units
-            };
-        default:
-            return google.maps.SymbolPath.CIRCLE; // Default shape if style is not recognized
-    }
+    const shapes = {
+        'Garden': {
+            path: 'M -2 -2 L 2 -2 L 2 2 L -2 2 z', // Square shape for Garden
+            scale: 1
+        },
+        'Mid-Rise': {
+            path: 'M 0 -3 L -3 3 L 3 3 z', // Triangle shape for Mid-Rise
+            scale: 1
+        },
+        'Hi-Rise': {
+            path: 'M -2 0 L 0 -2 L 2 0 L 0 2 z', // Diamond shape for Hi-Rise
+            scale: 1
+        }
+    };
+    return shapes[style] || shapes['Garden']; // Default to Garden shape if style is not recognized
 }
 
 // Define a function to calculate the scale of the icon based on num_of_units
