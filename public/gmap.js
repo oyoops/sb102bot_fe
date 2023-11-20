@@ -177,9 +177,9 @@ function getStyleShape(style) {
         case 'Mid-Rise':
             return google.maps.SymbolPath.SQUARE; // Square shape for Mid-Rise
         case 'Hi-Rise':
-            return { // Diamond shape for Hi-Rise
-                path: 'M -2 0 L 0 -2 L 2 0 L 0 2 z',
-                scale: 4
+            return { // Adjusted Diamond shape for Hi-Rise
+                path: 'M -3 0 L 0 -3 L 3 0 L 0 3 z',
+                scale: 6 // Increased scale for better visibility
             };
         default:
             return google.maps.SymbolPath.CIRCLE; // Default shape if style is not recognized
@@ -187,20 +187,25 @@ function getStyleShape(style) {
 }
 
 // Define a function to get the color based on the average effective rent
-function getRentColor(avg_eff_unit) {
-    const maxRent = 3000; // Define the maximum expected rent
-    const minRent = 500;  // Define the minimum expected rent
-    const midRent = (maxRent + minRent) / 2;
+function getRentColor(avg_eff_unit, avgRent) {
+    const threshold = 0.10; // 10% threshold for variance
+    const maxIntensity = 255;
     let color = '#FFFFFF'; // Default to white for mid-point rent
 
-    if (avg_eff_unit >= midRent) {
-        // Calculate green gradient
-        const greenIntensity = Math.round(255 * ((avg_eff_unit - midRent) / (maxRent - midRent)));
-        color = `rgb(0, ${greenIntensity}, 0)`;
+    // Calculate the percentage difference from the average rent
+    const percentageDifference = (avg_eff_unit - avgRent) / avgRent;
+
+    if (Math.abs(percentageDifference) <= threshold) {
+        // Within +/-10% range, interpolate between green and red
+        const intensity = Math.round(maxIntensity * Math.abs(percentageDifference) / threshold);
+        color = percentageDifference > 0
+            ? `rgb(0, ${maxIntensity - intensity}, 0)` // Greenish
+            : `rgb(${maxIntensity - intensity}, 0, 0)`; // Reddish
     } else {
-        // Calculate red gradient
-        const redIntensity = Math.round(255 * ((midRent - avg_eff_unit) / (midRent - minRent)));
-        color = `rgb(${redIntensity}, 0, 0)`;
+        // Beyond +/-10% range, cap the color intensity
+        color = percentageDifference > 0
+            ? `rgb(0, ${maxIntensity}, 0)` // Vivid green
+            : `rgb(${maxIntensity}, 0, 0)`; // Vivid red
     }
 
     return color;
@@ -215,7 +220,9 @@ function addCompsMarkersToMap(responseData) {
         // Get the shape for the marker based on the building style
         const shape = getStyleShape(item.style);
         // Get the color for the marker based on the average effective rent
-        const fillColor = getRentColor(item.avg_eff_unit);
+        // Calculate the average rent of all comps
+        const avgRent = responseData.reduce((sum, comp) => sum + comp.avg_eff_unit, 0) / responseData.length;
+        const fillColor = getRentColor(item.avg_eff_unit, avgRent);
 
         // Custom icon using the determined shape and color for the marker
         const customIcon = {
