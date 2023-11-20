@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
     
     // manually add Excel workbook switch event listener
-    let superAI = 'off';
+    let superAI = 'on';
+    document.getElementById('superchargeSwitch').checked = true;
     document.getElementById('superchargeSwitch').addEventListener('change', function() {
         this.value = this.checked ? 'on' : 'off';
         superAI = this.value;
@@ -23,13 +24,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // manually add debug mode switch event listener
-    let debugModeCheckbox = 'off'
+    let debugModeCheckbox = 'on'
+    document.getElementById('debugModeCheckbox').checked = true;
     document.getElementById('debugModeCheckbox').addEventListener('change', function() {
         this.value = this.checked ? 'on' : 'off';
         debugModeCheckbox = this.value;
         console.log(`Debug Mode=${debugModeCheckbox}`);
     });
-
+    
     // on form submit:
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
