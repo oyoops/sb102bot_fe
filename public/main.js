@@ -235,9 +235,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Collect the data necessary for proforma workbook
                 const dataForExcel = {
                     acres: acres,
-                    //address: address,
+                    // ^dup?
                     ...aiSupplementalData
-                    // ...many more!
                 };
                 // Generate the proforma workbook 
                 await generateAndDownloadExcel(dataForExcel, "xlsx");
