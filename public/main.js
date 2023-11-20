@@ -5,8 +5,9 @@ import './eventListeners.js';
 // Get DOM elements
 import {
     // In use:
-    mainHeader, initialContent, form, addressInput, currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections,
-    loadingContainer, googlemap, eligibilityDiv, tryAgainButton, rentInfoContainer, countyMaxRentsTable, rentsTableBody, compsTable,
+    mainHeader, initialContent, form, addressInput, infoSections, recentUpdatesContainer,
+    loadingContainer, googlemap, eligibilityDiv, tryAgainButton, rentInfoContainer, countyMaxRentsTable, rentsTableBody,
+    compsTable
 } from './domElements.js';
 
 
