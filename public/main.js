@@ -9,10 +9,11 @@ import {
     // In use:
     mainHeader, initialContent, form, addressInput, navButtonsContainer, loadingContainer,
     googlemap, eligibilityDiv, tryAgainButton,
-    currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections,
+    currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections
     // ... rest of the imports remain unchanged ...
+} from './domElements.js';
 
-// once DOM is fully loaded:
+    // once DOM is fully loaded:
 document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
     
