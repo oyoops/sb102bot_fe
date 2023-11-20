@@ -251,7 +251,7 @@ function addCompsMarkersToMap(responseData) {
         const customIcon = {
             path: shape.path, // Use the determined shape path
             fillColor: fillColor, // Use the determined color
-            fillOpacity: 0.70,
+            fillOpacity: 0.85,
             scale: scale,
             strokeColor: 'white',
             strokeWeight: 1.5
@@ -275,18 +275,18 @@ function addCompsMarkersToMap(responseData) {
             <p class="info-window" style="margin: 5px 0; color: #666;">Developed by ${item.dev_name} (${item.yr_built})</p>
             <p class="info-window" style="margin: 5px 0; color: #666;">${item.property_address}</p>
             <div style="background-color: #fff; border-radius: 5px; padding: 8px; margin-top: 10px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);">
-                <p class="info-window" style="margin: 4px 0; font-size: 14px;"><strong>${item.num_of_stories}-story ${item.style}</strong> with ${item.num_of_units} units</p>
-                <p class="info-window" style="margin: 4px 0; font-size: 14px;"><strong>$${item.avg_eff_unit}/month</strong> - ${item.avg_unit_sf} SF at <strong>$${item.avg_eff_sf}/SF</strong></p>
+                <p class="info-window" style="margin: 4px 0; font-size: 14px;"><strong>${item.num_of_stories}-story</strong> ${item.style} with <strong>${item.num_of_units} units</strong></p>
+                <p class="info-window" style="margin: 4px 0; font-size: 14px;"><strong>$${item.avg_eff_unit}/mo.</strong> - <strong>${item.avg_unit_sf} SF</strong> @ <strong>$${item.avg_eff_sf.toFixed(2)}/SF</strong></p>
                 <p class="info-window" style="margin: 4px 0; font-size: 14px;"><strong>${(100-item.vacancy_pct)}%</strong> occupied</p>
             </div>
             <div style="margin-top: 15px;">
-                <!-- <h3 style="font-size: 16px; margin-bottom: 10px;">Unit Types</h3> -->
+                <h3 style="font-size: 16px; margin-bottom: 10px;">Unit Types:</h3>
                 ${
                     item.st_ask_rent_unit ? `
                     <div style="background-color: #eef2f7; border-radius: 5px; padding: 8px; margin-bottom: 10px;">
                         <h4 style="margin: 0 0 5px 0; color: #4a90e2;">Studio</h4>
                         <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent: $${item.st_ask_rent_unit}/mo</p>
-                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Average Size: ${item.st_avg_sf} SF</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Avg. SF: ${item.st_avg_sf} SF</p>
                         <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent/SF: $${item.st_ask_rent_sf}/SF</p>
                     </div>` : ''
                 }
@@ -295,7 +295,7 @@ function addCompsMarkersToMap(responseData) {
                     <div style="background-color: #eef2f7; border-radius: 5px; padding: 8px; margin-bottom: 10px;">
                         <h4 style="margin: 0 0 5px 0; color: #4a90e2;">1-Bedroom</h4>
                         <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent: $${item.one_bd_ask_rent_unit}/mo</p>
-                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Average Size: ${item.one_bd_avg_sf} SF</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Avg. SF: ${item.one_bd_avg_sf} SF</p>
                         <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent/SF: $${item.one_bd_ask_rent_sf}/SF</p>
                     </div>` : ''
                 }
@@ -304,7 +304,7 @@ function addCompsMarkersToMap(responseData) {
                     <div style="background-color: #eef2f7; border-radius: 5px; padding: 8px; margin-bottom: 10px;">
                         <h4 style="margin: 0 0 5px 0; color: #4a90e2;">2-Bedroom</h4>
                         <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent: $${item.two_bd_ask_rent_unit}/mo</p>
-                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Average Size: ${item.two_bd_avg_sf} SF</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Avg. SF: ${item.two_bd_avg_sf} SF</p>
                         <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent/SF: $${item.two_bd_ask_rent_sf}/SF</p>
                     </div>` : ''
                 }
@@ -313,7 +313,7 @@ function addCompsMarkersToMap(responseData) {
                     <div style="background-color: #eef2f7; border-radius: 5px; padding: 8px; margin-bottom: 10px;">
                         <h4 style="margin: 0 0 5px 0; color: #4a90e2;">3-Bedroom</h4>
                         <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent: $${item.three_bd_ask_rent_unit}/mo</p>
-                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Average Size: ${item.three_bd_avg_sf} SF</p>
+                        <p class="info-window" style="margin: 2px 0; font-size: 13px;">Avg. SF: ${item.three_bd_avg_sf} SF</p>
                         <p class="info-window" style="margin: 2px 0; font-size: 13px;">Rent/SF: $${item.three_bd_ask_rent_sf}/SF</p>
                     </div>` : ''
                 }

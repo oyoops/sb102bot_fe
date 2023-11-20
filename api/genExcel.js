@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
         worksheet.getCell('W5').value = parseFloat(req.body.comps_percentages.studio)/100;
         worksheet.getCell('W6').value = parseFloat(req.body.comps_percentages.oneBd)/100;
         worksheet.getCell('W7').value = parseFloat(req.body.comps_percentages.twoBd)/100;
-        worksheet.getCell('W8').value = 1 - (parseFloat(req.body.comps_percentages.oneBd)/100 + parseFloat(req.body.comps_percentages.twoBd)/100 + parseFloat(req.body.comps_percentages.threeBd)/100);
+        worksheet.getCell('W8').value = 1 - (parseFloat(req.body.comps_percentages.studio)/100 + parseFloat(req.body.comps_percentages.oneBd)/100 + parseFloat(req.body.comps_percentages.twoBd)/100);
 
         worksheet.getCell('C2').value = parseFloat(req.body.comps_averages.rents.studio);
         worksheet.getCell('C3').value = parseFloat(req.body.comps_averages.rents.oneBd);
