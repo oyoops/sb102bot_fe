@@ -166,18 +166,41 @@ function createStyledMarker(position, map, label) {
 
 /* Maps + Comps Database */
 
-// Define a function to get the color based on the building style
-function getStyleColor(style) {
+// Define a function to get the shape based on the building style
+function getStyleShape(style) {
     switch (style) {
         case 'Garden':
-            return '#FF5733'; // Example color for Garden
+            return google.maps.SymbolPath.CIRCLE; // Circle shape for Garden
         case 'Mid-Rise':
-            return '#33FF57'; // Example color for Mid-Rise
+            return google.maps.SymbolPath.SQUARE; // Square shape for Mid-Rise
         case 'Hi-Rise':
-            return '#3357FF'; // Example color for Hi-Rise
+            return { // Diamond shape for Hi-Rise
+                path: 'M -2 0 L 0 -2 L 2 0 L 0 2 z',
+                scale: 4
+            };
         default:
-            return '#CCCCCC'; // Default color if style is not recognized
+            return google.maps.SymbolPath.CIRCLE; // Default shape if style is not recognized
     }
+}
+
+// Define a function to get the color based on the average effective rent
+function getRentColor(avg_eff_unit) {
+    const maxRent = 3000; // Define the maximum expected rent
+    const minRent = 500;  // Define the minimum expected rent
+    const midRent = (maxRent + minRent) / 2;
+    let color = '#FFFFFF'; // Default to white for mid-point rent
+
+    if (avg_eff_unit >= midRent) {
+        // Calculate green gradient
+        const greenIntensity = Math.round(255 * ((avg_eff_unit - midRent) / (maxRent - midRent)));
+        color = `rgb(0, ${greenIntensity}, 0)`;
+    } else {
+        // Calculate red gradient
+        const redIntensity = Math.round(255 * ((midRent - avg_eff_unit) / (midRent - minRent)));
+        color = `rgb(${redIntensity}, 0, 0)`;
+    }
+
+    return color;
 }
 
 // Adds each comp returned to a Google Map with unique color
@@ -186,15 +209,17 @@ function addCompsMarkersToMap(responseData) {
     let bounds = new google.maps.LatLngBounds();
 
     responseData.forEach((item, index) => {
-        // Get the color for the marker based on the building style
-        const fillColor = getStyleColor(item.style);
+        // Get the shape for the marker based on the building style
+        const shape = getStyleShape(item.style);
+        // Get the color for the marker based on the average effective rent
+        const fillColor = getRentColor(item.avg_eff_unit);
 
-        // Custom icon using SVG for a smaller and uniquely-colored marker
+        // Custom icon using the determined shape and color for the marker
         const customIcon = {
-            path: google.maps.SymbolPath.CIRCLE,
+            path: shape.path || shape, // Use the determined shape path or predefined shape
             fillColor: fillColor, // Use the determined color
             fillOpacity: 0.65,
-            scale: 10,  // Adjust the size using the scale property
+            scale: shape.scale || 10, // Use the determined scale or default
             strokeColor: 'white',
             strokeWeight: 2
         };
