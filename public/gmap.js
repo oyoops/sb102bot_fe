@@ -34,8 +34,8 @@ async function initializeMap(lat, lng) {
         fullscreenControl: false, // Disable Fullscreen control
     };
 
-    if (!map) {
-        map = new google.maps.Map(mapDisplay, mapOptions);
+    if (!window.map) {
+        window.map = new google.maps.Map(mapDisplay, mapOptions);
         console.log('Map generated!');
     }
 
@@ -67,7 +67,7 @@ async function initializeMap(lat, lng) {
     });
 
     // New test...
-    userInfowindow.open(map, userMarker);
+    userInfowindow.open(window.map, userMarker);
 
     userMarker.addListener('click', function() {
         userInfowindow.open(map, userMarker);
@@ -271,7 +271,7 @@ function addCompsMarkersToMap(responseData, gmap) {
     // Once all markers have been added, adjust viewport to show all
     // Check if there are comps to fit bounds to
     if (responseData.length > 0) {
-        map.fitBounds(bounds);
+        window.map.fitBounds(bounds);
     } else {
         console.warn('No comps available to fit bounds to.');
     }
