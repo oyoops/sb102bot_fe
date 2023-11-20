@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0); // scroll to top
     
     // manually add Excel workbook switch event listener
-    let superAI = 'on';
-    document.getElementById('superchargeSwitch').checked = true;
+    let superAI = 'off';
+    document.getElementById('superchargeSwitch').checked = false;
     document.getElementById('superchargeSwitch').addEventListener('change', function() {
         this.value = this.checked ? 'on' : 'off';
         superAI = this.value;
