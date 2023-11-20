@@ -179,11 +179,26 @@ function getStyleShape(style) {
         case 'Hi-Rise':
             return { // Adjusted Diamond shape for Hi-Rise
                 path: 'M -3 0 L 0 -3 L 3 0 L 0 3 z',
-                scale: 6 // Increased scale for better visibility
+                // scale is now dynamically set based on num_of_units
             };
         default:
             return google.maps.SymbolPath.CIRCLE; // Default shape if style is not recognized
     }
+}
+
+// Define a function to calculate the scale of the icon based on num_of_units
+function getCompMarkerScale(num_of_units) {
+    const minUnits = 200;
+    const maxUnits = 400;
+    const minScale = 3; // Smallest size for the icon
+    const maxScale = 6; // Largest size for the icon
+
+    // Ensure num_of_units is within the expected range
+    num_of_units = Math.max(minUnits, Math.min(num_of_units, maxUnits));
+
+    // Calculate the scale based on num_of_units
+    const scale = minScale + (maxScale - minScale) * ((num_of_units - minUnits) / (maxUnits - minUnits));
+    return scale;
 }
 
 // Define a function to get the color based on the average effective rent
@@ -224,12 +239,15 @@ function addCompsMarkersToMap(responseData) {
         const avgRent = responseData.reduce((sum, comp) => sum + comp.avg_eff_unit, 0) / responseData.length;
         const fillColor = getRentColor(item.avg_eff_unit, avgRent);
 
-        // Custom icon using the determined shape and color for the marker
+        // Calculate the scale for the marker based on num_of_units
+        const scale = getCompMarkerScale(item.num_of_units);
+
+        // Custom icon using the determined shape, color, and scale for the marker
         const customIcon = {
             path: (shape && shape.path) ? shape.path : (shape || google.maps.SymbolPath.CIRCLE), // Use the determined shape path, predefined shape, or default to circle
             fillColor: fillColor, // Use the determined color
             fillOpacity: 0.65,
-            scale: (shape && shape.scale) ? shape.scale : 10, // Use the determined scale or default
+            scale: scale, // Use the calculated scale based on num_of_units
             strokeColor: 'white',
             strokeWeight: 2
         };
