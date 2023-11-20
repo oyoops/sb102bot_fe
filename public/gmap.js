@@ -195,7 +195,7 @@ function createStyledMarker(position, map, label) {
 /* Maps + Comps Database */
 
 // Adds each comp returned to a Google Map
-function addCompsMarkersToMap(responseData, gmap) { // Add 'map' as a parameter
+function addCompsMarkersToMap(responseData, gmap) {
     if (!gmap) {
         console.error('Error: Map is not defined.');
         return;
