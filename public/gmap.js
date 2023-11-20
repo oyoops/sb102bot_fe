@@ -166,8 +166,19 @@ function createStyledMarker(position, map, label) {
 
 /* Maps + Comps Database */
 
-// Define an array of colors for the comp markers
-const compMarkerColors = ['#FF5733', '#33FF57', '#3357FF', '#FF33F6', '#F6FF33', '#33FFF6', '#F633FF', '#FF3333'];
+// Define a function to get the color based on the building style
+function getStyleColor(style) {
+    switch (style) {
+        case 'Garden':
+            return '#FF5733'; // Example color for Garden
+        case 'Mid-Rise':
+            return '#33FF57'; // Example color for Mid-Rise
+        case 'Hi-Rise':
+            return '#3357FF'; // Example color for Hi-Rise
+        default:
+            return '#CCCCCC'; // Default color if style is not recognized
+    }
+}
 
 // Adds each comp returned to a Google Map with unique color
 function addCompsMarkersToMap(responseData) {
@@ -175,9 +186,8 @@ function addCompsMarkersToMap(responseData) {
     let bounds = new google.maps.LatLngBounds();
 
     responseData.forEach((item, index) => {
-        // Determine the color for the marker
-        const colorIndex = index % compMarkerColors.length;
-        const fillColor = compMarkerColors[colorIndex];
+        // Get the color for the marker based on the building style
+        const fillColor = getStyleColor(item.style);
 
         // Custom icon using SVG for a smaller and uniquely-colored marker
         const customIcon = {
