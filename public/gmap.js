@@ -34,8 +34,8 @@ async function initializeMap(lat, lng) {
         fullscreenControl: false, // Disable Fullscreen control
     };
 
-    // Define the map variable locally within the function
-    const gmap = new google.maps.Map(mapDisplay, mapOptions);
+    // Define the map variable globally
+    window.map = new google.maps.Map(mapDisplay, mapOptions);
     console.log('Map generated!');
 
     // Define a custom icon for the subject site marker
