@@ -187,7 +187,7 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
             }
             return response.json();
         }),
-        timeout(30000) // 30 seconds => timeout
+        timeout(45000) // 45 seconds => timeout
     ])
     .catch(err => {
         console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
