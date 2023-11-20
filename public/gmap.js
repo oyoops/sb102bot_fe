@@ -46,9 +46,6 @@ async function initializeMap(lat, lng) {
         content: `<div style="text-align:center;"><strong>Subject</strong></div>`
     });
 
-    // New test...
-    userInfowindow.open(map, userMarker);
-
     userMarker.addListener('click', function() {
         userInfowindow.open(map, userMarker);
     });
@@ -125,7 +122,7 @@ async function initializeMap(lat, lng) {
             
             // create distance label (subject -> tallest bldg)
             const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
-            createStyledMarker(lineLabelPos, map, `${buildingHeight.toFixed(0)}' max. height\n${distanceInMilesToTallestBldg.toFixed(2)} miles away`);
+            createStyledMarker(lineLabelPos, map, `${buildingHeight.toFixed(0)} feet (${distanceInMilesToTallestBldg.toFixed(2)} mi. away)`);
 
             // extend map boundaries to include tallest building
             bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));
@@ -152,14 +149,14 @@ function createStyledMarker(position, map, label) {
         icon: {
             labelOrigin: new google.maps.Point(11, 50),
             url: 'data:image/svg+xml;charset=utf-8,' +
-                encodeURIComponent('<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"></svg>'),
+                encodeURIComponent('<svg width="18" height="18" xmlns="http://www.w3.org/2000/svg"></svg>'),
             size: new google.maps.Size(20, 20),
         },
         label: {
             text: label,
             color: "yellow",
             fontWeight: "bold",
-            fontSize: "20px"
+            fontSize: "18px"
         }
     });
     return marker;
@@ -180,8 +177,8 @@ function addCompsMarkersToMap(responseData) {
         const customIcon = {
             path: google.maps.SymbolPath.CIRCLE,
             fillColor: 'orange', // Change this color as needed
-            fillOpacity: 0.8,
-            scale: 14,  // Adjust the size using the scale property
+            fillOpacity: 0.65,
+            scale: 10,  // Adjust the size using the scale property
             strokeColor: 'white',
             strokeWeight: 2
         };
@@ -200,13 +197,14 @@ function addCompsMarkersToMap(responseData) {
 
         // Info window content
         const infoContent = `
-            <strong><u>${item.property_name}</u><br>
-            by ${item.dev_name} (${item.yr_built})</strong><br>
-            ${item.property_address}<br><br>
+            <strong><u>${item.property_name}</u> (${item.yr_built})</strong><br>
+            Developer: ${item.dev_name}<br><br>
 
-            ${item.num_of_stories}-story ${item.style} (${item.num_of_units} units)<br>
-            $${item.avg_eff_unit}/mo. = ${item.avg_unit_sf} SF @ $${item.avg_eff_sf}/SF<br>
-            Occupancy: ${(100-item.vacancy_pct)}%
+            <strong>${item.num_of_stories}-story ${item.style} (${item.num_of_units} units)</strong><br>
+            <strong>$${item.avg_eff_unit}</strong>/mo. = ${item.avg_unit_sf} SF @ <strong>$${item.avg_eff_sf}</strong>/SF<br>
+            Occupancy: ${(100-item.vacancy_pct)}% <br><br>
+
+            <i>${item.property_address}</i><br>
         `;
 
         const infoWindow = new google.maps.InfoWindow({
