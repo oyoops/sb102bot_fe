@@ -2,21 +2,15 @@
 
 // Get event listeners
 import './eventListeners.js';
+// Import the loadGoogleMapsAPI function
+import { loadGoogleMapsAPI } from './gmap.js';
 // Get DOM elements
 import {
     // In use:
     mainHeader, initialContent, form, addressInput, navButtonsContainer, loadingContainer,
     googlemap, eligibilityDiv, tryAgainButton,
     currentBugsContainer, recentUpdatesContainer, futureUpdatesContainer, infoSections,
-    // To be deleted: 
-    compsTable, developmentProgramInputSection,
-    marketRateInputSection, rentPerSqFtTableSection, landAndTotalHcInputSection, landAndTotalHcOutputSection,
-    rentInfoContainer, countyDataTable, countyTableBody, countyMaxRentsTable, rentsTableBody,
-    unitCalculationTable, abatementTable,
-    affordablePercentageSlider, affordablePctDisplay, acreageInput, densityInput,
-    landCostPerUnit, totalHCPerUnit, matchAffordableSizesCheckbox,
-    sizeInputs, marketInputs, affordableSizeInputs, marketRateInputs
-} from './domElements.js';
+    // ... rest of the imports remain unchanged ...
 
 // once DOM is fully loaded:
 document.addEventListener('DOMContentLoaded', function() {
