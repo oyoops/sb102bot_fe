@@ -90,8 +90,11 @@ async function initializeMap(lat, lng) {
                 content: buildingInfoContent
             });
 
-            buildingMarker.addListener('click', function () {
+            buildingMarker.addListener('mouseover', function () {
                 buildingInfowindow.open(map, buildingMarker);
+            });
+            buildingMarker.addListener('mouseout', function () {
+                buildingInfowindow.close();
             });
 
             const line = new google.maps.Polyline({
@@ -251,8 +254,11 @@ function addCompsMarkersToMap(responseData) {
             content: infoContent
         });
         
-        marker.addListener('click', () => {
+        marker.addListener('mouseover', () => {
             infoWindow.open(map, marker);
+        });
+        marker.addListener('mouseout', () => {
+            infoWindow.close();
         });
     });
 
