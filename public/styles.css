@@ -26,7 +26,8 @@ body {
     margin: 0 auto; /* centers the image */
     margin-top: 50px;
     opacity: 0;
-    animation: slideUpFadeIn 1.5 forwards 1.0s; /* Add animation */
+    animation: slideUpFadeIn 1.5s forwards 1.0s; /* Add animation */
+}
 }
 /* Media query to switch logos based on screen size, with improved readability */
 @media (max-width: 800px) {
