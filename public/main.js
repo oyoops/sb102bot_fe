@@ -46,6 +46,15 @@ document.addEventListener('DOMContentLoaded', function() {
         debugModeCheckbox = this.value;
         console.log(`Debug Mode=${debugModeCheckbox}`);
     });
+
+    // manually add 'Use Live Local' switch event listener
+    let enableLiveLocalCheckbox = 'on'
+    document.getElementById('enableLiveLocalSwitch').checked = true;
+    document.getElementById('enableLiveLocalSwitch').addEventListener('change', function() {
+        this.value = this.checked ? 'on' : 'off';
+        enableLiveLocalCheckbox = this.value;
+        console.log(`Use Live Local=${enableLiveLocalCheckbox}`);
+    });
     
     // on form submit:
     form.addEventListener('submit', async (e) => {
@@ -172,19 +181,26 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
-            // If eligible, populate and show Table #2 (Comps avg. vs Affordable max. rent comparison)
-            if (eligPath == "yes") {
-                rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
-                rentInfoContainer.style.display = 'table'; // show the container
-                countyMaxRentsTable.style.display = 'table'; // show the table
+
+            // * If LLA Module = Enabled && Parcel Eligibility = True,
+            //   then populate and show Table #2 (Comps avg. vs Affordable max. rents comparison)
+            if (enableLiveLocalCheckbox) {
+
             } else {
                 console.log("LLA Ineligible!");
             }
 
+            if (eligPath == "yes") {
+                rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
+                rentInfoContainer.style.display = 'table';
+                countyMaxRentsTable.style.display = 'table';
+                console.log(`'Use Live Local' is enabled \n*AND* the property is eligible!\n  :-D   :-D   :-D`); 
+            } else {
+                console.log(`'Use Live Local' is enabled... \nBut the property is INELIGIBLE.\n  :'(   :'(   :'(`);
+            }
 
             // Show the Try Again button
             tryAgainButton.style.display = 'block';
-
 
             /* Start AI Module */
             try {
