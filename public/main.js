@@ -78,15 +78,21 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             console.log(`Asking the Guru about \n${address}`);
             
-            // Hide header and initial content
-            mainHeader.style.display = 'none';
-            initialContent.style.display = 'none';
-            infoSections.style.display = 'none';
-            recentUpdatesContainer.style.display = 'none';
+            // Trigger slide-down fade-out animation for header and initial content
+            mainHeader.classList.add('slide-down-fade-out');
+            initialContent.classList.add('slide-down-fade-out');
+            infoSections.classList.add('slide-down-fade-out');
+            recentUpdatesContainer.classList.add('slide-down-fade-out');
+            // Set a timeout to remove elements from display after the animation ends
+            setTimeout(() => {
+                mainHeader.style.display = 'none';
+                initialContent.style.display = 'none';
+                infoSections.style.display = 'none';
+                recentUpdatesContainer.style.display = 'none';
+            }, 1000); // Assuming the animation duration is 1 second
 
-            // Display fake loading progress bar
-            updateLoadingBar();
-            loadingContainer.style.display = 'block';
+            // Trigger slide-down fade-in animation for loading container
+            loadingContainer.classList.add('slide-down-fade-in');
 
             // Add class to loading squares to trigger transition
             const loadingSquares = document.querySelectorAll('.loading-square');
@@ -107,12 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // TALLEST BLDG. DATA (+ initializes map)
             const tallestBuildingData = await initializeMap(lat, lng);
             
-            // Display the map with a smooth fade-in effect
-            googlemap.style.display = 'block';
-            window.scrollTo(0, 0);
-            setTimeout(() => {
-                googlemap.style.opacity = 1; // Trigger the fade-in effect
-            }, 100); // Start the transition 100ms after display change
+            // Trigger slide-down fade-in animation for the map
+            googlemap.classList.add('slide-down-fade-in');
             
             // MAX BLDG. HEIGHT
             const maxBH = tallestBuildingData.maxHeight.toFixed(0); // feet tall
