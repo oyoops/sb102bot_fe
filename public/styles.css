@@ -24,8 +24,9 @@ body {
     height: auto;  /* maintain the aspect ratio */
     display: block; /* centers the image if h1 text-align is centered */
     margin: 0 auto; /* centers the image */
+    margin-top: 30px;
     opacity: 0;
-    animation: fadeIn 1.0 forwards 0.5s; /* Add animation */
+    animation: slideUpFadeIn 1.5 forwards 1.0s; /* Add animation */
 }
 
 /* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
@@ -403,7 +404,8 @@ footer a:hover {
 #tryAgainButton {
     /* margin-top: 10px; */
     /* margin-bottom: 10px; */
-    width: 300px;
+    width: auto;
+    max-width: 200px;
     padding: 5px 10px;
     font-weight: 500;
     background-color: #1f54b0;
