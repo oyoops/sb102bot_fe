@@ -20,13 +20,13 @@ superchargeSwitch.addEventListener('change', function() {
 // Debug mode checkbox change:
 debugModeCheckbox.addEventListener('change', function() {
     this.value = this.checked ? 'on' : 'off';
-    debugModeCheckbox = this.value;
+    debugMode = this.value;
     console.log(`Debug Mode=${debugModeCheckbox}`);
 });
 
 // Enable Live Local switch change:
 enableLiveLocalSwitch.addEventListener('change', function() {
     this.value = this.checked ? 'on' : 'off';
-    enableLiveLocalCheckbox = this.value;
-    console.log(`Use Live Local=${enableLiveLocalCheckbox}`);
+    enableLiveLocalModule = this.value;
+    console.log(`Use Live Local=${enableLiveLocalModule}`);
 });
