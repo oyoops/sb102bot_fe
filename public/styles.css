@@ -967,7 +967,7 @@ table, .styled-table {
 @keyframes formFadeIn {
     0% {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(10px);
     }
     100% {
         opacity: 1;
@@ -977,11 +977,11 @@ table, .styled-table {
 
 .form-fade-in {
     opacity: 0; /* Initialize opacity to 0 to prevent flash before animation */
-    animation: formFadeIn 2s ease 1s forwards;
+    animation: formFadeIn 3s ease 2s forwards;
 }
 @keyframes slideDownFadeIn {
     from {
-        top: -100px;
+        top: -250px;
         opacity: 0;
     }
     to {
@@ -992,7 +992,7 @@ table, .styled-table {
 
 @keyframes slideUpFadeIn {
     from {
-        bottom: -100px;
+        bottom: -250px;
         opacity: 0;
     }
     to {
@@ -1003,7 +1003,7 @@ table, .styled-table {
 @keyframes formFadeIn {
     0% {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(10px);
     }
     100% {
         opacity: 1;
@@ -1013,7 +1013,7 @@ table, .styled-table {
 
 .form-fade-in {
     opacity: 0; /* Initialize opacity to 0 to prevent flash before animation */
-    animation: formFadeIn 2s ease 1s forwards;
+    animation: formFadeIn 3s ease 2s forwards;
 }
 .info-fade-in {
     opacity: 0;
