@@ -90,6 +90,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 initialContent.classList.add('slide-down-fade-out');
                 infoSections.classList.add('slide-down-fade-out');
                 recentUpdatesContainer.classList.add('slide-down-fade-out');
+                // Trigger slide-down fade-out animation for header and initial content
+                mainHeader.classList.add('slide-down-fade-out');
+                initialContent.classList.add('slide-down-fade-out');
+                infoSections.classList.add('slide-down-fade-out');
+                recentUpdatesContainer.classList.add('slide-down-fade-out');
                 // Set a timeout to remove elements from display after the animation ends
                 setTimeout(() => {
                     mainHeader.style.display = 'none';
@@ -98,6 +103,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     recentUpdatesContainer.style.display = 'none';
                 }, 1000); // Assuming the animation duration is 1 second
             }, 1000); // Assuming the animation duration is 1 second
+
+            // Trigger slide-down fade-in animation for loading container
+            loadingContainer.classList.add('slide-down-fade-in');
 
             // Trigger slide-down fade-in animation for loading container
             loadingContainer.classList.add('slide-down-fade-in');
