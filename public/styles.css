@@ -412,21 +412,19 @@ footer a:hover {
 
 #tryAgainButton {
     font-family: 'Montserrat', sans-serif;
-    /* margin-top: 10px; */
-    /* margin-bottom: 10px; */
     width: auto;
     max-width: 200px;
     padding: 5px 10px;
     font-weight: 500;
     background-color: #1f54b0;
     color: #ffffff;
-    opacity: 1;
     border-radius: 5px;
     display: inline-block;
-    justify-content: center;
-    align-items: center;
     text-align: center;
     position: fixed;
+    bottom: 10px; /* Position at the bottom of the screen */
+    right: 10px; /* Position on the right of the screen */
+    z-index: 100; /* Ensure it's above other elements */
 }
 
 .unitCalculationText {
@@ -603,13 +601,14 @@ input:disabled {
     width: 100%;
     height: 50vh;
     box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
-    position: relative;
-    top: 0px;
-    z-index: 1;
-    transition: opacity 2s ease-in-out; /* Smooth transition for opacity */
-    opacity: 0; /* Start with map fully transparent */
+    position: fixed; /* Fix the position to the top of the viewport */
+    top: 0; /* Start at the top */
+    left: 0; /* Align to the left */
+    z-index: 2; /* Ensure it's above other elements, but below the menu bar */
+    transition: opacity 2s ease-in-out;
+    opacity: 1; /* Start with map visible */
     border-radius: 0;
-    display: none; /* Start with map not visible */
+    display: block; /* Start with map visible */
 
     /* Desktop specific styles */
     @media (min-width: 768px) { /* Adjust breakpoint as needed */
