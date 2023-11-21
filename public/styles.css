@@ -463,8 +463,8 @@ label, .dark-input {
 .checkbox-grid {
     display: none; /* Initially hidden */
     grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
-    gap: 5px; /* Reduced gap */
-    margin-top: 10px; /* Reduced top margin */
+    gap: 5px; /* Further reduce any margins or padding */
+    margin-top: 5px; /* Further reduce top margin */
 }
 
 .cool-checkbox-label {
@@ -473,6 +473,7 @@ label, .dark-input {
     font-size: 0.7em; /* Further reduced font size */
     color: #333;
     margin-left: 0; /* Align label text to the left */
+    text-align: left; /* Left-align all checkbox labels */
 }
 
 /* Toggle button for more options */
@@ -484,7 +485,7 @@ label, .dark-input {
     cursor: pointer;
     padding: 5px;
     margin-top: 10px;
-    text-align: center; /* Centered text */
+    text-align: center; /* Center text within the container */
     width: 100%;
 }
 
@@ -495,9 +496,9 @@ label, .dark-input {
 
 .cool-checkbox-custom {
     display: inline-block;
-    width: 16px; /* Slightly reduced width */
-    height: 16px; /* Slightly reduced height */
-    margin-right: 5px; /* Reduced right margin */
+    width: 14px; /* Slightly reduce the size of all checkboxes */
+    height: 14px; /* Slightly reduce the size of all checkboxes */
+    margin-right: 3px; /* Reduce the space between the labels and their respective checkboxes */
     background: #f2f2f2;
     border: 2px solid #d1d9e6;
     border-radius: 4px;
