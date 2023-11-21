@@ -24,9 +24,9 @@ body {
     height: auto;  /* maintain the aspect ratio */
     display: block; /* centers the image if h1 text-align is centered */
     margin: 0 auto; /* centers the image */
-    margin-top: 50px;
+    margin-top: 10px;
     opacity: 0;
-    animation: slideUpFadeIn 1.5s forwards 1.0s; /* Add animation */
+    animation: slideUpFadeIn 1.2s forwards 0.2s; /* Add animation */
 }
 
 /* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
@@ -55,7 +55,7 @@ h1 {
     font-family: 'Playfair Display', serif;
     font-size: 1.8em;
     color: #333;
-    margin-top: 20px; /* Reduced margin-top */
+    margin-top: 10px; /* Reduced margin-top */
     font-weight: 600;
     transform: translateY(10px);
     transition: opacity 1s, transform 1s;
@@ -101,7 +101,7 @@ form p {
     font-family: 'Playfair Display', serif;
     font-weight: 300;
     font-size: 26PX;
-    animation: fadeIn 0.5 forwards; /* Ensure the final state persists */
+    animation: fadeIn 1.0 forwards; /* Ensure the final state persists */
 }
 /* Generic table styling */
 .table-container {
@@ -358,7 +358,7 @@ footer {
     font-weight: 400;
     font-size: 0.8em;
     border-top: 2px solid var(--accent-color);
-    animation: slideUpFadeIn 1.5s forwards 0.8s; /* Add animation */
+    animation: slideUpFadeIn 1.5s forwards 0.5s; /* Add animation */
 }
 
 footer a {
@@ -624,6 +624,8 @@ input:disabled {
     width: 80%;
     max-width: 1200px;
     margin: 2% auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding: 1em 2em;
     background-color: #f2f2f2;
     border-radius: 8px;
