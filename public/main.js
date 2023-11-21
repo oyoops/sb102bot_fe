@@ -229,8 +229,13 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 // Generate AI summary HTML content
                 const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode, customInstructionsText);
-                // Hide primary AI responses
-                document.getElementById("primaryResponsesContainer").style.display = 'none';
+                // Trigger slide-down fade-out animation for primary AI responses
+                const primaryResponsesContainer = document.getElementById("primaryResponsesContainer");
+                primaryResponsesContainer.classList.add('slideDownFadeOut');
+                // Set a timeout to remove primary responses from display after the animation ends
+                setTimeout(() => {
+                    primaryResponsesContainer.style.display = 'none';
+                }, 1000); // Assuming the animation duration is 1 second
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
                 // Show AI summary response
