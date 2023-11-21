@@ -2,7 +2,7 @@
 
 
 let superAI = 'off';
-let debugMode = 'on';
+let debugModeSwitch = 'on';
 let enableLiveLocalModule = 'on';
 
 /* CONSTANTS */

@@ -26,7 +26,7 @@ body {
     margin: 0 auto; /* centers the image */
     margin-top: 10px;
     opacity: 0;
-    animation: slideUpFadeIn 1.2s forwards 0.2s; /* Add animation */
+    animation: slideDownFadeIn 3.0s forwards 0.3s; /* Add animation */
 }
 
 /* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
@@ -92,7 +92,7 @@ form {
     width: 90%;
     max-width: 500PX;
     opacity: 1;
-    animation: fadeIn 1.5s forwards 1.8s; /* Add animation */
+    animation: fadeIn 1.5s forwards 0.5s; /* Add animation */
 }
 form:hover {
     transform: translateY(-1px);
@@ -363,7 +363,7 @@ footer {
     font-weight: 400;
     font-size: 0.8em;
     border-top: 2px solid var(--accent-color);
-    animation: slideUpFadeIn 1.0s forwards 2.0s; /* Add animation */
+    animation: slideUpFadeIn 1.0s forwards 1.0s; /* Add animation */
 }
 
 footer a {
@@ -749,7 +749,7 @@ input:disabled {
     font-weight: 500;
     color: var(--accent-color);
     margin-bottom: 10px;
-    animation: slideDownFadeIn 1s forwards;
+    animation: slideDownFadeIn 2s forwards;
 }
 
 .loading-bar {

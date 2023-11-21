@@ -218,8 +218,8 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
             document.getElementById(`response${i + 1}`).innerHTML = results[i];
             setTimeout(() => {
                 animateTextFadeIn(document.getElementById(`response${i + 1}`));
-            }, i * 1500); // delay each animation by 1500ms
-            /* ^ Not doing what I intended but seems to be working fine */
+            }, i * 100); // delay each animation by 100ms
+            /* ^ Not doing what I intended but works fine */
         }
   
         ////console.log("Clean Data: \n", cleanData);
@@ -236,7 +236,22 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
                 superAI: superAI
             })
         });
-        const serData = await serResponse.json();    
+        const serData = await serResponse.json();
+
+
+
+        /* TESTING */
+
+        // Trigger slide-down fade-out animation for primary AI responses
+        const primaryResponsesContainer = document.getElementById("primaryResponsesContainer");
+        primaryResponsesContainer.classList.add('slideDownFadeOut');
+        // Set a timeout to remove primary responses from display after the animation ends
+        setTimeout(() => {
+            primaryResponsesContainer.style.display = 'none';
+        }, 2000); // Assuming the animation duration stays at 2 seconds
+
+
+
         return serData;
     } catch (error) {
         const errorMessage = error?.data?.error?.message || "TIMEOUT: Server took too long to send AI response.";
@@ -396,7 +411,7 @@ function animateTextFadeIn(element) {
         } else {
             clearInterval(interval);
         }
-    }, 2); // adjust speed; ms between iterations
+    }, 1); // adjust speed; ms between iterations (1 = very fast)
 }
 
 // Create a timeout, putting a time limit on each AI endpoint
@@ -502,7 +517,7 @@ function getDirtyDataString(aiSupplementalData) {
 function updateLoadingBar() {
     const loadingFill = document.querySelector('.loading-fill');
     const loadingPercentage = document.querySelector('.loading-percentage');
-    percentageLoading = percentageLoading + (1 - percentageLoading / 100) * 1.00042069; // This makes it slow down as it approaches 100
+    percentageLoading = percentageLoading + (1 - percentageLoading / 100) * 0.9; // Smaller = Slower
     if (percentageLoading >= 99) {
       percentageLoading = 99;
     }

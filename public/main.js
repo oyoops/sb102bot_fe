@@ -20,11 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const map = document.getElementById('map');
     const menuBarHeight = menuBar.offsetHeight;
     map.style.top = `${menuBarHeight}px`;
+
     // Add fade-in effect to infoSections
     setTimeout(function() {
         document.getElementById('infoSections').style.opacity = 0;
         document.getElementById('infoSections').classList.add('info-fade-in');
     }, 1000); // start after 1 second
+
     // Toggle more options
     document.getElementById('toggleMoreOptions').addEventListener('click', function() {
         var moreOptions = document.getElementById('moreOptions');
@@ -41,19 +43,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     window.scrollTo(0, 0); // scroll to top
     
-
-    // manually add Excel workbook switch event listener
-    //superchargeSwitch.value = 'off';
+    // manually set Excel workbook switch
+    superchargeSwitch.value = 'off';
     superchargeSwitch.checked = false;
-    
-    // manually add debug mode switch event listener
+    // manually set debug mode switch
     debugModeCheckbox.value = 'off';
     debugModeCheckbox.checked = false;
-    
-    // manually add 'Use Live Local' switch event listener
+    // manually set 'Use Live Local' switch
     enableLiveLocalSwitch.value = 'on';
     enableLiveLocalSwitch.checked = true;
-
     
     // on form submit:
     form.addEventListener('submit', async (e) => {
@@ -65,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Type an address first. Just a suggestion!');
             return;
         }
-
         // Get user's custom instructions for AI, if any provided
         const customInstructionsText = customInstructionsInput.value;
         if (!customInstructionsText) {
@@ -86,22 +83,27 @@ document.addEventListener('DOMContentLoaded', function() {
             // Trigger slide-down fade-out animation for header and initial content
             mainHeader.classList.add('slideDownFadeOut');
             initialContent.classList.add('slideDownFadeOut');
+
             // Set a timeout to remove elements from display after the animation ends and to show the map and loading container
             setTimeout(() => {
                 mainHeader.style.display = 'none';
                 initialContent.style.display = 'none';
+
                 // Show the map and loading container with slide-down fade-in animation
                 googlemap.style.display = 'block';
                 googlemap.classList.add('slideDownFadeIn');
                 loadingContainer.style.display = 'flex'; // Use 'flex' to maintain the container's flexbox layout
                 loadingContainer.classList.add('slideDownFadeIn');
-            }, 1000); // Assuming the animation duration is 1 second
+            }, 2000); // Assuming the animation duration is 2 seconds
 
             // Trigger slide-down fade-in animation for loading container
             loadingContainer.classList.add('slide-down-fade-in');
 
             // Trigger slide-down fade-in animation for loading container
             loadingContainer.classList.add('slide-down-fade-in');
+
+            // Start the loading bar animation
+            updateLoadingBar()
 
             // Add class to loading squares to trigger transition
             const loadingSquares = document.querySelectorAll('.loading-square');
@@ -221,21 +223,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 handleAIError(error);
             }
 
-            let debugMode = false;
+            debugModeSwitch = false;
             if (debugModeCheckbox=='on') {
-                debugMode = true;
+                debugModeSwitch = true;
             }
 
             try {
                 // Generate AI summary HTML content
-                const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode, customInstructionsText);
+                const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugModeSwitch, customInstructionsText);
+                /*
                 // Trigger slide-down fade-out animation for primary AI responses
                 const primaryResponsesContainer = document.getElementById("primaryResponsesContainer");
                 primaryResponsesContainer.classList.add('slideDownFadeOut');
                 // Set a timeout to remove primary responses from display after the animation ends
                 setTimeout(() => {
                     primaryResponsesContainer.style.display = 'none';
-                }, 1000); // Assuming the animation duration is 1 second
+                }, 2000); // Assuming the animation duration is 2 seconds
+                */
+                // 
+                //
+                //
+
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
                 // Show AI summary response
@@ -275,18 +283,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
                 alert('Sorry, there was an unknown critical error. \nYour device will now self-destruct.');
+
             } else if (error.message.startsWith("Took too long")) {
                 console.error('Server error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
                 alert('Sorry, there was an unknown critical error. \nYour device will now self-destruct.');
+
             } else {
                 console.error('Error:', error);
                 document.documentElement.style.setProperty('--hue', '360'); // red
                 tryAgainButton.style.display = 'block';
                 loadingContainer.style.display = 'none';
                 alert('The AI server took too long to respond. \n\nThis happens randomly. \n Please refresh and try again.');
+            
             }
         }
     });
