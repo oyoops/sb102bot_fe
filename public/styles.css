@@ -315,7 +315,7 @@ tbody tr:hover {
 }
 
 #menuBar #logo {
-    width: 150px;  /* or whatever width you desire */
+    width: 100px;  /* or whatever width you desire */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* to handle vertical spacing better */
     margin-left: 10px;
