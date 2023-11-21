@@ -95,10 +95,10 @@ function generateMarketRentsTableHTML(compsData) {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Unit Mix</th>
-                        <th>Sq. Ft. (Avg.)</th>
+                        <th>% Mix</th>
+                        <th>Avg. SF</th>
                         <th>Market Rent</th>
-                        <th>Market Rent/Sq. Ft.</th>
+                        <th>Market Rent/SF</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -119,42 +119,38 @@ function generateMarketRentsTableHTML(compsData) {
         weightedRentSum += rent * weight;
         weightedSqftSum += sqft * weight;
         weightedRentPerSqftSum += rentPerSqft * weight;
-        percentageSum += weight;
+        percentageSum += Math.min(weight, 1.00);
 
         tableHTML += `
                 <tr>
                     <td>${type.display}</td>
                     <td>${weight.toFixed(0)}%</td>
-                    <td>${sqft.toFixed(0)} sf</td>
+                    <td>${sqft.toFixed(0)} SF</td>
                     <td>$${rent.toFixed(0)}</td>
-                    <td>$${rentPerSqft.toFixed(2)}/sf</td>
+                    <td>$${rentPerSqft.toFixed(2)}/SF</td>
                 </tr>
         `;
 
     });
-
     // Calculate the weighted averages
     const averageWeightedRent = (weightedRentSum / 100).toFixed(0);
     const averageWeightedSqft = (weightedSqftSum / 100).toFixed(0);
     const averageWeightedRentPerSqft = (weightedRentPerSqftSum / 100).toFixed(2);
-
     // Append the weighted average row
     tableHTML += `
             <tr>
                 <td><strong>Avgs.</strong></td>
                 <td><strong>${percentageSum.toFixed(0)}%</strong></td>
-                <td><strong>${averageWeightedSqft} sq. ft.</strong></td>
+                <td><strong>${averageWeightedSqft} SF</strong></td>
                 <td><strong>$${averageWeightedRent}</strong></td>
-                <td><strong>$${averageWeightedRentPerSqft}/sq. ft.</strong></td>
+                <td><strong>$${averageWeightedRentPerSqft}/SF</strong></td>
             </tr>
     `;
-
     tableHTML += `
                 </tbody>
             </table>
         </div>
     `;
-
     return tableHTML;
 }
 

@@ -227,11 +227,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (debugModeCheckbox=='on') {
                 debugModeSwitch = true;
             }
-
+            
             try {
                 // Generate AI summary HTML content
                 const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugModeSwitch, customInstructionsText);
                 /*
+                [MOVED TO WITHIN AI MODULE]
                 // Trigger slide-down fade-out animation for primary AI responses
                 const primaryResponsesContainer = document.getElementById("primaryResponsesContainer");
                 primaryResponsesContainer.classList.add('slideDownFadeOut');
@@ -240,10 +241,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     primaryResponsesContainer.style.display = 'none';
                 }, 2000); // Assuming the animation duration is 2 seconds
                 */
-                // 
-                //
-                //
-
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
                 // Show AI summary response
