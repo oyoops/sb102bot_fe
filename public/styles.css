@@ -63,12 +63,16 @@ h1 {
 
 p, footer, .submit-button, #tryAgainButton {
     font-family: 'Montserrat', sans-serif;
-    color: #666666;
     font-weight: 500;
     padding-left: 10px;
     padding-right: 10px;
     opacity: 0; /* Start fully transparent */
     animation: fadeIn 1.3s forwards 1.3s; /* Ensure the final state persists and starts after 1 second */
+}
+
+p.form-description {
+    color: #999999; /* Slightly lighter color */
+    font-size: 0.9em; /* Smaller font size */
 }
 .info-window p {
     animation: fadeIn 0.3s forwards 0.3s; /* Ensure the final state persists and starts after 1 second */
