@@ -592,7 +592,7 @@ input:disabled {
     height: 50vh;
     box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
     position: relative;
-    top: -100px;
+    top: 50px;
     z-index: 1;
     transition: opacity 1s ease-in-out; /* Smooth transition for opacity */
     opacity: 0; /* Start with map fully transparent */
