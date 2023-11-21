@@ -101,7 +101,8 @@ form:hover {
 form p {
     font-family: 'Playfair Display', serif;
     font-weight: 300;
-    font-size: 26PX;
+    font-size: 20px; /* Smaller font size */
+    color: #999999; /* Slightly lighter color */
     animation: fadeIn 1.0 forwards; /* Ensure the final state persists */
 }
 /* Generic table styling */
