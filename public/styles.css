@@ -529,6 +529,9 @@ label, .dark-input {
     max-height: 0; /* Initially no height */
     transition: max-height 0.5s ease-in-out; /* Smooth transition for max-height */
     width: 95%;
+    /* Set a max-height that is greater than the content's actual height */
+    /* This value should be adjusted based on the content's size */
+    max-height: 1000px; /* Example: Adjust as needed */
 }
 
 .cool-checkbox-custom {
