@@ -469,7 +469,7 @@ label, .dark-input {
 
 .cool-checkbox-label {
     display: block; /* Align label text to the left */
-    font-family: 'Arial', sans-serif; /* Changed to a more modern-looking font */
+    font-family: 'CoolFont', sans-serif; /* Changed to a cooler, more noticeable font */
     font-size: 0.7em; /* Further reduced font size */
     color: #333;
     margin-left: 0; /* Align label text to the left */
