@@ -431,10 +431,32 @@ input[type="range"] {
     cursor: pointer;
 }
 
-/* Style for the checkboxes */
-label {
+/* Style for the checkboxes and new text input */
+label, .dark-input {
     display: block;
     margin: 10px 0;
+}
+
+/* New text input field with darker interior shade of gray */
+.dark-input {
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    width: calc(100% - 30px);
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif; /* Modern-looking font to match labels */
+    font-size: 20px;
+    color: #333;
+    background-color: #e0e0e0; /* Slightly darker shade of gray */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.dark-input:focus {
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
 /* Checkbox grid and custom styles */
@@ -448,8 +470,8 @@ label {
 .cool-checkbox-label {
     display: flex;
     align-items: center;
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.9em;
+    font-family: 'Arial', sans-serif; /* Changed to a more modern-looking font */
+    font-size: 0.8em; /* Reduced font size */
     color: #333;
 }
 
