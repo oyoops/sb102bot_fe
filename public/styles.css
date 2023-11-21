@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
 html {
     background: linear-gradient(to bottom, #f4f4f4, #e6e9ec);
@@ -471,7 +472,7 @@ label, .dark-input {
 
 .cool-checkbox-label {
     display: block; /* Align label text to the left */
-    font-family: 'CoolFont', sans-serif; /* Changed to a cooler, more noticeable font */
+    font-family: 'Open Sans', sans-serif; /* Changed to Open Sans for a modern, sleek, and striking look */
     font-size: 0.7em; /* Further reduced font size */
     color: #333;
     margin-left: 0; /* Align label text to the left */
