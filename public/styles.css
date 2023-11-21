@@ -28,14 +28,6 @@ body {
     opacity: 0;
     animation: slideUpFadeIn 1.5s forwards 1.0s; /* Add animation */
 }
-}
-/* Media query to switch logos based on screen size, with improved readability */
-@media (max-width: 800px) {
-    /* Hide desktop logo */
-    #logo {
-        display: none;
-    }
-
 
 /* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
 #logoMobile {
