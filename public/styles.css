@@ -932,6 +932,20 @@ table, .styled-table {
     background-color: #ffffff;
 }
 /* Add keyframes for the animations */
+@keyframes formFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-fade-in {
+    animation: formFadeIn 2s ease forwards;
+}
 @keyframes slideDownFadeIn {
     from {
         top: -100px;
