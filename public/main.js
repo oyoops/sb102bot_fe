@@ -42,11 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
     superchargeSwitch.checked = false;
     
     // manually add debug mode switch event listener
-    debugModeCheckbox.value = 'on'
-    debugModeCheckbox.checked = true;
+    debugModeCheckbox.value = 'off';
+    debugModeCheckbox.checked = false;
     
     // manually add 'Use Live Local' switch event listener
-    enableLiveLocalSwitch.value = 'on'
+    enableLiveLocalSwitch.value = 'on';
     enableLiveLocalSwitch.checked = true;
 
     
