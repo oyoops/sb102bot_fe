@@ -13,6 +13,10 @@ import {
 
 // once DOM is fully loaded:
 document.addEventListener('DOMContentLoaded', function() {
+    // Add fade-in effect to infoSections
+    setTimeout(function() {
+        document.getElementById('infoSections').classList.add('fade-in', 'active');
+    }, 200); // slight delay to ensure the page is loaded
     // Toggle more options
     document.getElementById('toggleMoreOptions').addEventListener('click', function() {
         var moreOptions = document.getElementById('moreOptions');

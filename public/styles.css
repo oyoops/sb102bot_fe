@@ -967,3 +967,25 @@ table, .styled-table {
         opacity: 1;
     }
 }
+@keyframes formFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-fade-in {
+    animation: formFadeIn 2s ease forwards;
+}
+.fade-in {
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+.fade-in.active {
+    opacity: 1;
+}
