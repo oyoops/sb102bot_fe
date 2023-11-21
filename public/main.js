@@ -13,6 +13,20 @@ import {
 
 // once DOM is fully loaded:
 document.addEventListener('DOMContentLoaded', function() {
+    // Toggle more options
+    document.getElementById('toggleMoreOptions').addEventListener('click', function() {
+        var moreOptions = document.getElementById('moreOptions');
+        var checkboxGrid = document.querySelector('.checkbox-grid');
+        if (moreOptions.style.display === 'none') {
+            moreOptions.style.display = 'block';
+            checkboxGrid.style.display = 'grid';
+            this.textContent = 'Hide More Options';
+        } else {
+            moreOptions.style.display = 'none';
+            checkboxGrid.style.display = 'none';
+            this.textContent = 'Display More Options';
+        }
+    });
     window.scrollTo(0, 0); // scroll to top
     
     // manually add Excel workbook switch event listener
