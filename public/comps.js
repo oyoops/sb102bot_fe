@@ -119,7 +119,7 @@ function generateMarketRentsTableHTML(compsData) {
         weightedRentSum += rent * weight;
         weightedSqftSum += sqft * weight;
         weightedRentPerSqftSum += rentPerSqft * weight;
-        percentageSum += Math.min(weight, 1.00);
+        percentageSum += weight;
 
         tableHTML += `
                 <tr>
@@ -136,6 +136,10 @@ function generateMarketRentsTableHTML(compsData) {
     const averageWeightedRent = (weightedRentSum / 100).toFixed(0);
     const averageWeightedSqft = (weightedSqftSum / 100).toFixed(0);
     const averageWeightedRentPerSqft = (weightedRentPerSqftSum / 100).toFixed(2);
+    
+    // Cap percentage sum manually since the rounding handling sucks
+    percentageSum = Math.min(percentageSum, 100);
+
     // Append the weighted average row
     tableHTML += `
             <tr>
