@@ -24,10 +24,17 @@ body {
     height: auto;  /* maintain the aspect ratio */
     display: block; /* centers the image if h1 text-align is centered */
     margin: 0 auto; /* centers the image */
-    margin-top: 30px;
+    margin-top: 50px;
     opacity: 0;
     animation: slideUpFadeIn 1.5 forwards 1.0s; /* Add animation */
 }
+/* Media query to switch logos based on screen size, with improved readability */
+@media (max-width: 800px) {
+    /* Hide desktop logo */
+    #logo {
+        display: none;
+    }
+
 
 /* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
 #logoMobile {
