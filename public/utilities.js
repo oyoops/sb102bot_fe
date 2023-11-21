@@ -99,7 +99,7 @@ async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, ci
 
     const dirtyData = await getDirtyData(aiSupplementalData);
     const cleanerData = refineData(dirtyData, superAI);
-    const aiGeneratedHTML = await fetchAiResponsesCombined(eligPath, cleanerData, superAI, debugMode, customInstructionsText);
+    const aiGeneratedHTML = await fetchAiResponsesCombined(eligPath, cleanerData, superAI, debugModeSwitch, customInstructionsText);
 
     if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
         throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
