@@ -979,7 +979,8 @@ table, .styled-table {
 }
 
 .form-fade-in {
-    animation: formFadeIn 2s ease forwards;
+    opacity: 0; /* Initialize opacity to 0 to prevent flash before animation */
+    animation: formFadeIn 2s ease 1s forwards;
 }
 .info-fade-in {
     opacity: 0;
