@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             moreOptions.style.display = 'none';
             checkboxGrid.style.display = 'none';
-            this.textContent = 'Display More Options';
+            this.textContent = 'Show More Options';
         }
     });
     window.scrollTo(0, 0); // scroll to top
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get user input (dirty address) 
         address = addressInput.value;
         if (!address) {
-            alert('Type an address first. Just a suggestion...');
+            alert('Type an address first. Just a suggestion!');
             return;
         }
         
@@ -74,8 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
             initialContent.style.display = 'none';
             infoSections.style.display = 'none';
             recentUpdatesContainer.style.display = 'none';
-            //futureUpdatesContainer.style.display = 'none';
-            //currentBugsContainer.style.display = 'none';
 
             // Display fake loading progress bar
             updateLoadingBar();

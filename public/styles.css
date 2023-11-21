@@ -442,38 +442,39 @@ label, .dark-input {
 
 /* New text input field with darker interior shade of gray */
 .dark-input {
-    padding: 15px;
+    padding: 5px;
     border-radius: 8px;
     border: none;
-    width: calc(100% - 30px);
+    /*width: calc(100% - 30px);*/
+    width: calc(100% - 2px);
     margin-bottom: 5px;
     box-sizing: border-box;
     font-family: 'Arial', sans-serif; /* Modern-looking font to match labels */
-    font-size: 20px;
+    font-size: 14px;
     color: #333;
     background-color: #e0e0e0; /* Slightly darker shade of gray */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+    transition: box-shadow 1.2s ease-in-out, transform 1.0s ease-in-out;
 }
 
 .dark-input:focus {
     outline: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
 }
 
 /* Checkbox grid and custom styles */
 .checkbox-grid {
     display: none; /* Initially hidden */
     grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
-    gap: 5px; /* Further reduce any margins or padding */
-    margin-top: 5px; /* Further reduce top margin */
+    gap: 3px; /* Further reduce any margins or padding */
+    margin-top: 3px; /* Further reduce top margin */
 }
 
 .cool-checkbox-label {
     display: block; /* Align label text to the left */
     font-family: 'Open Sans', sans-serif; /* Changed to Open Sans for a modern, sleek, and striking look */
-    font-size: 0.7em; /* Further reduced font size */
+    font-size: 0.6em; /* Further reduced font size */
     color: #333;
     margin-left: 0; /* Align label text to the left */
     text-align: left; /* Left-align all checkbox labels */
@@ -499,12 +500,12 @@ label, .dark-input {
 
 .cool-checkbox-custom {
     display: inline-block;
-    width: 14px; /* Slightly reduce the size of all checkboxes */
-    height: 14px; /* Slightly reduce the size of all checkboxes */
-    margin-right: 3px; /* Reduce the space between the labels and their respective checkboxes */
+    width: 12px; /* Slightly reduce the size of all checkboxes */
+    height: 12px; /* Slightly reduce the size of all checkboxes */
+    margin-right: 2px; /* Reduce the space between the labels and their respective checkboxes */
     background: #f2f2f2;
     border: 2px solid #d1d9e6;
-    border-radius: 4px;
+    border-radius: 5px;
     position: relative;
 }
 
@@ -513,8 +514,8 @@ label, .dark-input {
     position: absolute;
     width: 10px;
     height: 5px;
-    border-left: 2px solid #007bff;
-    border-bottom: 2px solid #007bff;
+    border-left: 2px solid rgb(29, 204, 64);
+    border-bottom: 2px solid rgb(29, 204, 64);
     transform: rotate(-45deg);
     left: 4px;
     top: 5px;
