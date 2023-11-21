@@ -15,6 +15,11 @@ import {
 
 // once DOM is fully loaded:
 document.addEventListener('DOMContentLoaded', function() {
+    // Calculate the bottom position of the menuBar and set the top property of the map
+    const menuBar = document.getElementById('menuBar');
+    const map = document.getElementById('map');
+    const menuBarHeight = menuBar.offsetHeight;
+    map.style.top = `${menuBarHeight}px`;
     // Add fade-in effect to infoSections
     setTimeout(function() {
         document.getElementById('infoSections').style.opacity = 0;
