@@ -1,9 +1,8 @@
 // Owner Insights
 
 const axios = require('axios');
-const { customInstructionsInput } = require('../public/domElements');
-// Function to calculate the cost of API call
 
+// Function to calculate the cost of API call
 function calculateCost(tokensUsed, modelName) {
     let ratePer1000Tokens = 0;
 
