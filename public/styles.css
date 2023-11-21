@@ -525,7 +525,9 @@ label, .dark-input {
 
 /* Container for additional options */
 .more-options {
-    display: none; /* Initially hidden */
+    overflow: hidden;
+    max-height: 0; /* Initially no height */
+    transition: max-height 0.5s ease-in-out; /* Transition for growing effect */
     width: 95%;
 }
 
