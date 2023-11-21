@@ -623,6 +623,12 @@ input:disabled {
     }
 }
 
+ /* When the map is supposed to be visible, ensure these properties are set */
+ #map.slideDownFadeIn {
+    display: block; /* Or 'flex' or other display value as needed */
+    animation: slideDownFadeIn 1s ease forwards;
+}
+
 #eligibilityStatus {
     display: none;
     width: 80%;
@@ -948,6 +954,12 @@ table, .styled-table {
     border-collapse: collapse;
     background-color: #ffffff;
 }
+
+
+
+
+
+
 /* Add keyframes for the animations */
 @keyframes formFadeIn {
     0% {
@@ -1009,3 +1021,23 @@ table, .styled-table {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+
+
+@keyframes slideDownFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+}
+
+.slideDownFadeOut {
+    animation: slideDownFadeOut 1s ease forwards;
+}
+
+
+
