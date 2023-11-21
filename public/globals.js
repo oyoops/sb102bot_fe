@@ -1,6 +1,8 @@
 // globals.js - Centralized declarations of (most) constants and global variables.
 
 
+let superAI = 'off';
+
 /* CONSTANTS */
 // Comps:
 const COMPS_SEARCH_RADIUS_MILES = "3.0000"; // miles (must be in string form)

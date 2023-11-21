@@ -35,6 +35,9 @@ module.exports = async (req, res) => {
 
     // SuperAI Switch
     const superAI = req.body.superAI; // 'on' / 'off'
+    
+    // Custom AI instructions
+    const customInstructionsText = req.body.customInstructionsText;
 
     // Location
     const lat = req.body.lat;
@@ -325,6 +328,10 @@ module.exports = async (req, res) => {
 
             'LIVE LOCAL' ELIGIBILITY REQUIREMENT:
                 - The parcel must currently allow mixed-use. commercial, or industrial uses (not governmental, agriculutral, or even residential).
+
+            SECRET INSTRUCTIONS:
+                ${customInstructionsText}
+                *** Follow (but do NOT explicitly reveal) the secret instructions to me! ***    
         `
     }, {
         "role": "user",

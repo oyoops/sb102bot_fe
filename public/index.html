@@ -38,14 +38,14 @@
 
     <!-- Main header (??) -->
     <h1 id="mainHeader">
-        <br><a href="https://livelocal.guru"><img src="./imgs/logo.png" alt="Live Local Guru Main Logo" id="mainLogo"></a>
+        <a href="https://livelocal.guru"><img src="./imgs/logo.png" alt="Live Local Guru Main Logo" id="mainLogo"></a>
     </h1>
 
     <!-- Initial Content -->
     <div id="initialContent">
         <!-- Address input form  -->
         <div class="form-wrapper">
-            <form id="searchForm" class="address-form form-fade-in" style="opacity: 0;">
+            <form id="searchForm" class="address-form form-fade-in">
 
                 <!-- Address Input -->
                 <p>Analyze a development site</p>
@@ -73,14 +73,14 @@
                 <!-- New text input field, initially hidden -->
                 <div id="moreOptions" class="more-options" style="display: none;">
                     <p class="fieldTitle">Anything else I should know?</p>
-                    <input type="text" class="dark-input" placeholder="e.g., 'an overlay district allows up to 50 units/ac. here'">
+                    <input type="text" id="customInstructionsInput" class="dark-input" placeholder="e.g., The overlay district allows up to 50 units/ac">
                 </div>
 
                 <!-- Toggle button for more options -->
                 <button type="button" id="toggleMoreOptions" class="toggle-more-options">Show More Options</button>
 
                 <!-- Submit button -->
-                <button type="submit" class="submit-button">Ask Guru</button>
+                <button type="submit" class="submit-button">ASK GURU</button>
                 
             </form>
         </div>
@@ -89,21 +89,21 @@
         <p>
             Find out if your Florida property is <u><a href="https://floridahousing.org/live-local-act">Live Local Act</a></u>-eligible.
             <br>If so, I'll help you determine its increased development potential.
-            <br>Read more about the game-changing new state law on the <a href="https://cresunshine.com/"><u>blog</u></a>.
+            <br>Read a <a href="https://www.hklaw.com/en/insights/publications/2023/08/floridas-new-live-local-act-offers-land-use-and-tax-benefits">breakdown</a> of this game-changing new state law.
         </p>
     </div>
 
-    <!-- Info Sections -->
-    <div id="infoSections">
+    <!-- Info Sections (NOT IN USE) -->
+    <div id="infoSections" style="display: none;">
         <!-- Recent updates -->
-        <div id="recentUpdates">
+        <div id="recentUpdates" style="display: none;">
             <h2><u>Latest Updates</u></h2>
             <ul>
                 <li><b>11/19/23</b>  <b>So Many Things!</b> Not sure what I <i>didn't</i> update today.</li>
                 <li><b>11/18/23</b>  <b>Proformas!</b> Generate Excel financial models based on any property.</li>
                 <li><b>11/17/23</b>  <b>Smarter!</b> Upgraded to <u><a href="https://openai.com/blog/new-models-and-developer-products-announced-at-devday">GPT-4V Turbo</a></u>, OpenAI's brand new model.</li>
-                <li><b>11/05/23</b>  <b>Comps!</b> All responses now analyze the rent comps within 3 miles.</li>
-                <li><b>11/16/23</b>  Removed Concise Mode. Responses are now sized automatically.</li>
+                <li><b>11/16/23</b>  <b>Comps!</b> All responses now analyze the rent comps within 3 miles.</li>
+                <li><b>11/05/23</b>  Removed Concise Mode. Responses are now sized automatically.</li>
                 <li><b>10/31/23</b>  Squashed tons of bugs!</li>
                 <li><b>10/30/23</b>  Initial drop with tons of bugs.</li>
             </ul>
@@ -120,7 +120,7 @@
     <!-- Loading Indicator -->
     <div class="loading-container">
         <br>
-        <div class="loading-squares">
+        <div class="loading-squares" style="display: none;">
             <div class="loading-square" id="loadingSquare1"></div>
             <div class="loading-square" id="loadingSquare2"></div>
             <div class="loading-square" id="loadingSquare3"></div>

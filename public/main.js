@@ -7,6 +7,8 @@ import {
     // In use:
     mainHeader, initialContent, form, addressInput, infoSections, recentUpdatesContainer,
     loadingContainer, googlemap, eligibilityDiv, tryAgainButton, rentInfoContainer, countyMaxRentsTable, rentsTableBody,
+    enableLiveLocalSwitch, debugModeCheckbox, superchargeSwitch,
+    customInstructionsInput,
     compsTable
 } from './domElements.js';
 
@@ -15,6 +17,7 @@ import {
 document.addEventListener('DOMContentLoaded', function() {
     // Add fade-in effect to infoSections
     setTimeout(function() {
+        document.getElementById('infoSections').style.opacity = 0;
         document.getElementById('infoSections').classList.add('info-fade-in');
     }, 1000); // start after 1 second
     // Toggle more options
@@ -33,32 +36,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     window.scrollTo(0, 0); // scroll to top
     
+
     // manually add Excel workbook switch event listener
-    let superAI = 'off';
-    document.getElementById('superchargeSwitch').checked = false;
-    document.getElementById('superchargeSwitch').addEventListener('change', function() {
-        this.value = this.checked ? 'on' : 'off';
-        superAI = this.value;
-        console.log(`Download in Excel=${superAI}`);
-    });
-
+    //superchargeSwitch.value = 'off';
+    superchargeSwitch.checked = false;
+    
     // manually add debug mode switch event listener
-    let debugModeCheckbox = 'on'
-    document.getElementById('debugModeCheckbox').checked = true;
-    document.getElementById('debugModeCheckbox').addEventListener('change', function() {
-        this.value = this.checked ? 'on' : 'off';
-        debugModeCheckbox = this.value;
-        console.log(`Debug Mode=${debugModeCheckbox}`);
-    });
-
+    debugModeCheckbox.value = 'on'
+    debugModeCheckbox.checked = true;
+    
     // manually add 'Use Live Local' switch event listener
-    let enableLiveLocalCheckbox = 'on'
-    document.getElementById('enableLiveLocalSwitch').checked = true;
-    document.getElementById('enableLiveLocalSwitch').addEventListener('change', function() {
-        this.value = this.checked ? 'on' : 'off';
-        enableLiveLocalCheckbox = this.value;
-        console.log(`Use Live Local=${enableLiveLocalCheckbox}`);
-    });
+    enableLiveLocalSwitch.value = 'on'
+    enableLiveLocalSwitch.checked = true;
+
     
     // on form submit:
     form.addEventListener('submit', async (e) => {
@@ -69,6 +59,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!address) {
             alert('Type an address first. Just a suggestion!');
             return;
+        }
+
+        // Get user's custom instructions for AI, if any provided
+        const customInstructionsText = customInstructionsInput.value;
+        if (!customInstructionsText) {
+            console.log('[Special Instructions] \nN/A');
         }
         
         // Send address to Google Analytics
@@ -188,21 +184,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // * If LLA Module = Enabled && Parcel Eligibility = True,
             //   then populate and show Table #2 (Comps avg. vs Affordable max. rents comparison)
-            if (enableLiveLocalCheckbox) {
-
+            if (enableLiveLocalSwitch) {
+                if (eligPath == "yes") {
+                    rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
+                    rentInfoContainer.style.display = 'table';
+                    countyMaxRentsTable.style.display = 'table';
+                    console.log(`'Use Live Local' is enabled \n*AND* the property is eligible!\n  :-D   :-D   :-D`); 
+                } else {
+                    console.log(`'Use Live Local' is enabled... \nBut the property is INELIGIBLE.\n  :'(   :'(   :'(`);
+                }
             } else {
                 console.log("LLA Ineligible!");
             }
-
-            if (eligPath == "yes") {
-                rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
-                rentInfoContainer.style.display = 'table';
-                countyMaxRentsTable.style.display = 'table';
-                console.log(`'Use Live Local' is enabled \n*AND* the property is eligible!\n  :-D   :-D   :-D`); 
-            } else {
-                console.log(`'Use Live Local' is enabled... \nBut the property is INELIGIBLE.\n  :'(   :'(   :'(`);
-            }
-
+        
             // Show the Try Again button
             tryAgainButton.style.display = 'block';
 
@@ -223,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             try {
                 // Generate AI summary HTML content
-                const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode);
+                const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode, customInstructionsText);
                 // Hide primary AI responses
                 document.getElementById("primaryResponsesContainer").style.display = 'none';
                 // Hide loading indicator

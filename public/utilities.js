@@ -86,7 +86,7 @@ function getMunicipality(cityData, countyData) {
 /* AI-Related Functions: */
 
 // Main AI module entry point
-async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode=false) {
+async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode=false, customInstructionsText) {
     if (countyData) {
         enhanceWithCountyData(aiSupplementalData, countyData);
     }
@@ -99,7 +99,7 @@ async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, ci
 
     const dirtyData = await getDirtyData(aiSupplementalData);
     const cleanerData = refineData(dirtyData, superAI);
-    const aiGeneratedHTML = await fetchAiResponsesCombined(eligPath, cleanerData, superAI, debugMode);
+    const aiGeneratedHTML = await fetchAiResponsesCombined(eligPath, cleanerData, superAI, debugMode, customInstructionsText);
 
     if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
         throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
@@ -120,7 +120,7 @@ function handleAIError(error) {
 }
 
 // fetch combined set of primary AI responses
-async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=false) {
+async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=false, customInstructionsText) {
   // (super secret debug method)
   if (debug) {
     const noAIresultHTML =  `
@@ -130,8 +130,11 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
     return noAIresultHTML
   }
     
-  // Add value of superAI switch to all primary requests [LEGACY]
+  // Add value of superAI switch to cleanData for all primary requests [LEGACY]
   cleanData.superAI = superAI;
+  // Add custom instructions text to cleanData for all primary requests
+  cleanData.customInstructionsText = customInstructionsText;
+
   // Define primary prompt endpoints based on Live Local Eligibility and Current Land Use
   let endpoints;
   let summaryEndpoint;

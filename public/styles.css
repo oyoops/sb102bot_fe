@@ -25,7 +25,7 @@ body {
     display: block; /* centers the image if h1 text-align is centered */
     margin: 0 auto; /* centers the image */
     opacity: 0;
-    animation: fadeIn 1s forwards 1.5s; /* Add animation */
+    animation: fadeIn 1.0 forwards 0.5s; /* Add animation */
 }
 
 /* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
@@ -61,11 +61,11 @@ p {
     font-weight: 500;
     margin-left: 10px;
     margin-right: 10px;
-    opacity: 0.1; /* Start almost fully transparent */
-    animation: fadeIn 0.4s forwards; /* Ensure the final state persists */
+    opacity: 0; /* Start fully transparent */
+    animation: fadeIn 2.5s forwards 2.5s; /* Ensure the final state persists and starts after 1 second */
 }
 .info-window p {
-    animation: fadeIn 1.0s forwards; /* Ensure the final state persists */
+    animation: fadeIn 1.0s forwards 1s; /* Ensure the final state persists and starts after 1 second */
 }
 
 
@@ -86,7 +86,7 @@ form {
     width: 90%;
     max-width: 500PX;
     opacity: 1;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: transform 1.5s ease-in-out, box-shadow 1.5s ease-in-out;
 }
 form:hover {
     transform: translateY(-1px);
@@ -96,7 +96,7 @@ form p {
     font-family: 'Playfair Display', serif;
     font-weight: 300;
     font-size: 26PX;
-    animation: fadeIn 0.3s forwards; /* Ensure the final state persists */
+    animation: fadeIn 0.5 forwards; /* Ensure the final state persists */
 }
 /* Generic table styling */
 .table-container {
@@ -162,7 +162,7 @@ tbody tr:hover {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 300;
     color: rgb(241, 243, 219);
     background-color: rgb(240, 240, 240);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -311,18 +311,18 @@ tbody tr:hover {
     align-items: center;
     z-index: 1000;
     border-bottom: 2px solid var(--accent-color);
-    animation: slideDownFadeIn 0.5s forwards 0.5s; /* Add animation */
+    animation: slideDownFadeIn 1.1s forwards 1.0s; /* Add animation */
 }
 
 #menuBar #logo {
-    width: 125px;  /* or whatever width you desire */
+    width: 150px;  /* or whatever width you desire */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* to handle vertical spacing better */
     margin-left: 10px;
 }
 
 #menuBar #logoMobile {
-    width: 75px;  /* or whatever width you desire for the mobile logo */
+    width: 100px;  /* or whatever width you desire for the mobile logo */
     height: auto;  /* maintain the aspect ratio */
     display: none; /* by default, hide it if you plan to show it only on smaller screens */
     margin-left: 10px;
@@ -351,14 +351,14 @@ footer {
     font-weight: 400;
     font-size: 0.8em;
     border-top: 2px solid var(--accent-color);
-    animation: slideUpFadeIn 0.5s forwards 0.5s; /* Add animation */
+    animation: slideUpFadeIn 1.5s forwards 0.8s; /* Add animation */
 }
 
 footer a {
     color: var(--accent-color);
     text-decoration: none;
     padding: 0 5px;
-    transition: color 0.3s ease;
+    transition: color 1.0s ease;
 }
 
 footer a:hover {
@@ -414,6 +414,7 @@ footer a:hover {
     justify-content: center;
     align-items: center;
     text-align: center;
+    position: fixed;
 }
 
 .unitCalculationText {
@@ -588,10 +589,10 @@ input:disabled {
 /* Google Map container */
 #map {
     width: 100%;
-    height: 60vh;
+    height: 50vh;
     box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
     position: relative;
-    top: 0px;
+    top: -100px;
     z-index: 1;
     transition: opacity 1s ease-in-out; /* Smooth transition for opacity */
     opacity: 0; /* Start with map fully transparent */
@@ -606,7 +607,7 @@ input:disabled {
 
     /* Mobile specific styles */
     @media (max-width: 767px) {
-        height: 50vh;          /* Adjust height for mobile; change as needed */
+        height: 40vh;          /* Adjust height for mobile; change as needed */
     }
 }
 
@@ -944,6 +945,7 @@ table, .styled-table {
 }
 
 .form-fade-in {
+    opacity: 0; /* Initialize opacity to 0 to prevent flash before animation */
     animation: formFadeIn 2s ease 1s forwards;
 }
 @keyframes slideDownFadeIn {

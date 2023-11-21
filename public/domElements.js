@@ -11,7 +11,10 @@ const recentUpdatesContainer = document.getElementById('recentUpdates');
 // Main form and its elements
 const form = document.querySelector('#searchForm');
 const addressInput = document.querySelector('#addressInput');
-/* Form is missing the two switches! */
+const customInstructionsInput = document.getElementById('customInstructionsInput');
+const superchargeSwitch = document.getElementById('superchargeSwitch');
+const debugModeCheckbox = document.getElementById('debugModeCheckbox');
+const enableLiveLocalSwitch = document.getElementById('enableLiveLocalSwitch')
 
 // Map and try again button
 const googlemap = document.getElementById('map');
@@ -32,6 +35,10 @@ export {
     mainHeader, // (?)
     form,
     addressInput,
+    customInstructionsInput,
+    debugModeCheckbox,
+    enableLiveLocalSwitch,
+    superchargeSwitch,
     infoSections,
     recentUpdatesContainer,
     loadingContainer,
