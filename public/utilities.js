@@ -220,7 +220,7 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
             }, i * 300); // delay each animation by 300ms (not sure this actually works...)
         }
   
-        console.log("Clean Data: \n", cleanData);
+        ////console.log("Clean Data: \n", cleanData);
 
         /* START STAGE 2: SER */
         const serResponse = await fetch('/api/' + summaryEndpoint, {
@@ -394,7 +394,7 @@ function animateTextFadeIn(element) {
         } else {
             clearInterval(interval);
         }
-    }, 2); // adjust speed; ms between iterations
+    }, 4); // adjust speed; ms between iterations
 }
 
 // Create a timeout, putting a time limit on each AI endpoint

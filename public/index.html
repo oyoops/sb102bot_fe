@@ -120,7 +120,7 @@
     <!-- Loading Indicator -->
     <div class="loading-container">
         <br>
-        <div class="loading-squares" style="display: none;">
+        <div class="loading-squares">
             <div class="loading-square" id="loadingSquare1"></div>
             <div class="loading-square" id="loadingSquare2"></div>
             <div class="loading-square" id="loadingSquare3"></div>
@@ -128,18 +128,18 @@
             <div class="loading-square" id="loadingSquare5"></div>
         </div>
         
+        <br>
         <div class="loading-bar">
             <div class="loading-fill"></div>
             <div class="loading-percentage">0%</div>
         </div>
         
-        <br>
         <div class="spinner" style="display: none;"></div>
 
         <div class="loading-text">
             Conducting due diligence
             <br><b>Please wait...</b>
-            <br><br>
+            <br>
         </div>
     </div>
 
@@ -152,14 +152,15 @@
         <div id="response5" class="primaryResponse"></div>
     </div>
 
+    <br>
+    
     <!-- Table: Rent Comps Weight Avgs by Unit Type -->
     <div id="averagesTableContainer" style="display: none">
         <!-- The averages table will be rendered here -->
     </div>
-
+    
     <!-- Table: Market Rents vs. Max Live Local Rents -->
-    <div id="rentInfoContainer" style="display: none;"> <!-- container 1 -->
-        <br>
+    <div id="rentInfoContainer" style="display: none;"> <!-- container 1 -->    
         <div class="table-container"> <!-- container 2 -->
             <!-- table -->
             <table id="countyMaxRentsTable">
@@ -175,15 +176,16 @@
                     <!-- Data will be inserted here by JavaScript -->
                 </tbody>
             </table>
-
+            
             <p>
                 <i>These are the Live Local affordable rent limits (120% AMI)
                 <br>Limits must include any direct billing of electric/water/insurance/taxes</i>
             </p>
         </div>
-        <br>
-    </div> 
+    </div>
 
+    <br>
+    
     <!-- Footer -->
     <footer>
         <!-- New Search (aka Try Again) button -->

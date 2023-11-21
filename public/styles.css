@@ -215,7 +215,7 @@ tbody tr:hover {
 .primaryResponse {
     padding: 20px;
     margin: 20px auto;
-    max-width: 70%; /* Responsive width */
+    max-width: 50%; /* Responsive width */
     border: 1px solid #d1d9e6;
     border-radius: 8px;
     background-color: #f7f9fc;
@@ -592,9 +592,9 @@ input:disabled {
     height: 50vh;
     box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
     position: relative;
-    top: 50px;
+    top: 0px;
     z-index: 1;
-    transition: opacity 1s ease-in-out; /* Smooth transition for opacity */
+    transition: opacity 2s ease-in-out; /* Smooth transition for opacity */
     opacity: 0; /* Start with map fully transparent */
     border-radius: 0;
     display: none; /* Start with map not visible */
@@ -887,7 +887,8 @@ input:checked + .toggle:before {
     background-color: #0b378a;
     color: #fff;
     padding: 10px 20px;
-    margin: 0 10px;
+    margin: 10 10px;
+    max-width: 200px;
     text-decoration: none;
     border-radius: 8px;
     transition: background-color 0.3s, transform 0.3s;
