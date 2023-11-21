@@ -79,29 +79,17 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(`Asking the Guru about \n${address}`);
             
             // Trigger slide-down fade-out animation for header and initial content
-            mainHeader.classList.add('slide-down-fade-out');
-            initialContent.classList.add('slide-down-fade-out');
-            infoSections.classList.add('slide-down-fade-out');
-            recentUpdatesContainer.classList.add('slide-down-fade-out');
-            // Set a timeout to remove elements from display after the animation ends
+            mainHeader.classList.add('slideDownFadeOut');
+            initialContent.classList.add('slideDownFadeOut');
+            // Set a timeout to remove elements from display after the animation ends and to show the map and loading container
             setTimeout(() => {
-                // Trigger slide-down fade-out animation for header and initial content
-                mainHeader.classList.add('slide-down-fade-out');
-                initialContent.classList.add('slide-down-fade-out');
-                infoSections.classList.add('slide-down-fade-out');
-                recentUpdatesContainer.classList.add('slide-down-fade-out');
-                // Trigger slide-down fade-out animation for header and initial content
-                mainHeader.classList.add('slide-down-fade-out');
-                initialContent.classList.add('slide-down-fade-out');
-                infoSections.classList.add('slide-down-fade-out');
-                recentUpdatesContainer.classList.add('slide-down-fade-out');
-                // Set a timeout to remove elements from display after the animation ends
-                setTimeout(() => {
-                    mainHeader.style.display = 'none';
-                    initialContent.style.display = 'none';
-                    infoSections.style.display = 'none';
-                    recentUpdatesContainer.style.display = 'none';
-                }, 1000); // Assuming the animation duration is 1 second
+                mainHeader.style.display = 'none';
+                initialContent.style.display = 'none';
+                // Show the map and loading container with slide-down fade-in animation
+                googlemap.style.display = 'block';
+                googlemap.classList.add('slideDownFadeIn');
+                loadingContainer.style.display = 'flex'; // Use 'flex' to maintain the container's flexbox layout
+                loadingContainer.classList.add('slideDownFadeIn');
             }, 1000); // Assuming the animation duration is 1 second
 
             // Trigger slide-down fade-in animation for loading container
