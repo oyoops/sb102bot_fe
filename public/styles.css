@@ -67,7 +67,7 @@ p {
     margin-left: 10px;
     margin-right: 10px;
     opacity: 0; /* Start fully transparent */
-    animation: fadeIn 2.5s forwards 2.5s; /* Ensure the final state persists and starts after 1 second */
+    animation: fadeIn 0.3s forwards 0.3s; /* Ensure the final state persists and starts after 1 second */
 }
 .info-window p {
     animation: fadeIn 1.0s forwards 1s; /* Ensure the final state persists and starts after 1 second */
