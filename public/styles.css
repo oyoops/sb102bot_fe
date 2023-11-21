@@ -36,15 +36,10 @@ body {
 }
 /* Media query to switch logos based on screen size, with improved readability */
 @media (max-width: 800px) {
-    /* Hide desktop logo */
+    /* Hide desktop logo and show mobile logo */
     #logo {
         display: none;
     }
-}
-
-/* Media query to switch logos based on screen size, with improved readability */
-@media (max-width: 800px) {
-    /* Show mobile logo */
     #logoMobile {
         display: block;
         visibility: visible; /* Make it accessible to screen readers */
