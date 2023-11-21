@@ -92,7 +92,7 @@ form {
     width: 90%;
     max-width: 500PX;
     opacity: 1;
-    transition: transform 1.0s ease-in-out, box-shadow 1.5s ease-in-out;
+    animation: fadeIn 1.5s forwards 1.8s; /* Add animation */
 }
 form:hover {
     transform: translateY(-1px);
@@ -320,14 +320,16 @@ tbody tr:hover {
     align-items: center;
     z-index: 1000;
     border-bottom: 2px solid var(--accent-color);
-    animation: slideDownFadeIn 1.1s forwards 1.0s; /* Add animation */
+    animation: slideDownFadeIn 1.0s forwards 0.5s; /* Add animation */
 }
 
 #menuBar #logo {
-    width: 125px;  /* or whatever width you desire */
+    width: 100px;  /* or whatever width you desire */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* to handle vertical spacing better */
     margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 2px;
 }
 
 #menuBar #logoMobile {
@@ -361,7 +363,7 @@ footer {
     font-weight: 400;
     font-size: 0.8em;
     border-top: 2px solid var(--accent-color);
-    animation: slideUpFadeIn 1.5s forwards 0.5s; /* Add animation */
+    animation: slideUpFadeIn 1.0s forwards 2.0s; /* Add animation */
 }
 
 footer a {
@@ -418,11 +420,11 @@ footer a:hover {
     font-weight: 500;
     background-color: #1f54b0;
     color: #ffffff;
-    border-radius: 5px;
+    border-radius: 10px;
     display: inline-block;
     text-align: center;
     position: fixed;
-    bottom: 10px; /* Position at the bottom of the screen */
+    bottom: 15px; /* Position at the bottom of the screen */
     right: 10px; /* Position on the right of the screen */
     z-index: 100; /* Ensure it's above other elements */
 }
@@ -747,7 +749,7 @@ input:disabled {
     font-weight: 500;
     color: var(--accent-color);
     margin-bottom: 10px;
-    animation: slideInFromLeft 1s forwards;
+    animation: slideDownFadeIn 1s forwards;
 }
 
 .loading-bar {
@@ -1039,6 +1041,4 @@ table, .styled-table {
 .slideDownFadeOut {
     animation: slideDownFadeOut 1s ease forwards;
 }
-
-
 

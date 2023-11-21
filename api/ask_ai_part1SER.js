@@ -78,7 +78,7 @@ module.exports = async (req, res) => {
                     A set of related prompts were used to generate insights about a property and then combined.
                 YOUR TASK:
                     Write a report about this property as it relates to potentially buying it and developing new multifamily under the Live Local Act (if you determine it's eligible).
-                    Focus heavily on the comps analysis. DESCRIBE COMPS BY NAME. Rank them in descending order of affordability.
+                    Focus heavily on the comps analysis. DESCRIBE COMPS BY NAME. Rank them in descending order of rent per sq. ft.
                 FORMAT RULES:
                     - Your result will go directly inside an already-existing HTML div, so use text styling as appropriate EXCLUDING LINE BREAKS.
                         - You MUST emphasize key content through different colors and symbols. All subheadings should have text styling.

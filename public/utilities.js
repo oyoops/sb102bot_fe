@@ -214,6 +214,7 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
 
         // Display primary responses once they are available
         for (let i = 0; i < results.length; i++) {
+            document.getElementById(`response${i + 1}`).opacity = 0; // TESTING
             document.getElementById(`response${i + 1}`).innerHTML = results[i];
             setTimeout(() => {
                 animateTextFadeIn(document.getElementById(`response${i + 1}`));
