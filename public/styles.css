@@ -231,6 +231,8 @@ tbody tr:hover {
     white-space: pre-wrap; /* Preserve whitespace and line breaks */
     word-break: break-word; /* Break words to prevent overflow */
     overflow-wrap: break-word; /* Break words at appropriate points */
+    text-align: left; /* Align text to the left */
+    font-family: 'Montserrat', sans-serif; /* Updated font family */
 }
 /* Hover effect for non-touch devices */
 @media (hover: hover) {
@@ -630,7 +632,7 @@ input:disabled {
     font-size: 1em;
     line-height: 1.2;
     text-align: left;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Montserrat', sans-serif; /* Updated font family */
 }
 #eligibilityStatus ul {
     list-style-type: none;
