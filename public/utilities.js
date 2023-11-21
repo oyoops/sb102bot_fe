@@ -394,7 +394,7 @@ function animateTextFadeIn(element) {
         } else {
             clearInterval(interval);
         }
-    }, 4); // adjust speed; ms between iterations
+    }, 2); // adjust speed; ms between iterations
 }
 
 // Create a timeout, putting a time limit on each AI endpoint
