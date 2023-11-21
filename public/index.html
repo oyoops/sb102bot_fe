@@ -46,8 +46,12 @@
         <!-- Address input form  -->
         <div class="form-wrapper">
             <form id="searchForm" class="address-form">
+
+                <!-- Address Input -->
+                <p>Research this address:</p>
                 <input type="text" id="addressInput" class="address-input" placeholder="1100 S Ocean Blvd, Palm Beach, FL">
 
+                <!-- Checkbox Grid -->
                 <div class="checkbox-grid" style="display: none;">
                     <label class="cool-checkbox-label">
                         <input type="checkbox" id="debugModeCheckbox" name="debugMode" value="on">
@@ -91,20 +95,20 @@
                         <span class="cool-checkbox-text">Placeholder</span>
                     </label>
                 </div>
+                <!-- New text input field, initially hidden -->
+                <div id="moreOptions" class="more-options" style="display: none;">
+                    <p>Anything else I should know?</p>
+                    <input type="text" class="dark-input" placeholder="E.g., 'the overlay district allows up to 50 units/ac. here'">
+                </div>
+                <!-- Submit button -->
+                <button type="submit" class="submit-button">Ask the Guru</button>
 
                 <!-- Toggle button for more options -->
                 <button type="button" id="toggleMoreOptions" class="toggle-more-options">Show More Options</button>
 
-                <!-- New text input field, initially hidden -->
-                <div id="moreOptions" class="more-options" style="display: none;">
-                    <p>
-                        Anything else I should know? 
-                        <br><u>Example</u>  <i>An overlay district allows up to 50 units/ac here.</i>
-                    </p>
-                    <input type="text" class="dark-input" placeholder="This property is... ">
 
-                <!-- Submit button -->
-                <button type="submit" class="submit-button">Ask the Guru</button>
+
+
             </form>
         </div>
 

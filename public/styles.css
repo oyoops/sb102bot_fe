@@ -157,6 +157,7 @@ tbody tr:hover {
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
     color: #333;
+    background-color: rgb(241, 243, 219);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
@@ -442,32 +443,32 @@ label, .dark-input {
 
 /* New text input field with darker interior shade of gray */
 .dark-input {
-    padding: 5px;
+    padding: 15px;
     border-radius: 8px;
     border: none;
-    /*width: calc(100% - 30px);*/
-    width: calc(100% - 2px);
-    margin-bottom: 5px;
+    width: calc(100% - 0px);
+    align-items: center;
+    margin-bottom: 15px;
     box-sizing: border-box;
     font-family: 'Arial', sans-serif; /* Modern-looking font to match labels */
     font-size: 14px;
-    color: #333;
+    color: rgb(241, 243, 219);
     background-color: #e0e0e0; /* Slightly darker shade of gray */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 1.2s ease-in-out, transform 1.0s ease-in-out;
+    transition: box-shadow 0.6s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .dark-input:focus {
     outline: none;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
 /* Checkbox grid and custom styles */
 .checkbox-grid {
     display: none; /* Initially hidden */
     grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
-    gap: 3px; /* Further reduce any margins or padding */
+    gap: 7px; /* Further reduce any margins or padding */
     margin-top: 3px; /* Further reduce top margin */
 }
 
@@ -477,6 +478,7 @@ label, .dark-input {
     font-size: 0.6em; /* Further reduced font size */
     color: #333;
     margin-left: 0; /* Align label text to the left */
+    margin-bottom: 5px;
     text-align: left; /* Left-align all checkbox labels */
 }
 
@@ -485,10 +487,10 @@ label, .dark-input {
     background: none;
     border: none;
     color: #aaa; /* Light grey color */
-    font-size: 0.8em; /* Small text */
+    font-size: 0.9em; /* Small text */
     cursor: pointer;
     padding: 5px;
-    margin-top: 10px;
+    margin-top: 15px;
     text-align: center; /* Center text within the container */
     width: 100%;
 }
@@ -496,14 +498,16 @@ label, .dark-input {
 /* Container for additional options */
 .more-options {
     display: none; /* Initially hidden */
+    width: 95%;
 }
 
 .cool-checkbox-custom {
     display: inline-block;
-    width: 12px; /* Slightly reduce the size of all checkboxes */
-    height: 12px; /* Slightly reduce the size of all checkboxes */
-    margin-right: 2px; /* Reduce the space between the labels and their respective checkboxes */
-    background: #f2f2f2;
+    width: 14px; /* Slightly reduce the size of all checkboxes */
+    height: 14px; /* Slightly reduce the size of all checkboxes */
+    margin-right: 3px; /* Reduce the space between the labels and their respective checkboxes */
+    /*margin-bottom: 0px;*/
+    background: rgb(241, 243, 219);
     border: 2px solid #d1d9e6;
     border-radius: 5px;
     position: relative;
@@ -534,6 +538,7 @@ label, .dark-input {
     flex-grow: 1;
 }
 
+/* ??? */
 .sizeInput {
     width: 80%;
     padding: 5px 10px;
