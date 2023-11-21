@@ -20,7 +20,7 @@ body {
 }
 
 #mainHeader #mainLogo {
-    width: 350px;  /* or whatever width you desire for the main logo */
+    width: 250px;  /* or whatever width you desire for the main logo */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* centers the image if h1 text-align is centered */
     margin: 0 auto; /* centers the image */
@@ -214,7 +214,7 @@ tbody tr:hover {
 /* Style for primary response containers with improved comments and organization */
 .primaryResponse {
     padding: 20px;
-    margin: 20px auto;
+    margin: 10px auto;
     max-width: 50%; /* Responsive width */
     border: 1px solid #d1d9e6;
     border-radius: 8px;
@@ -315,14 +315,14 @@ tbody tr:hover {
 }
 
 #menuBar #logo {
-    width: 100px;  /* or whatever width you desire */
+    width: 125px;  /* or whatever width you desire */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* to handle vertical spacing better */
     margin-left: 10px;
 }
 
 #menuBar #logoMobile {
-    width: 100px;  /* or whatever width you desire for the mobile logo */
+    width: 75px;  /* or whatever width you desire for the mobile logo */
     height: auto;  /* maintain the aspect ratio */
     display: none; /* by default, hide it if you plan to show it only on smaller screens */
     margin-left: 10px;
