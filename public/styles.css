@@ -944,7 +944,7 @@ table, .styled-table {
 }
 
 .form-fade-in {
-    animation: formFadeIn 2s ease forwards;
+    animation: formFadeIn 2s ease 1s forwards;
 }
 @keyframes slideDownFadeIn {
     from {
@@ -981,11 +981,12 @@ table, .styled-table {
 .form-fade-in {
     animation: formFadeIn 2s ease forwards;
 }
-.fade-in {
+.info-fade-in {
     opacity: 0;
-    transition: opacity 2s ease;
+    animation: infoFadeIn 2s ease 1s forwards;
 }
 
-.fade-in.active {
-    opacity: 1;
+@keyframes infoFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
