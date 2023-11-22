@@ -320,10 +320,17 @@ function generateCompsTables(compsData) {
             const percentageCell = document.querySelector(`td[data-category="compsUnitMixPct"][data-key="${key}"]`);
             const rentCell = document.querySelector(`td[data-category="compsRents"][data-key="${key}"]`);
             const sqFtCell = document.querySelector(`td[data-category="compsSqFts"][data-key="${key}"]`);
+            const rentPerSqFtCell = document.querySelector(`td[data-category="compsRentPerSqfts"][data-key="${key}"]`);
 
             const weight = parseFloat(percentageCell.dataset.value) / 100;
             const rent = parseFloat(rentCell.dataset.value);
             const sqFt = parseFloat(sqFtCell.dataset.value);
+
+            // Calculate the rent per square foot for the current row
+            const rentPerSqFt = sqFt !== 0 ? (rent / sqFt).toFixed(2) : 'N/A';
+            // Update the rent per square foot cell
+            rentPerSqFtCell.textContent = sqFt !== 0 ? `$${rentPerSqFt}/SF` : rentPerSqFt;
+            rentPerSqFtCell.dataset.value = rentPerSqFt;
 
             sumPercentages += parseFloat(percentageCell.dataset.value);
             weightedRents += rent * weight;
