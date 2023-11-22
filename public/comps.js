@@ -267,49 +267,43 @@ function generateCompsTables(compsData) {
     tableHTML += '</table>';
     container.innerHTML = tableHTML; // Set the innerHTML to the new table
 
-    // Add event listeners for editable cells
-    const editableCells = container.querySelectorAll('td[contenteditable]');
-    // Update event listeners to handle focus and blur events for formatting
-    editableCells.forEach(cell => {
-        cell.addEventListener('focus', handleCellFocus); // Add focus event listener
-        cell.addEventListener('blur', handleCellBlur); // Change to handleCellBlur
-    });
-
-    // Define new functions to handle focus and blur events
-    function handleCellFocus(event) {
-        const cell = event.target;
-        cell.textContent = cell.dataset.value; // Show only the number for editing
-    }
-
-    function handleCellBlur(event) {
-        const cell = event.target;
-        const category = cell.dataset.category;
-        const key = cell.dataset.key;
-        const newValue = parseFloat(cell.textContent);
-        if (!isNaN(newValue)) {
-            cell.dataset.value = newValue; // Update the data-value attribute
-            // Reapply formatting based on the category
-            switch (category) {
-                case 'compsUnitMixPct':
-                    cell.textContent = `${newValue.toFixed(0)}%`;
-                    break;
-                case 'compsRents':
-                    cell.textContent = `$${newValue.toLocaleString()}`;
-                    break;
-                case 'compsSqFts':
-                    cell.textContent = `${newValue.toLocaleString()} SF`;
-                    break;
-                case 'compsRentPerSqfts':
-                    cell.textContent = `$${newValue.toFixed(2)}/SF`;
-                    break;
+    // Add event listeners for editable cells and handle focus and blur events for formatting
+    container.querySelectorAll('td[contenteditable]').forEach(cell => {
+        cell.addEventListener('focus', event => {
+            // Show only the number for editing
+            event.target.textContent = event.target.dataset.value;
+        });
+        cell.addEventListener('blur', event => {
+            const cell = event.target;
+            const category = cell.dataset.category;
+            const key = cell.dataset.key;
+            const newValue = parseFloat(cell.textContent.replace(/[^0-9.-]+/g, ""));
+            if (!isNaN(newValue) && newValue >= 0) {
+                cell.dataset.value = newValue; // Update the data-value attribute
+                // Reapply formatting based on the category
+                switch (category) {
+                    case 'compsUnitMixPct':
+                        cell.textContent = `${newValue.toFixed(0)}%`;
+                        break;
+                    case 'compsRents':
+                        cell.textContent = `$${newValue.toLocaleString()}`;
+                        break;
+                    case 'compsSqFts':
+                        cell.textContent = `${newValue.toLocaleString()} SF`;
+                        break;
+                    case 'compsRentPerSqfts':
+                        cell.textContent = `$${newValue.toFixed(2)}/SF`;
+                        break;
+                }
+                // Recalculate weighted averages after updating the value
+                recalculateWeightedAverages();
+            } else {
+                // If the input is not a number or is negative, revert to the previous value
+                cell.textContent = cell.dataset.value;
+                alert('Please enter a positive number.');
             }
-            // Recalculate weighted averages after updating the value
-            recalculateWeightedAverages();
-        } else {
-            // If the input is not a number, revert to the previous value
-            cell.textContent = cell.dataset.value;
-        }
-    }
+        });
+    });
 
     // Update the recalculateWeightedAverages function to recompute the averages
     function recalculateWeightedAverages() {
