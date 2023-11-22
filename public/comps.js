@@ -228,19 +228,36 @@ function generateCompsTables(compsData) {
         ['compsUnitMixPct', 'compsRents', 'compsSqFts', 'compsRentPerSqfts'].forEach(category => {
             const dataset = compsData[category];
             const isEditable = category !== 'compsRentPerSqfts';
+            let formattedValue = dataset[key];
+            switch (category) {
+                case 'compsUnitMixPct':
+                    formattedValue = `${parseInt(formattedValue).toFixed(0)}%`;
+                    break;
+                case 'compsRents':
+                    formattedValue = `$${parseInt(formattedValue).toLocaleString()}`;
+                    break;
+                case 'compsSqFts':
+                    formattedValue = `${parseInt(formattedValue).toLocaleString()} SF`;
+                    break;
+                case 'compsRentPerSqfts':
+                    formattedValue = `$${parseFloat(formattedValue).toFixed(2)}/SF`;
+                    break;
+            }
             const contentEditable = isEditable ? 'contenteditable' : 'false';
             const editableStyle = isEditable ? 'style="color: blue; background-color: #ffffe0;"' : '';
-            tableHTML += `<td ${contentEditable} ${editableStyle} data-category="${category}" data-key="${key}">${dataset[key]}</td>`;
+            tableHTML += `<td ${contentEditable} ${editableStyle} data-category="${category}" data-key="${key}">${formattedValue}</td>`;
         });
         tableHTML += '</tr>';
     });
 
     // Add the averages row
-    tableHTML += `<tr><td>Avgs</td>`;
-    tableHTML += `<td>${sumPercentages}%</td>`; // Sum of percentages
-    tableHTML += `<td>${(weightedSqFts / totalUnits).toFixed(2)}</td>`; // Weighted average of SqFts
-    tableHTML += `<td>${(weightedRents / totalUnits).toFixed(2)}</td>`; // Weighted average of Rents
-    tableHTML += `<td>${(weightedRents / weightedSqFts).toFixed(2)}</td>`; // Weighted average of RentPerSqFts
+    // Apply bold font and darker background color to the averages row
+    const avgRowStyle = 'style="font-weight: bold; background-color: #ddd;"';
+    tableHTML += `<tr ${avgRowStyle}><td>Avgs</td>`;
+    tableHTML += `<td>${parseInt(sumPercentages).toFixed(0)}%</td>`; // Sum of percentages
+    tableHTML += `<td>${parseInt(weightedSqFts / totalUnits).toLocaleString()} SF</td>`; // Weighted average of SqFts
+    tableHTML += `<td>$${parseInt(weightedRents / totalUnits).toLocaleString()}</td>`; // Weighted average of Rents
+    tableHTML += `<td>$${(weightedRents / weightedSqFts).toFixed(2)}/SF</td>`; // Weighted average of RentPerSqFts
     tableHTML += `</tr>`;
 
     tableHTML += '</table>';
