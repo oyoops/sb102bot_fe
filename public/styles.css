@@ -49,6 +49,8 @@ body {
         width: 250px; /* Set a fixed width for the desktop logo */
         text-align: center;
         margin: 0 auto;
+        opacity: 0; /* Set initial opacity to 0 */
+        transform: translateY(-100%); /* Move off-screen initially */
         animation: slideDown 0.5s ease 0.5s forwards;
     }
 }
@@ -68,8 +70,8 @@ h1.titleText {
     color: #333;
     margin-top: 5px; /* Decreased margin-top */
     font-weight: 700;
-    transform: translateY(0); /* Remove transform for proper centering */
-    /*animation: none; */ /* Remove animation to keep the element static */
+    opacity: 0; /* Set initial opacity to 0 */
+    transform: translateY(-100%); /* Move off-screen initially */
     z-index: 101;
     text-align: center; /* Center the text */
     margin: 0 auto; /* Center the element */
