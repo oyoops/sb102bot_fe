@@ -188,24 +188,27 @@ function generateAffordableTableHTML(countyData, compsData) {
 
 function generateCompsTables(compsData) {
     const container = document.getElementById('rentInfoContainer');
-    container.innerHTML += '<br>';
+    container.innerHTML = ''; // Clear any existing content
 
+    let tableHTML = '<table><tr><th>Category</th>';
+
+    // Assuming the dataset is an object where each key is a column
     Object.keys(compsData).forEach(key => {
-        const dataset = compsData[key];
-        let tableHTML = `<h6>${key}</h6><table><tr>`;
+        tableHTML += `<th>${key}</th>`;
+    });
 
-        // Assuming the dataset is an object where each key is a column
-        Object.keys(dataset).forEach(column => {
-            tableHTML += `<th>${column}</th>`;
-        });
+    tableHTML += '</tr>';
 
-        tableHTML += '</tr><tr>';
-
+    // Create a row for each category
+    ['compsUnitMixPct', 'compsRents', 'compsSqFts', 'compsRentPerSqfts'].forEach(category => {
+        const dataset = compsData[category];
+        tableHTML += `<tr><td>${category}</td>`;
         Object.values(dataset).forEach(value => {
             tableHTML += `<td>${value}</td>`;
         });
-
-        tableHTML += '</tr></table><br>';
-        container.innerHTML += tableHTML;
+        tableHTML += '</tr>';
     });
+
+    tableHTML += '</table>';
+    container.innerHTML = tableHTML; // Set the innerHTML to the new table
 }
