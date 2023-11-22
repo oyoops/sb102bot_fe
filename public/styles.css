@@ -14,8 +14,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Ensure center alignment */
+    justify-content: center; /* Ensure center alignment */
     overflow-x: hidden;
 }
 
@@ -23,16 +23,12 @@ body {
     width: 250px;  /* or whatever width you desire for the main logo */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* centers the image if h1 text-align is centered */
-    /*margin: 0 auto;*/ /* centers the image */
+    margin: 0 auto; /* centers the image */
     margin-bottom: 1px;
     margin-top: 5px;
-    opacity: 0;
+    opacity: 1; /* Ensure the logo does not disappear */
     justify-content: center;
     align-items: center;
-    /*transition: slideDownFadeIn 1s, transform 1s;*/
-    /*animation: slideDownFadeIn 0.8s forwards 1.0s;*/ /* Add animation */
-    transform: slideDownFadeIn;
-    animation: fadeIn 5s, transform 5s, opacity 5s;
 }
 
 
@@ -64,11 +60,11 @@ h1.titleText {
     color: #333;
     margin-top: 5px; /* Decreased margin-top */
     font-weight: 700;
-    transform: translateY(35px);
-    animation: fadeIn 5s, transform 5s;
+    transform: translateY(0); /* Remove transform for proper centering */
+    animation: none; /* Remove animation to keep the element static */
     z-index: 101;
-    align-items: center;
-    justify-content: center;
+    text-align: center; /* Center the text */
+    margin: 0 auto; /* Center the element */
 }
 
 p, footer, .submit-button, #tryAgainButton {
