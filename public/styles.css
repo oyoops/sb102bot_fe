@@ -9,7 +9,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     margin: 0;
-    padding: 2% 0; /* Added top and bottom padding */
+    padding: 4% 0; /* Increased top padding */
     background: linear-gradient(to bottom, #f4f4f4, #e6e9ec);
     min-height: 100vh;
     display: flex;
@@ -62,7 +62,7 @@ h1.titleText {
     font-family: 'Montserrat', sans-serif;
     font-size: 2.4em;
     color: #333;
-    margin-top: 15px; /* Reduced margin-top */
+    margin-top: 5px; /* Decreased margin-top */
     font-weight: 700;
     transform: translateY(35px);
     animation: fadeIn 5s, transform 5s;
