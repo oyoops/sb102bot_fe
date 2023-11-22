@@ -190,7 +190,7 @@ function generateCompsTables(compsData) {
     const container = document.getElementById('rentInfoContainer');
     container.innerHTML = ''; // Clear any existing content
 
-    let tableHTML = '<table><tr><th>Category</th>';
+    let tableHTML = '<table id="compsTable"><tr><th>Category</th>';
 
     // Assuming the dataset is an object where each key is a column
     Object.keys(compsData).forEach(key => {
@@ -202,13 +202,43 @@ function generateCompsTables(compsData) {
     // Create a row for each category
     ['compsUnitMixPct', 'compsRents', 'compsSqFts', 'compsRentPerSqfts'].forEach(category => {
         const dataset = compsData[category];
-        tableHTML += `<tr><td>${category}</td>`;
-        Object.values(dataset).forEach(value => {
-            tableHTML += `<td>${value}</td>`;
+        tableHTML += `<tr id="${category}"><td>${category}</td>`;
+        Object.keys(dataset).forEach(key => {
+            const isEditable = category !== 'compsRentPerSqfts';
+            const contentEditable = isEditable ? 'contenteditable' : 'false';
+            tableHTML += `<td ${contentEditable} data-category="${category}" data-key="${key}">${dataset[key]}</td>`;
         });
         tableHTML += '</tr>';
     });
 
     tableHTML += '</table>';
     container.innerHTML = tableHTML; // Set the innerHTML to the new table
+
+    // Add event listeners for editable cells
+    const editableCells = container.querySelectorAll('td[contenteditable]');
+    editableCells.forEach(cell => {
+        cell.addEventListener('blur', handleCellEdit);
+    });
+}
+
+// Handle cell edit event
+function handleCellEdit(event) {
+    const cell = event.target;
+    const category = cell.getAttribute('data-category');
+    const key = cell.getAttribute('data-key');
+    const value = parseFloat(cell.innerText);
+
+    if (category === 'compsRents' || category === 'compsSqFts') {
+        const rentCell = document.querySelector(`#compsRents td[data-key="${key}"]`);
+        const sqFtCell = document.querySelector(`#compsSqFts td[data-key="${key}"]`);
+        const rentPerSqFtCell = document.querySelector(`#compsRentPerSqfts td[data-key="${key}"]`);
+
+        const rent = parseFloat(rentCell.innerText);
+        const sqFt = parseFloat(sqFtCell.innerText);
+
+        if (!isNaN(rent) && !isNaN(sqFt) && sqFt !== 0) {
+            const rentPerSqFt = (rent / sqFt).toFixed(2);
+            rentPerSqFtCell.innerText = rentPerSqFt;
+        }
+    }
 }
