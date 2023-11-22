@@ -259,8 +259,8 @@ function generateCompsTables(compsData) {
     const avgRowStyle = 'style="font-weight: bold; background-color: #ddd;"';
     tableHTML += `<tr class="averages" ${avgRowStyle}><td>Avgs</td>`;
     tableHTML += `<td class="avgPercentage">${parseInt(sumPercentages).toFixed(0)}%</td>`; // Sum of percentages
-    tableHTML += `<td class="avgSqFt">${parseInt(weightedSqFts / totalUnits).toLocaleString()} SF</td>`; // Weighted average of SqFts
     tableHTML += `<td class="avgRent">$${parseInt(weightedRents / totalUnits).toLocaleString()}</td>`; // Weighted average of Rents
+    tableHTML += `<td class="avgSqFt">${parseInt(weightedSqFts / totalUnits).toLocaleString()} SF</td>`; // Weighted average of SqFts
     tableHTML += `<td class="avgRentPerSqFt">$${(weightedRents / weightedSqFts).toFixed(2)}/SF</td>`; // Weighted average of RentPerSqFts
     tableHTML += `</tr>`;
 
@@ -273,7 +273,10 @@ function generateCompsTables(compsData) {
             // Show only the number for editing
             event.target.textContent = event.target.dataset.value;
         });
-        cell.addEventListener('blur', event => {
+        cell.addEventListener('blur', handleCellEditBlur);
+        cell.addEventListener('keypress', handleCellEditKeypress);
+
+        function handleCellEditBlur(event) {
             const cell = event.target;
             const category = cell.dataset.category;
             const key = cell.dataset.key;
@@ -375,5 +378,19 @@ function handleCellEdit(event) {
         rentPerSqFtCell.dataset.value = rentPerSqFt;
     } else {
         rentPerSqFtCell.innerText = 'N/A'; // Handle division by zero or invalid input
+    }
+}
+function handleCellEditKeypress(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const cell = event.target;
+        cell.blur();
+        const nextRow = cell.parentElement.nextElementSibling;
+        if (nextRow) {
+            const nextCell = nextRow.querySelector(`td[data-category="${cell.dataset.category}"]`);
+            if (nextCell) {
+                nextCell.focus();
+            }
+        }
     }
 }
