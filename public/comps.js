@@ -185,3 +185,27 @@ function generateAffordableTableHTML(countyData, compsData) {
     
     return rentRowsHTML;
 }
+
+function generateCompsTables(compsData) {
+    const container = document.getElementById('rentInfoContainer');
+    container.innerHTML += '<br>';
+
+    Object.keys(compsData).forEach(key => {
+        const dataset = compsData[key];
+        let tableHTML = `<h6>${key}</h6><table><tr>`;
+
+        // Assuming the dataset is an object where each key is a column
+        Object.keys(dataset).forEach(column => {
+            tableHTML += `<th>${column}</th>`;
+        });
+
+        tableHTML += '</tr><tr>';
+
+        Object.values(dataset).forEach(value => {
+            tableHTML += `<td>${value}</td>`;
+        });
+
+        tableHTML += '</tr></table><br>';
+        container.innerHTML += tableHTML;
+    });
+}
