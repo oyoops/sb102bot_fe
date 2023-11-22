@@ -199,14 +199,23 @@ function generateCompsTables(compsData) {
 
     tableHTML += '</tr>';
 
-    // Create a row for each category
-    ['compsUnitMixPct', 'compsRents', 'compsSqFts', 'compsRentPerSqfts'].forEach(category => {
-        const dataset = compsData[category];
-        tableHTML += `<tr id="${category}"><td>${category}</td>`;
-        Object.keys(dataset).forEach(key => {
+    // Define row titles
+    const rowTitles = {
+        'studio': 'Studio',
+        'oneBd': '1BD',
+        'twoBd': '2BD',
+        'threeBd': '3BD'
+    };
+
+    // Create a row for each key
+    Object.keys(compsData.compsUnitMixPct).forEach(key => {
+        tableHTML += `<tr><td>${rowTitles[key]}</td>`;
+        ['compsUnitMixPct', 'compsRents', 'compsSqFts', 'compsRentPerSqfts'].forEach(category => {
+            const dataset = compsData[category];
             const isEditable = category !== 'compsRentPerSqfts';
             const contentEditable = isEditable ? 'contenteditable' : 'false';
-            tableHTML += `<td ${contentEditable} data-category="${category}" data-key="${key}">${dataset[key]}</td>`;
+            const editableStyle = isEditable ? 'style="color: blue; background-color: #ffffe0;"' : '';
+            tableHTML += `<td ${contentEditable} ${editableStyle} data-category="${category}" data-key="${key}">${dataset[key]}</td>`;
         });
         tableHTML += '</tr>';
     });
