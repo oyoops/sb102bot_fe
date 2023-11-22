@@ -273,10 +273,10 @@ function generateCompsTables(compsData) {
             // Show only the number for editing
             event.target.textContent = event.target.dataset.value;
         });
-        cell.addEventListener('blur', handleCellEditBlur);
-        cell.addEventListener('keypress', handleCellEditKeypress);
-
-        function handleCellEditBlur(event) {
+        cell.addEventListener('keypress', event => {
+            handleCellEditKeypress(event);
+        });
+        cell.addEventListener('blur', event => {
             const cell = event.target;
             const category = cell.dataset.category;
             const key = cell.dataset.key;
