@@ -257,11 +257,11 @@ function generateCompsTables(compsData) {
     // Add the averages row
     // Apply bold font and darker background color to the averages row
     const avgRowStyle = 'style="font-weight: bold; background-color: #ddd;"';
-    tableHTML += `<tr ${avgRowStyle}><td>Avgs</td>`;
-    tableHTML += `<td>${parseInt(sumPercentages).toFixed(0)}%</td>`; // Sum of percentages
-    tableHTML += `<td>${parseInt(weightedSqFts / totalUnits).toLocaleString()} SF</td>`; // Weighted average of SqFts
-    tableHTML += `<td>$${parseInt(weightedRents / totalUnits).toLocaleString()}</td>`; // Weighted average of Rents
-    tableHTML += `<td>$${(weightedRents / weightedSqFts).toFixed(2)}/SF</td>`; // Weighted average of RentPerSqFts
+    tableHTML += `<tr class="averages" ${avgRowStyle}><td>Avgs</td>`;
+    tableHTML += `<td class="avgPercentage">${parseInt(sumPercentages).toFixed(0)}%</td>`; // Sum of percentages
+    tableHTML += `<td class="avgSqFt">${parseInt(weightedSqFts / totalUnits).toLocaleString()} SF</td>`; // Weighted average of SqFts
+    tableHTML += `<td class="avgRent">$${parseInt(weightedRents / totalUnits).toLocaleString()}</td>`; // Weighted average of Rents
+    tableHTML += `<td class="avgRentPerSqFt">$${(weightedRents / weightedSqFts).toFixed(2)}/SF</td>`; // Weighted average of RentPerSqFts
     tableHTML += `</tr>`;
 
     tableHTML += '</table>';
@@ -334,9 +334,9 @@ function generateCompsTables(compsData) {
         const averageWeightedRentPerSqft = (weightedRents / weightedSqFts).toFixed(2);
 
         // Update the averages row with the new values if elements are found
-        const avgRentCell = document.querySelector('tr[style*="font-weight: bold;"] td[data-category="compsRents"]');
-        const avgSqFtCell = document.querySelector('tr[style*="font-weight: bold;"] td[data-category="compsSqFts"]');
-        const avgRentPerSqFtCell = document.querySelector('tr[style*="font-weight: bold;"] td[data-category="compsRentPerSqfts"]');
+        const avgRentCell = document.querySelector('.avgRent');
+        const avgSqFtCell = document.querySelector('.avgSqFt');
+        const avgRentPerSqFtCell = document.querySelector('.avgRentPerSqFt');
 
         if (avgRentCell) {
             avgRentCell.textContent = `$${parseInt(averageWeightedRent).toLocaleString()}`;
