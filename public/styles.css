@@ -22,6 +22,9 @@ body {
 @media only screen and (max-width: 800px) {
     #mainHeader #mainLogo {
         width: 150px; /* Reduce logo width on mobile */
+        text-align: center;
+        margin: 0 auto;
+        animation: slideDown 0.5s ease 0.5s forwards;
     }
 }
 
@@ -44,6 +47,9 @@ body {
     /* Ensure desktop logo has a fixed size */
     #mainHeader #mainLogo {
         width: 250px; /* Set a fixed width for the desktop logo */
+        text-align: center;
+        margin: 0 auto;
+        animation: slideDown 0.5s ease 0.5s forwards;
     }
 }
 
@@ -63,10 +69,11 @@ h1.titleText {
     margin-top: 5px; /* Decreased margin-top */
     font-weight: 700;
     transform: translateY(0); /* Remove transform for proper centering */
-    animation: none; /* Remove animation to keep the element static */
+    /*animation: none; */ /* Remove animation to keep the element static */
     z-index: 101;
     text-align: center; /* Center the text */
     margin: 0 auto; /* Center the element */
+    animation: slideDown 0.5s ease 0.5s forwards;
 }
 
 p, footer, .submit-button, #tryAgainButton {
@@ -101,6 +108,17 @@ p.info-window {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; } /* End at full opacity */
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 form {
