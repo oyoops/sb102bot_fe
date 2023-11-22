@@ -347,6 +347,7 @@ function generateCompsTables(compsData) {
         const avgRentCell = document.querySelector('.avgRent');
         const avgSqFtCell = document.querySelector('.avgSqFt');
         const avgRentPerSqFtCell = document.querySelector('.avgRentPerSqFt');
+        const avgPercentageCell = document.querySelector('.avgPercentage'); // Get the average percentage cell
 
         if (avgRentCell) {
             avgRentCell.textContent = `$${parseInt(averageWeightedRent).toLocaleString()}`;
@@ -362,6 +363,15 @@ function generateCompsTables(compsData) {
             avgRentPerSqFtCell.textContent = `$${parseFloat(averageWeightedRentPerSqft).toFixed(2)}/SF`;
         } else {
             console.error('Error: Average Rent Per SqFt Cell not found');
+        }
+
+        // Check if the sum of percentages equals 100
+        if (sumPercentages.toFixed(0) !== '100') {
+            // If not, change the background color of the average percentage cell to light red
+            avgPercentageCell.style.backgroundColor = 'lightcoral';
+        } else {
+            // If it does, reset the background color
+            avgPercentageCell.style.backgroundColor = '';
         }
     }
 }
