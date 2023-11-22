@@ -207,8 +207,23 @@ function generateCompsTables(compsData) {
         'threeBd': '3BD'
     };
 
-    // Create a row for each key
+    // Calculate weighted averages and sum of percentages
+    let sumPercentages = 0;
+    let weightedRents = 0;
+    let weightedSqFts = 0;
+    let totalUnits = 0;
+
+    // Create a row for each key and calculate weighted sums
     Object.keys(compsData.compsUnitMixPct).forEach(key => {
+        const percentage = parseFloat(compsData.compsUnitMixPct[key]) / 100;
+        const rent = parseFloat(compsData.compsRents[key]);
+        const sqFt = parseFloat(compsData.compsSqFts[key]);
+
+        sumPercentages += parseFloat(compsData.compsUnitMixPct[key]);
+        weightedRents += rent * percentage;
+        weightedSqFts += sqFt * percentage;
+        totalUnits += percentage;
+
         tableHTML += `<tr><td>${rowTitles[key]}</td>`;
         ['compsUnitMixPct', 'compsRents', 'compsSqFts', 'compsRentPerSqfts'].forEach(category => {
             const dataset = compsData[category];
@@ -219,6 +234,14 @@ function generateCompsTables(compsData) {
         });
         tableHTML += '</tr>';
     });
+
+    // Add the averages row
+    tableHTML += `<tr><td>Avgs</td>`;
+    tableHTML += `<td>${sumPercentages}%</td>`; // Sum of percentages
+    tableHTML += `<td>${(weightedSqFts / totalUnits).toFixed(2)}</td>`; // Weighted average of SqFts
+    tableHTML += `<td>${(weightedRents / totalUnits).toFixed(2)}</td>`; // Weighted average of Rents
+    tableHTML += `<td>${(weightedRents / weightedSqFts).toFixed(2)}</td>`; // Weighted average of RentPerSqFts
+    tableHTML += `</tr>`;
 
     tableHTML += '</table>';
     container.innerHTML = tableHTML; // Set the innerHTML to the new table
