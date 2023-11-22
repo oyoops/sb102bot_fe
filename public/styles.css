@@ -19,16 +19,10 @@ body {
     overflow-x: hidden;
 }
 
-#mainHeader #mainLogo {
-    width: 250px;  /* or whatever width you desire for the main logo */
-    height: auto;  /* maintain the aspect ratio */
-    display: block; /* centers the image if h1 text-align is centered */
-    margin: 0 auto; /* centers the image */
-    margin-bottom: 1px;
-    margin-top: 5px;
-    opacity: 1; /* Ensure the logo does not disappear */
-    justify-content: center;
-    align-items: center;
+@media only screen and (max-width: 800px) {
+    #mainHeader #mainLogo {
+        width: 150px; /* Reduce logo width on mobile */
+    }
 }
 
 
@@ -77,10 +71,10 @@ p, footer, .submit-button, #tryAgainButton {
     animation: fadeIn 1.5s forwards 1.5s; /* Ensure the final state persists and starts after 1 second */
 }
 
-p.form-description {
-    color: rgb(115, 100, 167);
-    font-size: 1.0em; /* Smaller font size */
-    animation: fadeIn 1.0s forwards 2.0s;
+@media only screen and (max-width: 800px) {
+    p.form-description {
+        font-size: 0.85em; /* Reduce font size on mobile */
+    }
 }
 p.fieldTitle {
     font-family: 'Montserrat', sans-serif;
@@ -336,6 +330,9 @@ tbody tr:hover {
 @media only screen and (max-width: 800px) { 
     .submit-button {
         position: absolute;
+        width: calc(100% - 40px); /* Adjust width to match input fields */
+        left: 20px; /* Align with the left edge of input fields */
+        bottom: 20px; /* Position at the bottom of the form */
     }
 }
 
