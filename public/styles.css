@@ -11,7 +11,8 @@ body {
     margin: 0;
     padding: 4% 0; /* Increased top padding */
     background: linear-gradient(to bottom, #f4f4f4, #e6e9ec);
-    min-height: 100vh;
+    /*min-height: 100 75vh;*/
+    min-height: auto;
     display: flex;
     flex-direction: column;
     align-items: center; /* Ensure center alignment */
@@ -24,10 +25,9 @@ body {
         width: 150px; /* Reduce logo width on mobile */
         text-align: center;
         margin: 0 auto;
-        animation: slideDown 0.5s ease 0.5s forwards;
+        animation: slideDown 1.4s ease 0.6s forwards;
     }
 }
-
 
 /* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
 #logoMobile {
@@ -44,14 +44,20 @@ body {
 
 /* Media query to switch logos based on screen size, with improved readability */
 @media (min-width: 801px) {
+    p.form-description {
+        font-size: 0.9em;
+        animation: slideUp 1.5s ease 0.6s forwards;
+    }
+
     /* Ensure desktop logo has a fixed size */
     #mainHeader #mainLogo {
-        width: 250px; /* Set a fixed width for the desktop logo */
+        width: 225px; /* Set a fixed width for the desktop logo */
         text-align: center;
+        margin-top: 1px;
         margin: 0 auto;
         opacity: 0; /* Set initial opacity to 0 */
         transform: translateY(-100%); /* Move off-screen initially */
-        animation: slideDown 0.5s ease 0.5s forwards;
+        animation: slideDown 1.4s ease 0.6s forwards;
     }
 }
 
@@ -68,14 +74,14 @@ h1.titleText {
     font-family: 'Montserrat', sans-serif;
     font-size: 2.4em;
     color: #333;
-    margin-top: 5px; /* Decreased margin-top */
+    margin-top: 1px; /* Decreased margin-top */
     font-weight: 700;
     opacity: 0; /* Set initial opacity to 0 */
     transform: translateY(-100%); /* Move off-screen initially */
     z-index: 101;
     text-align: center; /* Center the text */
     margin: 0 auto; /* Center the element */
-    animation: slideDown 0.5s ease 0.5s forwards;
+    animation: slideDown 1.4s ease 0.6s forwards;
 }
 
 p, footer, .submit-button, #tryAgainButton {
@@ -85,12 +91,13 @@ p, footer, .submit-button, #tryAgainButton {
     padding-left: 10px;
     padding-right: 10px;
     opacity: 0; /* Start fully transparent */
-    animation: fadeIn 1.5s forwards 1.5s; /* Ensure the final state persists and starts after 1 second */
+    animation: slideUp 1.4s ease 0.6s forwards;
 }
 
 @media only screen and (max-width: 800px) {
     p.form-description {
         font-size: 0.85em; /* Reduce font size on mobile */
+        animation: slideUp 1.4s ease 0.6s forwards;
     }
 }
 p.fieldTitle {
@@ -123,25 +130,37 @@ p.info-window {
     }
 }
 
+@keyframes slideUp {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+    padding-top: 5px;
     padding: 20px;
-    margin-top: 2px;
-    margin-left: 2px;
-    margin-right: 2px;
-    margin-bottom: 2px;
-    
+    margin: 2em auto;
+    margin-top: 25px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 25px;
     background: rgb(251, 251, 251);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 2em auto;
-    width: 90%;
-    max-width: 600PX;
+    height: auto;
+    width: auto;
+    min-width: 550px;
+    max-width: 800px;
     opacity: 1;
-    animation: slideUpFadeIn 1.0s forwards 0.8s; /* Ensure the final state persists */
+    animation: slideUpFadeIn 1.0s forwards 0.5s; /* Ensure the final state persists */
 }
 form:hover {
     transform: translateY(-1px);
@@ -151,7 +170,7 @@ form p {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
     font-size: 20px;
-    animation: slideUpFadeIn 2.4s forwards 2.4s; /* Ensure the final state persists */
+    animation: slideUpFadeIn 1.5s forwards 1.5s; /* Ensure the final state persists */
 }
 
 /* Generic table styling */
@@ -216,7 +235,7 @@ tbody tr:hover {
     padding: 10px;
     border-radius: 8px;
     border: none;
-    width: calc(100% - 40px);
+    width: calc(100% - 50px);
     margin-bottom: 5px;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
