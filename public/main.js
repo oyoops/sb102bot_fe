@@ -34,13 +34,23 @@ document.addEventListener('DOMContentLoaded', function() {
         if (moreOptions.style.display === 'none') {
             moreOptions.style.display = 'block';
             checkboxGrid.style.display = 'grid';
-            this.textContent = 'Hide More Options';
+            this.textContent = 'Hide Options';
         } else {
             moreOptions.style.display = 'none';
             checkboxGrid.style.display = 'none';
-            this.textContent = 'Show More Options';
+            this.textContent = 'More Options';
         }
     });
+    /*document.getElementById('toggleMoreOptions').addEventListener('click', function() {
+        var moreOptions = document.getElementById('moreOptions');
+        if (moreOptions.style.maxHeight === '0px' || moreOptions.style.maxHeight === '') {
+            moreOptions.style.maxHeight = moreOptions.scrollHeight + "px";
+            this.textContent = 'Hide More Options';
+        } else {
+            moreOptions.style.maxHeight = '0px';
+            this.textContent = 'Show More Options';
+        }
+    });*/
     window.scrollTo(0, 0); // scroll to top
     
     // manually set Excel workbook switch
@@ -227,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (debugModeCheckbox=='on') {
                 debugModeSwitch = true;
             }
-            
+
             try {
                 // Generate AI summary HTML content
                 const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugModeSwitch, customInstructionsText);

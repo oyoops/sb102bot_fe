@@ -36,51 +36,57 @@
         <a href="https://livelocal.guru"><img src="./imgs/logoMobile.png" alt="Live Local Guru Mobile Logo" id="logoMobile"></a>
     </div>
 
-    <!-- Main header (??) -->
-    <h1 id="mainHeader">
-        <a href="https://livelocal.guru"><img src="./imgs/logo.png" alt="Live Local Guru Main Logo" id="mainLogo"></a>
+    <!-- Main header -->
+    <h1 class="titleText" id="mainHeader">
+        <a href="https://livelocal.guru">
+            <img src="./imgs/logo.png" alt="Live Local Guru Main Logo" id="mainLogo">
+        </a>
+        Live Local Guru
     </h1>
-
+    
     <!-- Initial Content -->
     <div id="initialContent">
         <!-- Address input form  -->
         <div class="form-wrapper">
             <form id="searchForm" class="address-form form-fade-in">
-
                 <!-- Address Input -->
-                <p>Analyze a property</p>
+                <h4>What property shall we research today?</h4>
+                <!-- <p class="fieldTitle">Analyze My Property</p> -->
                 <input type="text" id="addressInput" class="address-input" placeholder="1100 S Ocean Blvd, Palm Beach, FL">
 
-                <!-- Checkbox Grid -->
-                <div class="checkbox-grid" style="display: none;">
-                    <label class="cool-checkbox-label">
-                        <input type="checkbox" id="enableLiveLocalSwitch" name="enableLiveLocal" value="on">
-                        <span class="cool-checkbox-custom"></span>
-                        <span class="cool-checkbox-text">Try Live Local</span>
-                    </label>
-                    <label class="cool-checkbox-label">
-                        <input type="checkbox" id="superchargeSwitch" name="supercharge" value="off">
-                        <span class="cool-checkbox-custom"></span>
-                        <span class="cool-checkbox-text">Download Excel</span>
-                    </label>
-                    <label class="cool-checkbox-label">
-                        <input type="checkbox" id="debugModeCheckbox" name="debugMode" value="off">
-                        <span class="cool-checkbox-custom"></span>
-                        <span class="cool-checkbox-text">Skip AI (Faster)</span>
-                    </label>
-                </div>
+                <!-- Toggle button for more options -->
+                <button type="button" id="toggleMoreOptions" class="toggle-more-options">More Options</button>
 
                 <!-- New text input field, initially hidden -->
                 <div id="moreOptions" class="more-options" style="display: none;">
-                    <p class="fieldTitle">Anything else I should know?</p>
-                    <input type="text" id="customInstructionsInput" class="dark-input" placeholder="e.g., 'Rank the comps by square footage'">
+
+                    <!-- Checkbox Grid -->
+                    <div class="checkbox-grid" style="display: none;">
+                        <label class="cool-checkbox-label">
+                            <input type="checkbox" id="enableLiveLocalSwitch" name="enableLiveLocal" value="on">
+                            <span class="cool-checkbox-custom"></span>
+                            <span class="cool-checkbox-text">Try Live Local</span>
+                        </label>
+                        <label class="cool-checkbox-label">
+                            <input type="checkbox" id="superchargeSwitch" name="supercharge" value="off">
+                            <span class="cool-checkbox-custom"></span>
+                            <span class="cool-checkbox-text">Download Excel</span>
+                        </label>
+                        <label class="cool-checkbox-label">
+                            <input type="checkbox" id="debugModeCheckbox" name="debugMode" value="off">
+                            <span class="cool-checkbox-custom"></span>
+                            <span class="cool-checkbox-text">Skip AI (Faster)</span>
+                        </label>
+                    </div>
+                    
+                    <!-- Custom Instructions Text Field -->
+                    <h4>Anything else I should know?</h4>
+                    <!-- <p class="fieldTitle">Anything Else I Should Know?</p> -->
+                    <input type="text" id="customInstructionsInput" class="dark-input" placeholder="E.g., 'rank the comps by square footage'">
                 </div>
 
-                <!-- Toggle button for more options -->
-                <button type="button" id="toggleMoreOptions" class="toggle-more-options">Show More Options</button>
-
                 <!-- Submit button -->
-                <button type="submit" class="submit-button">Ask the Guru</button>
+                <button type="submit" class="submit-button">Ask The Guru</button>
                 
             </form>
         </div>
@@ -88,7 +94,7 @@
         <!-- Text below form and above Latest Updates -->  
         <p class="form-description">
             Find out if your Florida property is <u><a href="https://floridahousing.org/live-local-act">Live Local Act</a></u>-eligible.
-            <br>If so, I'll help you determine its increased development potential.
+            <br>If so, I'll help you figure out its development potential.
             <br>Read a <a href="https://www.hklaw.com/en/insights/publications/2023/08/floridas-new-live-local-act-offers-land-use-and-tax-benefits">breakdown</a> of this game-changing new state law.
         </p>
     </div>

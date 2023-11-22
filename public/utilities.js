@@ -214,11 +214,12 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
 
         // Display primary responses once they are available
         for (let i = 0; i < results.length; i++) {
+            document.getElementById(`response${i + 1}`).style.display = "block"; // TESTING
             document.getElementById(`response${i + 1}`).opacity = 0; // TESTING
             document.getElementById(`response${i + 1}`).innerHTML = results[i];
             setTimeout(() => {
                 animateTextFadeIn(document.getElementById(`response${i + 1}`));
-            }, i * 100); // delay each animation by 100ms
+            }, i * 1200); // delay each animation by 1200ms
             /* ^ Not doing what I intended but works fine */
         }
   
@@ -244,15 +245,14 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
 
         // Trigger slide-down fade-out animation for primary AI responses
         const primaryResponsesContainer = document.getElementById("primaryResponsesContainer");
-        primaryResponsesContainer.classList.add('slideDownFadeOut');
+        //primaryResponsesContainer.classList.add('slideDownFadeOut');
         // Set a timeout to remove primary responses from display after the animation ends
         setTimeout(() => {
-            primaryResponsesContainer.style.display = 'none';
-        }, 2000); // Assuming the animation duration stays at 2 seconds
-
-
-
+            primaryResponsesContainer.classList.add('slideDownFadeOut');
+            //primaryResponsesContainer.style.display = 'none';
+        }, 2500); // Assuming the animation duration stays at ~2.5 seconds
         return serData;
+
     } catch (error) {
         const errorMessage = error?.data?.error?.message || "TIMEOUT: Server took too long to send AI response.";
         console.error("Server timed out while sending AI response:", errorMessage);
