@@ -136,10 +136,10 @@ async function initializeMap(lat, lng) {
         }
     });
 
-    if (bounds.getNorthEast() !== bounds.getSouthWest()) {
-        map.fitBounds(bounds);
-    }
-    
+    // Center the map on the subject site marker and adjust the zoom level if necessary
+    map.setCenter({ lat: lat, lng: lng });
+    map.setZoom(mapOptions.zoom);
+
     return {maxHeight, maxDistance};
 }
 
