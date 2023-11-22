@@ -247,7 +247,8 @@ function generateCompsTables(compsData) {
             const editableStyle = isEditable ? 'style="color: blue; background-color: #ffffe0;"' : '';
             // Store the numeric value in a data attribute for calculations and display the formatted value
             const dataValue = isEditable ? `data-value="${dataset[key]}"` : '';
-            const displayValue = isEditable ? dataset[key] : formattedValue; // Use raw value for editable cells
+            // Apply formatting immediately for all cells
+            const displayValue = formattedValue;
             tableHTML += `<td ${contentEditable} ${editableStyle} ${dataValue} data-category="${category}" data-key="${key}">${displayValue}</td>`;
         });
         tableHTML += '</tr>';
