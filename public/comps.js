@@ -245,9 +245,10 @@ function generateCompsTables(compsData) {
             }
             const contentEditable = isEditable ? 'contenteditable' : 'false';
             const editableStyle = isEditable ? 'style="color: blue; background-color: #ffffe0;"' : '';
-            // Store the numeric value in a data attribute for calculations
+            // Store the numeric value in a data attribute for calculations and display the formatted value
             const dataValue = isEditable ? `data-value="${dataset[key]}"` : '';
-            tableHTML += `<td ${contentEditable} ${editableStyle} ${dataValue} data-category="${category}" data-key="${key}">${formattedValue}</td>`;
+            const displayValue = isEditable ? dataset[key] : formattedValue; // Use raw value for editable cells
+            tableHTML += `<td ${contentEditable} ${editableStyle} ${dataValue} data-category="${category}" data-key="${key}">${displayValue}</td>`;
         });
         tableHTML += '</tr>';
     });
@@ -267,9 +268,53 @@ function generateCompsTables(compsData) {
 
     // Add event listeners for editable cells
     const editableCells = container.querySelectorAll('td[contenteditable]');
+    // Update event listeners to handle focus and blur events for formatting
     editableCells.forEach(cell => {
-        cell.addEventListener('blur', handleCellEdit);
+        cell.addEventListener('focus', handleCellFocus); // Add focus event listener
+        cell.addEventListener('blur', handleCellBlur); // Change to handleCellBlur
     });
+
+    // Define new functions to handle focus and blur events
+    function handleCellFocus(event) {
+        const cell = event.target;
+        cell.textContent = cell.dataset.value; // Show only the number for editing
+    }
+
+    function handleCellBlur(event) {
+        const cell = event.target;
+        const category = cell.dataset.category;
+        const key = cell.dataset.key;
+        const newValue = parseFloat(cell.textContent);
+        if (!isNaN(newValue)) {
+            cell.dataset.value = newValue; // Update the data-value attribute
+            // Reapply formatting based on the category
+            switch (category) {
+                case 'compsUnitMixPct':
+                    cell.textContent = `${newValue.toFixed(0)}%`;
+                    break;
+                case 'compsRents':
+                    cell.textContent = `$${newValue.toLocaleString()}`;
+                    break;
+                case 'compsSqFts':
+                    cell.textContent = `${newValue.toLocaleString()} SF`;
+                    break;
+                case 'compsRentPerSqfts':
+                    cell.textContent = `$${newValue.toFixed(2)}/SF`;
+                    break;
+            }
+            // Recalculate weighted averages after updating the value
+            recalculateWeightedAverages();
+        } else {
+            // If the input is not a number, revert to the previous value
+            cell.textContent = cell.dataset.value;
+        }
+    }
+
+    // Update the recalculateWeightedAverages function to recompute the averages
+    function recalculateWeightedAverages() {
+        // Logic to recalculate the weighted averages goes here
+        // This will likely involve iterating over the cells and updating the averages row
+    }
 }
 
 // Handle cell edit event
