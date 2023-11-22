@@ -339,14 +339,26 @@ function generateCompsTables(compsData) {
         const averageWeightedSqft = (weightedSqFts / totalUnits).toFixed(0);
         const averageWeightedRentPerSqft = (weightedRents / weightedSqFts).toFixed(2);
 
-        // Update the averages row with the new values
+        // Update the averages row with the new values if elements are found
         const avgRentCell = document.querySelector('tr[style*="font-weight: bold;"] td[data-category="compsRents"]');
         const avgSqFtCell = document.querySelector('tr[style*="font-weight: bold;"] td[data-category="compsSqFts"]');
         const avgRentPerSqFtCell = document.querySelector('tr[style*="font-weight: bold;"] td[data-category="compsRentPerSqfts"]');
 
-        avgRentCell.textContent = `$${parseInt(averageWeightedRent).toLocaleString()}`;
-        avgSqFtCell.textContent = `${parseInt(averageWeightedSqft).toLocaleString()} SF`;
-        avgRentPerSqFtCell.textContent = `$${parseFloat(averageWeightedRentPerSqft).toFixed(2)}/SF`;
+        if (avgRentCell) {
+            avgRentCell.textContent = `$${parseInt(averageWeightedRent).toLocaleString()}`;
+        } else {
+            console.error('Error: Average Rent Cell not found');
+        }
+        if (avgSqFtCell) {
+            avgSqFtCell.textContent = `${parseInt(averageWeightedSqft).toLocaleString()} SF`;
+        } else {
+            console.error('Error: Average SqFt Cell not found');
+        }
+        if (avgRentPerSqFtCell) {
+            avgRentPerSqFtCell.textContent = `$${parseFloat(averageWeightedRentPerSqft).toFixed(2)}/SF`;
+        } else {
+            console.error('Error: Average Rent Per SqFt Cell not found');
+        }
     }
 }
 
