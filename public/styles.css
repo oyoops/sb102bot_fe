@@ -61,9 +61,9 @@ h1.titleText {
     margin-top: 10px; /* Reduced margin-top */
     font-weight: 700;
     transform: translateY(10px);
-    transition: slideDownFadeIn 1s, transform 1s;
+    /*transition: slideDownFadeIn 1s, transform 1s forwards 2.0s;*/
     align-items: center;
-    animation: fadeIn 3.0s; /* Add animation */
+    animation: fadeIn 3.0s forwards 2.0s;
 }
 
 p, footer, .submit-button, #tryAgainButton {
