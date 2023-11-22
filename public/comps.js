@@ -233,21 +233,18 @@ function generateCompsTables(compsData) {
 // Handle cell edit event
 function handleCellEdit(event) {
     const cell = event.target;
-    const category = cell.getAttribute('data-category');
     const key = cell.getAttribute('data-key');
-    const value = parseFloat(cell.innerText);
+    const rentCell = document.querySelector(`td[data-category="compsRents"][data-key="${key}"]`);
+    const sqFtCell = document.querySelector(`td[data-category="compsSqFts"][data-key="${key}"]`);
+    const rentPerSqFtCell = document.querySelector(`td[data-category="compsRentPerSqfts"][data-key="${key}"]`);
 
-    if (category === 'compsRents' || category === 'compsSqFts') {
-        const rentCell = document.querySelector(`#compsRents td[data-key="${key}"]`);
-        const sqFtCell = document.querySelector(`#compsSqFts td[data-key="${key}"]`);
-        const rentPerSqFtCell = document.querySelector(`#compsRentPerSqfts td[data-key="${key}"]`);
+    const rent = parseFloat(rentCell.innerText);
+    const sqFt = parseFloat(sqFtCell.innerText);
 
-        const rent = parseFloat(rentCell.innerText);
-        const sqFt = parseFloat(sqFtCell.innerText);
-
-        if (!isNaN(rent) && !isNaN(sqFt) && sqFt !== 0) {
-            const rentPerSqFt = (rent / sqFt).toFixed(2);
-            rentPerSqFtCell.innerText = rentPerSqFt;
-        }
+    if (!isNaN(rent) && !isNaN(sqFt) && sqFt !== 0) {
+        const rentPerSqFt = (rent / sqFt).toFixed(2); // Ensure two decimal places
+        rentPerSqFtCell.innerText = rentPerSqFt;
+    } else {
+        rentPerSqFtCell.innerText = 'N/A'; // Handle division by zero or invalid input
     }
 }
