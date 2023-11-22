@@ -245,11 +245,10 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
 
         // Trigger slide-down fade-out animation for primary AI responses
         const primaryResponsesContainer = document.getElementById("primaryResponsesContainer");
-        //primaryResponsesContainer.classList.add('slideDownFadeOut');
+        primaryResponsesContainer.classList.add('slideDownFadeOut');
         // Set a timeout to remove primary responses from display after the animation ends
         setTimeout(() => {
-            primaryResponsesContainer.classList.add('slideDownFadeOut');
-            //primaryResponsesContainer.style.display = 'none';
+            primaryResponsesContainer.style.display = 'none';
         }, 2500); // Assuming the animation duration stays at ~2.5 seconds
         return serData;
 
