@@ -108,46 +108,52 @@ function generateMarketRentsTableHTML(compsData) {
     let weightedSqftSum = 0;
     let weightedRentPerSqftSum = 0;
     let percentageSum = 0;
+    let totalWeights = 0;
 
     types.forEach(type => {
         const rent = averages.rents[type.key];
         const sqft = averages.sqfts[type.key];
         const rentPerSqft = averages.rentPerSqfts[type.key];
         const weight = parseFloat(percentages[type.key] || '0');
+        totalWeights += weight;
 
         // Accumulate the weighted sums
         weightedRentSum += rent * weight;
         weightedSqftSum += sqft * weight;
         weightedRentPerSqftSum += rentPerSqft * weight;
-        percentageSum += weight;
+        percentageSum += Math.round(weight);
 
         tableHTML += `
                 <tr>
                     <td>${type.display}</td>
-                    <td>${weight.toFixed(0)}%</td>
-                    <td>${sqft.toFixed(0)} SF</td>
-                    <td>$${rent.toFixed(0)}</td>
-                    <td>$${rentPerSqft.toFixed(2)}/SF</td>
+                    <td>${Math.round(weight)}%</td>
+                    <td>${parseInt(sqft).toLocaleString()} SF</td>
+                    <td>$${parseInt(rent).toLocaleString()}</td>
+                    <td>$${parseFloat(rentPerSqft).toFixed(2)}/SF</td>
                 </tr>
         `;
 
     });
-    // Calculate the weighted averages
-    const averageWeightedRent = (weightedRentSum / 100).toFixed(0);
-    const averageWeightedSqft = (weightedSqftSum / 100).toFixed(0);
-    const averageWeightedRentPerSqft = (weightedRentPerSqftSum / 100).toFixed(2);
-    
-    // Cap percentage sum manually since the rounding handling sucks
-    percentageSum = Math.min(percentageSum, 100);
 
+    // Adjust the last percentage to make the sum equal to 100%
+    if (totalWeights > 0) {
+        percentageSum -= Math.round(types[types.length - 1].weight);
+        percentageSum += Math.round(100 - (totalWeights - types[types.length - 1].weight));
+    }
+
+    // Calculate the weighted averages
+    const averageWeightedRent = parseInt((weightedRentSum / totalWeights).toFixed(0)).toLocaleString();
+    const averageWeightedSqft = parseInt((weightedSqftSum / totalWeights).toFixed(0)).toLocaleString();
+    const averageWeightedRentPerSqft = parseFloat((weightedRentPerSqftSum / totalWeights).toFixed(2)).toFixed(2);
+    
     // Append the weighted average row
     tableHTML += `
-            <tr>
-                <td><strong>Avgs.</strong></td>
-                <td><strong>${percentageSum.toFixed(0)}%</strong></td>
-                <td><strong>${averageWeightedSqft} SF</strong></td>
-                <td><strong>$${averageWeightedRent}</strong></td>
-                <td><strong>$${averageWeightedRentPerSqft}/SF</strong></td>
+            <tr style="font-weight: bold; background-color: #f0f0f0;">
+                <td>Avgs.</td>
+                <td>${percentageSum}%</td>
+                <td>${averageWeightedSqft} SF</td>
+                <td>$${averageWeightedRent}</td>
+                <td>$${averageWeightedRentPerSqft}/SF</td>
             </tr>
     `;
     tableHTML += `
