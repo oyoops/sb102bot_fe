@@ -245,7 +245,9 @@ function generateCompsTables(compsData) {
             }
             const contentEditable = isEditable ? 'contenteditable' : 'false';
             const editableStyle = isEditable ? 'style="color: blue; background-color: #ffffe0;"' : '';
-            tableHTML += `<td ${contentEditable} ${editableStyle} data-category="${category}" data-key="${key}">${formattedValue}</td>`;
+            // Store the numeric value in a data attribute for calculations
+            const dataValue = isEditable ? `data-value="${dataset[key]}"` : '';
+            tableHTML += `<td ${contentEditable} ${editableStyle} ${dataValue} data-category="${category}" data-key="${key}">${formattedValue}</td>`;
         });
         tableHTML += '</tr>';
     });
@@ -278,12 +280,15 @@ function handleCellEdit(event) {
     const sqFtCell = document.querySelector(`td[data-category="compsSqFts"][data-key="${key}"]`);
     const rentPerSqFtCell = document.querySelector(`td[data-category="compsRentPerSqfts"][data-key="${key}"]`);
 
-    const rent = parseFloat(rentCell.innerText);
-    const sqFt = parseFloat(sqFtCell.innerText);
+    // Use the numeric values from data attributes for calculations
+    const rent = parseFloat(rentCell.dataset.value);
+    const sqFt = parseFloat(sqFtCell.dataset.value);
 
     if (!isNaN(rent) && !isNaN(sqFt) && sqFt !== 0) {
         const rentPerSqFt = (rent / sqFt).toFixed(2); // Ensure two decimal places
-        rentPerSqFtCell.innerText = rentPerSqFt;
+        // Update the display formatting and the data-value attribute
+        rentPerSqFtCell.innerText = `$${rentPerSqFt}/SF`;
+        rentPerSqFtCell.dataset.value = rentPerSqFt;
     } else {
         rentPerSqFtCell.innerText = 'N/A'; // Handle division by zero or invalid input
     }
