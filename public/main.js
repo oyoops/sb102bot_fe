@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const compsModuleResult = await runCompsModule(lat, lng, COMPS_SEARCH_RADIUS_MILES);
             console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
             
-            // tbls
+            // generate comps tables
             generateCompsTables(compsModuleResult);
 
             // CITY DATA
@@ -208,13 +208,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
 
+            /*
             // * If LLA Module = Enabled && Parcel Eligibility = True,
             //   then populate and show Table #2 (Comps avg. vs Affordable max. rents comparison)
             if (enableLiveLocalSwitch) {
                 if (eligPath == "yes") {
-                    rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
-                    rentInfoContainer.style.display = 'table';
-                    countyMaxRentsTable.style.display = 'table';
                     console.log(`'Use Live Local' is enabled \n*AND* the property is eligible!\n  :-D   :-D   :-D`); 
                 } else {
                     console.log(`'Use Live Local' is enabled... \nBut the property is INELIGIBLE.\n  :'(   :'(   :'(`);
@@ -222,10 +220,18 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.log("LLA Ineligible!");
             }
-        
+            */
+
             // Show the Try Again button
             tryAgainButton.style.display = 'block';
 
+            // Show the tables container
+            rentInfoContainer.style.display = 'table';
+            
+            // Generate and show the Live Local rents comparison table
+            rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
+            countyMaxRentsTable.style.display = 'table';
+            
             /* Start AI Module */
             try {
                 // Start composing the supplemental data set for AI beginning with parcelData
