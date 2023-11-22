@@ -25,12 +25,16 @@ body {
     display: block; /* centers the image if h1 text-align is centered */
     /*margin: 0 auto;*/ /* centers the image */
     margin-bottom: 1px;
-    margin-top: 10px;
+    margin-top: 5px;
     opacity: 0;
+    justify-content: center;
     align-items: center;
-    transition: slideDownFadeIn 1s, transform 1s;
-    animation: slideDownFadeIn 1.0s forwards 2.0s; /* Add animation */
+    /*transition: slideDownFadeIn 1s, transform 1s;*/
+    /*animation: slideDownFadeIn 0.8s forwards 1.0s;*/ /* Add animation */
+    transform: slideDownFadeIn;
+    animation: fadeIn 5s, transform 5s, opacity 5s;
 }
+
 
 /* Hide mobile logo by default and ensure it's accessible by screen readers when hidden */
 #logoMobile {
@@ -56,14 +60,15 @@ body {
 
 h1.titleText {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.8em;
+    font-size: 2.4em;
     color: #333;
-    margin-top: 10px; /* Reduced margin-top */
+    margin-top: 15px; /* Reduced margin-top */
     font-weight: 700;
-    transform: translateY(10px);
-    /*transition: slideDownFadeIn 1s, transform 1s forwards 2.0s;*/
+    transform: translateY(35px);
+    animation: fadeIn 5s, transform 5s;
+    z-index: 101;
     align-items: center;
-    animation: fadeIn 3.0s forwards 2.0s;
+    justify-content: center;
 }
 
 p, footer, .submit-button, #tryAgainButton {
