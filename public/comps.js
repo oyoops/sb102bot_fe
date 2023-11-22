@@ -313,8 +313,40 @@ function generateCompsTables(compsData) {
 
     // Update the recalculateWeightedAverages function to recompute the averages
     function recalculateWeightedAverages() {
-        // Logic to recalculate the weighted averages goes here
-        // This will likely involve iterating over the cells and updating the averages row
+        let sumPercentages = 0;
+        let weightedRents = 0;
+        let weightedSqFts = 0;
+        let totalUnits = 0;
+
+        // Iterate over each row to calculate the new weighted averages
+        Object.keys(compsData.compsUnitMixPct).forEach(key => {
+            const percentageCell = document.querySelector(`td[data-category="compsUnitMixPct"][data-key="${key}"]`);
+            const rentCell = document.querySelector(`td[data-category="compsRents"][data-key="${key}"]`);
+            const sqFtCell = document.querySelector(`td[data-category="compsSqFts"][data-key="${key}"]`);
+
+            const weight = parseFloat(percentageCell.dataset.value) / 100;
+            const rent = parseFloat(rentCell.dataset.value);
+            const sqFt = parseFloat(sqFtCell.dataset.value);
+
+            sumPercentages += parseFloat(percentageCell.dataset.value);
+            weightedRents += rent * weight;
+            weightedSqFts += sqFt * weight;
+            totalUnits += weight;
+        });
+
+        // Calculate the weighted averages
+        const averageWeightedRent = (weightedRents / totalUnits).toFixed(0);
+        const averageWeightedSqft = (weightedSqFts / totalUnits).toFixed(0);
+        const averageWeightedRentPerSqft = (weightedRents / weightedSqFts).toFixed(2);
+
+        // Update the averages row with the new values
+        const avgRentCell = document.querySelector('tr[style*="font-weight: bold;"] td[data-category="compsRents"]');
+        const avgSqFtCell = document.querySelector('tr[style*="font-weight: bold;"] td[data-category="compsSqFts"]');
+        const avgRentPerSqFtCell = document.querySelector('tr[style*="font-weight: bold;"] td[data-category="compsRentPerSqfts"]');
+
+        avgRentCell.textContent = `$${parseInt(averageWeightedRent).toLocaleString()}`;
+        avgSqFtCell.textContent = `${parseInt(averageWeightedSqft).toLocaleString()} SF`;
+        avgRentPerSqFtCell.textContent = `$${parseFloat(averageWeightedRentPerSqft).toFixed(2)}/SF`;
     }
 }
 
