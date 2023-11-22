@@ -40,11 +40,19 @@ body {
 }
 
 /* Media query to switch logos based on screen size, with improved readability */
+@media (min-width: 801px) {
+    /* Ensure desktop logo has a fixed size */
+    #mainHeader #mainLogo {
+        width: 250px; /* Set a fixed width for the desktop logo */
+    }
+}
+
 @media (max-width: 800px) {
-    /* Show mobile logo */
+    /* Show mobile logo and adjust the size */
     #logoMobile {
         display: block;
         visibility: visible; /* Make it accessible to screen readers */
+        width: 150px; /* Set a fixed width for the mobile logo */
     }
 }
 
