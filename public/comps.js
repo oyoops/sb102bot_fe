@@ -258,7 +258,7 @@ function generateCompsTables(compsData) {
     // Apply bold font and darker background color to the averages row
     const avgRowStyle = 'style="font-weight: bold; background-color: #ddd;"';
     tableHTML += `<tr class="averages" ${avgRowStyle}><td>Avgs</td>`;
-    tableHTML += `<td class="avgPercentage">${parseInt(sumPercentages).toFixed(0)}%</td>`; // Sum of percentages
+    tableHTML += `<td class="avgPercentage">${parseInt(sumPercentages).toFixed(1)}%</td>`; // Sum of percentages
     tableHTML += `<td class="avgRent">$${parseInt(weightedRents / totalUnits).toLocaleString()}</td>`; // Weighted average of Rents
     tableHTML += `<td class="avgSqFt">${parseInt(weightedSqFts / totalUnits).toLocaleString()} SF</td>`; // Weighted average of SqFts
     tableHTML += `<td class="avgRentPerSqFt">$${(weightedRents / weightedSqFts).toFixed(2)}/SF</td>`; // Weighted average of RentPerSqFts
@@ -286,7 +286,7 @@ function generateCompsTables(compsData) {
                 // Reapply formatting based on the category
                 switch (category) {
                     case 'compsUnitMixPct':
-                        cell.textContent = `${newValue.toFixed(0)}%`;
+                        cell.textContent = `${newValue.toFixed(1)}%`;
                         break;
                     case 'compsRents':
                         cell.textContent = `$${newValue.toLocaleString()}`;
