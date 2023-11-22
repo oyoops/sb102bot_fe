@@ -224,22 +224,24 @@ function generateCompsTables(compsData) {
         weightedSqFts += sqFt * percentage;
         totalUnits += percentage;
 
-        tableHTML += `<tr><td>${rowTitles[key]}</td>` +
-            `<td>${parseFloat(compsData.compsUnitMixPct[key]).toFixed(0)}%</td>` +
-            `<td>$${parseInt(compsData.compsRents[key]).toLocaleString()}</td>` +
-            `<td>${parseInt(compsData.compsSqFts[key]).toLocaleString()} SF</td>` +
-            `<td>$${parseFloat(compsData.compsRentPerSqfts[key]).toFixed(2)}/SF</td>` +
-            '</tr>';
+        tableHTML += `<tr><td>${rowTitles[key]}</td>`;
+        ['compsUnitMixPct', 'compsRents', 'compsSqFts', 'compsRentPerSqfts'].forEach(category => {
+            const dataset = compsData[category];
+            const isEditable = category !== 'compsRentPerSqfts';
+            const contentEditable = isEditable ? 'contenteditable' : 'false';
+            const editableStyle = isEditable ? 'style="color: blue; background-color: #ffffe0;"' : '';
+            tableHTML += `<td ${contentEditable} ${editableStyle} data-category="${category}" data-key="${key}">${dataset[key]}</td>`;
+        });
+        tableHTML += '</tr>';
     });
 
     // Add the averages row
-    tableHTML += `<tr style="font-weight: bold; background-color: #f0f0f0;">` +
-        `<td>Avgs</td>` +
-        `<td>${sumPercentages.toFixed(0)}%</td>` +
-        `<td>$${(weightedSqFts / totalUnits).toLocaleString()} SF</td>` +
-        `<td>$${(weightedRents / totalUnits).toLocaleString()}</td>` +
-        `<td>$${(weightedRents / weightedSqFts).toFixed(2)}/SF</td>` +
-        `</tr>`;
+    tableHTML += `<tr><td>Avgs</td>`;
+    tableHTML += `<td>${sumPercentages}%</td>`; // Sum of percentages
+    tableHTML += `<td>${(weightedSqFts / totalUnits).toFixed(2)}</td>`; // Weighted average of SqFts
+    tableHTML += `<td>${(weightedRents / totalUnits).toFixed(2)}</td>`; // Weighted average of Rents
+    tableHTML += `<td>${(weightedRents / weightedSqFts).toFixed(2)}</td>`; // Weighted average of RentPerSqFts
+    tableHTML += `</tr>`;
 
     tableHTML += '</table>';
     container.innerHTML = tableHTML; // Set the innerHTML to the new table
