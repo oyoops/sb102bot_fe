@@ -19,7 +19,8 @@ async function initializeMap(lat, lng) {
     const mapOptions = {
         center: { lat: lat, lng: lng },
         zoom: 13,
-        mapTypeId: google.maps.MapTypeId.SATELLITE
+        mapTypeId: google.maps.MapTypeId.SATELLITE,
+        streetViewControl: false // Disable Street View control
     };
 
     map = new google.maps.Map(mapDisplay, mapOptions);
@@ -72,9 +73,18 @@ async function initializeMap(lat, lng) {
             buildingName = buildingData.name || `#${index + 1} tallest building`;
             buildingAddress = buildingData.address || "-";
 
+            // Define a custom icon for the tallest building marker
+            const tallestBuildingIcon = {
+                url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="16" height="16" style="fill:lightgrey;stroke:black;stroke-width:2"/></svg>'),
+                scaledSize: new google.maps.Size(24, 24), // Size of the icon
+                origin: new google.maps.Point(0, 0), // Origin of the icon
+                anchor: new google.maps.Point(12, 24) // Anchor point of the icon
+            };
+
             const buildingMarker = new google.maps.Marker({
                 position: { lat: buildingLat, lng: buildingLng },
                 map: map,
+                icon: tallestBuildingIcon, // Use the custom icon
             });
 
             const buildingInfoContent = `
