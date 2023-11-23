@@ -100,7 +100,7 @@ p, footer, .submit-button, #tryAgainButton {
     animation: slideUp 1.4s ease 0.6s forwards;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1300px) {
     p.form-description,
     p, footer, .submit-button, #tryAgainButton,
     .primaryResponse, .loading-text, #eligibilityStatus ul li,
