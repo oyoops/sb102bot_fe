@@ -394,37 +394,22 @@ function generateCompsTables(compsData) {
         const averageWeightedSqft = (weightedSqFts / totalUnits).toFixed(0);
         const averageWeightedRentPerSqft = (weightedRents / weightedSqFts).toFixed(2);
 
-        // Update the averages row with the new values if elements are found
+        // Update the averages row with the new values
         const avgRentCell = document.querySelector('.avgRent');
         const avgSqFtCell = document.querySelector('.avgSqFt');
         const avgRentPerSqFtCell = document.querySelector('.avgRentPerSqFt');
         const avgPercentageCell = document.querySelector('.avgPercentage'); // Get the average percentage cell
 
-        if (avgRentCell) {
-            avgRentCell.textContent = `$${parseInt(averageWeightedRent).toLocaleString()}`;
-        } else {
-            console.error('Error: Average Rent Cell not found');
-        }
-        if (avgSqFtCell) {
-            avgSqFtCell.textContent = `${parseInt(averageWeightedSqft).toLocaleString()} SF`;
-        } else {
-            console.error('Error: Average SqFt Cell not found');
-        }
-        if (avgRentPerSqFtCell) {
-            avgRentPerSqFtCell.textContent = `$${parseFloat(averageWeightedRentPerSqft).toFixed(2)}/SF`;
-        } else {
-            console.error('Error: Average Rent Per SqFt Cell not found');
-        }
+        if (avgRentCell) avgRentCell.textContent = `$${parseInt(averageWeightedRent).toLocaleString()}`;
+        if (avgSqFtCell) avgSqFtCell.textContent = `${parseInt(averageWeightedSqft).toLocaleString()} SF`;
+        if (avgRentPerSqFtCell) avgRentPerSqFtCell.textContent = `$${parseFloat(averageWeightedRentPerSqft).toFixed(2)}/SF`;
+        if (avgPercentageCell) avgPercentageCell.textContent = `${sumPercentages.toFixed(0)}%`; // Update the sum of percentages
 
-        // Check if the sum of percentages equals 100
+        // Change the background color of the average percentage cell based on the sum of percentages
         if (sumPercentages.toFixed(0) !== '100') {
-            // If not, change the background color of the average percentage cell to light red
-            ////avgPercentageCell.style.backgroundColor = 'lightcoral';
-            avgPercentageCell.classList.add('redFill');
+            avgPercentageCell.classList.add('redFill'); // If not 100%, add red background
         } else {
-            // If it does, reset the background color
-            ////avgPercentageCell.style.backgroundColor = '';
-            avgPercentageCell.classList.remove('redFill');
+            avgPercentageCell.classList.remove('redFill'); // If 100%, remove red background
         }
     }
 
