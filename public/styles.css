@@ -175,7 +175,7 @@ form:hover {
 form p {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-    font-size: 15px;
+    font-size: 12px;
     animation: slideUpFadeIn 1.5s forwards 0.5s; /* Ensure the final state persists */
 }
 
@@ -269,17 +269,28 @@ tbody tr:hover {
     transform: translateY(2px);
 }
 /* Responsive styles for smaller screen widths */
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
     form {
-        width: 95%;
+        width: 90%;
         margin: 0 auto; /* Center the input field */
         padding: 10px;
-        margin: 15px;
     }
     #addressInput {
         font-size: 16px; /* Adjust font size for better readability */
     }
 }
+@media (max-width: 1200px) {
+    form {
+        width: 95%;
+        margin: 0 auto; /* Center the input field */
+        padding: 10px;
+        margin: 10px;
+    }
+    #addressInput {
+        font-size: 16px; /* Adjust font size for better readability */
+    }
+}
+
 /* Responsive design: If the screen width is 600px or less, adjust styles for mobile */
 @media (max-width: 600px) {
     h1 {
@@ -393,10 +404,8 @@ tbody tr:hover {
 }
 @media only screen and (max-width: 800px) {
     .submit-button {
-        position: absolute;
         width: calc(100% - 40px);
-        left: 20px;
-        bottom: 80px; /* Adjusted to make space for more-options button */
+        padding: 5px;
     }
 }
 
