@@ -475,6 +475,10 @@ footer a {
     transition: color 1.0s ease;
 }
 
+footer p {
+    font-size: 0.8em;
+}
+
 footer a:hover {
     color: var(--hover-color);
 }
