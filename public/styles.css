@@ -173,7 +173,7 @@ form:hover {
 form p {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-    font-size: 18px;
+    font-size: 15px;
     animation: slideUpFadeIn 1.5s forwards 0.5s; /* Ensure the final state persists */
 }
 
@@ -476,7 +476,7 @@ footer a {
 }
 
 footer p {
-    font-size: 0.8em;
+    font-size: 1.0em;
 }
 
 footer a:hover {
