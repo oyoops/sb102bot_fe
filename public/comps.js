@@ -208,15 +208,15 @@ const rowTitlesFromDataKeyMap = {
 };
 
 
-function generateCompsTables(compsData) {
-    const container = document.getElementById('liveLocalTable');
-    container.innerHTML = ''; // Clear any existing content
+function generateLiveLocalTable(compsData) {
+    const container = document.getElementById('liveLocalTable'); // This ID should be unique for the new table
+    container.innerHTML = ''; // Clear any existing content for the new table
 
     // Calculate the number of columns (N)
     const numColumns = Object.keys(columnNameToDataKeyMap).length + 1; // +1 for the row title column
 
     // Start generating the table HTML
-    let tableHTML = `<table id="compsTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`;
+    let tableHTML = `<table id="liveLocalTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`; // This ID should be unique for the new table
     // Generate each row
     Object.keys(columnNameToDataKeyMap).forEach(key => {
         const columnHeader = getColumnHeaderFromKey(key);
