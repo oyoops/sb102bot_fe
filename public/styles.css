@@ -3,20 +3,21 @@
 
 html {
     background: linear-gradient(to bottom, #ffffff, #e6e9ec);
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     margin: 0;
-    padding: 1% 0;
+    padding: 0; /* Remove padding to prevent any overflow */
     background: linear-gradient(to bottom, #f4f4f4, #e6e9ec);
-    min-height: calc(100vh - 40px); /* Adjusted to account for footer height */
+    min-height: 100vh; /* Ensure the gradient covers the full height */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 @media only screen and (max-width: 800px) {
@@ -392,11 +393,10 @@ tbody tr:hover {
 }
 @media only screen and (max-width: 800px) {
     .submit-button {
-        position: relative;
-        /*position: absolute;*/
+        position: absolute;
         width: calc(100% - 40px);
-        /*left: 20px;*/
-        /*bottom: 60px;*/ /* Adjusted to make space for more-options button */
+        left: 20px;
+        bottom: 80px; /* Adjusted to make space for more-options button */
     }
 }
 
