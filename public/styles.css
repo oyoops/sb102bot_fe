@@ -50,7 +50,7 @@ body {
 /* Media query to switch logos based on screen size, with improved readability */
 @media (min-width: 801px) {
     p.form-description {
-        font-size: 0.9em;
+        font-size: 0.8em; /* Reduce font size for better readability on mobile */
         animation: slideUp 1.5s ease 0.6s forwards;
     }
 
@@ -156,20 +156,14 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 5px;
     padding: 20px;
     margin: 2em auto;
-    margin-top: 25px;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-bottom: 25px;
     background: rgb(251, 251, 251);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     height: auto;
-    width: auto;
-    min-width: 550px;
-    max-width: 800px;
+    width: 95%; /* Set width to 95% of the screen size */
+    max-width: 550px; /* Set a maximum width to prevent exceeding screen width */
     opacity: 1;
     animation: slideUpFadeIn 0.5s forwards 0.5s; /* Ensure the final state persists */
 }
@@ -370,18 +364,20 @@ tbody tr:hover {
 .submit-button, #tryAgainButton {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    width: 55%;
+    width: calc(100% - 40px); /* Adjust width to match input fields */
     padding: 10px;
     border: none;
     background-color: #348dec; /* Bootstrap primary color */
     color: #fff;
     border-radius: 18px;
     cursor: pointer;
-    /*font-weight: bold;*/
     text-align: center;
     transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
-    margin-top: 5px;
+    margin: 10px 20px; /* Add horizontal margin and adjust vertical margin */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative; /* Change position to relative */
+    bottom: auto; /* Remove fixed positioning */
+    right: auto; /* Remove fixed positioning */
 }
 .submit-button:hover {
     background-color: rgb(20, 101, 187); /* Darken on hover */
