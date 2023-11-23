@@ -35,10 +35,15 @@ body {
     visibility: hidden;
 }
 /* Media query to switch logos based on screen size, with improved readability */
-@media (max-width: 800px) {
+@media (max-width: 1200px) {
     /* Hide desktop logo */
     #logo {
         display: none;
+    }
+    /* Show mobile logo */
+    #logoMobile {
+        display: block;
+        visibility: visible;
     }
 }
 
@@ -94,10 +99,16 @@ p, footer, .submit-button, #tryAgainButton {
     animation: slideUp 1.4s ease 0.6s forwards;
 }
 
-@media only screen and (max-width: 800px) {
-    p.form-description {
-        font-size: 0.85em; /* Reduce font size on mobile */
-        animation: slideUp 1.4s ease 0.3s forwards;
+@media only screen and (max-width: 1200px) {
+    p.form-description,
+    p, footer, .submit-button, #tryAgainButton,
+    .primaryResponse, .loading-text, #eligibilityStatus ul li,
+    .styled-table th, .styled-table td {
+        font-size: 0.9em; /* Adjust font size for better readability on mobile */
+    }
+    .submit-button, #tryAgainButton {
+        width: 100%; /* Make buttons full width on mobile */
+        margin: 10px 0; /* Add some vertical margin */
     }
 }
 p.fieldTitle {
@@ -263,17 +274,14 @@ tbody tr:hover {
     transform: translateY(2px);
 }
 /* Responsive styles for smaller screen widths */
-@media (max-width: 800px) {
+@media (max-width: 1200px) {
     form {
-        width: 85%;
+        width: 95%;
         margin: 0 auto; /* Center the input field */
-        margin-left: 10px;
-        margin-right: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 10px;
     }
     #addressInput {
-        font-size: 14px; 
+        font-size: 16px; /* Adjust font size for better readability */
     }
 }
 /* Responsive design: If the screen width is 600px or less, adjust styles for mobile */
