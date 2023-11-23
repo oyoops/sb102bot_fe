@@ -101,7 +101,7 @@ p, footer, .submit-button, #tryAgainButton {
 }
 
 @media only screen and (max-width: 1300px) {
-    p.form-description,
+    /*p.form-description,*/
     p, footer, .submit-button, #tryAgainButton,
     .primaryResponse, .loading-text, #eligibilityStatus ul li,
     .styled-table th, .styled-table td {
@@ -165,7 +165,7 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     height: auto;
     width: auto;
-    max-width: calc(100% - 10px);
+    max-width: calc(100% - 30px);
     opacity: 1;
     animation: slideUpFadeIn 0.5s forwards 0.5s;
 }
