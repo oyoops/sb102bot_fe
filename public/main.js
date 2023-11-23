@@ -149,9 +149,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // generate comps tables
             generateCompsTable(compsModuleResult);
+            generateLiveLocalTable(compsModuleResult);
+
             // show the dev program table
             devProgramContainer.style.display = 'block';
             devProgramTable.style.display = 'table';
+
+            // ...
+            
 
             // CITY DATA
             const cityData = await checkCity(geocodeData);        

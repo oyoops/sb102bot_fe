@@ -216,21 +216,13 @@ function generateLiveLocalTable(compsData) {
     const numColumns = Object.keys(columnNameToDataKeyMap).length + 1; // +1 for the row title column
 
     // Start generating the table HTML
-    let tableHTML = `<table id="liveLocalTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`; // This ID should be unique for the new table
+    let tableHTML = `<table id="liveLocalTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`;
     
     // Generate each row
     Object.keys(columnNameToDataKeyMap).forEach(key => {
         const columnHeader = getColumnHeaderFromKey(key);
         tableHTML += `<th style="width: ${100 / numColumns}%;">${columnHeader}</th>`;
     });
-
-    /*
-    Object.keys(compsData).forEach(key => {
-        const columnHeader = getColumnHeaderFromKey(key);
-        tableHTML += `<th>${columnHeader}</th>`;
-    });
-    */
-
     tableHTML += '</tr>';
 
     // Calculate weighted averages and sum of percentages
@@ -266,17 +258,6 @@ function generateLiveLocalTable(compsData) {
         Object.entries(columnNameToDataKeyMap).forEach(([columnName, dataKey]) => {
             const dataset = compsData[dataKey];
             const category = columnName;
-            /*
-            // Logging to diagnose the issue
-            console.log(`Category: ${category}, DataKey: ${dataKey}, Dataset:`, dataset);
-            if (!dataset) {
-                console.error(`Dataset for ${category} (${dataKey}) is undefined.`);
-                return; // Skip to next iteration
-            }
-            if (!dataset.hasOwnProperty(key)) {
-                console.error(`Key '${key}' not found in dataset for ${category} (${dataKey}).`);
-                return; // Skip to next iteration
-            }*/
             const isEditable = category !== 'Rent/SF';
             let formattedValue = dataset[key];
 
@@ -418,27 +399,19 @@ function generateLiveLocalTable(compsData) {
 }
 
 function generateCompsTable(compsData) {
-    const container = document.getElementById('compsTable');
+    const container = document.getElementById('devProgramTable');
     container.innerHTML = ''; // Clear any existing content
 
     // Calculate the number of columns (N)
     const numColumns = Object.keys(columnNameToDataKeyMap).length + 1; // +1 for the row title column
 
     // Start generating the table HTML
-    let tableHTML = `<table id="compsTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`;
+    let tableHTML = `<table id="devProgramTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`;
     // Generate each row
     Object.keys(columnNameToDataKeyMap).forEach(key => {
         const columnHeader = getColumnHeaderFromKey(key);
         tableHTML += `<th style="width: ${100 / numColumns}%;">${columnHeader}</th>`;
     });
-
-    /*
-    Object.keys(compsData).forEach(key => {
-        const columnHeader = getColumnHeaderFromKey(key);
-        tableHTML += `<th>${columnHeader}</th>`;
-    });
-    */
-
     tableHTML += '</tr>';
 
     // Calculate weighted averages and sum of percentages
@@ -474,17 +447,6 @@ function generateCompsTable(compsData) {
         Object.entries(columnNameToDataKeyMap).forEach(([columnName, dataKey]) => {
             const dataset = compsData[dataKey];
             const category = columnName;
-            /*
-            // Logging to diagnose the issue
-            console.log(`Category: ${category}, DataKey: ${dataKey}, Dataset:`, dataset);
-            if (!dataset) {
-                console.error(`Dataset for ${category} (${dataKey}) is undefined.`);
-                return; // Skip to next iteration
-            }
-            if (!dataset.hasOwnProperty(key)) {
-                console.error(`Key '${key}' not found in dataset for ${category} (${dataKey}).`);
-                return; // Skip to next iteration
-            }*/
             const isEditable = category !== 'Rent/SF';
             let formattedValue = dataset[key];
 
