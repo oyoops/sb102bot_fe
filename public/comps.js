@@ -217,6 +217,7 @@ function generateLiveLocalTable(compsData) {
 
     // Start generating the table HTML
     let tableHTML = `<table id="liveLocalTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`; // This ID should be unique for the new table
+    
     // Generate each row
     Object.keys(columnNameToDataKeyMap).forEach(key => {
         const columnHeader = getColumnHeaderFromKey(key);
@@ -416,8 +417,8 @@ function generateLiveLocalTable(compsData) {
     recalculateWeightedAverages();
 }
 
-function generateLiveLocalTable(compsData) {
-    const container = document.getElementById('liveLocalTable');
+function generateCompsTable(compsData) {
+    const container = document.getElementById('compsTable');
     container.innerHTML = ''; // Clear any existing content
 
     // Calculate the number of columns (N)
