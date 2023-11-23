@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Comps Analysis: \n" + JSON.stringify(compsModuleResult));
             
             // generate comps tables
-            generateCompsTables(compsModuleResult);
+            generateCompsTable(compsModuleResult);
             // show the dev program table
             devProgramContainer.style.display = 'block';
             devProgramTable.style.display = 'table';
