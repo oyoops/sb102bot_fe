@@ -159,6 +159,8 @@ form {
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
     margin-right: 5px;
     margin: 5px;
     background: rgb(251, 251, 251);
