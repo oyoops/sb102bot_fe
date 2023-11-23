@@ -27,7 +27,10 @@ const eligibilityDiv = document.getElementById("eligibilityStatus");
 const rentInfoContainer = document.getElementById('rentInfoContainer');
 const countyMaxRentsTable = document.getElementById('countyMaxRentsTable');
 const rentsTableBody = document.querySelector('#countyMaxRentsTable tbody');
-const compsTable = document.getElementById("compsTable");
+const compsTable = document.getElementById('compsTable');
+
+const devProgramContainer = document.getElementById('devProgramContainer');
+const devProgramTable = document.getElementById('devProgramTable');
 
 
 export {
@@ -48,5 +51,7 @@ export {
     compsTable,
     rentInfoContainer,
     countyMaxRentsTable,
-    rentsTableBody
+    rentsTableBody,
+    devProgramContainer,
+    devProgramTable
 };

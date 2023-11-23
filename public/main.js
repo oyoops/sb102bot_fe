@@ -9,7 +9,8 @@ import {
     loadingContainer, googlemap, eligibilityDiv, tryAgainButton, rentInfoContainer, countyMaxRentsTable, rentsTableBody,
     enableLiveLocalSwitch, debugModeCheckbox, superchargeSwitch,
     customInstructionsInput,
-    compsTable
+    //compsTable,
+    devProgramContainer, devProgramTable
 } from './domElements.js';
 
 
@@ -148,6 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // generate comps tables
             generateCompsTables(compsModuleResult);
+            // show the dev program table
+            devProgramContainer.style.display = 'block';
+            devProgramTable.style.display = 'table';
 
             // CITY DATA
             const cityData = await checkCity(geocodeData);        
@@ -208,8 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.setProperty('--hue', '360'); // red
             }
 
-            /*
-            // * If LLA Module = Enabled && Parcel Eligibility = True,
+            /*// * If LLA Module = Enabled && Parcel Eligibility = True,
             //   then populate and show Table #2 (Comps avg. vs Affordable max. rents comparison)
             if (enableLiveLocalSwitch) {
                 if (eligPath == "yes") {
@@ -219,20 +222,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } else {
                 console.log("LLA Ineligible!");
-            }
-            */
+            }*/
 
             // Show the Try Again button
             tryAgainButton.style.display = 'block';
 
-            // Show the tables container
+            // Show the (old) tables container
             rentInfoContainer.style.display = 'table';
             
             // Generate and show the Live Local rents comparison table
             rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
             countyMaxRentsTable.style.display = 'table';
-            
+
+            ////////document.getElementById('#averagesContainer').style.display = 'table';
+            ////////document.getElementById('#averagesTableContainer').style.display = 'table';
+
             /* Start AI Module */
+            
             try {
                 // Start composing the supplemental data set for AI beginning with parcelData
                 verifyParcelData(parcelData);

@@ -97,8 +97,8 @@ function generateMarketRentsTableHTML(compsData) {
                         <th></th>
                         <th>% Mix</th>
                         <th>Avg. SF</th>
-                        <th>Market Rent</th>
-                        <th>Market Rent/SF</th>
+                        <th>Rent</th>
+                        <th>Rent/SF</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -186,26 +186,51 @@ function generateAffordableTableHTML(countyData, compsData) {
     return rentRowsHTML;
 }
 
+
+// (Column titles) Map cleaner column titles to data keys
+const columnNameToDataKeyMap = {
+    'Mix %': 'compsUnitMixPct',
+    'Rent': 'compsRents',
+    'Avg. SF': 'compsSqFts',
+    'Rent/SF': 'compsRentPerSqfts'
+};
+
+/* NOTE THE MAPPING IS REVERSED 
+   COMPARED TO columnNameToDataKeyMap
+   WHICH WAS VERY STUPID OF ME... */
+
+// (Row titles) Map data keys to cleaner row titles
+const rowTitlesFromDataKeyMap = {
+    'studio': 'Studio',
+    'oneBd': '1BD',
+    'twoBd': '2BD',
+    'threeBd': '3BD'
+};
+
+
 function generateCompsTables(compsData) {
-    const container = document.getElementById('rentInfoContainer');
+    const container = document.getElementById('devProgramTable');
     container.innerHTML = ''; // Clear any existing content
 
-    let tableHTML = '<table id="compsTable"><tr><th>Category</th>';
+    // Calculate the number of columns (N)
+    const numColumns = Object.keys(columnNameToDataKeyMap).length + 1; // +1 for the row title column
 
-    // Assuming the dataset is an object where each key is a column
-    Object.keys(compsData).forEach(key => {
-        tableHTML += `<th>${key}</th>`;
+    // Start generating the table HTML
+    let tableHTML = `<table id="compsTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`;
+    // Generate each row
+    Object.keys(columnNameToDataKeyMap).forEach(key => {
+        const columnHeader = getColumnHeaderFromKey(key);
+        tableHTML += `<th style="width: ${100 / numColumns}%;">${columnHeader}</th>`;
     });
 
-    tableHTML += '</tr>';
+    /*
+    Object.keys(compsData).forEach(key => {
+        const columnHeader = getColumnHeaderFromKey(key);
+        tableHTML += `<th>${columnHeader}</th>`;
+    });
+    */
 
-    // Define row titles
-    const rowTitles = {
-        'studio': 'Studio',
-        'oneBd': '1BD',
-        'twoBd': '2BD',
-        'threeBd': '3BD'
-    };
+    tableHTML += '</tr>';
 
     // Calculate weighted averages and sum of percentages
     let sumPercentages = 0;
@@ -216,33 +241,59 @@ function generateCompsTables(compsData) {
     // Create a row for each key and calculate weighted sums
     Object.keys(compsData.compsUnitMixPct).forEach(key => {
         const percentage = parseFloat(compsData.compsUnitMixPct[key]) / 100;
-        const rent = parseFloat(compsData.compsRents[key]);
-        const sqFt = parseFloat(compsData.compsSqFts[key]);
+        let rent = 0, sqFt = 0;
+    
+        if (compsData.compsRents && compsData.compsRents.hasOwnProperty(key)) {
+            rent = parseFloat(compsData.compsRents[key]);
+        } else {
+            console.log("compsData.compsRents value: \n" + compsData.compsRents);
+        }
 
+        if (compsData.compsSqFts && compsData.compsSqFts.hasOwnProperty(key)) {
+            sqFt = parseFloat(compsData.compsSqFts[key]);
+        } else {
+            console.log("compsData.compsSqFts value: \n" + compsData.compsSqFts);
+        }
+        
         sumPercentages += parseFloat(compsData.compsUnitMixPct[key]);
         weightedRents += rent * percentage;
         weightedSqFts += sqFt * percentage;
         totalUnits += percentage;
 
-        tableHTML += `<tr><td>${rowTitles[key]}</td>`;
-        ['compsUnitMixPct', 'compsRents', 'compsSqFts', 'compsRentPerSqfts'].forEach(category => {
-            const dataset = compsData[category];
-            const isEditable = category !== 'compsRentPerSqfts';
+        tableHTML += `<tr><td>${rowTitlesFromDataKeyMap[key]}</td>`;
+
+        Object.entries(columnNameToDataKeyMap).forEach(([columnName, dataKey]) => {
+            const dataset = compsData[dataKey];
+            const category = columnName;
+            /*
+            // Logging to diagnose the issue
+            console.log(`Category: ${category}, DataKey: ${dataKey}, Dataset:`, dataset);
+            if (!dataset) {
+                console.error(`Dataset for ${category} (${dataKey}) is undefined.`);
+                return; // Skip to next iteration
+            }
+            if (!dataset.hasOwnProperty(key)) {
+                console.error(`Key '${key}' not found in dataset for ${category} (${dataKey}).`);
+                return; // Skip to next iteration
+            }*/
+            const isEditable = category !== 'Rent/SF';
             let formattedValue = dataset[key];
+
             switch (category) {
-                case 'compsUnitMixPct':
-                    formattedValue = `${parseInt(formattedValue).toFixed(0)}%`;
+                case 'Mix %':
+                    formattedValue = `${parseInt(formattedValue).toFixed(1)}%`;
                     break;
-                case 'compsRents':
+                case 'Rent':
                     formattedValue = `$${parseInt(formattedValue).toLocaleString()}`;
                     break;
-                case 'compsSqFts':
+                case 'Avg. SF':
                     formattedValue = `${parseInt(formattedValue).toLocaleString()} SF`;
                     break;
-                case 'compsRentPerSqfts':
+                case 'Rent/SF':
                     formattedValue = `$${parseFloat(formattedValue).toFixed(2)}/SF`;
                     break;
             }
+            
             const contentEditable = isEditable ? 'contenteditable' : 'false';
             const editableStyle = isEditable ? 'style="color: blue; background-color: #ffffe0;"' : '';
             // Store the numeric value in a data attribute for calculations and display the formatted value
@@ -254,8 +305,7 @@ function generateCompsTables(compsData) {
         tableHTML += '</tr>';
     });
 
-    // Add the averages row
-    // Apply bold font and darker background color to the averages row
+    // Add the averages row w/ bold font and darker background color
     const avgRowStyle = 'style="font-weight: bold; background-color: #ddd;"';
     tableHTML += `<tr class="averages" ${avgRowStyle}><td>Avgs</td>`;
     tableHTML += `<td class="avgPercentage">${parseInt(sumPercentages).toFixed(1)}%</td>`; // Sum of percentages
@@ -278,27 +328,28 @@ function generateCompsTables(compsData) {
         });
         cell.addEventListener('blur', event => {
             const cell = event.target;
-            const category = cell.dataset.category;
-            const key = cell.dataset.key;
+            const category = cell.dataset.category; // Get the category from the cell's data attribute
             const newValue = parseFloat(cell.textContent.replace(/[^0-9.-]+/g, ""));
+        
             if (!isNaN(newValue) && newValue >= 0) {
                 cell.dataset.value = newValue; // Update the data-value attribute
                 // Reapply formatting based on the category
                 switch (category) {
-                    case 'compsUnitMixPct':
+                    case 'Mix %':
                         cell.textContent = `${newValue.toFixed(1)}%`;
                         break;
-                    case 'compsRents':
+                    case 'Rent':
                         cell.textContent = `$${newValue.toLocaleString()}`;
                         break;
-                    case 'compsSqFts':
+                    case 'Avg. SF':
                         cell.textContent = `${newValue.toLocaleString()} SF`;
                         break;
-                    case 'compsRentPerSqfts':
+                    case 'Rent/SF':
                         cell.textContent = `$${newValue.toFixed(2)}/SF`;
                         break;
                 }
-                // Recalculate weighted averages after updating the value
+
+                // Initial computation of the averages(/total) row
                 recalculateWeightedAverages();
             } else {
                 // If the input is not a number or is negative, revert to the previous value
@@ -307,7 +358,7 @@ function generateCompsTables(compsData) {
             }
         });
     });
-
+    
     // Update the recalculateWeightedAverages function to recompute the averages
     function recalculateWeightedAverages() {
         let sumPercentages = 0;
@@ -317,10 +368,10 @@ function generateCompsTables(compsData) {
 
         // Iterate over each row to calculate the new weighted averages
         Object.keys(compsData.compsUnitMixPct).forEach(key => {
-            const percentageCell = document.querySelector(`td[data-category="compsUnitMixPct"][data-key="${key}"]`);
-            const rentCell = document.querySelector(`td[data-category="compsRents"][data-key="${key}"]`);
-            const sqFtCell = document.querySelector(`td[data-category="compsSqFts"][data-key="${key}"]`);
-            const rentPerSqFtCell = document.querySelector(`td[data-category="compsRentPerSqfts"][data-key="${key}"]`);
+            const percentageCell = document.querySelector(`td[data-category="Mix %"][data-key="${key}"]`);
+            const rentCell = document.querySelector(`td[data-category="Rent"][data-key="${key}"]`);
+            const sqFtCell = document.querySelector(`td[data-category="Avg. SF"][data-key="${key}"]`);
+            const rentPerSqFtCell = document.querySelector(`td[data-category="Rent/SF"][data-key="${key}"]`);
 
             const weight = parseFloat(percentageCell.dataset.value) / 100;
             const rent = parseFloat(rentCell.dataset.value);
@@ -368,14 +419,36 @@ function generateCompsTables(compsData) {
         // Check if the sum of percentages equals 100
         if (sumPercentages.toFixed(0) !== '100') {
             // If not, change the background color of the average percentage cell to light red
-            avgPercentageCell.style.backgroundColor = 'lightcoral';
+            ////avgPercentageCell.style.backgroundColor = 'lightcoral';
+            avgPercentageCell.classList.add('redFill');
         } else {
             // If it does, reset the background color
-            avgPercentageCell.style.backgroundColor = '';
+            ////avgPercentageCell.style.backgroundColor = '';
+            avgPercentageCell.classList.remove('redFill');
         }
+    }
+
+    recalculateWeightedAverages();
+}
+
+
+// Define the column names
+function getColumnHeaderFromKey(key) {
+    switch (key) {
+        case 'compsUnitMixPct':
+            return 'Mix %';
+        case 'compsRents':
+            return 'Rent';
+        case 'compsSqFts':
+            return 'Avg. SF';
+        case 'compsRentPerSqfts':
+            return 'Rent/SF';
+        default:
+            return key; // Fallback in case of an unexpected key
     }
 }
 
+/*
 // Handle cell edit event
 function handleCellEdit(event) {
     const cell = event.target;
@@ -397,6 +470,8 @@ function handleCellEdit(event) {
         rentPerSqFtCell.innerText = 'N/A'; // Handle division by zero or invalid input
     }
 }
+*/
+
 function handleCellEditKeypress(event) {
     if (event.key === 'Enter') {
         event.preventDefault();

@@ -6,13 +6,13 @@ html {
 }
 
 body {
+    /* top: 200px; */
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     margin: 0;
-    padding: 4% 0; /* Increased top padding */
+    padding: 1% 0; /* Increased top padding */
     background: linear-gradient(to bottom, #f4f4f4, #e6e9ec);
-    /*min-height: 100 75vh;*/
-    min-height: auto;
+    min-height: 100 80vh;
     display: flex;
     flex-direction: column;
     align-items: center; /* Ensure center alignment */
@@ -25,7 +25,7 @@ body {
         width: 150px; /* Reduce logo width on mobile */
         text-align: center;
         margin: 0 auto;
-        animation: slideDown 1.4s ease 0.6s forwards;
+        animation: slideDown 1.6s ease 0.5s forwards;
     }
 }
 
@@ -57,7 +57,7 @@ body {
         margin: 0 auto;
         opacity: 0; /* Set initial opacity to 0 */
         transform: translateY(-100%); /* Move off-screen initially */
-        animation: slideDown 1.4s ease 0.6s forwards;
+        animation: slideDown 1.4s ease 0.3s forwards;
     }
 }
 
@@ -97,7 +97,7 @@ p, footer, .submit-button, #tryAgainButton {
 @media only screen and (max-width: 800px) {
     p.form-description {
         font-size: 0.85em; /* Reduce font size on mobile */
-        animation: slideUp 1.4s ease 0.6s forwards;
+        animation: slideUp 1.4s ease 0.3s forwards;
     }
 }
 p.fieldTitle {
@@ -160,7 +160,7 @@ form {
     min-width: 550px;
     max-width: 800px;
     opacity: 1;
-    animation: slideUpFadeIn 1.0s forwards 0.5s; /* Ensure the final state persists */
+    animation: slideUpFadeIn 0.5s forwards 0.5s; /* Ensure the final state persists */
 }
 form:hover {
     transform: translateY(-1px);
@@ -169,13 +169,19 @@ form:hover {
 form p {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-    font-size: 20px;
-    animation: slideUpFadeIn 1.5s forwards 1.5s; /* Ensure the final state persists */
+    font-size: 18px;
+    animation: slideUpFadeIn 1.5s forwards 0.5s; /* Ensure the final state persists */
+}
+
+#primaryResponsesContainer {
+    margin-bottom:10px;
 }
 
 /* Generic table styling */
-.table-container {
+.table-container, #devProgramContainer, #averagesContainer {
     overflow: hidden;
+    width: auto;
+    max-width: 95%;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -183,13 +189,18 @@ form p {
     animation: slideUpFadeIn 1s forwards 0.1s; /* Add animation */
 }
 
-table, .styled-table {
-    width: 100%;
-    max-width: 1000px;
+table, .styled-table, #devProgramTable, #averagesTableContainer {
+    width: auto;
+    max-width: 95%;
     margin: 0 auto;
     border-collapse: collapse;
     background-color: #ffffff;
     animation: slideUpFadeIn 1s forwards 0.1s; /* Add animation */
+}
+table td, table th {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow content */
+    text-overflow: ellipsis; /* Add an ellipsis for overflow content */
 }
 
 th, td {
@@ -407,11 +418,11 @@ tbody tr:hover {
     align-items: center;
     z-index: 1000;
     border-bottom: 2px solid var(--accent-color);
-    animation: slideDownFadeIn 1.1s forwards 0.1s; /* Add animation */
+    animation: slideDownFadeIn 0.9s forwards 0.1s; /* Add animation */
 }
 
 #menuBar #logo {
-    width: 80px;  /* or whatever width you desire */
+    width: 100px;  /* or whatever width you desire */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* to handle vertical spacing better */
     margin-left: 15px;
@@ -464,42 +475,6 @@ footer a {
 footer a:hover {
     color: var(--hover-color);
 }
-
-/* UNUSED: 
-.loading {
-    display: none;
-    font-weight: 700;
-    color: #007BFF;
-    position: relative;
-    padding-left: 50px;
-}
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-.loading::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    width: 30px;
-    height: 30px;
-    margin-top: -15px;
-    border: 4px solid rgba(0, 123, 255, 0.2);
-    border-top-color: #007BFF;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-.loading::after {
-    content: '...';
-    animation: blinker 1s linear infinite;
-}
-@keyframes blinker {
-    0% { opacity: 0.2; }
-    50% { opacity: 1; }
-    100% { opacity: 0.2; }
-}
-*/
 
 #tryAgainButton {
     font-family: 'Montserrat', sans-serif;
@@ -775,6 +750,7 @@ input:disabled {
 
 .loading-container {
     display: flex;
+    min-width: 25%; 
     margin-top: calc(50vh + 15px); /* Adjust top margin to be below the map */
     flex-direction: column;
     align-items: center;

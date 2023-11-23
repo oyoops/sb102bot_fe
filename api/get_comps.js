@@ -143,10 +143,10 @@ module.exports = async (req, res) => {
 
     // Calculate the weighted percentages by unit type
     const weightedPercentages = {
-      studio: (totalUnitsByType.studio / totalUnitsAllProperties * 100).toFixed(0),
-      oneBd: (totalUnitsByType.oneBd / totalUnitsAllProperties * 100).toFixed(0),
-      twoBd: (totalUnitsByType.twoBd / totalUnitsAllProperties * 100).toFixed(0),
-      threeBd: (totalUnitsByType.threeBd / totalUnitsAllProperties * 100).toFixed(0)
+      studio: (totalUnitsByType.studio / totalUnitsAllProperties * 100).toFixed(1),
+      oneBd: (totalUnitsByType.oneBd / totalUnitsAllProperties * 100).toFixed(1),
+      twoBd: (totalUnitsByType.twoBd / totalUnitsAllProperties * 100).toFixed(1),
+      threeBd: (totalUnitsByType.threeBd / totalUnitsAllProperties * 100).toFixed(1)
     };
 
     console.log('\nWeighted Percentages by Unit Type:');

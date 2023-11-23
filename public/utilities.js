@@ -178,40 +178,48 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
 
   // Map primary prompts to endpoints, then fetch all simultaneously
   const fetchPromises = endpoints.map(endpoint => {
-    return Promise.race([
-        fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(cleanData) // Send the data as JSON in the request body
-        })
-        .then(response => {
-            if (!response.ok) {
-                console.error(`Failed at endpoint ${endpoint} with status: ${response.statusText}`);
-                throw new Error(`Failed to fetch from ${endpoint}: ${response.statusText}`);
+        return Promise.race([
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cleanData) // Send the data as JSON in the request body
+            })
+            .then(response => {
+                if (!response.ok) {
+                    console.error(`Failed at endpoint ${endpoint} with status: ${response.statusText}`);
+                    throw new Error(`Failed to fetch from ${endpoint}: ${response.statusText}`);
+                }
+                return response.json();
+            }),
+            timeout(59000) // 59 seconds => timeout
+        ])
+        .catch(err => {
+            console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
+            if (err.message === 'Request took too long!') {
+                alert(`Endpoint ${endpoint} took too long to respond.`);
             }
-            return response.json();
-        }),
-        timeout(59000) // 59 seconds => timeout
-    ])
-    .catch(err => {
-        console.error(`Error during fetch from endpoint ${endpoint}: ${err}`);
-        if (err.message === 'Request took too long!') {
-            alert(`Endpoint ${endpoint} took too long to respond.`);
-        }
-        throw err;
-    });
+            throw err;
+        });
     });
     try {
         /* STAGE 1: PRIMARY RESPONSES */
 
         // Fetch all primary prompt responses simultaneously
         const results = await Promise.all(fetchPromises);
-
+        
+        /*
         // Display primary response container
         document.getElementById("primaryResponsesContainer").style.display = 'block';
 
+        // Before animation, set all to an initial state of being hidden
+        for (let i = 0; i < results.length; i++) {
+            document.getElementById(`response${i + 1}`).style.display = "none";
+            document.getElementById(`response${i + 1}`).opacity = 0;
+            document.getElementById(`response${i + 1}`).innerHTML = '';
+        }
+        
         // Display primary responses once they are available
         for (let i = 0; i < results.length; i++) {
             document.getElementById(`response${i + 1}`).style.display = "block"; // TESTING
@@ -219,10 +227,9 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
             document.getElementById(`response${i + 1}`).innerHTML = results[i];
             setTimeout(() => {
                 animateTextFadeIn(document.getElementById(`response${i + 1}`));
-            }, i * 1200); // delay each animation by 1200ms
-            /* ^ Not doing what I intended but works fine */
+            }, i * 1000); // delay each animation by 1000ms
         }
-  
+        */
         ////console.log("Clean Data: \n", cleanData);
 
         /* START STAGE 2: SER */
@@ -238,8 +245,6 @@ async function fetchAiResponsesCombined(eligPath, cleanData, superAI, debug=fals
             })
         });
         const serData = await serResponse.json();
-
-
 
         /* TESTING */
 

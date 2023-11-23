@@ -5,10 +5,10 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://googletagmanager.com/gtag/js?id=G-36Y7QNF54Z"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-36Y7QNF54Z');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-36Y7QNF54Z');
     </script>
     
     <!-- Stuff -->
@@ -20,8 +20,12 @@
     <link rel="manifest" href="/misc/site.webmanifest">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="styles.css">
     
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="tableStyles.css">
+
+    <!-- Title -->
     <title>Home | Live Local Guru</title>
 </head>
 
@@ -38,6 +42,7 @@
 
     <!-- Main header -->
     <div id="mainHeader" style="text-align: center;">
+        <br><br><br>
         <a href="https://livelocal.guru">
             <img src="./imgs/logo.png" alt="Live Local Guru Main Logo" id="mainLogo" style="max-width: 100%;">
         </a>
@@ -96,6 +101,8 @@
             Find out if your Florida property is <u><a href="https://floridahousing.org/live-local-act">Live Local Act</a></u>-eligible.
             <br>If so, I'll help you figure out its development potential.
             <br>Read a <a href="https://www.hklaw.com/en/insights/publications/2023/08/floridas-new-live-local-act-offers-land-use-and-tax-benefits">breakdown</a> of this game-changing new state law.
+            
+            <br><br><br>
         </p>
     </div>
 
@@ -120,9 +127,6 @@
     <!-- Map -->
     <div id="map" style="display: none"></div>
 
-    <!-- Eligibility Result -->
-    <div id="eligibilityStatus"></div> 
-
     <!-- Loading Indicator -->
     <div class="loading-container">
         <div class="spinner" style="display: none;"></div>
@@ -135,15 +139,44 @@
         </div>
 
         <div class="loading-text">
-            Please wait,<br>
+            <b>Researching...</b><br>
         </div>
+
         <div class="loading-bar">
             <div class="loading-fill"></div>
             <div class="loading-percentage">0%</div>
         </div>
+
         <div class="loading-text">
-            <b>Checking with my land guy...</b><br>
+            <br>Please wait...
+            <br><br>
         </div>
+    </div>
+
+    <!-- Eligibility Result -->
+    <div id="eligibilityStatus"></div> 
+    
+    <div id="averagesContainer" class=".table-container" style="display: none;">
+        <!-- Table 1: Market Rent Comps Weight Avgs by Unit Type -->
+        <div id="averagesTableContainer" class=".styled-table" style="display: none">
+            <!-- Market comps weighted averages table will be rendered here -->
+        </div>
+        <p>
+            <i>These are the weighted averages of the multifamily comps.
+            <br>This shows how apartments within 3 miles perform currently.</i>
+        </p>
+    </div>
+
+    <!-- Dev program inputs container -->
+    <div id="devProgramContainer" class=".table-container" style="display: none;">
+        <!-- Dev program inputs table -->
+        <div id="devProgramTable" class=".styled-table" style="display: none">
+            <!-- Table HTML will be inserted here -->
+        </div>
+        <p>
+            <i>This is my suggestion for your development program.
+            <br>You can override my suggested mix, rents, and sizes.</i>
+        </p>
     </div>
 
     <!-- Primary AI Responses Container -->
@@ -155,26 +188,18 @@
         <div id="response5" class="primaryResponse"></div>
     </div>
 
-    <!-- Table 1: Market Rent Comps Weight Avgs by Unit Type -->
-    <br>
-    <div id="averagesTableContainer" style="display: none">
-        <!-- Market comps weighted averages table will be rendered here -->
-        <br>
-    </div>
-    
-    <!-- Table: Market Rents vs. Max Live Local Rents Comparison by Unit Type -->
-    <!-- container 1 -->
+    <!-- Live Local rents table container -->
     <div id="rentInfoContainer" style="display: none;">
         <br>
-        <!-- container 2 -->
-        <div class="table-container"> 
+        <!-- (unneccessary sub-container) -->
+        <div class="table-container">
             <!-- Live Local max rents comparison table -->
             <table id="countyMaxRentsTable">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Market Rent</th>
-                        <th>Affordable Rent</th>
+                        <th>Market</th>
+                        <th>Affordable</th>
                         <th><b>Discount</b></th>
                     </tr>
                 </thead>
@@ -182,7 +207,6 @@
                     <!-- Data will be inserted here by JavaScript -->
                 </tbody>
             </table>
-            
             <p>
                 <i>These are the Live Local affordable rent limits (120% AMI)
                 <br>Limits must include any direct billing of electric/water/insurance/taxes</i>
@@ -190,13 +214,13 @@
         </div>
     </div>
 
-    <br>
-    
+    <!-- Spacing -->
+    <br><br><br>
+
     <!-- Footer -->
     <footer>
         <!-- New Search (aka Try Again) button -->
         <button id="tryAgainButton" style="display: none;">New Search</button>
-        
         <p>
             Created by <b>Nick</b> |<a href="cresunshine.com/" target="_blank"><b>CRE☀️</b></a>| Last update: <b>11/22/23</b>
         </p>

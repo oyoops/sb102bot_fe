@@ -1,0 +1,29 @@
+
+/*
+    COMPS TABLE:
+*/
+
+/* Title and averages row styling */
+#compsTable th, .averages {
+    background-color: #ddd; /* Your chosen fill color */
+    font-weight: bold;
+}
+
+/* Hover effect for averages row, excluding cells with red fill */
+.averages td:not(.redFill):hover {
+    background-color: #bbb; /* Slightly darker color */
+}
+
+/* Editable body cells styling and hover effect */
+td[contenteditable="true"] {
+    background-color: #ffffe0; /* Yellow background */
+}
+
+td[contenteditable="true"]:hover {
+    background-color: #e0e0a0; /* Slightly darker yellow */
+}
+
+/* Special case for red fill color */
+.redFill {
+    background-color: lightcoral;
+}
