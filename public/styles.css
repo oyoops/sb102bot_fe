@@ -24,7 +24,7 @@ body {
     #mainHeader #mainLogo {
         width: 150px; /* Different main header and logo width on mobile */
         text-align: center;
-        /*display: none;*/
+        opacity: 0;
         margin: 0 auto;
         animation: slideDown 1.5s ease 0.5s forwards;
     }
