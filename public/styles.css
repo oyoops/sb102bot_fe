@@ -24,6 +24,7 @@ body {
     #mainHeader #mainLogo {
         width: 150px; /* Different main header and logo width on mobile */
         text-align: center;
+        display: none;
         margin: 0 auto;
         animation: slideDown 1.5s ease 0.5s forwards;
     }
@@ -50,7 +51,7 @@ body {
 /* Media query to switch stuff based on screen size, with improved readability */
 @media (min-width: 801px) {
     p.form-description {
-        font-size: 0.6em; /* Reduce font size for better readability on mobile */
+        font-size: 0.5em; /* Reduce font size for better readability on mobile */
         animation: slideUp 1.5s ease 0.5s forwards;
     }
 
@@ -176,7 +177,7 @@ form:hover {
 form p {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-    font-size: 12px;
+    font-size: 10px;
     animation: slideUpFadeIn 1.5s forwards 0.5s; /* Ensure the final state persists */
 }
 
@@ -193,7 +194,7 @@ form p {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
     background-color: #f2f4f7;
-    animation: slideUpFadeIn 1s forwards 0.1s; /* Add animation */
+    animation: slideUpFadeIn 0.8s forwards 0.2s;
 }
 
 table, .styled-table, #devProgramTable, #averagesTableContainer {
@@ -202,7 +203,7 @@ table, .styled-table, #devProgramTable, #averagesTableContainer {
     margin: 0 auto;
     border-collapse: collapse;
     background-color: #ffffff;
-    animation: slideUpFadeIn 1s forwards 0.1s; /* Add animation */
+    animation: slideUpFadeIn 1.5s forwards 0.5s;
 }
 table td, table th {
     white-space: nowrap; /* Prevent text wrapping */
@@ -450,8 +451,9 @@ tbody tr:hover {
     width: 100px;  /* or whatever width you desire for the mobile logo */
     height: auto;  /* maintain the aspect ratio */
     display: none; /* by default, hide it if you plan to show it only on smaller screens */
-    margin-left: 10px;
-}
+    margin-right: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;}
 
 /* If you are planning to show the mobile logo on smaller screens using media queries: */
 @media only screen and (max-width: 800px) { /* or whatever breakpoint you use for mobile */
