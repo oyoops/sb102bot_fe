@@ -392,10 +392,11 @@ tbody tr:hover {
 }
 @media only screen and (max-width: 800px) {
     .submit-button {
-        position: absolute;
+        position: relative;
+        /*position: absolute;*/
         width: calc(100% - 40px);
-        left: 20px;
-        bottom: 60px; /* Adjusted to make space for more-options button */
+        /*left: 20px;*/
+        /*bottom: 60px;*/ /* Adjusted to make space for more-options button */
     }
 }
 
