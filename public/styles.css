@@ -51,7 +51,7 @@ body {
 /* Media query to switch stuff based on screen size, with improved readability */
 @media (min-width: 801px) {
     p.form-description {
-        font-size: 0.5em; /* Reduce font size for better readability on mobile */
+        font-size: 0.9em; /* Reduce font size for better readability on mobile */
         animation: slideUp 1.5s ease 0.5s forwards;
     }
 
@@ -78,7 +78,7 @@ body {
 
 h1.titleText {
     font-family: 'Montserrat', sans-serif;
-    font-size: 2.4em;
+    font-size: 2.2em;
     color: #333;
     margin-top: 1px; /* Decreased margin-top */
     font-weight: 700;
@@ -92,7 +92,7 @@ h1.titleText {
 
 p, footer, .submit-button, #tryAgainButton {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.0em;
+    font-size: 0.9em;
     color: #666666;
     font-weight: 500;
     padding-left: 10px;
@@ -256,7 +256,7 @@ tbody tr:hover {
     padding: 10px;
     border-radius: 8px;
     border: none;
-    width: calc(100% - 50px);
+    width: calc(100% - 20px);
     margin-bottom: 5px;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
