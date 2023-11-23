@@ -189,7 +189,7 @@ form p {
 }
 
 /* Generic table styling */
-.table-container, #devProgramContainer, #averagesContainer {
+.table-container, #devProgramContainer, #averagesContainer, #liveLocalContainer {
     overflow: hidden;
     width: auto;
     max-width: 95%;
