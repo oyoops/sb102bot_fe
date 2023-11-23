@@ -278,6 +278,16 @@ tbody tr:hover {
 
 
 
+@media (max-width: 1999px) {
+    form {
+        width: 95%;
+        margin: 0 auto; /* Center the input field */
+        padding: 10px;
+    }
+    #addressInput {
+        font-size: 16px; /* Adjust font size for better readability */
+    }
+}
 /* Responsive styles for smaller screen widths */
 @media (max-width: 1300px) {
     form {
