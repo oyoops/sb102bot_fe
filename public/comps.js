@@ -340,7 +340,7 @@ function generateLiveLocalTable(compsData) {
                 }
 
                 // Initial computation of the averages(/total) row
-                recalculateWeightedAverages();
+                recalculateWeightedAverages(compsData);
             } else {
                 // If the input is not a number or is negative, revert to the previous value
                 cell.textContent = cell.dataset.value;
@@ -874,7 +874,7 @@ window.decrementValue = function(button) {
 };
 
 // Update the recalculateWeightedAverages function to recompute the averages
-function recalculateWeightedAverages() {
+function recalculateWeightedAverages(compsData) {
     let sumPercentages = 0;
     let weightedRents = 0;
     let weightedSqFts = 0;
