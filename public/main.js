@@ -323,4 +323,35 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     // Dynamically load Google Maps APIs
     loadGoogleMapsAPI();
+
+    // Chatbot functionality
+    const chatInput = document.getElementById('chatInput');
+    const chatMessages = document.getElementById('chatMessages');
+    const sendMessageButton = document.getElementById('sendMessageButton');
+
+    // Event listener for the send message button
+    sendMessageButton.addEventListener('click', function() {
+        const message = chatInput.value.trim();
+        if (message) {
+            displayChatMessage(message, 'user');
+            processChatMessage(message);
+            chatInput.value = '';
+        }
+    });
+
+    // Function to display chat messages
+    function displayChatMessage(message, sender) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('chat-message', sender);
+        messageElement.textContent = message;
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+    }
+
+    // Function to process chat messages
+    function processChatMessage(message) {
+        // Placeholder for processing logic
+        displayChatMessage('Processing your message...', 'bot');
+        // TODO: Implement actual processing and response generation
+    }
 });
