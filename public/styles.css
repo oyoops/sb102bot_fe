@@ -1175,6 +1175,9 @@ table, .styled-table {
         align-items: flex-start;
         flex-wrap: nowrap; /* Change wrap to nowrap to prevent stacking */
         margin-bottom: 20px; /* Add some space below the table containers */
+        max-width: 90%; /* Increased max-width to allow tables to spread out more */
+        margin-left: auto; /* Center the table container group */
+        margin-right: auto; /* Center the table container group */
     }
     .table-container-group .table-container {
         width: calc(50% - 4%); /* Adjust width to fit side by side, accounting for margin */
