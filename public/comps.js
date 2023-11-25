@@ -796,7 +796,7 @@ function generateLiveLocalTable(compsData) {
         }
     }*/
 
-    recalculateWeightedAverages();
+    recalculateWeightedAverages(compsData);
 }
 
 // Define the column names
