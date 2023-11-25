@@ -236,6 +236,10 @@ function generateLiveLocalTable(compsData) {
     let totalUnits = 0;
 
     // Create a row for each key and calculate weighted sums
+    if (!compsData || !compsData.compsUnitMixPct) {
+        console.error('recalculateWeightedAverages: compsData or compsData.compsUnitMixPct is undefined or null.');
+        return;
+    }
     Object.keys(compsData.compsUnitMixPct).forEach(key => {
         const percentage = parseFloat(compsData.compsUnitMixPct[key]) / 100;
         let rent = 0, sqFt = 0;
@@ -854,7 +858,8 @@ function handleCellEditKeypress(event) {
     }
 }
 // Function to increment the value of the editable cell
-window.incrementValue = function(button, compsData) {
+window.incrementValue = function(button) {
+    const compsData = this.compsData; // Assuming compsData is available in the current context
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value++;
@@ -864,7 +869,8 @@ window.incrementValue = function(button, compsData) {
 };
 
 // Function to decrement the value of the editable cell
-window.decrementValue = function(button, compsData) {
+window.decrementValue = function(button) {
+    const compsData = this.compsData; // Assuming compsData is available in the current context
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value = value > 0 ? value - 1 : 0; // Prevent negative values
