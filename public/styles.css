@@ -1173,7 +1173,7 @@ table, .styled-table {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        flex-wrap: wrap;
+        flex-wrap: nowrap; /* Change wrap to nowrap to prevent stacking */
         margin-bottom: 20px; /* Add some space below the table containers */
     }
     .table-container-group .table-container {
