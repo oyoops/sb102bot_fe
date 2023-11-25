@@ -430,36 +430,54 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to generate dynamic response using chatbot proxy
-    async function generateDynamicResponse(message) {
-        const response = await fetch('/api/aichat', {
+    // Function to generate dynamic response using OpenAI API
+    async function generateDynamicResponse(message, chatState) {
+        // Create a prompt that includes the entire conversation history
+        const prompt = createPromptWithHistory(chatState);
+
+        // Define the parameters for the OpenAI API call
+        const data = {
+            prompt: prompt,
+            max_tokens: 150,
+            temperature: 0.9,
+            stop: [" Human:", " AI:"], // Stop sequences to control the conversation flow
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0.6
+        };
+
+        // Make the API call to OpenAI
+        const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${OPENAI_API_KEY}`
             },
-            body: JSON.stringify({ message })
+            body: JSON.stringify(data)
         });
-    
-        const replyText = await response.json();
-        displayTypingIndicator(false);
-        return replyText;
+
+        // Handle the API response
+        if (!response.ok) {
+            throw new Error(`Failed to fetch response from OpenAI API: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        return responseData.choices[0].text.trim();
     }
 
-    // Helper function to create prompt from chat history
-    function createPrompt(message, history) {
-        let prompt = `
-            The following is a conversation with an AI assistant.
-            The assistant is helpful, creative, clever, and very friendly.
-            \n\n
-        `;
-        for (const entry of history) {
+    // Helper function to create a prompt that includes the entire conversation history
+    function createPromptWithHistory(chatState) {
+        let prompt = 'The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very
+    friendly.\n\n';
+
+        // Include each message in the history in the prompt
+        chatState.history.forEach(entry => {
             const role = entry.sender === 'user' ? 'Human' : 'AI';
             prompt += `${role}: ${entry.message}\n`;
-        }
-        prompt += `
-            Human: ${message}
-            \nAI:
-        `;
+        });
+
+        // Add the latest message from the user
+        prompt += `Human: ${chatState.context.latestMessage}\nAI:`;
         return prompt;
     }
 
