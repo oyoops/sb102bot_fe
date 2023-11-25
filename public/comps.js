@@ -350,7 +350,7 @@ function generateLiveLocalTable(compsData) {
     });
     
     // Update the recalculateWeightedAverages function to recompute the averages
-    function recalculateWeightedAverages() {
+    function recalculateWeightedAverages(compsData) {
         let sumPercentages = 0;
         let weightedRents = 0;
         let weightedSqFts = 0;
@@ -403,7 +403,7 @@ function generateLiveLocalTable(compsData) {
         }
     }
 
-    recalculateWeightedAverages();
+    recalculateWeightedAverages(compsData);
 }*/
 
 function generateCompsTable(compsData) {
