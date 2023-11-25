@@ -414,14 +414,14 @@ function generateCompsTable(compsData) {
     const numColumns = Object.keys(columnNameToDataKeyMap).length + 1; // +1 for the row title column
 
     // Start generating the table HTML
-    let tableHTML = `<table id="devProgramTable" style="width: 100%;"><tr>`;
+    let tableHTML = `<table id="devProgramTable" style="width: 100%;"><thead><tr>`;
     // Generate the header row
     tableHTML += `<th></th>`; // Empty header for the row titles
     Object.keys(columnNameToDataKeyMap).forEach(key => {
         const columnHeader = getColumnHeaderFromKey(key);
         tableHTML += `<th>${columnHeader}</th>`;
     });
-    tableHTML += '</tr>';
+    tableHTML += '</tr></thead><tbody>';
 
     // Calculate weighted averages and sum of percentages
     let sumPercentages = 0;
@@ -855,7 +855,7 @@ function handleCellEditKeypress(event) {
 }
 // Function to increment the value of the editable cell
 window.incrementValue = function(button) {
-    const editableDiv = button.nextElementSibling;
+    const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value++;
     editableDiv.dataset.value = value;
@@ -865,7 +865,7 @@ window.incrementValue = function(button) {
 
 // Function to decrement the value of the editable cell
 window.decrementValue = function(button) {
-    const editableDiv = button.previousElementSibling;
+    const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value = value > 0 ? value - 1 : 0; // Prevent negative values
     editableDiv.dataset.value = value;
