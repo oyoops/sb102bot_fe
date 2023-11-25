@@ -287,9 +287,9 @@ function generateLiveLocalTable(compsData) {
             if (isEditable) {
                 tableHTML += `
                     <td class="editable-cell-container">
-                        <button class="decrement-btn" onclick="decrementValue(this)">-</button>
+                        <button class="decrement-btn" onclick="decrementValue(this, compsData)">-</button>
                         <div contenteditable="true" class="editable-cell" data-value="${dataset[key]}" data-category="${category}" data-key="${key}">${formattedValue}</div>
-                        <button class="increment-btn" onclick="incrementValue(this)">+</button>
+                        <button class="increment-btn" onclick="incrementValue(this, compsData)">+</button>
                     </td>
                 `;
             } else {
@@ -857,7 +857,7 @@ function handleCellEditKeypress(event) {
         }
     }
 }
-window.incrementValue = function(button) {
+window.incrementValue = function(button, compsData) {
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value++;
@@ -871,7 +871,7 @@ window.incrementValue = function(button) {
     }
 };
 
-window.decrementValue = function(button) {
+window.decrementValue = function(button, compsData) {
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value = value > 0 ? value - 1 : 0;
