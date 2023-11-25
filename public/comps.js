@@ -857,24 +857,32 @@ function handleCellEditKeypress(event) {
         }
     }
 }
-// Function to increment the value of the editable cell
-window.incrementValue = function(button, compsData) {
+window.incrementValue = function(button) {
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value++;
     editableDiv.dataset.value = value;
     editableDiv.textContent = value;
-    recalculateWeightedAverages(compsData);
+    // Ensure compsData is defined in the scope where incrementValue is called
+    if (typeof compsData !== 'undefined') {
+        recalculateWeightedAverages(compsData);
+    } else {
+        console.error('incrementValue: compsData is undefined.');
+    }
 };
 
-// Function to decrement the value of the editable cell
-window.decrementValue = function(button, compsData) {
+window.decrementValue = function(button) {
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value = value > 0 ? value - 1 : 0; // Prevent negative values
     editableDiv.dataset.value = value;
     editableDiv.textContent = value;
-    recalculateWeightedAverages(compsData);
+    // Ensure compsData is defined in the scope where decrementValue is called
+    if (typeof compsData !== 'undefined') {
+        recalculateWeightedAverages(compsData);
+    } else {
+        console.error('decrementValue: compsData is undefined.');
+    }
 };
 
 // Update the recalculateWeightedAverages function to recompute the averages
