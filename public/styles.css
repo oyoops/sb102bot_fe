@@ -1170,12 +1170,12 @@ table, .styled-table {
 @media (min-width: 1024px) { /* Adjust breakpoint as needed for desktop */
     .table-container-group {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: flex-start;
-        flex-wrap: wrap;
+        flex-wrap: nowrap; /* Change wrap to nowrap to prevent stacking */
     }
     .table-container-group .table-container {
-        width: 45%; /* Adjust width to fit side by side */
+        width: calc(50% - 4%); /* Adjust width to fit side by side, accounting for margin */
         margin: 0 2%; /* Add some space between the tables */
     }
 }
