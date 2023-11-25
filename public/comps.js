@@ -857,31 +857,31 @@ function handleCellEditKeypress(event) {
         }
     }
 }
-window.incrementValue = function(button, compsData) {
+window.incrementValue = function(button) {
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value++;
     editableDiv.dataset.value = value;
     editableDiv.textContent = value;
     // Check if compsData is defined globally
-    if (window.compsData && typeof window.compsData.compsUnitMixPct !== 'undefined') {
-        recalculateWeightedAverages(window.compsData);
+    if (typeof compsData !== 'undefined' && compsData && typeof compsData.compsUnitMixPct !== 'undefined') {
+        recalculateWeightedAverages(compsData);
     } else {
-        console.error('incrementValue: compsData is undefined or compsUnitMixPct is not set.', window.compsData);
+        console.error('incrementValue: compsData is undefined or compsUnitMixPct is not set.', compsData);
     }
 };
 
-window.decrementValue = function(button, compsData) {
+window.decrementValue = function(button) {
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value = value > 0 ? value - 1 : 0;
     editableDiv.dataset.value = value;
     editableDiv.textContent = value;
     // Check if compsData is defined globally
-    if (window.compsData && typeof window.compsData.compsUnitMixPct !== 'undefined') {
-        recalculateWeightedAverages(window.compsData);
+    if (typeof compsData !== 'undefined' && compsData && typeof compsData.compsUnitMixPct !== 'undefined') {
+        recalculateWeightedAverages(compsData);
     } else {
-        console.error('decrementValue: compsData is undefined or compsUnitMixPct is not set.', window.compsData);
+        console.error('decrementValue: compsData is undefined or compsUnitMixPct is not set.', compsData);
     }
 };
 
