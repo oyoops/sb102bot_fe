@@ -858,8 +858,7 @@ function handleCellEditKeypress(event) {
     }
 }
 // Function to increment the value of the editable cell
-window.incrementValue = function(button) {
-    const compsData = this.compsData; // Assuming compsData is available in the current context
+window.incrementValue = function(button, compsData) {
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value++;
@@ -869,8 +868,7 @@ window.incrementValue = function(button) {
 };
 
 // Function to decrement the value of the editable cell
-window.decrementValue = function(button) {
-    const compsData = this.compsData; // Assuming compsData is available in the current context
+window.decrementValue = function(button, compsData) {
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value = value > 0 ? value - 1 : 0; // Prevent negative values
