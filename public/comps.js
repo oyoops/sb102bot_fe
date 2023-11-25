@@ -879,6 +879,11 @@ window.decrementValue = function(button, compsData) {
 
 // Update the recalculateWeightedAverages function to recompute the averages
 function recalculateWeightedAverages(compsData) {
+    if (!compsData || !compsData.compsUnitMixPct) {
+        console.error('recalculateWeightedAverages: compsData or compsData.compsUnitMixPct is undefined or null.');
+        return;
+    }
+    
     let sumPercentages = 0;
     let weightedRents = 0;
     let weightedSqFts = 0;
