@@ -10,7 +10,7 @@ import {
     enableLiveLocalSwitch, debugModeCheckbox, superchargeSwitch,
     customInstructionsInput,
     //compsTable,
-    devProgramContainer, devProgramTable
+    devProgramContainer, devProgramTable, liveLocalTable
 } from './domElements.js';
 
 
@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
             devProgramContainer.style.display = 'block';
             devProgramTable.style.display = 'table';
 
+            liveLocalTable.style.display = 'block';
             // ...
             
 

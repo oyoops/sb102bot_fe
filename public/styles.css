@@ -200,7 +200,7 @@ form p {
     animation: slideUpFadeIn 0.8s forwards 0.2s;
 }
 
-table, .styled-table, #devProgramTable, #averagesTableContainer {
+table, .styled-table, #devProgramTable, #averagesTableContainer, #liveLocalTable {
     width: auto;
     max-width: 95%;
     margin: 0 auto;
