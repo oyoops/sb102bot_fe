@@ -280,13 +280,17 @@ function generateLiveLocalTable(compsData) {
                     break;
             }
             
-            const contentEditable = isEditable ? 'contenteditable' : 'false';
-            const editableStyle = isEditable ? 'style="color: blue; background-color: #ffffe0;"' : '';
-            // Store the numeric value in a data attribute for calculations and display the formatted value
-            const dataValue = isEditable ? `data-value="${dataset[key]}"` : '';
-            // Apply formatting immediately for all cells
-            const displayValue = formattedValue;
-            tableHTML += `<td ${contentEditable} ${editableStyle} ${dataValue} data-category="${category}" data-key="${key}">${displayValue}</td>`;
+            if (isEditable) {
+                tableHTML += `
+                    <td class="editable-cell-container">
+                        <button class="decrement-btn" onclick="decrementValue(this)">-</button>
+                        <div contenteditable="true" class="editable-cell" data-value="${dataset[key]}" data-category="${category}" data-key="${key}">${formattedValue}</div>
+                        <button class="increment-btn" onclick="incrementValue(this)">+</button>
+                    </td>
+                `;
+            } else {
+                tableHTML += `<td>${formattedValue}</td>`;
+            }
         });
         tableHTML += '</tr>';
     });
@@ -834,4 +838,23 @@ function handleCellEditKeypress(event) {
             }
         }
     }
+}
+// Function to increment the value of the editable cell
+function incrementValue(button) {
+    const editableDiv = button.nextElementSibling;
+    let value = parseInt(editableDiv.dataset.value);
+    value++;
+    editableDiv.dataset.value = value;
+    editableDiv.textContent = value;
+    recalculateWeightedAverages();
+}
+
+// Function to decrement the value of the editable cell
+function decrementValue(button) {
+    const editableDiv = button.previousElementSibling;
+    let value = parseInt(editableDiv.dataset.value);
+    value = value > 0 ? value - 1 : 0; // Prevent negative values
+    editableDiv.dataset.value = value;
+    editableDiv.textContent = value;
+    recalculateWeightedAverages();
 }
