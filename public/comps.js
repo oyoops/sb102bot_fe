@@ -867,7 +867,7 @@ window.incrementValue = function(button) {
     if (window.compsData && typeof window.compsData.compsUnitMixPct !== 'undefined') {
         recalculateWeightedAverages(window.compsData);
     } else {
-        console.error('incrementValue: compsData is undefined or compsUnitMixPct is not set.');
+        console.error('incrementValue: compsData is undefined or compsUnitMixPct is not set.', window.compsData);
     }
 };
 
@@ -881,7 +881,7 @@ window.decrementValue = function(button) {
     if (window.compsData && typeof window.compsData.compsUnitMixPct !== 'undefined') {
         recalculateWeightedAverages(window.compsData);
     } else {
-        console.error('decrementValue: compsData is undefined or compsUnitMixPct is not set.');
+        console.error('decrementValue: compsData is undefined or compsUnitMixPct is not set.', window.compsData);
     }
 };
 
