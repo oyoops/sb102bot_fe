@@ -542,7 +542,7 @@ function generateCompsTable(compsData) {
                 }
 
                 // Initial computation of the averages(/total) row
-                recalculateWeightedAverages();
+                recalculateWeightedAverages(compsData);
             } else {
                 // If the input is not a number or is negative, revert to the previous value
                 cell.textContent = cell.dataset.value;
