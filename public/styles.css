@@ -432,7 +432,9 @@ tbody tr:hover {
 
 :root {
     /* Default blue hue */
-    --hue: 185; 
+    --hue: 185;
+    /* Transition for hue change */
+    transition: --hue 1s ease;
 
     /* Computed colors */
     --primary-color: hsl(var(--hue), 60%, 80%); 

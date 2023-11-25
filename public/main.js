@@ -206,17 +206,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // All other uses
                 eligPath = "no";
             }
-            // Set site colors based on eligibility
-            if (eligPath == "multi") {
-                document.documentElement.style.setProperty('--hue', '360'); // red
-                //document.documentElement.style.setProperty('--hue', '25'); // orange
-            } else if (eligPath == "yes") {
-                document.documentElement.style.setProperty('--hue', '120'); // green
-            } else if (eligPath == "no") {
-                document.documentElement.style.setProperty('--hue', '360'); // red
-            } else {
-                document.documentElement.style.setProperty('--hue', '360'); // red
-            }
+            // Set site colors based on eligibility with fade effect
+            const rootStyle = document.documentElement.style;
+            const newHue = eligPath === "multi" ? '360' : eligPath === "yes" ? '120' : '360';
+            rootStyle.setProperty('--hue', newHue);
 
             /*// * If LLA Module = Enabled && Parcel Eligibility = True,
             //   then populate and show Table #2 (Comps avg. vs Affordable max. rents comparison)
