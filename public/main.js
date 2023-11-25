@@ -441,6 +441,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     
         const replyText = await response.json();
+        displayTypingIndicator(false);
         return replyText;
     }
 
