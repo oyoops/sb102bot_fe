@@ -209,8 +209,11 @@ const rowTitlesFromDataKeyMap = {
 
 
 function generateLiveLocalTable(compsData) {
-    const container = document.getElementById('liveLocalTable'); // This ID should be unique for the new table
-    container.innerHTML = ''; // Clear any existing content for the new table
+    // Create a new div element to act as a container for the table
+    const container = document.createElement('div');
+    container.className = 'table-container';
+    container.id = 'liveLocalTableContainer'; // Assign a unique ID to the new container
+    container.style.display = 'none'; // Initially hidden, will be made visible in the script when needed
 
     // Calculate the number of columns (N)
     const numColumns = Object.keys(columnNameToDataKeyMap).length + 1; // +1 for the row title column
