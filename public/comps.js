@@ -477,9 +477,9 @@ function generateCompsTable(compsData) {
             if (isEditable) {
                 tableHTML += `
                     <td class="editable-cell-container">
-                        <button class="decrement-btn" onclick="decrementValue(this)">-</button>
+                        <button class="decrement-btn" onclick="decrementValue(this,compsData)">-</button>
                         <div contenteditable="true" class="editable-cell" data-value="${dataset[key]}" data-category="${category}" data-key="${key}">${formattedValue}</div>
-                        <button class="increment-btn" onclick="incrementValue(this)">+</button>
+                        <button class="increment-btn" onclick="incrementValue(this,compsData)">+</button>
                     </td>
                 `;
             } else {
@@ -733,7 +733,7 @@ function generateLiveLocalTable(compsData) {
                 }
 
                 // Initial computation of the averages(/total) row
-                recalculateWeightedAverages();
+                recalculateWeightedAverages(compsData);
             } else {
                 // If the input is not a number or is negative, revert to the previous value
                 cell.textContent = cell.dataset.value;
@@ -854,23 +854,23 @@ function handleCellEditKeypress(event) {
     }
 }
 // Function to increment the value of the editable cell
-window.incrementValue = function(button) {
+window.incrementValue = function(button, compsData) {
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value++;
     editableDiv.dataset.value = value;
     editableDiv.textContent = value;
-    recalculateWeightedAverages();
+    recalculateWeightedAverages(compsData);
 };
 
 // Function to decrement the value of the editable cell
-window.decrementValue = function(button) {
+window.decrementValue = function(button, compsData) {
     const editableDiv = button.parentElement.querySelector('.editable-cell');
     let value = parseInt(editableDiv.dataset.value);
     value = value > 0 ? value - 1 : 0; // Prevent negative values
     editableDiv.dataset.value = value;
     editableDiv.textContent = value;
-    recalculateWeightedAverages();
+    recalculateWeightedAverages(compsData);
 };
 
 // Update the recalculateWeightedAverages function to recompute the averages
