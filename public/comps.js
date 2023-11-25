@@ -472,7 +472,19 @@ function generateCompsTable(compsData) {
                     formattedValue = `$${parseFloat(formattedValue).toFixed(2)}/SF`;
                     break;
             }
-            
+
+            if (isEditable) {
+                tableHTML += `
+                    <td class="editable-cell-container">
+                        <button class="decrement-btn" onclick="decrementValue(this)">-</button>
+                        <div contenteditable="true" class="editable-cell" data-value="${dataset[key]}" data-category="${category}" data-key="${key}">${formattedValue}</div>
+                        <button class="increment-btn" onclick="incrementValue(this)">+</button>
+                    </td>
+                `;
+            } else {
+                tableHTML += `<td>${formattedValue}</td>`;
+            }
+
             const contentEditable = isEditable ? 'contenteditable' : 'false';
             const editableStyle = isEditable ? 'style="color: blue; background-color: #ffffe0;"' : '';
             // Store the numeric value in a data attribute for calculations and display the formatted value
