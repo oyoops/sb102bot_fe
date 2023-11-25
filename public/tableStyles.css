@@ -26,4 +26,39 @@ td[contenteditable="true"]:hover {
 /* Special case for red fill color */
 .redFill {
     background-color: lightcoral;
+}/* Increment and decrement button styles */
+.increment-btn, .decrement-btn {
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 2px 5px;
+    margin: 0 2px;
+    font-size: 0.8em;
+}
+
+/* Hover effect for increment and decrement buttons */
+.increment-btn:hover, .decrement-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* Disable text selection for buttons */
+.increment-btn, .decrement-btn {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Container for the editable cell and buttons */
+.editable-cell-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style for the editable cell within the container */
+.editable-cell-container .editable-cell {
+    margin: 0 5px;
+    text-align: center;
+    min-width: 50px; /* Ensure the cell is not too narrow */
 }

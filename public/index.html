@@ -170,7 +170,17 @@
     <div id="twoTables" class="table-container-group">
         <div id="devProgramContainer" class="table-container" style="display: none;">
             <div id="devProgramTable" class="styled-table" style="display: none">
-                <!-- Table HTML will be inserted here -->
+                <!-- Example of a table row with increment and decrement buttons for an editable cell -->
+                <tr>
+                    <td>Example Unit Type</td>
+                    <td class="editable-cell-container">
+                        <button class="decrement-btn">-</button>
+                        <div contenteditable="true" class="editable-cell">100</div>
+                        <button class="increment-btn">+</button>
+                    </td>
+                    <!-- ... other cells ... -->
+                </tr>
+                <!-- Note: Repeat the above structure for each editable cell in your dynamically generated tables -->
             </div>
             <p>
                 <i>This is my suggestion for your development program.
