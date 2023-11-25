@@ -467,8 +467,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Helper function to create a prompt that includes the entire conversation history
     function createPromptWithHistory(chatState) {
-        let prompt = 'The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very
-    friendly.\n\n';
+        let prompt = 'The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\n';
 
         // Include each message in the history in the prompt
         chatState.history.forEach(entry => {
