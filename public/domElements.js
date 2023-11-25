@@ -23,6 +23,9 @@ const tryAgainButton = document.getElementById("tryAgainButton");
 // AI response div
 const eligibilityDiv = document.getElementById("eligibilityStatus");
 
+// Chatbot div
+const chatbotDiv = document.getElementById("chatInterface");
+
 // Tables and their elements
 const rentInfoContainer = document.getElementById('rentInfoContainer');
 const countyMaxRentsTable = document.getElementById('countyMaxRentsTable');
@@ -50,6 +53,7 @@ export {
     googlemap,
     tryAgainButton,
     eligibilityDiv,
+    chatbotDiv,
     compsTable,
     rentInfoContainer,
     countyMaxRentsTable,

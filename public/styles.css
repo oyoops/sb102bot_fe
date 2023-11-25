@@ -1192,14 +1192,20 @@ table, .styled-table {
         margin-bottom: 20px; /* Add some space below each table container */
     }
 }
+
+
+
+
+
 /* Chat Interface Styles */
-.chat-interface {
+ .chat-interface {
     width: 100%;
     max-width: 600px;
+    /*max-width: 600px;*/
     margin: 20px auto;
     padding: 10px;
     background-color: #f7f9fc;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -1222,16 +1228,70 @@ table, .styled-table {
 .send-message-button {
     padding: 10px 20px;
     background-color: #348dec;
+    font-family: 'Montserrat', sans-serif;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    margin-top: 5px;
+    border-radius: 12px;
     cursor: pointer;
 }
 
-.send-message-button:hover {
-    background-color: #267ac8;
+/* Typing indicator styles */
+.typing-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
 }
 
-.send-message-button:active {
-    background-color: #1a5a96;
+.typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background-color: #888;
+    border-radius: 50%;
+    animation: typing-blink 1.4s infinite;
+}
+
+@keyframes typing-blink {
+    0% { background-color: #888; }
+    50% { background-color: #ccc; }
+    100% { background-color: #888; }
+}
+
+/* Improved message formatting */
+.chat-message {
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 15px;
+    display: inline-block;
+    max-width: 80%;
+}
+
+.chat-message.user {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+    margin-right: 10px;
+    word-wrap: break-word;
+}
+
+.chat-message.bot {
+    background-color: #e5e5ea;
+    align-self: flex-start;
+    margin-left: 10px;
+    word-wrap: break-word;
+}
+
+/* Enhancements for better readability and engagement */
+.chat-message {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    max-width: 75%; /* Adjusted for better readability */
+}
+
+/* Styles for error messages */
+.chat-message.error {
+    background-color: #ffdddd;
+    border-left: 4px solid #ff5c5c;
 }

@@ -10,7 +10,8 @@ import {
     enableLiveLocalSwitch, debugModeCheckbox, superchargeSwitch,
     customInstructionsInput,
     //compsTable,
-    devProgramContainer, devProgramTable, liveLocalContainer, liveLocalTable
+    devProgramContainer, devProgramTable, liveLocalContainer, liveLocalTable,
+    chatbotDiv
 } from './domElements.js';
 
 
@@ -254,23 +255,17 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 // Generate AI summary HTML content
                 const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugModeSwitch, customInstructionsText);
-                /*
-                [MOVED TO WITHIN AI MODULE]
-                // Trigger slide-down fade-out animation for primary AI responses
-                const primaryResponsesContainer = document.getElementById("primaryResponsesContainer");
-                primaryResponsesContainer.classList.add('slideDownFadeOut');
-                // Set a timeout to remove primary responses from display after the animation ends
-                setTimeout(() => {
-                    primaryResponsesContainer.style.display = 'none';
-                }, 2000); // Assuming the animation duration is 2 seconds
-                */
+
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
+                // Show chatbot
+                ///////////////////chatInterface.style.display = 'block';
                 // Show AI summary response
                 eligibilityDiv.innerHTML = aiContentHTML;
                 eligibilityDiv.style.display = 'block';
                 window.scrollTo(0, 0);
                 animateTextFadeIn(eligibilityDiv);
+                
             } catch (error) {
                 console.error('Error:', error);
                 handleAIError(error);
@@ -328,6 +323,69 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatInput = document.getElementById('chatInput');
     const chatMessages = document.getElementById('chatMessages');
     const sendMessageButton = document.getElementById('sendMessageButton');
+    const chatState = {
+        history: [],
+        context: {},
+        threads: {},
+        currentThread: null
+    };
+   
+    // Function to process chat messages
+    async function processChatMessage(message) {
+        // Add user message to chat history
+        chatState.history.push({ message, sender: 'user' });
+        updateContext(message);
+   
+        // Simulate typing indicator
+        displayTypingIndicator(true);
+   
+        // Generate a dynamic response using OpenAI API
+        try {
+            const response = await generateDynamicResponse(message, chatState);
+            displayTypingIndicator(false);
+            displayChatMessage(response, 'bot');
+            handleContextSwitching(response);
+        } catch (error) {
+            displayTypingIndicator(false);
+            displayChatMessage("I'm sorry, I'm having trouble understanding. Could you rephrase that?", 'bot');
+            console.error('Error generating dynamic response:', error);
+        }
+    }
+   
+     // Function to update the chat context based on the message
+    function updateContext(message) {
+        // Example logic to update context based on message content
+        // Extract key information such as user preferences or topics
+        const preferencesRegex = /prefer (?:to|the) ([^\.\?\!]+)/i;
+        const match = preferencesRegex.exec(message);
+        if (match) {
+            chatState.context.preferences = match[1];
+        }
+
+        // Update the context with the latest message
+        chatState.context.latestMessage = message;
+    }
+
+    // Function to handle context switching within conversations
+    function handleContextSwitching(response) {
+        // Example logic to handle context-switching
+        // Detect topic shifts based on the latest user message and updated context
+        const topicShiftRegex = /let's talk about (?:the )?([^\.\?\!]+)/i;
+        const match = topicShiftRegex.exec(response);
+        if (match) {
+            const newTopic = match[1];
+            if (!chatState.threads[newTopic]) {
+                chatState.threads[newTopic] = { history: [] };
+            }
+            chatState.currentThread = newTopic;
+        }
+
+        // Manage transitions between different conversation threads
+        if (chatState.currentThread) {
+            chatState.threads[chatState.currentThread].history.push(response);
+        }
+    }
+
 
     // Event listener for the send message button
     sendMessageButton.addEventListener('click', function() {
@@ -336,6 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
             displayChatMessage(message, 'user');
             processChatMessage(message);
             chatInput.value = '';
+            displayTypingIndicator(true);
         }
     });
 
@@ -346,12 +405,61 @@ document.addEventListener('DOMContentLoaded', function() {
         messageElement.textContent = message;
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+        if (sender === 'bot') {
+            chatState.history.push({ message, sender });
+        }
     }
 
-    // Function to process chat messages
-    function processChatMessage(message) {
-        // Placeholder for processing logic
-        displayChatMessage('Processing your message...', 'bot');
-        // TODO: Implement actual processing and response generation
+    // Function to display typing indicator
+    function displayTypingIndicator(show) {
+        if (show) {
+            const typingIndicator = document.createElement('div');
+            typingIndicator.classList.add('typing-indicator');
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('span');
+                dot.textContent = '.';
+                typingIndicator.appendChild(dot);
+            }
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        } else {
+            const typingIndicator = document.querySelector('.typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
     }
+
+    // Function to generate dynamic response using chatbot proxy
+    async function generateDynamicResponse(message) {
+        const response = await fetch('/api/aichat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message })
+        });
+    
+        const replyText = await response.json();
+        return replyText;
+    }
+
+    // Helper function to create prompt from chat history
+    function createPrompt(message, history) {
+        let prompt = `
+            The following is a conversation with an AI assistant.
+            The assistant is helpful, creative, clever, and very friendly.
+            \n\n
+        `;
+        for (const entry of history) {
+            const role = entry.sender === 'user' ? 'Human' : 'AI';
+            prompt += `${role}: ${entry.message}\n`;
+        }
+        prompt += `
+            Human: ${message}
+            \nAI:
+        `;
+        return prompt;
+    }
+
 });
