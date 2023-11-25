@@ -1167,18 +1167,6 @@ table, .styled-table {
     animation: slideDownFadeOut 1s ease forwards;
 }
 
-@media (min-width: 1024px) { /* Adjust breakpoint as needed for desktop */
-    .table-container-group {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        flex-wrap: nowrap; /* Change wrap to nowrap to prevent stacking */
-    }
-    .table-container-group .table-container {
-        width: calc(50% - 4%); /* Adjust width to fit side by side, accounting for margin */
-        margin: 0 2%; /* Add some space between the tables */
-    }
-}
 /* Desktop specific styles for side-by-side tables */
 @media (min-width: 1024px) { /* Adjust breakpoint as needed for desktop */
     .table-container-group {
