@@ -208,6 +208,7 @@ const rowTitlesFromDataKeyMap = {
 };
 
 
+/*
 function generateLiveLocalTable(compsData) {
     // Create a new div element to act as a container for the table
     const container = document.createElement('div');
@@ -399,7 +400,7 @@ function generateLiveLocalTable(compsData) {
     }
 
     recalculateWeightedAverages();
-}
+}*/
 
 function generateCompsTable(compsData) {
     const container = document.getElementById('devProgramTable');
@@ -590,6 +591,195 @@ function generateCompsTable(compsData) {
     recalculateWeightedAverages();
 }
 
+// Generate Live Local table
+function generateLiveLocalTable(compsData) {
+    const container = document.getElementById('liveLocalTable');
+    container.innerHTML = ''; // Clear any existing content
+
+    // Calculate the number of columns (N)
+    const numColumns = Object.keys(columnNameToDataKeyMap).length + 1; // +1 for the row title column
+
+    // Start generating the table HTML
+    let tableHTML = `<table id="liveLocalTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`;
+    // Generate each row
+    Object.keys(columnNameToDataKeyMap).forEach(key => {
+        const columnHeader = getColumnHeaderFromKey(key);
+        tableHTML += `<th style="width: ${100 / numColumns}%;">${columnHeader}</th>`;
+    });
+    tableHTML += '</tr>';
+
+    // Calculate weighted averages and sum of percentages
+    let sumPercentages = 0;
+    let weightedRents = 0;
+    let weightedSqFts = 0;
+    let totalUnits = 0;
+
+    // Create a row for each key and calculate weighted sums
+    Object.keys(compsData.compsUnitMixPct).forEach(key => {
+        const percentage = parseFloat(compsData.compsUnitMixPct[key]) / 100;
+        let rent = 0, sqFt = 0;
+    
+        if (compsData.compsRents && compsData.compsRents.hasOwnProperty(key)) {
+            rent = parseFloat(compsData.compsRents[key]);
+        } else {
+            console.log("compsData.compsRents value: \n" + compsData.compsRents);
+        }
+
+        if (compsData.compsSqFts && compsData.compsSqFts.hasOwnProperty(key)) {
+            sqFt = parseFloat(compsData.compsSqFts[key]);
+        } else {
+            console.log("compsData.compsSqFts value: \n" + compsData.compsSqFts);
+        }
+        
+        sumPercentages += parseFloat(compsData.compsUnitMixPct[key]);
+        weightedRents += rent * percentage;
+        weightedSqFts += sqFt * percentage;
+        totalUnits += percentage;
+
+        tableHTML += `<tr><td>${rowTitlesFromDataKeyMap[key]}</td>`;
+
+        Object.entries(columnNameToDataKeyMap).forEach(([columnName, dataKey]) => {
+            const dataset = compsData[dataKey];
+            const category = columnName;
+            const isEditable = category !== 'Rent/SF';
+            let formattedValue = dataset[key];
+
+            switch (category) {
+                case 'Mix %':
+                    formattedValue = `${parseInt(formattedValue).toFixed(1)}%`;
+                    break;
+                case 'Rent':
+                    formattedValue = `$${parseInt(formattedValue).toLocaleString()}`;
+                    break;
+                case 'Avg. SF':
+                    formattedValue = `${parseInt(formattedValue).toLocaleString()} SF`;
+                    break;
+                case 'Rent/SF':
+                    formattedValue = `$${parseFloat(formattedValue).toFixed(2)}/SF`;
+                    break;
+            }
+            
+            const contentEditable = isEditable ? 'contenteditable' : 'false';
+            const editableStyle = isEditable ? 'style="color: blue; background-color: #ffffe0;"' : '';
+            // Store the numeric value in a data attribute for calculations and display the formatted value
+            const dataValue = isEditable ? `data-value="${dataset[key]}"` : '';
+            // Apply formatting immediately for all cells
+            const displayValue = formattedValue;
+            tableHTML += `<td ${contentEditable} ${editableStyle} ${dataValue} data-category="${category}" data-key="${key}">${displayValue}</td>`;
+        });
+        tableHTML += '</tr>';
+    });
+
+    // Add the averages row w/ bold font and darker background color
+    const avgRowStyle = 'style="font-weight: bold; background-color: #ddd;"';
+    tableHTML += `<tr class="averages" ${avgRowStyle}><td>Avgs</td>`;
+    tableHTML += `<td class="avgPercentage">${parseInt(sumPercentages).toFixed(1)}%</td>`; // Sum of percentages
+    tableHTML += `<td class="avgRent">$${parseInt(weightedRents / totalUnits).toLocaleString()}</td>`; // Weighted average of Rents
+    tableHTML += `<td class="avgSqFt">${parseInt(weightedSqFts / totalUnits).toLocaleString()} SF</td>`; // Weighted average of SqFts
+    tableHTML += `<td class="avgRentPerSqFt">$${(weightedRents / weightedSqFts).toFixed(2)}/SF</td>`; // Weighted average of RentPerSqFts
+    tableHTML += `</tr>`;
+
+    tableHTML += '</table>';
+    container.innerHTML = tableHTML; // Set the innerHTML to the new table
+
+    // Add event listeners for editable cells and handle focus and blur events for formatting
+    container.querySelectorAll('td[contenteditable]').forEach(cell => {
+        cell.addEventListener('focus', event => {
+            // Show only the number for editing
+            event.target.textContent = event.target.dataset.value;
+        });
+        cell.addEventListener('keypress', event => {
+            handleCellEditKeypress(event);
+        });
+        cell.addEventListener('blur', event => {
+            const cell = event.target;
+            const category = cell.dataset.category; // Get the category from the cell's data attribute
+            const newValue = parseFloat(cell.textContent.replace(/[^0-9.-]+/g, ""));
+        
+            if (!isNaN(newValue) && newValue >= 0) {
+                cell.dataset.value = newValue; // Update the data-value attribute
+                // Reapply formatting based on the category
+                switch (category) {
+                    case 'Mix %':
+                        cell.textContent = `${newValue.toFixed(1)}%`;
+                        break;
+                    case 'Rent':
+                        cell.textContent = `$${newValue.toLocaleString()}`;
+                        break;
+                    case 'Avg. SF':
+                        cell.textContent = `${newValue.toLocaleString()} SF`;
+                        break;
+                    case 'Rent/SF':
+                        cell.textContent = `$${newValue.toFixed(2)}/SF`;
+                        break;
+                }
+
+                // Initial computation of the averages(/total) row
+                recalculateWeightedAverages();
+            } else {
+                // If the input is not a number or is negative, revert to the previous value
+                cell.textContent = cell.dataset.value;
+                alert('Please enter a positive number.');
+            }
+        });
+    });
+    
+    // Update the recalculateWeightedAverages function to recompute the averages
+    function recalculateWeightedAverages() {
+        let sumPercentages = 0;
+        let weightedRents = 0;
+        let weightedSqFts = 0;
+        let totalUnits = 0;
+
+        // Iterate over each row to calculate the new weighted averages
+        Object.keys(compsData.compsUnitMixPct).forEach(key => {
+            const percentageCell = document.querySelector(`td[data-category="Mix %"][data-key="${key}"]`);
+            const rentCell = document.querySelector(`td[data-category="Rent"][data-key="${key}"]`);
+            const sqFtCell = document.querySelector(`td[data-category="Avg. SF"][data-key="${key}"]`);
+            const rentPerSqFtCell = document.querySelector(`td[data-category="Rent/SF"][data-key="${key}"]`);
+
+            const weight = parseFloat(percentageCell.dataset.value) / 100;
+            const rent = parseFloat(rentCell.dataset.value);
+            const sqFt = parseFloat(sqFtCell.dataset.value);
+
+            // Calculate the rent per square foot for the current row
+            const rentPerSqFt = sqFt !== 0 ? (rent / sqFt).toFixed(2) : 'N/A';
+            // Update the rent per square foot cell
+            rentPerSqFtCell.textContent = sqFt !== 0 ? `$${rentPerSqFt}/SF` : rentPerSqFt;
+            rentPerSqFtCell.dataset.value = rentPerSqFt;
+
+            sumPercentages += parseFloat(percentageCell.dataset.value);
+            weightedRents += rent * weight;
+            weightedSqFts += sqFt * weight;
+            totalUnits += weight;
+        });
+
+        // Calculate the weighted averages
+        const averageWeightedRent = (weightedRents / totalUnits).toFixed(0);
+        const averageWeightedSqft = (weightedSqFts / totalUnits).toFixed(0);
+        const averageWeightedRentPerSqft = (weightedRents / weightedSqFts).toFixed(2);
+
+        // Update the averages row with the new values
+        const avgRentCell = document.querySelector('.avgRent');
+        const avgSqFtCell = document.querySelector('.avgSqFt');
+        const avgRentPerSqFtCell = document.querySelector('.avgRentPerSqFt');
+        const avgPercentageCell = document.querySelector('.avgPercentage'); // Get the average percentage cell
+
+        if (avgRentCell) avgRentCell.textContent = `$${parseInt(averageWeightedRent).toLocaleString()}`;
+        if (avgSqFtCell) avgSqFtCell.textContent = `${parseInt(averageWeightedSqft).toLocaleString()} SF`;
+        if (avgRentPerSqFtCell) avgRentPerSqFtCell.textContent = `$${parseFloat(averageWeightedRentPerSqft).toFixed(2)}/SF`;
+        if (avgPercentageCell) avgPercentageCell.textContent = `${sumPercentages.toFixed(0)}%`; // Update the sum of percentages
+
+        // Change the background color of the average percentage cell based on the sum of percentages
+        if (sumPercentages.toFixed(0) !== '100') {
+            avgPercentageCell.classList.add('redFill'); // If not 100%, add red background
+        } else {
+            avgPercentageCell.classList.remove('redFill'); // If 100%, remove red background
+        }
+    }
+
+    recalculateWeightedAverages();
+}
 
 // Define the column names
 function getColumnHeaderFromKey(key) {

@@ -31,6 +31,8 @@ const compsTable = document.getElementById('compsTable');
 
 const devProgramContainer = document.getElementById('devProgramContainer');
 const devProgramTable = document.getElementById('devProgramTable');
+const liveLocalContainer = document.getElementById('liveLocalContainer');
+const liveLocalTable = document.getElementById('liveLocalTable');
 
 
 export {
@@ -53,5 +55,7 @@ export {
     countyMaxRentsTable,
     rentsTableBody,
     devProgramContainer,
-    devProgramTable
+    devProgramTable,
+    liveLocalContainer,
+    liveLocalTable
 };

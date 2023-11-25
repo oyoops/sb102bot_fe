@@ -10,7 +10,7 @@ import {
     enableLiveLocalSwitch, debugModeCheckbox, superchargeSwitch,
     customInstructionsInput,
     //compsTable,
-    devProgramContainer, devProgramTable, liveLocalTable
+    devProgramContainer, devProgramTable, liveLocalContainer, liveLocalTable
 } from './domElements.js';
 
 
@@ -155,9 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
             devProgramContainer.style.display = 'block';
             devProgramTable.style.display = 'table';
 
-            liveLocalTable.style.display = 'block';
-            // ...
-            
+            liveLocalContainer.style.display = 'block';
+            liveLocalTable.style.display = 'table';
 
             // CITY DATA
             const cityData = await checkCity(geocodeData);        
