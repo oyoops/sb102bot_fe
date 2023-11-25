@@ -414,11 +414,12 @@ function generateCompsTable(compsData) {
     const numColumns = Object.keys(columnNameToDataKeyMap).length + 1; // +1 for the row title column
 
     // Start generating the table HTML
-    let tableHTML = `<table id="devProgramTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`;
-    // Generate each row
+    let tableHTML = `<table id="devProgramTable" style="width: 100%;"><tr>`;
+    // Generate the header row
+    tableHTML += `<th></th>`; // Empty header for the row titles
     Object.keys(columnNameToDataKeyMap).forEach(key => {
         const columnHeader = getColumnHeaderFromKey(key);
-        tableHTML += `<th style="width: ${100 / numColumns}%;">${columnHeader}</th>`;
+        tableHTML += `<th>${columnHeader}</th>`;
     });
     tableHTML += '</tr>';
 
@@ -616,11 +617,12 @@ function generateLiveLocalTable(compsData) {
     const numColumns = Object.keys(columnNameToDataKeyMap).length + 1; // +1 for the row title column
 
     // Start generating the table HTML
-    let tableHTML = `<table id="liveLocalTable" style="width: 100%;"><tr><th style="width: ${100 / numColumns}%;"> </th>`;
-    // Generate each row
+    let tableHTML = `<table id="liveLocalTable" style="width: 100%;"><tr>`;
+    // Generate the header row
+    tableHTML += `<th></th>`; // Empty header for the row titles
     Object.keys(columnNameToDataKeyMap).forEach(key => {
         const columnHeader = getColumnHeaderFromKey(key);
-        tableHTML += `<th style="width: ${100 / numColumns}%;">${columnHeader}</th>`;
+        tableHTML += `<th>${columnHeader}</th>`;
     });
     tableHTML += '</tr>';
 
@@ -852,21 +854,21 @@ function handleCellEditKeypress(event) {
     }
 }
 // Function to increment the value of the editable cell
-function incrementValue(button) {
+window.incrementValue = function(button) {
     const editableDiv = button.nextElementSibling;
     let value = parseInt(editableDiv.dataset.value);
     value++;
     editableDiv.dataset.value = value;
     editableDiv.textContent = value;
     recalculateWeightedAverages();
-}
+};
 
 // Function to decrement the value of the editable cell
-function decrementValue(button) {
+window.decrementValue = function(button) {
     const editableDiv = button.previousElementSibling;
     let value = parseInt(editableDiv.dataset.value);
     value = value > 0 ? value - 1 : 0; // Prevent negative values
     editableDiv.dataset.value = value;
     editableDiv.textContent = value;
     recalculateWeightedAverages();
-}
+};
