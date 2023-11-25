@@ -552,7 +552,7 @@ function generateCompsTable(compsData) {
     });
     
     // Update the recalculateWeightedAverages function to recompute the averages
-    function recalculateWeightedAverages() {
+    /*function recalculateWeightedAverages() {
         let sumPercentages = 0;
         let weightedRents = 0;
         let weightedSqFts = 0;
@@ -603,7 +603,7 @@ function generateCompsTable(compsData) {
         } else {
             avgPercentageCell.classList.remove('redFill'); // If 100%, remove red background
         }
-    }
+    }*/
 
     recalculateWeightedAverages();
 }
@@ -743,7 +743,7 @@ function generateLiveLocalTable(compsData) {
     });
     
     // Update the recalculateWeightedAverages function to recompute the averages
-    function recalculateWeightedAverages() {
+    /*function recalculateWeightedAverages() {
         let sumPercentages = 0;
         let weightedRents = 0;
         let weightedSqFts = 0;
@@ -794,7 +794,7 @@ function generateLiveLocalTable(compsData) {
         } else {
             avgPercentageCell.classList.remove('redFill'); // If 100%, remove red background
         }
-    }
+    }*/
 
     recalculateWeightedAverages();
 }
@@ -872,3 +872,57 @@ window.decrementValue = function(button) {
     editableDiv.textContent = value;
     recalculateWeightedAverages();
 };
+
+// Update the recalculateWeightedAverages function to recompute the averages
+function recalculateWeightedAverages() {
+    let sumPercentages = 0;
+    let weightedRents = 0;
+    let weightedSqFts = 0;
+    let totalUnits = 0;
+
+    // Iterate over each row to calculate the new weighted averages
+    Object.keys(compsData.compsUnitMixPct).forEach(key => {
+        const percentageCell = document.querySelector(`td[data-category="Mix %"][data-key="${key}"]`);
+        const rentCell = document.querySelector(`td[data-category="Rent"][data-key="${key}"]`);
+        const sqFtCell = document.querySelector(`td[data-category="Avg. SF"][data-key="${key}"]`);
+        const rentPerSqFtCell = document.querySelector(`td[data-category="Rent/SF"][data-key="${key}"]`);
+
+        const weight = parseFloat(percentageCell.dataset.value) / 100;
+        const rent = parseFloat(rentCell.dataset.value);
+        const sqFt = parseFloat(sqFtCell.dataset.value);
+
+        // Calculate the rent per square foot for the current row
+        const rentPerSqFt = sqFt !== 0 ? (rent / sqFt).toFixed(2) : 'N/A';
+        // Update the rent per square foot cell
+        rentPerSqFtCell.textContent = sqFt !== 0 ? `$${rentPerSqFt}/SF` : rentPerSqFt;
+        rentPerSqFtCell.dataset.value = rentPerSqFt;
+
+        sumPercentages += parseFloat(percentageCell.dataset.value);
+        weightedRents += rent * weight;
+        weightedSqFts += sqFt * weight;
+        totalUnits += weight;
+    });
+
+    // Calculate the weighted averages
+    const averageWeightedRent = (weightedRents / totalUnits).toFixed(0);
+    const averageWeightedSqft = (weightedSqFts / totalUnits).toFixed(0);
+    const averageWeightedRentPerSqft = (weightedRents / weightedSqFts).toFixed(2);
+
+    // Update the averages row with the new values
+    const avgRentCell = document.querySelector('.avgRent');
+    const avgSqFtCell = document.querySelector('.avgSqFt');
+    const avgRentPerSqFtCell = document.querySelector('.avgRentPerSqFt');
+    const avgPercentageCell = document.querySelector('.avgPercentage'); // Get the average percentage cell
+
+    if (avgRentCell) avgRentCell.textContent = `$${parseInt(averageWeightedRent).toLocaleString()}`;
+    if (avgSqFtCell) avgSqFtCell.textContent = `${parseInt(averageWeightedSqft).toLocaleString()} SF`;
+    if (avgRentPerSqFtCell) avgRentPerSqFtCell.textContent = `$${parseFloat(averageWeightedRentPerSqft).toFixed(2)}/SF`;
+    if (avgPercentageCell) avgPercentageCell.textContent = `${sumPercentages.toFixed(0)}%`; // Update the sum of percentages
+
+    // Change the background color of the average percentage cell based on the sum of percentages
+    if (sumPercentages.toFixed(0) !== '100') {
+        avgPercentageCell.classList.add('redFill'); // If not 100%, add red background
+    } else {
+        avgPercentageCell.classList.remove('redFill'); // If 100%, remove red background
+    }
+}
