@@ -605,7 +605,7 @@ function generateCompsTable(compsData) {
         }
     }*/
 
-    recalculateWeightedAverages();
+    recalculateWeightedAverages(compsData);
 }
 
 // Generate Live Local table
