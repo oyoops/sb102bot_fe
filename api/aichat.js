@@ -45,13 +45,9 @@ module.exports = async (req, res) => {
     if (CONTEXT_SWITCHING_ACTIVE) {
         context = await adjustContext(history);
     } else {
-        // Default system & assistant prompts using supplemental data:
-        const serializedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
-        systemContentText = `You are a knowledgeable AI assistant specializing in Florida real estate. If you cannot answer a question, you simply say 'Sorry, I don't know that'. A property has just been referred to you for analysis. 
-            Property data:
-            ${serializedSuppData}
-        `;
-        assistantContentText = `I'm here to assist with any questions about Florida real estate, particularly the subject property.`;// However, feel free to ask about real estate sales and development stategies, trends, regulations, or other related topics.`;
+        // Default system & assistant prompts:
+        systemContentText = `You are a knowledgeable AI assistant specializing in Florida real estate. If you cannot answer a question, you simply say 'Sorry, I don't know that'. A property has just been referred to you for analysis.`;
+        assistantContentText = `I'm here to assist with any questions about Florida real estate, particularly the subject property.`;
         context = {
             systemPrompt: {
                 "role": "system",
@@ -72,8 +68,15 @@ module.exports = async (req, res) => {
         "content": assistantContentText
     };
 
-    // Ensure supplemental data is only sent once at the beginning of the conversation
-    const initialSystemMessage = chatbotSupplementalData ? { ...systemPrompt, content: `${systemPrompt.content} The following supplemental data is available to inform your responses: ${JSON.stringify(chatbotSupplementalData)}` } : { ...systemPrompt, content: `${systemPrompt.content} No supplemental data provided.` };
+    // Get supplemental data
+    ////const serializedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
+    ////console.log(serializedSuppData);
+    // (debug)
+    ////console.log(chatbotSupplementalData);
+
+    // Inject supplemental data into the beginning of the conversation
+    ////const initialSystemMessage = serializedSuppData ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${serializedSuppData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
+    const initialSystemMessage = chatbotSupplementalData ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
     const initialAssistantMessage = history.length === 1 ? assistantPrompt : null;
 
     // Convert the chat history to the format expected by the OpenAI API
