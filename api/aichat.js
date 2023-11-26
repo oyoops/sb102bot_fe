@@ -34,8 +34,8 @@ const COLOR_AI = RED;
 
 module.exports = async (req, res) => {
     const { message, history, chatbotSupplementalData, updateContext } = req.body;
-    console.log(history);
-    console.log(message);
+    //console.log(history);
+    //console.log(message);
     ////console.log(chatbotSupplementalData);
 
     // New chat received
@@ -74,8 +74,9 @@ module.exports = async (req, res) => {
     
     // Inject supplemental data into the beginning of the conversation
     // Check if the context needs to be updated with new data
-    // Check if updateContext is true and chatbotSupplementalData is a non-empty string
-    const initialSystemMessage = updateContext && typeof chatbotSupplementalData === 'string' && chatbotSupplementalData.trim() !== '' ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
+    // Check if updateContext is true
+    console.log(chatbotSupplementalData);
+    const initialSystemMessage = updateContext ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
     const initialAssistantMessage = history.length === 1 ? assistantPrompt : null;
 
     // Convert the chat history to the format expected by the OpenAI API
