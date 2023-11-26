@@ -34,9 +34,9 @@ const COLOR_AI = RED;
 
 module.exports = async (req, res) => {
     const { message, history, chatbotSupplementalData, updateContext } = req.body;
-    //console.log(history);
-    //console.log(message);
-    ////console.log(chatbotSupplementalData);
+    console.log(history);
+    console.log(message);
+    //console.log(chatbotSupplementalData);
 
     // New chat received
     console.log(RESET + `\n\n\n\n` + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET + `\n`);
@@ -74,10 +74,16 @@ module.exports = async (req, res) => {
     
     // Inject supplemental data into the beginning of the conversation
     // Check if the context needs to be updated with new data
-    // Check if updateContext is true
-    console.log(chatbotSupplementalData);
-    const initialSystemMessage = updateContext ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
+    
+    console.log("SysPromptContent-1: ", systemPrompt.content);
+    console.log("Update Context? ", updateContext);
+    
+    const initialSystemMessage = updateContext ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
     const initialAssistantMessage = history.length === 1 ? assistantPrompt : null;
+
+    console.log("SysPromptContent-2: ", initialSystemMessage);
+
+    console.log("Initial System Msg: ", initialSystemMessage);
 
     // Convert the chat history to the format expected by the OpenAI API
     const messages = [
@@ -110,7 +116,7 @@ module.exports = async (req, res) => {
         console.log(`   ` + RESET + BOLD + UNDERLINE + roleColor + `${entry.sender.toUpperCase()}` + RESET + `\n     ` + roleColor + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
     });
 
-    //console.log("Messages:\n", JSON.stringify(messages[0]));
+    console.log("Messages:\n", JSON.stringify(messages[0]));
 
     // Send POST request
     try {
@@ -155,6 +161,11 @@ module.exports = async (req, res) => {
             // Total
             console.log(RESET + DIM + `    = Total     ` + BOLD + UNDERLINE + RED + `` + tokensUsed + ` tokens` + DIM + ` used` + RESET);
         }
+        
+        console.log(history);
+        console.log(message);
+        //console.log(chatbotSupplementalData);
+
         
         // Send response to client
         res.status(200).json(responseString);
