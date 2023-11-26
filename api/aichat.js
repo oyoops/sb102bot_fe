@@ -19,12 +19,14 @@ const GREEN = '\x1b[32m';
 const GREEN_BACKGROUND = '\x1b[42;30m';
 const MAGENTA = '\x1b[35m';
 const MAGENTA_BACKGROUND = '\x1b[45;30m';
+const ORANGE = '\x1b[33m'; // New color for system-update messages
 
 // ---
 const COLOR_SYSTEM = YELLOW;
 const COLOR_ASSISTANT = BLUE;
 const COLOR_USER = GREEN;
 const COLOR_AI = RED;
+const COLOR_SYSTEM_UPDATE = ORANGE; // New color constant for system-update messages
 // ---
 
 
