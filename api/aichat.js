@@ -70,7 +70,7 @@ module.exports = async (req, res) => {
     };
 
     // Ensure supplemental data is only sent once at the beginning of the conversation (when history length == 1)
-    const serializedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
+    const serializedSuppData = chatbotSupplementalData ? (typeof chatbotSupplementalData === 'string' ? chatbotSupplementalData : JSON.stringify(chatbotSupplementalData)) : "No supplemental data provided";
     const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} The following supplemental data is available to inform your responses: ${serializedSuppData}` };
     const initialAssistantMessage = history.length === 1 ? assistantPrompt : null;
 
