@@ -161,7 +161,7 @@ module.exports = async (req, res) => {
         // Log detailed OpenAI error info
         if (error?.response && error?.response?.data && error?.response?.data?.error) {
             console.error(RED + UNDERLINE + "Error Details:" + RESET + "\n" + RED + error.response.data.error + RESET);
-            //console.log(error);
+            console.log(error);
         }
 
         // Return *just* the error message
