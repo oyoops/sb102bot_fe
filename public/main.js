@@ -401,16 +401,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Event listener for the send message button
-    sendMessageButton.addEventListener('click', function() {
+    // Event listener for the send message button and Enter keypress in the chat input
+    sendMessageButton.addEventListener('click', sendChatMessage);
+    chatInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendChatMessage();
+        }
+    });
+
+    function sendChatMessage() {
         const message = chatInput.value.trim();
         if (message) {
-            displayChatMessage(message.trim(), 'user');
-            processChatMessage(message.trim());
+            displayChatMessage(message, 'user');
+            processChatMessage(message);
             chatInput.value = '';
             displayTypingIndicator(true);
         }
-    });
+    }
 
     // Function to display chat messages
     function displayChatMessage(message, sender) {
