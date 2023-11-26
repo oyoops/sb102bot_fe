@@ -376,6 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
             displayChatMessage(response, 'bot');
             handleContextSwitching(response);
         } catch (error) {
+            console.log(error);
             displayTypingIndicator(false);
             displayChatMessage("I'm sorry, I didn't understand. Could you rephrase that?", 'bot');
             console.error('Error generating dynamic response:', error);

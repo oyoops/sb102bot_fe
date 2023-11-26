@@ -149,6 +149,8 @@ module.exports = async (req, res) => {
       threeBd: (totalUnitsByType.threeBd / totalUnitsAllProperties * 100).toFixed(1)
     };
 
+    // Log results summary
+    /*
     console.log('\nWeighted Percentages by Unit Type:');
     console.log('Studio: ' + weightedPercentages.studio + '%');
     console.log('1 Bed: ' + weightedPercentages.oneBd + '%');
@@ -172,6 +174,8 @@ module.exports = async (req, res) => {
     console.log('1 Bed: ', totalUnitsByType.oneBd ? parseFloat((weightedSums.oneBd.rentPerSqft / totalUnitsByType.oneBd).toFixed(2)) : 0);
     console.log('2 Bed: ', totalUnitsByType.twoBd ? parseFloat((weightedSums.twoBd.rentPerSqft / totalUnitsByType.twoBd).toFixed(2)) : 0);
     console.log('3 Bed: ', totalUnitsByType.threeBd ? parseFloat((weightedSums.threeBd.rentPerSqft / totalUnitsByType.threeBd).toFixed(2)) : 0);
+    console.log('\n');
+    */
     
     // Calculate the averages
     const averages = {

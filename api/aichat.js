@@ -40,37 +40,37 @@ module.exports = async (req, res) => {
     /* Set Context Switching functionality */
     const CONTEXT_SWITCHING_ACTIVE = false;
     let context;
-    let systemContent;
-    let assistantContent;
+    let systemContentText;
+    let assistantContentText;
     if (CONTEXT_SWITCHING_ACTIVE) {
         context = await adjustContext(history);
     } else {
-        // Default system & assistant prompts with supplemental data:
-        const serializedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData).replace(/\\\\/g, "\\") : "No supplemental data provided";
-        systemContent = "You are a knowledgeable AI assistant specializing in Florida real estate. A property has just been referred to you for analysis. The following supplemental data contains info about the property as well as info about nearby multifamily comps. Always respond with evidence using this data to inform your responses:" + serializedSuppData;
-        assistantContent = `I'm here to assist with any questions about Florida real estate, particularly the subject property and its multifamily comps. However, feel free to ask about real estate sales and development stategies, trends, regulations, or other related topics.`;
+        // Default system & assistant prompts using supplemental data:
+        const serializedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
+        systemContentText = "You are a knowledgeable AI assistant specializing in Florida real estate. If you cannot answer a question, you simply say 'Sorry, I don't know that'. A property has just been referred to you for analysis. Property data:" + serializedSuppData;
+        assistantContentText = `I'm here to assist with any questions about Florida real estate, particularly the subject property.`;// However, feel free to ask about real estate sales and development stategies, trends, regulations, or other related topics.`;
         context = {
             systemPrompt: {
                 "role": "system",
-                "content": systemContent
+                "content": systemContentText
             },
             assistantPrompt: {
                 "role": "assistant",
-                "content": assistantContent
+                "content": assistantContentText
             }
         };
     }
     const systemPrompt = {
         "role": "system",
-        "content": systemContent
+        "content": systemContentText
     };
     const assistantPrompt = {
         "role": "assistant",
-        "content": assistantContent
+        "content": assistantContentText
     };
 
-    // Ensure supplemental data is only sent once at the beginning of the conversation (when history length == 1)
-    const initialSystemMessage = chatbotSupplementalData ? { ...systemPrompt, content: `${systemPrompt.content} The following supplemental data is available to inform your responses:`, supplementalData: chatbotSupplementalData } : { ...systemPrompt, content: `${systemPrompt.content} No supplemental data provided.` };
+    // Ensure supplemental data is only sent once at the beginning of the conversation
+    const initialSystemMessage = chatbotSupplementalData ? { ...systemPrompt, content: `${systemPrompt.content} The following supplemental data is available to inform your responses: ${JSON.stringify(chatbotSupplementalData)}` } : { ...systemPrompt, content: `${systemPrompt.content} No supplemental data provided.` };
     const initialAssistantMessage = history.length === 1 ? assistantPrompt : null;
 
     // Convert the chat history to the format expected by the OpenAI API
@@ -88,7 +88,7 @@ module.exports = async (req, res) => {
     // Log all prompt components before sending request
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
     if (initialSystemMessage) {
-        console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_SYSTEM + `SYSTEM` + RESET + `\n     ` + COLOR_SYSTEM + `${initialSystemMessage.content.split('\n').join('\n\t')}` + RESET);
+        console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_SYSTEM + `SYSTEM` + RESET + `\n     ` + COLOR_SYSTEM + `${initialSystemMessage.content.split('\n').join('\n\t').split('\"').join(`'`)}` + RESET);
     }
     if (initialAssistantMessage) {
         console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_ASSISTANT + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${initialAssistantMessage.content.split('\n').join('\n\t')}` + RESET);
@@ -98,26 +98,27 @@ module.exports = async (req, res) => {
         console.log(`   ` + RESET + BOLD + UNDERLINE + roleColor + `${entry.sender.toUpperCase()}` + RESET + `\n     ` + roleColor + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
     });
 
+    //console.log("Messages:\n", JSON.stringify(messages[0]));
+
     // Send POST request
     try {
+        // Set OpenAI API parameters
         const requestData = {
             messages: messages,
             model: 'gpt-4-1106-preview',
-            max_tokens: 25000,
+            max_tokens: 300,
             temperature: 0.9
         };
-        // If there is supplemental data, add it to the first message
-        if (initialSystemMessage.supplementalData) {
-            requestData.messages[0].supplementalData = initialSystemMessage.supplementalData;
-        }
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', requestData
-        }, {
+
+        // Send the request
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', requestData, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
             }
         })
 
+        // Parse the response
         const responseData = response.data;
         const responseString = responseData.choices[0].message.content;
 
@@ -153,24 +154,27 @@ module.exports = async (req, res) => {
         let errDesc;
         if (error.response?.data?.error?.code == 'insufficient_quota') {
             errDesc = "YOU ARE OUT OF MONEY !!!";
-        } /*else if (error.response?.data?.error?.code != 'insufficient_quota') {
-            errDesc = "[ERROR] \nSomething non-money related happened!";
-        }*/ else {
+        } else if (error.response?.data?.error?.code != 'insufficient_quota') {
+            errDesc = error.response.data.error.message;
+        } else {
             errDesc = "An Unknown Error Occurred!";
         }
-        // Server log the error
-        console.error(`\n` + RED_BACKGROUND + `[ERROR]\n` + RESET + RED + errDesc + RESET);
-        //console.log(error);
 
-        // Log detailed OpenAI error info
+        // Server log detailed error info
+        console.error(`\n` + RED_BACKGROUND + `[ERROR]` + RESET);
         if (error?.response && error?.response?.data && error?.response?.data?.error) {
-            console.error(RED + UNDERLINE + "Error Details:" + RESET + "\n" + RED + error.response.data.error + RESET);
-            console.log(error);
+            console.error(RED + UNDERLINE + "Exact Error Details:" + RESET + "\n" + RED + error.response.data.error.message + RESET);
         }
 
         // Return *just* the error message
-        const errorMessage = error.response?.data?.message || JSON.stringify(error);
-        res.status(500).send(errorMessage);
+        let errorMsg;
+        if (error?.response?.data) {
+            errorMsg = {error: `Sorry, I'm broken right now.\nTell the clown who made this website,\n  "${error.response.data.error.message}"` || JSON.stringify(error)
+            };
+        } else {
+            errorMsg = {error: `Sorry, I'm broken right now. \nTry again later.`};
+        }
+        res.status(500).send(errorMsg);
     }
 };
 

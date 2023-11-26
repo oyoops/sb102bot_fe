@@ -391,7 +391,6 @@ function refineDataForChatbot(rawData, superAI) {
     }
 }
 
-
 // Add globals to dataset and apply final enhancements
 function refineData(rawData, superAI) {
     let refinedData = {};
@@ -460,7 +459,7 @@ function refineData(rawData, superAI) {
             refinedData[key] = 0;
         }
     }
-    console.log(refinedData);
+    //console.log(refinedData);
     return refinedData;
 }
 

@@ -152,7 +152,7 @@ module.exports = async (req, res) => {
         // Log the response
         const aiResponseText = responseData?.choices[0]?.message?.content.trim();
         if (aiResponseText) {
-            console.log("\n[AI Response]\n" + aiResponseText);
+            ////console.log("\n[AI Response]\n" + aiResponseText);
         }
 
         // Convert newline characters to <br> tags for HTML rendering
