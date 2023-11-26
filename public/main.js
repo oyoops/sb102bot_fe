@@ -455,6 +455,14 @@ document.addEventListener('DOMContentLoaded', function() {
             processChatMessage(message, globSupData);
             chatInput.value = '';
             displayTypingIndicator(true);
+
+            // Create and dispatch the DataUpdatedEvent with the new message
+            const dataUpdatedEvent = new CustomEvent('DataUpdatedEvent', {
+                detail: {
+                    newData: message
+                }
+            });
+            document.dispatchEvent(dataUpdatedEvent);
         }
     }
 
