@@ -101,17 +101,17 @@ module.exports = async (req, res) => {
 
     // Send POST request
     try {
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', JSON.stringify({
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             messages: messages,
             model: 'gpt-4-1106-preview',
             max_tokens: 25000,
             temperature: 0.9
-        }), {
+        }, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
             }
-        });
+        })
 
         const responseData = response.data;
         const responseString = responseData.choices[0].message.content;
