@@ -233,15 +233,25 @@ document.addEventListener('DOMContentLoaded', function() {
             rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
             countyMaxRentsTable.style.display = 'table';
 
+            // Function to clean up supplemental data by replacing double backslashes with single backslashes
+            function cleanSupplementalData(data) {
+                if (typeof data === 'string') {
+                    return data.replace(/\\\\/g, '\\');
+                } else if (typeof data === 'object') {
+                    return JSON.stringify(data).replace(/\\\\/g, '\\');
+                }
+                return data;
+            }
+
             // Composing the supplemental data set(s) for AI by combining all available data
             let suppDatasets;
             try {
                 // Generate supp data set(s)
                 verifyParcelData(parcelData);
-                aiSupplementalData = await JSON.parse(JSON.stringify(parcelData));
+                aiSupplementalData = await JSON.parse(cleanSupplementalData(JSON.stringify(parcelData)));
                 suppDatasets = await generateSupplementalDatasets(aiSupplementalData, countyData, cityData, compsData);
-                globSupData = suppDatasets.cleanSuppDataForChatbot;
-                globSupDataForLegacy = suppDatasets.cleanSuppDataForLegacyAI;
+                globSupData = cleanSupplementalData(suppDatasets.cleanSuppDataForChatbot);
+                globSupDataForLegacy = cleanSupplementalData(suppDatasets.cleanSuppDataForLegacyAI);
                 // Log complete supp data set(s)
                 console.log('\nGlobal Supplemental Data Payload (Chatbot):');
                 console.log(globSupData);
