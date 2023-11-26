@@ -78,8 +78,8 @@ module.exports = async (req, res) => {
     console.log("SysPromptContent-1: ", systemPrompt.content);
     console.log("Update Context? ", updateContext);
     
-    const initialSystemMessage = updateContext ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
-    const initialAssistantMessage = history.length === 1 ? assistantPrompt : null;
+    const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` };
+    const initialAssistantMessage = { ...assistantPrompt };
 
     console.log("SysPromptContent-2: ", initialSystemMessage);
 
@@ -88,14 +88,13 @@ module.exports = async (req, res) => {
     // Convert the chat history to the format expected by the OpenAI API
     const messages = [
         initialSystemMessage,
-        ...(initialAssistantMessage ? [initialAssistantMessage] : []),
         ...history
             .filter(entry => entry && entry.message) // Filter out any invalid msgs
             .map(entry => ({
                 "role": entry.sender === 'user' ? 'user' : 'assistant',
                 "content": entry.message.trim()
             }))
-    ].filter((msg, index, self) => index === 0 || msg.content !== self[0].content);
+    ];
 
     // Log messages
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
