@@ -47,7 +47,10 @@ module.exports = async (req, res) => {
     } else {
         // Default system & assistant prompts using supplemental data:
         const serializedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
-        systemContentText = "You are a knowledgeable AI assistant specializing in Florida real estate. If you cannot answer a question, you simply say 'Sorry, I don't know that'. A property has just been referred to you for analysis. Property data:" + serializedSuppData;
+        systemContentText = `You are a knowledgeable AI assistant specializing in Florida real estate. If you cannot answer a question, you simply say 'Sorry, I don't know that'. A property has just been referred to you for analysis. 
+            Property data:
+            ${serializedSuppData}
+        `;
         assistantContentText = `I'm here to assist with any questions about Florida real estate, particularly the subject property.`;// However, feel free to ask about real estate sales and development stategies, trends, regulations, or other related topics.`;
         context = {
             systemPrompt: {

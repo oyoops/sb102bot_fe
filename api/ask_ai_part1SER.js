@@ -130,13 +130,13 @@ module.exports = async (req, res) => {
             // Calculate cost in dollars
             //const totalCost = calculateCost(tokensUsed, modelName);
             //console.log(`       Total Cost = $${totalCost.toFixed(2)}`);
-            console.log("\n    # Total Tkns. =", tokensUsed);
+            ////console.log("\n    # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
-            console.log("   # Prompt Tkns. =", promptTokens);
+            ////console.log("   # Prompt Tkns. =", promptTokens);
         }
         if (completionTokens) {
-            console.log("    # Resp. Tkns. =", completionTokens);
+            ////console.log("    # Resp. Tkns. =", completionTokens);
         }
 
         // Log the prompt

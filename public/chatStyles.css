@@ -2,6 +2,7 @@
 .chat-interface {
     width: calc(100% - 40px); /* Subtract total horizontal margin from 100% width */
     max-width: 600px;
+    /* margin-top: calc(50vh + 15px); Adjust top margin to be below the map */
     margin: 20px 20px; /* Add 20px margin to left and right */
     padding: 20px;
     background-color: #ffffff;
