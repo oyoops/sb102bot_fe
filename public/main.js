@@ -421,10 +421,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let globSupDataProxy = new Proxy({}, {
         set: function(target, property, value, receiver) {
             // Dispatch the DataUpdatedEvent when globSupData is updated
+            const previousValue = target[property];
             const dataUpdatedEvent = new CustomEvent('DataUpdatedEvent', {
                 detail: {
                     newData: value,
-                    changedElement: property
+                    changedElements: [{ name: property, value: value, previousValue: previousValue }]
                 }
             });
             document.dispatchEvent(dataUpdatedEvent);
@@ -438,8 +439,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update the global supplemental data variable through the proxy
         globSupDataProxy.data = newSuppData;
         // Announce the context change in the chat without sending a message to the AI
-        const changedElementsList = changedElements.join(', ');
-        displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsList}`, 'system-update');
+        const changedElementsDescriptions = changedElements.map(el => `${el.name}: ${el.value}`).join(', ');
+        displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsDescriptions}`, 'system-update');
     }
 
     // Function to initialize the chat with a greeting message and set up dynamic data updates
@@ -453,7 +454,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set up an event listener or other mechanism to listen for data updates
         // This is a placeholder for the actual implementation, which will depend on how data updates are received
         document.addEventListener('DataUpdatedEvent', function(event) {
-            announceChatbotContextUpdate(event.detail.newData, [event.detail.changedElement]);
+            announceChatbotContextUpdate(event.detail.newData, event.detail.changedElements);
         });
     }
 
