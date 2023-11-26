@@ -329,11 +329,17 @@ document.addEventListener('DOMContentLoaded', function() {
         threads: {},
         currentThread: null
     };
+
+    // Init chat
+    initializeChat()
    
     // Function to process chat messages
     async function processChatMessage(message) {
-        // Add user message to chat history
-        chatState.history.push({ message, sender: 'user' });
+        // Add user message to chat history if it's not the last message already
+        const lastMessage = chatState.history[chatState.history.length - 1];
+        if (!lastMessage || lastMessage.message !== message) {
+            chatState.history.push({ message, sender: 'user' });
+        }
         updateContext(message);
    
         // Simulate typing indicator
@@ -347,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
             handleContextSwitching(response);
         } catch (error) {
             displayTypingIndicator(false);
-            displayChatMessage("I'm sorry, I'm having trouble understanding. Could you rephrase that?", 'bot');
+            displayChatMessage("I'm sorry, I didn't understand. Could you rephrase that?", 'bot');
             console.error('Error generating dynamic response:', error);
         }
     }
@@ -386,13 +392,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Function to initialize the chat with a greeting message
+    function initializeChat() {
+        const initialMessage = `Are you ready for my questions?`;
+        if (!chatState.history.some(msg => msg.message === initialMessage && msg.sender === 'user')) {
+            displayChatMessage(initialMessage, 'user');
+            processChatMessage(initialMessage);
+        }
+    }
 
     // Event listener for the send message button
     sendMessageButton.addEventListener('click', function() {
         const message = chatInput.value.trim();
         if (message) {
-            displayChatMessage(message, 'user');
-            processChatMessage(message);
+            displayChatMessage(message.trim(), 'user');
+            processChatMessage(message.trim());
             chatInput.value = '';
             displayTypingIndicator(true);
         }
@@ -417,7 +431,7 @@ document.addEventListener('DOMContentLoaded', function() {
             typingIndicator.classList.add('typing-indicator');
             for (let i = 0; i < 3; i++) {
                 const dot = document.createElement('span');
-                dot.textContent = '.';
+                dot.textContent = ' '; // weird
                 typingIndicator.appendChild(dot);
             }
             chatMessages.appendChild(typingIndicator);
@@ -430,54 +444,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to generate dynamic response using OpenAI API
-    async function generateDynamicResponse(message, chatState) {
-        // Create a prompt that includes the entire conversation history
-        const prompt = createPromptWithHistory(chatState);
-
-        // Define the parameters for the OpenAI API call
-        const data = {
-            prompt: prompt,
-            max_tokens: 150,
-            temperature: 0.9,
-            stop: [" Human:", " AI:"], // Stop sequences to control the conversation flow
-            top_p: 1,
-            frequency_penalty: 0,
-            presence_penalty: 0.6
-        };
-
-        // Make the API call to OpenAI
-        const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
+    // Function to generate dynamic response using chatbot proxy
+    async function generateDynamicResponse(message) {
+        const response = await fetch('/api/aichat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENAI_API_KEY}`
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({ message, history: chatState.history })
         });
-
-        // Handle the API response
-        if (!response.ok) {
-            throw new Error(`Failed to fetch response from OpenAI API: ${response.status}`);
-        }
-
-        const responseData = await response.json();
-        return responseData.choices[0].text.trim();
-    }
-
-    // Helper function to create a prompt that includes the entire conversation history
-    function createPromptWithHistory(chatState) {
-        let prompt = 'The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\n';
-
-        // Include each message in the history in the prompt
-        chatState.history.forEach(entry => {
-            const role = entry.sender === 'user' ? 'Human' : 'AI';
-            prompt += `${role}: ${entry.message}\n`;
-        });
-
-        // Add the latest message from the user
-        prompt += `Human: ${chatState.context.latestMessage}\nAI:`;
-        return prompt;
+    
+        const replyText = await response.json();
+        displayTypingIndicator(false);
+        return replyText;
     }
 
 });

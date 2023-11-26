@@ -30,3 +30,9 @@ enableLiveLocalSwitch.addEventListener('change', function() {
     enableLiveLocalModule = this.value;
     console.log(`Use Live Local=${enableLiveLocalModule}`);
 });
+
+// Call initializeChat to send a guided startup message to the AI chatbot after the page finishes loading
+//document.addEventListener('DOMContentLoaded', initializeChat);
+//  *IDEA*  Change this to trigger once the aiSupplementalData object is available, and send the data with the request.
+//          Alternate idea-- wait until the *entire* initial AI response is received, then send that too.
+//          (SEND SUPP DATA ONLY ONCE TIME FOR EFFICIENCY! SERVER SHOULD PRESERVE DATA UNTIL ADDRESS IS CHANGED)

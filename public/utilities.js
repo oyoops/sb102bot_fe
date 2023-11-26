@@ -579,3 +579,4 @@ function runInitialDevelopmentCalculations() {
     updateTotalCosts();
     calculateAbatement();
 }
+
