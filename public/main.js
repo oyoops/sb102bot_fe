@@ -419,26 +419,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Create a proxy to monitor changes to the globSupData object
     let globSupDataProxy = new Proxy({}, {
-        set: function(target, property, value) {
+        set: function(target, property, value, receiver) {
             // Dispatch the DataUpdatedEvent when globSupData is updated
             const dataUpdatedEvent = new CustomEvent('DataUpdatedEvent', {
                 detail: {
-                    newData: value
+                    newData: value,
+                    changedElement: property
                 }
             });
             document.dispatchEvent(dataUpdatedEvent);
             // Update the actual globSupData object
-            target[property] = value;
-            return true;
+            return Reflect.set(target, property, value, receiver);
         }
     });
 
     // Function to announce the chatbot's context update without sending a message to the AI
-    function announceChatbotContextUpdate(newSuppData) {
+    function announceChatbotContextUpdate(newSuppData, changedElements) {
         // Update the global supplemental data variable through the proxy
         globSupDataProxy.data = newSuppData;
         // Announce the context change in the chat without sending a message to the AI
-        displayChatMessage('The context/data has been updated.', 'system-update');
+        const changedElementsList = changedElements.join(', ');
+        displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsList}`, 'system-update');
     }
 
     // Function to initialize the chat with a greeting message and set up dynamic data updates
@@ -452,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set up an event listener or other mechanism to listen for data updates
         // This is a placeholder for the actual implementation, which will depend on how data updates are received
         document.addEventListener('DataUpdatedEvent', function(event) {
-            announceChatbotContextUpdate(event.detail.newData);
+            announceChatbotContextUpdate(event.detail.newData, [event.detail.changedElement]);
         });
     }
 
