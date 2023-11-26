@@ -29,7 +29,7 @@ const COLOR_AI = RED;
 
 
 module.exports = async (req, res) => {
-    const { message, history, chatbotSupplementalData } = req.body;
+    const { message, history, chatbotSupplementalData, updateContext } = req.body;
     console.log(history);
     console.log(message);
     ////console.log(chatbotSupplementalData);
@@ -76,7 +76,8 @@ module.exports = async (req, res) => {
 
     // Inject supplemental data into the beginning of the conversation
     ////const initialSystemMessage = serializedSuppData ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${serializedSuppData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
-    const initialSystemMessage = chatbotSupplementalData ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
+    // Check if the context needs to be updated with new data
+    const initialSystemMessage = updateContext ? { ...systemPrompt, content: `${systemPrompt.content} \nUpdated Property Data:\n ${chatbotSupplementalData}` } : chatbotSupplementalData ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
     const initialAssistantMessage = history.length === 1 ? assistantPrompt : null;
 
     // Convert the chat history to the format expected by the OpenAI API

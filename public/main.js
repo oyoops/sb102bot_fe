@@ -417,13 +417,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to initialize the chat with a greeting message
+    // Function to update the chatbot's context with new data
+    function updateChatbotContext(newSuppData) {
+        // Update the global supplemental data variable
+        globSupData = newSuppData;
+        // Notify the chatbot of the context change
+        processChatMessage('UPDATE_CONTEXT', globSupData);
+    }
+
+    // Function to initialize the chat with a greeting message and set up dynamic data updates
     function initializeChat(globSupData) {
         const initialMessage = `Are you ready for my questions?`;
         if (!chatState.history.some(msg => msg.message === initialMessage && msg.sender === 'user')) {
             displayChatMessage(initialMessage, 'user');
             processChatMessage(initialMessage, globSupData);
         }
+
+        // Set up an event listener or other mechanism to listen for data updates
+        // This is a placeholder for the actual implementation, which will depend on how data updates are received
+        document.addEventListener('DataUpdatedEvent', function(event) {
+            updateChatbotContext(event.detail.newData);
+        });
     }
 
     // Event listener for the send message button and Enter keypress in the chat input
