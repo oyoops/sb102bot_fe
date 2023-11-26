@@ -70,7 +70,8 @@ module.exports = async (req, res) => {
     };
 
     // Ensure supplemental data is only sent once at the beginning of the conversation
-    const initialSystemMessage = history.length === 0 ? systemPrompt : null;
+    const serializedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
+    const initialSystemMessage = history.length === 0 ? { ...systemPrompt, content: `${systemPrompt.content} The following supplemental data is available to inform your responses: ${serializedSuppData}` } : null;
     const initialAssistantMessage = history.length === 0 ? assistantPrompt : null;
 
     // Convert the chat history to the format expected by the OpenAI API
