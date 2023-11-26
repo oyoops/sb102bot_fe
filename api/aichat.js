@@ -105,7 +105,7 @@ module.exports = async (req, res) => {
             messages: messages,
             model: `gpt-4-1106-preview`,
             //model: 'gpt-4',
-            max_tokens: 250,
+            max_tokens: 25000,
             temperature: 0.9
         }, {
             headers: {
