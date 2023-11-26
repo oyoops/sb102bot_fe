@@ -71,12 +71,12 @@ module.exports = async (req, res) => {
 
     // Ensure supplemental data is only sent once at the beginning of the conversation (when history length == 1)
     const serializedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
-    const initialSystemMessage = history.length === 1 ? { ...systemPrompt, content: `${systemPrompt.content} The following supplemental data is available to inform your responses: ${serializedSuppData}` } : null;
+    const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} The following supplemental data is available to inform your responses: ${serializedSuppData}` };
     const initialAssistantMessage = history.length === 1 ? assistantPrompt : null;
 
     // Convert the chat history to the format expected by the OpenAI API
     const messages = [
-        ...(initialSystemMessage ? [initialSystemMessage] : []),
+        initialSystemMessage,
         ...(initialAssistantMessage ? [initialAssistantMessage] : []),
         ...history
             .filter(entry => entry && entry.message) // Filter out any invalid msgs
@@ -84,7 +84,7 @@ module.exports = async (req, res) => {
                 "role": entry.sender === 'user' ? 'user' : 'assistant',
                 "content": entry.message.trim()
             }))
-    ];
+    ].filter((msg, index, self) => index === 0 || msg.content !== self[0].content);
 
     // Log all prompt components before sending request
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
