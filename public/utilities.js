@@ -378,7 +378,11 @@ function refineDataForChatbot(rawData, superAI) {
                 refinedData[key] = 0;
             }
         }
-        console.log("Finished null value removal and zero value conversion.");
+        // Strip out the 'comps_data' array and 'geom' object from refinedData
+        delete refinedData['comps_data'];
+        delete refinedData['geom'];
+
+        console.log("Stripped 'comps_data' and 'geom' from the refined data.");
         console.log("Refined data:", refinedData);
         return refinedData;
     } catch (error) {
