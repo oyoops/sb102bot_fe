@@ -1,0 +1,88 @@
+/* Chat Interface Styles */
+.chat-interface {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border: 1px solid #d1d9e6;
+}
+
+.chat-input {
+    width: calc(100% - 90px);
+    padding: 10px;
+    border: 1px solid #d1d9e6;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-right: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.chat-message {
+    margin-bottom: 5px;
+    padding: 10px 15px;
+    border-radius: 18px;
+    display: block;
+    max-width: 75%;
+    word-wrap: break-word;
+    text-align: left;
+    /*line-height: 1.4;*/
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.chat-message.user {
+    background-color: #dcf8c6;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.chat-message.bot {
+    background-color: #e5e5ea;
+    margin-right: auto;
+    margin-left: 10px;
+}
+
+/* Styles for error messages */
+.chat-message.error {
+    background-color: #ffdddd;
+    border-left: 4px solid #ff5c5c;
+}
+
+.send-message-button {
+    padding: 0px 10px;
+    padding-top: 5px;
+    background-color: rgb(134, 184, 236);
+    font-family: 'Montserrat', sans-serif;
+    color: hsl(0, 0%, 100%);
+    border: none;
+    margin-top: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* Typing indicator styles */
+.typing-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background-color: #888;
+    border-radius: 50%;
+    animation: typing-blink 1.4s infinite;
+}
+
+@keyframes typing-blink {
+    0% { background-color: #888; }
+    50% { background-color: #ccc; }
+    100% { background-color: #888; }
+}

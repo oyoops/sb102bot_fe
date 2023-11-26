@@ -24,6 +24,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="stylesheet" type="text/css" href="tableStyles.css">
+    <link rel="stylesheet" type="text/css" href="chatStyles.css">
 
     <!-- Title -->
     <title>Home | Live Local Guru</title>
@@ -156,11 +157,15 @@
     <!-- Eligibility Result -->
     <div id="eligibilityStatus"></div>
 
-        <!-- Chat Interface -->
-    <div id="chatInterface" class="chat-interface">
+     <!-- Chat Interface -->
+     <div id="chatInterface" class="chat-interface">
         <div id="chatMessages" class="chat-messages"></div>
-        <input type="text" id="chatInput" class="chat-input" placeholder="Ask me anything...">
-        <button id="sendMessageButton" class="send-message-button">Send</button>
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Why is the sky blue?">
+            <button id="sendMessageButton" class="send-message-button">
+                <img src="./imgs/send-icon.png" alt="Send" style="width: 30px; height: 30px;">
+            </button>
+        </div>
     </div>
     
     <div id="averagesContainer" class=".table-container" style="display: none;">
