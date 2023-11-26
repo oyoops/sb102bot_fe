@@ -440,7 +440,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function announceChatbotContextUpdate(newSuppData, changedElements) {
         // Check if newSuppData is already an object or a valid JSON string
         let parsedData = {};
-        if (typeof newSuppData === 'string') {
+        if (typeof newSuppData === 'string' && newSuppData.trim().startsWith('{') && newSuppData.trim().endsWith('}')) {
             try {
                 parsedData = JSON.parse(newSuppData);
             } catch (error) {
@@ -452,8 +452,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (typeof newSuppData === 'object') {
             parsedData = newSuppData;
         } else {
-            console.error('newSuppData is neither a string nor an object:', newSuppData);
-            return;
+            // Handle the case where newSuppData is a string that is not JSON formatted
+            parsedData = { text: newSuppData };
         }
         // Update globSupData with the parsed data
         globSupData = { ...globSupData, ...parsedData };
