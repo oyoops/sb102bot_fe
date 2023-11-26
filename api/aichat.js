@@ -70,8 +70,7 @@ module.exports = async (req, res) => {
     };
 
     // Ensure supplemental data is only sent once at the beginning of the conversation (when history length == 1)
-    const serializedSuppData = chatbotSupplementalData ? (typeof chatbotSupplementalData === 'string' ? chatbotSupplementalData : JSON.stringify(chatbotSupplementalData)) : "No supplemental data provided";
-    const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} The following supplemental data is available to inform your responses: ${serializedSuppData}` };
+    const initialSystemMessage = chatbotSupplementalData ? { ...systemPrompt, content: `${systemPrompt.content} The following supplemental data is available to inform your responses:`, supplementalData: chatbotSupplementalData } : { ...systemPrompt, content: `${systemPrompt.content} No supplemental data provided.` };
     const initialAssistantMessage = history.length === 1 ? assistantPrompt : null;
 
     // Convert the chat history to the format expected by the OpenAI API
@@ -101,11 +100,17 @@ module.exports = async (req, res) => {
 
     // Send POST request
     try {
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+        const requestData = {
             messages: messages,
             model: 'gpt-4-1106-preview',
             max_tokens: 25000,
             temperature: 0.9
+        };
+        // If there is supplemental data, add it to the first message
+        if (initialSystemMessage.supplementalData) {
+            requestData.messages[0].supplementalData = initialSystemMessage.supplementalData;
+        }
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', requestData
         }, {
             headers: {
                 'Content-Type': 'application/json',
