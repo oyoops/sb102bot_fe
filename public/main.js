@@ -425,7 +425,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const dataUpdatedEvent = new CustomEvent('DataUpdatedEvent', {
                 detail: {
                     newData: value,
-                    changedElements: [{ name: property, value: value, previousValue: previousValue }]
+                    changedElements: [{ name: property, value: value, previousValue: previousValue }],
+                    isInternalUpdate: true // Flag to indicate that this update should not trigger announceChatbotContextUpdate
                 }
             });
             document.dispatchEvent(dataUpdatedEvent);
@@ -435,9 +436,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Function to announce the chatbot's context update without sending a message to the AI
+    // This function has been updated to prevent an infinite loop by not triggering the DataUpdatedEvent again
     function announceChatbotContextUpdate(newSuppData, changedElements) {
-        // Update the global supplemental data variable through the proxy
-        globSupDataProxy.data = newSuppData;
+        // Directly update the global supplemental data variable without using the proxy to avoid infinite loop
+        globSupData.data = newSuppData;
         // Announce the context change in the chat without sending a message to the AI
         const changedElementsDescriptions = changedElements.map(el => `${el.name}: ${el.value}`).join(', ');
         displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsDescriptions}`, 'system-update');
@@ -453,8 +455,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Set up an event listener or other mechanism to listen for data updates
         // This is a placeholder for the actual implementation, which will depend on how data updates are received
+        // The event listener for DataUpdatedEvent has been updated to check if the event was triggered by announceChatbotContextUpdate to prevent an infinite loop
         document.addEventListener('DataUpdatedEvent', function(event) {
-            announceChatbotContextUpdate(event.detail.newData, event.detail.changedElements);
+            // Check if the event was triggered by user action and not by announceChatbotContextUpdate itself
+            if (!event.detail.isInternalUpdate) {
+                announceChatbotContextUpdate(event.detail.newData, event.detail.changedElements);
+            }
         });
     }
 
