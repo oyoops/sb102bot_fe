@@ -417,12 +417,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Create a proxy to monitor changes to the globSupData object
+    let globSupDataProxy = new Proxy({}, {
+        set: function(target, property, value) {
+            // Dispatch the DataUpdatedEvent when globSupData is updated
+            const dataUpdatedEvent = new CustomEvent('DataUpdatedEvent', {
+                detail: {
+                    newData: value
+                }
+            });
+            document.dispatchEvent(dataUpdatedEvent);
+            // Update the actual globSupData object
+            target[property] = value;
+            return true;
+        }
+    });
+
     // Function to update the chatbot's context with new data
     function updateChatbotContext(newSuppData) {
-        // Update the global supplemental data variable
-        globSupData = newSuppData;
+        // Update the global supplemental data variable through the proxy
+        globSupDataProxy.data = newSuppData;
         // Notify the chatbot of the context change
-        processChatMessage('UPDATE_CONTEXT', globSupData);
+        processChatMessage('UPDATE_CONTEXT', globSupDataProxy.data);
     }
 
     // Function to initialize the chat with a greeting message and set up dynamic data updates
