@@ -28,7 +28,7 @@ function calculateCost(tokensUsed, modelName) {
 }
 
 module.exports = async (req, res) => {
-    console.log("[A]\n");
+    ////console.log("[A]\n");
 
     // Log all supplemental data available
     //console.log("\nSupp. data: \n" + JSON.stringify(req.body, null, 2)); // (doesn't work)
@@ -367,11 +367,11 @@ module.exports = async (req, res) => {
         let useTokens;
         // Use SuperAI?
         if (superAI == 'on') {
-            console.log('[SuperAI is ON]');
+            ////console.log('[SuperAI is ON]');
             useModel = 'gpt-3.5-turbo';
             useTokens = 125;
         } else {
-            console.log('[SuperAI is OFF]');
+            ////console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_PRIMARY_ANALYSES;
             useTokens = parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10);
         }
@@ -400,13 +400,13 @@ module.exports = async (req, res) => {
             // Calculate cost in dollars
             //const totalCost = calculateCost(tokensUsed, modelName);
             //console.log(`       Total Cost = $${totalCost.toFixed(2)}`);
-            console.log("\n    # Total Tkns. =", tokensUsed);
+            ////console.log("\n    # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
-            console.log("   # Prompt Tkns. =", promptTokens);
+            ////console.log("   # Prompt Tkns. =", promptTokens);
         }
         if (completionTokens) {
-            console.log("    # Resp. Tkns. =", completionTokens);
+            ////console.log("    # Resp. Tkns. =", completionTokens);
         }
 
         // Extract prompt components and response
@@ -423,7 +423,7 @@ module.exports = async (req, res) => {
             ////console.log("\n[USER Prompt]\n" + aiPromptUser);
         }
         if (aiResponseText) {
-            console.log("\n[AI Response]\n" + aiResponseText);
+            ////console.log("\n[AI Response]\n" + aiResponseText);
         }
         
 

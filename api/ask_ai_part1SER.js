@@ -28,7 +28,7 @@ function calculateCost(tokensUsed, modelName) {
 }
 */
 module.exports = async (req, res) => {
-    console.log("[SER]\n");
+    ////console.log("[SER]\n");
 
     let { aiCombinedResponses, suppDataForAI, superAI } = req.body;
         
@@ -42,9 +42,9 @@ module.exports = async (req, res) => {
     if (suppDataForAI && suppDataForAI.geom) {
         delete suppDataForAI.geom;
     } else if (suppDataForAI) {
-        console.log("\nThere is no geometry in the supplemental data, which is fine; just be aware!\n")
+        ////console.log("\nThere is no geometry in the supplemental data, which is fine; just be aware!\n")
     } else {
-        console.log("\n** HUGE PROBLEM! **\n There is no suppDataForAI!");
+        ////console.log("\n** HUGE PROBLEM! **\n There is no suppDataForAI!");
     }
     
     // Stringify and escape
@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
     } catch (err) {
         jsonString = "Failed to stringify object: " + err.message;
     }
-    //console.log(jsonString);
+    //////console.log(jsonString);
     
     const messages = [{
         "role": "system",
@@ -95,13 +95,13 @@ module.exports = async (req, res) => {
         let useTokens;
         // Use SuperAI?
         if (superAI == 'on') {
-            //console.log('[SuperAI is ON]');
+            //////console.log('[SuperAI is ON]');
             useModel = process.env.AI_MODEL_SER_MODULE;
             useTokens = parseInt(process.env.AI_MAX_TOKENS_SER_MODULE, 10);
             //useModel = 'gpt-4';
             //useTokens = 700;
         } else {
-            //console.log('[SuperAI is OFF]');
+            //////console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_SER_MODULE;
             useTokens = parseInt(process.env.AI_MAX_TOKENS_SER_MODULE, 10);
         }
@@ -160,8 +160,8 @@ module.exports = async (req, res) => {
         htmlFormattedResponse = aiResponseText.replace(/<br>/g, '').replace(/\n/g, '<br>');
         
         /*// (log all available data)
-        console.log(jsonString);
-        console.log(modelName);*/
+        ////console.log(jsonString);
+        ////console.log(modelName);*/
 
         // Send AI response to client
         res.status(200).json(htmlFormattedResponse);

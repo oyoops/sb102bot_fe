@@ -28,10 +28,10 @@ function calculateCost(tokensUsed, modelName) {
 }
 
 module.exports = async (req, res) => {
-    console.log("[C]\n");
+    ////console.log("[C]\n");
 
     // Log all supplemental data available
-    //console.log("\nSupp. data: \n" + JSON.stringify(req.body, null, 2)); // (doesn't work)
+    //////console.log("\nSupp. data: \n" + JSON.stringify(req.body, null, 2)); // (doesn't work)
 
     // SuperAI Switch
     const superAI = req.body.superAI; // 'on' / 'off'
@@ -310,7 +310,7 @@ module.exports = async (req, res) => {
         eligibleLandUseForLiveLocal = false;
         eligibilityDescription = "\nLand use is '" + useCodeLookup[dor_uc] + ",'\nwhich does NOT qualify. It's neither commercial nor industrial!\n";
     }
-    ////console.log("[LAND USE ELIGIBILITY]\n" + eligibilityDescription);
+    ////////console.log("[LAND USE ELIGIBILITY]\n" + eligibilityDescription);
 
     // Compose prompt
 
@@ -361,11 +361,11 @@ module.exports = async (req, res) => {
         let useTokens;
         // Use SuperAI?
         if (superAI == 'on') {
-            console.log('[SuperAI is ON]');
+            ////console.log('[SuperAI is ON]');
             useModel = 'gpt-3.5-turbo';
             useTokens = 125;
         } else {
-            console.log('[SuperAI is OFF]');
+            ////console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_PRIMARY_ANALYSES;
             useTokens = parseInt(process.env.AI_MAX_TOKENS_PRIMARY_ANALYSES, 10);
         }
@@ -393,14 +393,14 @@ module.exports = async (req, res) => {
         if (tokensUsed) {
             // Calculate cost in dollars
             //const totalCost = calculateCost(tokensUsed, modelName);
-            //console.log(`       Total Cost = $${totalCost.toFixed(2)}`);
-            console.log("\n    # Total Tkns. =", tokensUsed);
+            //////console.log(`       Total Cost = $${totalCost.toFixed(2)}`);
+            ////console.log("\n    # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
-            console.log("   # Prompt Tkns. =", promptTokens);
+            ////console.log("   # Prompt Tkns. =", promptTokens);
         }
         if (completionTokens) {
-            console.log("    # Resp. Tkns. =", completionTokens);
+            ////console.log("    # Resp. Tkns. =", completionTokens);
         }
 
         // Extract prompt components and response
@@ -410,13 +410,13 @@ module.exports = async (req, res) => {
         
         // Log prompt components and response
         if (aiPromptSystem) {
-            ////console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
+            ////////console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
         }
         if (aiPromptUser) {
-            ////console.log("\n[USER Prompt]\n" + aiPromptUser);
+            ////////console.log("\n[USER Prompt]\n" + aiPromptUser);
         }
         if (aiResponseText) {
-            console.log("\n[AI Response]\n" + aiResponseText);
+            ////console.log("\n[AI Response]\n" + aiResponseText);
         }
 
         // Send response to client

@@ -5,6 +5,9 @@ let superAI = 'off';
 let debugModeSwitch = 'on';
 let enableLiveLocalModule = 'on';
 
+let globSupData;
+let globSupDataForLegacy;
+
 /* CONSTANTS */
 // Comps:
 const COMPS_SEARCH_RADIUS_MILES = "3.0000"; // miles (must be in string form)

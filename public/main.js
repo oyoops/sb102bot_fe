@@ -233,16 +233,22 @@ document.addEventListener('DOMContentLoaded', function() {
             rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
             countyMaxRentsTable.style.display = 'table';
 
+            // Composing the supplemental data set(s) for AI by combining all available data
+            let suppDatasets;
             try {
-                // Start composing the supplemental data set for AI, beginning with parcelData
+                // Generate supp data set(s)
                 verifyParcelData(parcelData);
-                aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
-                globSupData = await composeGlobalSupplementalData(aiSupplementalData, countyData, cityData, compsData);
-                
-                console.log('Global Supplemental Data was successfully created!');
+                aiSupplementalData = await JSON.parse(JSON.stringify(parcelData));
+                suppDatasets = await generateSupplementalDatasets(aiSupplementalData, countyData, cityData, compsData);
+                globSupData = suppDatasets.cleanSuppDataForChatbot;
+                globSupDataForLegacy = suppDatasets.cleanSuppDataForLegacyAI;
+                // Log complete supp data set(s)
+                console.log('\nGlobal Supplemental Data Payload (Chatbot):');
                 console.log(globSupData);
+                console.log('\nGlobal Supplemental Data Payload (Legacy):');
+                console.log(globSupDataForLegacy);
             } catch (error) {
-                console.error('Parcel Data Error:', error);
+                console.error('Global Supp Data Composition Error:\n', error);
                 handleAIError(error);
             }
 
@@ -263,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 // Generate AI summary HTML content
-                const aiContentHTML = await runAIModule(eligPath, superAI, globSupData, debugModeSwitch, customInstructionsText);
+                const aiContentHTML = await runAIModule(eligPath, superAI, globSupDataForLegacy, debugModeSwitch, customInstructionsText);
 
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
@@ -355,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function() {
    
         // Generate a dynamic response using OpenAI API
         try {
-            const response = await generateDynamicResponse(message, chatState, globSupData);
+            const response = await generateDynamicResponse(message, chatState, supplementalData);
             displayTypingIndicator(false);
             displayChatMessage(response, 'bot');
             handleContextSwitching(response);
@@ -462,7 +468,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to generate dynamic response using chatbot proxy
     async function generateDynamicResponse(message, chatState, chatbotSupplementalData) {
-        console.log("SUPPDATA\n" + chatbotSupplementalData);
+        //console.log("SUPPDATA\n" + chatbotSupplementalData);
 
         const response = await fetch('/api/aichat', {
             method: 'POST',

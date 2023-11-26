@@ -28,20 +28,20 @@ function calculateCost(tokensUsed, modelName) {
 }
 */
 module.exports = async (req, res) => {
-    console.log("[SER]\n");
+    ////console.log("[SER]\n");
 
     let { aiCombinedResponses, suppDataForAI, superAI } = req.body;
         
     // SuperAI Switch
-    //console.log("<", superAI, ">");
+    //////console.log("<", superAI, ">");
 
     // Remove geometry because it can break API if too long
     if (suppDataForAI && suppDataForAI.geom) {
         delete suppDataForAI.geom;
     } else if (suppDataForAI) {
-        console.log("\nThere is no geometry in the supplemental data, which is fine; just be aware!\n")
+        ////console.log("\nThere is no geometry in the supplemental data, which is fine; just be aware!\n")
     } else {
-        console.log("\n** HUGE PROBLEM! **\n There is no suppDataForAI!");
+        ////console.log("\n** HUGE PROBLEM! **\n There is no suppDataForAI!");
     }
     
     // Stringify and escape
@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
     } catch (err) {
         jsonString = "Failed to stringify object: " + err.message;
     }
-    //console.log(jsonString);
+    //////console.log(jsonString);
     
     const messages = [{
         "role": "system",
@@ -94,11 +94,11 @@ module.exports = async (req, res) => {
         let useTokens;
         // Use SuperAI?
         if (superAI == 'on') {
-            console.log('[SuperAI is ON]');
+            ////console.log('[SuperAI is ON]');
             useModel = process.env.AI_MODEL_SER_MODULE;
             useTokens = parseInt(process.env.AI_MAX_TOKENS_SER_SFD_MODULE, 10);
         } else {
-            console.log('[SuperAI is OFF]');
+            ////console.log('[SuperAI is OFF]');
             useModel = process.env.AI_MODEL_SER_MODULE;
             useTokens = parseInt(process.env.AI_MAX_TOKENS_SER_SFD_MODULE, 10);
         }
@@ -126,11 +126,11 @@ module.exports = async (req, res) => {
         if (tokensUsed) {
             // Calculate cost in dollars
             //const totalCost = calculateCost(tokensUsed, modelName);
-            //console.log(`       Total Cost = $${totalCost.toFixed(2)}`);
+            //////console.log(`       Total Cost = $${totalCost.toFixed(2)}`);
             console.log("\n    # Total Tkns. =", tokensUsed);
         }
         if (promptTokens) {
-            console.log("   # Prompt Tkns. =", promptTokens);
+           console.log("   # Prompt Tkns. =", promptTokens);
         }
         if (completionTokens) {
             console.log("    # Resp. Tkns. =", completionTokens);
@@ -140,10 +140,10 @@ module.exports = async (req, res) => {
         const aiPromptSystem = messages[0]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'system' ? responseData?.choices[0]?.message?.content : null;
         const aiPromptUser = messages[1]?.content.trim(); //// responseData?.choices[0]?.message?.role === 'user' ? responseData?.choices[0]?.message?.content : null;
         if (aiPromptSystem) {
-            ////console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
+            ////////console.log("\n[SYSTEM Prompt]\n" + aiPromptSystem);
         }
         if (aiPromptUser) {
-            ////console.log("\n[USER Prompt]\n" + aiPromptUser);
+            ////////console.log("\n[USER Prompt]\n" + aiPromptUser);
         }
 
         // Log the response
@@ -157,14 +157,14 @@ module.exports = async (req, res) => {
         htmlFormattedResponse = aiResponseText.replace(/<br>/g, '').replace(/\n/g, '<br>');
         
         // (log all available data)
-        console.log(jsonString);
+        ////console.log(jsonString);
 
         // Send AI response to client
         res.status(200).json(htmlFormattedResponse);
     
     } catch (error) {
         // Log the OpenAI error
-        console.error("Full error object:", error);
+        console.error("Full Error:", error);
     
         // Check if the error response contains detailed error information
         if (error.response && error.response.data && error.response.data.error) {

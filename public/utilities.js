@@ -82,11 +82,8 @@ function getMunicipality(cityData, countyData) {
     return muniName;
 }
 
-
-/* AI-Related Functions: */
-
-// Main AI module entry point
-async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode=false, customInstructionsText) {
+// Compose the global supplemental data set (and also return a non-global copy of it)
+async function generateSupplementalDatasets(aiSupplementalData, countyData, cityData, compsData) {
     if (countyData) {
         enhanceWithCountyData(aiSupplementalData, countyData);
     }
@@ -96,15 +93,34 @@ async function runAIModule(eligPath, superAI, aiSupplementalData, countyData, ci
     if (compsData) {
         enhanceWithCompsData(aiSupplementalData, compsData);
     }
-
+    
+    // Clean enhanced data
     const dirtyData = await getDirtyData(aiSupplementalData);
-    const cleanerData = refineData(dirtyData, superAI);
-    const aiGeneratedHTML = await fetchAiResponsesCombined(eligPath, cleanerData, superAI, debugModeSwitch, customInstructionsText);
+    
+    // Get two data sets (new chatbot, legacy AI)
+    const cleanSuppDataForChatbot = refineDataForChatbot(dirtyData, superAI);
+    const cleanSuppDataForLegacyAI = refineData(dirtyData, superAI);
+    
+    // Return final data sets
+    const datasets = { cleanSuppDataForChatbot, cleanSuppDataForLegacyAI };
+    return datasets;
+}
 
-    if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
-        throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
+
+/* AI-Related Functions: */
+
+// Main AI module entry point
+async function runAIModule(eligPath, superAI, cleanSuppData, debugMode=false, customInstructionsText) {
+    if (!debugMode) { 
+        const aiGeneratedHTML = await fetchAiResponsesCombined(eligPath, cleanSuppData, superAI, debugModeSwitch, customInstructionsText);
+        if (!aiGeneratedHTML || aiGeneratedHTML.length === 0) {
+            throw new Error('[CRITICAL] Error: The AI-generated HTML is totally blank!');
+        }
+        return composeFormattedAiResponse(aiGeneratedHTML);
+    } else {
+        const noAiHTML = '<p>Blank!</p>';
+        return noAiHTML;
     }
-    return composeFormattedAiResponse(aiGeneratedHTML);
 }
 
 // handle AI module errors
@@ -284,7 +300,95 @@ function composeFormattedAiResponse(aiResponse, titleLine = `🌞 Living Local i
     return formattedResponse;
 }
 
-// Add globals to dataset and apply final super-enhancements
+
+// Add globals to CHATBOT dataset and apply final enhancements
+function refineDataForChatbot(rawData, superAI) {
+    try {
+        console.log("Refining data with the following raw input:", rawData);
+        let refinedData = {};
+        // Attach key globals to the supplementary dataset
+        rawData = {
+            // Parameters
+            superAI: superAI,
+
+            // Location Data
+            address: address,
+            lat: lat,
+            lng: lng,
+            cityNameProper: cityNameProper,
+            countyNameProper: countyNameProper,
+            displayMuniName: displayMuniName,
+
+            // Unit Density Data
+            acres: acres,
+            maxMuniDensity: maxMuniDensity,
+            maxCapacity: maxCapacity,
+
+            // Map & Building Data
+            //LIVE_LOCAL_BLDG_RADIUS_MILES: LIVE_LOCAL_BLDG_RADIUS_MILES,
+            //tallestBuildingLat: buildingLat,
+            //tallestBuildingLng: buildingLng,
+            distanceInMilesToTallestBldg: distanceInMilesToTallestBldg,
+            tallestBuildingHeight: buildingHeight,
+            tallestBuildingName: buildingName,
+            tallestBuildingAddress: buildingAddress,
+
+            // Custom Data
+            //descriptionOfLiveLocalEligibility: summaryContent,
+
+            /* Cost Data */
+            // ...
+            
+            /* Housing Unit Sizes & Rents */
+            // ...
+
+            /* Abatement Data */
+            // ...
+
+            // Pre-existing Parcel-County-City Data
+            ...rawData
+        };
+
+        console.log("Starting column renaming and removal of unwanted columns.");
+        // Rename most columns
+        for (let [key, value] of Object.entries(rawData)) {
+            if (renameMap[key]) {
+                console.log(`Renaming key: ${key} to ${renameMap[key]}`);
+                refinedData[renameMap[key]] = value;
+            } else {
+                refinedData[key] = value; // Keeping columns not in the renameMap as-is
+            }
+        }
+        // Remove unwanted columns
+        for (let unwantedColumn of unwantedColumns) {
+            if (refinedData[renameMap[unwantedColumn]]) {
+                console.log(`Removing unwanted column: ${renameMap[unwantedColumn]}`);
+                delete refinedData[renameMap[unwantedColumn]];
+            }
+        }
+        console.log("Finished column renaming and removal of unwanted columns.");
+        console.log("Starting null value removal and zero value conversion.");
+        // Remove null values; convert zero values
+        for (let [key, value] of Object.entries(refinedData)) {
+            if (value === null) {
+                console.log(`Removing null value for key: ${key}`);
+                delete refinedData[key];
+            } else if (value === "0.00000") {
+                console.log(`Converting zero string to numeric zero for key: ${key}`);
+                refinedData[key] = 0;
+            }
+        }
+        console.log("Finished null value removal and zero value conversion.");
+        console.log("Refined data:", refinedData);
+        return refinedData;
+    } catch (error) {
+        console.error("Error refining data:", error);
+        throw error; // Rethrow the error after logging
+    }
+}
+
+
+// Add globals to dataset and apply final enhancements
 function refineData(rawData, superAI) {
     let refinedData = {};
     // Attach key globals to the supplementary dataset
@@ -352,6 +456,7 @@ function refineData(rawData, superAI) {
             refinedData[key] = 0;
         }
     }
+    console.log(refinedData);
     return refinedData;
 }
 
