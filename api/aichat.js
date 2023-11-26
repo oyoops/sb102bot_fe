@@ -29,6 +29,9 @@ const COLOR_AI = RED;
 
 module.exports = async (req, res) => {
     const { message, history, aiSupplementalData } = req.body;
+    console.log(message);
+    console.log(history);
+    console.log(aiSupplementalData);
 
     // New chat received
     console.log(RESET + `\n\n\n` + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET + `\n`);
@@ -67,7 +70,12 @@ module.exports = async (req, res) => {
         "content": assistantContent
     };
 
-        // Convert the chat history to the format expected by the OpenAI API
+    // Log all available data
+    console.log("SUPPLEMENTAL DATA:\n");
+    //console.log(JSON.stringify(aiSupplementalData));
+
+
+    // Convert the chat history to the format expected by the OpenAI API
     const messages = [
         {
             "role": "system",
@@ -80,6 +88,12 @@ module.exports = async (req, res) => {
                 "content": entry.message.trim()
             }))
     ];
+    /*const messages = history
+        .filter(entry => entry && entry.message) // Filter out any invalid msgs
+        .map(entry => ({
+            "role": entry.sender === 'user' ? 'user' : 'assistant',
+            "content": entry.message.trim()
+        }));*/
     
     // Log all prompt components before sending request
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
@@ -149,12 +163,12 @@ module.exports = async (req, res) => {
         }
         // Server log the error
         console.error(`\n` + RED_BACKGROUND + `[ERROR]\n` + RESET + RED + errDesc + RESET);
-        console.log(error);
+        //console.log(error);
 
         // Log detailed OpenAI error info
         if (error?.response && error?.response?.data && error?.response?.data?.error) {
             console.error(RED + UNDERLINE + "Error Details:" + RESET + "\n" + RED + error.response.data.error + RESET);
-            console.log(error);
+            //console.log(error);
         }
 
         // Return *just the message* from the OpenAI error
