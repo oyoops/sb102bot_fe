@@ -29,10 +29,10 @@ const COLOR_AI = RED;
 
 
 module.exports = async (req, res) => {
-    const { message, history, globSupData } = req.body;
+    const { message, history, chatbotSupplementalData } = req.body;
     console.log(history);
     console.log(message);
-    console.log(globSupData);
+    console.log(chatbotSupplementalData);
 
     // New chat received
     console.log(RESET + `\n\n\n\n` + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET + `\n`);
@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
         context = await adjustContext(history);
     } else {
         // Default system & assistant prompts with supplemental data:
-        const serializedSuppData = JSON.stringify(globSupData);
+        const serializedSuppData = JSON.stringify(chatbotSupplementalData);
         systemContent = `You are a knowledgeable AI assistant specializing in Florida real estate development, ready to provide information on various aspects of the field. Your response should be short and concise. Use the following supplemental data to inform your responses: ${serializedSuppData}`;
         assistantContent = "I'm here to assist with any questions about Florida real estate. Feel free to ask about market trends, investment opportunities, regulations, or anything else related to this field.";
         context = {
@@ -91,13 +91,13 @@ module.exports = async (req, res) => {
     
     // Log available data
     console.log(`\n   ` + RESET + BOLD + WHITE_BACKGROUND + `    SUPPLEMENTAL DATA   ` + RESET);
-    console.log(globSupData);
+    console.log(chatbotSupplementalData);
     ////const parsedSuppData = JSON.stringify(JSON.parse(JSON.stringify(globSupData)), null, 2);
-    const parsedSuppData = globSupData;
+    const parsedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
     console.log(parsedSuppData);
 
     /* Insert the parsedSuppData object into the prompt so that the AI can draw from its info to answer questions */
-    const newMessage = message.replace(/{{SUPPLEMENTAL_DATA}}/g, parsedSuppData);
+    const newMessage = message.replace(/{{SUPPLEMENTAL_DATA}}/g, chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided");
     console.log(`\n   ` + RESET + BOLD + WHITE_BACKGROUND + `    NEW MESSAGE        ` + RESET);
     console.log(newMessage);
     
