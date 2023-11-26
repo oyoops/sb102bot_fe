@@ -438,8 +438,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to announce the chatbot's context update without sending a message to the AI
     // This function has been updated to prevent an infinite loop by not triggering the DataUpdatedEvent again
     function announceChatbotContextUpdate(newSuppData, changedElements) {
-        // Directly update the global supplemental data variable without using the proxy to avoid infinite loop
-        globSupData.data = newSuppData;
+        // Parse the newSuppData string into an object before updating globSupData
+        try {
+            const parsedData = JSON.parse(newSuppData);
+            globSupData = { ...globSupData, ...parsedData };
+        } catch (error) {
+            console.error('Failed to parse newSuppData:', error);
+        }
         // Announce the context change in the chat without sending a message to the AI
         const changedElementsDescriptions = changedElements.map(el => `${el.name}: ${el.value}`).join(', ');
         displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsDescriptions}`, 'system-update');
