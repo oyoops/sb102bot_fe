@@ -426,21 +426,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to display typing indicator
     function displayTypingIndicator(show) {
+        // Remove any existing typing indicators before adding a new one
+        const existingIndicator = document.querySelector('.typing-indicator');
+        if (existingIndicator) {
+            existingIndicator.remove();
+        }
+
         if (show) {
             const typingIndicator = document.createElement('div');
             typingIndicator.classList.add('typing-indicator');
             for (let i = 0; i < 3; i++) {
                 const dot = document.createElement('span');
-                dot.textContent = ' '; // weird
+                dot.textContent = ' ';
                 typingIndicator.appendChild(dot);
             }
             chatMessages.appendChild(typingIndicator);
             chatMessages.scrollTop = chatMessages.scrollHeight;
-        } else {
-            const typingIndicator = document.querySelector('.typing-indicator');
-            if (typingIndicator) {
-                typingIndicator.remove();
-            }
         }
     }
 

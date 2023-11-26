@@ -13,8 +13,8 @@
 
 @media (max-width: 600px) {
     .chat-interface {
-        width: 100%; /* On small screens, make the chat interface full width */
-        margin: 10px 0; /* Reduce margin on small screens */
+        width: calc(100% - 20px); /* Adjust width to allow for margin */
+        margin: 10px 10px; /* Add 10px margin to left and right on small screens */
         padding: 15px; /* Adjust padding for small screens */
         border-radius: 10px; /* Reduce border radius on small screens */
     }
