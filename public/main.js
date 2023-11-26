@@ -233,33 +233,41 @@ document.addEventListener('DOMContentLoaded', function() {
             rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
             countyMaxRentsTable.style.display = 'table';
 
-            ////////document.getElementById('#averagesContainer').style.display = 'table';
-            ////////document.getElementById('#averagesTableContainer').style.display = 'table';
-
-            /* Start AI Module */
-            
             try {
-                // Start composing the supplemental data set for AI beginning with parcelData
+                // Start composing the supplemental data set for AI, beginning with parcelData
                 verifyParcelData(parcelData);
                 aiSupplementalData = JSON.parse(JSON.stringify(parcelData));
+                globSupData = await composeGlobalSupplementalData(aiSupplementalData, countyData, cityData, compsData);
+                
+                console.log('Global Supplemental Data was successfully created!');
+                console.log(globSupData);
             } catch (error) {
                 console.error('Parcel Data Error:', error);
                 handleAIError(error);
             }
 
-            debugModeSwitch = false;
-            if (debugModeCheckbox=='on') {
-                debugModeSwitch = true;
-            }
 
+            /* Start Chatbot Module */
+            // Show chatbot
+            chatbotDiv.style.display = 'block';
+            // Init chatbot with chatbotSuppData
+            initializeChat(globSupData);
+            /* End Chatbot Module */
+
+
+            /* Start AI Module */
             try {
+                debugModeSwitch = false;
+                if (debugModeCheckbox=='on') {
+                    debugModeSwitch = true;
+                }
+
                 // Generate AI summary HTML content
-                const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugModeSwitch, customInstructionsText);
+                const aiContentHTML = await runAIModule(eligPath, superAI, globSupData, debugModeSwitch, customInstructionsText);
 
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
-                // Show chatbot
-                ///////////////////chatInterface.style.display = 'block';
+
                 // Show AI summary response
                 eligibilityDiv.innerHTML = aiContentHTML;
                 eligibilityDiv.style.display = 'block';
@@ -330,11 +338,11 @@ document.addEventListener('DOMContentLoaded', function() {
         currentThread: null
     };
 
-    // Init chat
-    initializeChat()
+    /*// Init chat
+    initializeChat();*/
    
     // Function to process chat messages
-    async function processChatMessage(message) {
+    async function processChatMessage(message, globSupData) {
         // Add user message to chat history if it's not the last message already
         const lastMessage = chatState.history[chatState.history.length - 1];
         if (!lastMessage || lastMessage.message !== message) {
@@ -347,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
    
         // Generate a dynamic response using OpenAI API
         try {
-            const response = await generateDynamicResponse(message, chatState);
+            const response = await generateDynamicResponse(message, chatState, globSupData);
             displayTypingIndicator(false);
             displayChatMessage(response, 'bot');
             handleContextSwitching(response);
@@ -393,27 +401,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to initialize the chat with a greeting message
-    function initializeChat() {
+    function initializeChat(globSupData) {
         const initialMessage = `Are you ready for my questions?`;
         if (!chatState.history.some(msg => msg.message === initialMessage && msg.sender === 'user')) {
             displayChatMessage(initialMessage, 'user');
-            processChatMessage(initialMessage);
+            processChatMessage(initialMessage, globSupData);
         }
     }
 
     // Event listener for the send message button and Enter keypress in the chat input
-    sendMessageButton.addEventListener('click', sendChatMessage);
+    sendMessageButton.addEventListener('click', sendChatMessage(globSupData));
     chatInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
-            sendChatMessage();
+            sendChatMessage(globSupData);
         }
     });
 
-    function sendChatMessage() {
+    function sendChatMessage(globSupData) {
         const message = chatInput.value.trim();
         if (message) {
             displayChatMessage(message, 'user');
-            processChatMessage(message);
+            processChatMessage(message, globSupData);
             chatInput.value = '';
             displayTypingIndicator(true);
         }
@@ -453,13 +461,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to generate dynamic response using chatbot proxy
-    async function generateDynamicResponse(message, aiSupplementalData) {
+    async function generateDynamicResponse(message, chatState, chatbotSupplementalData) {
+        console.log("SUPPDATA\n" + chatbotSupplementalData);
+
         const response = await fetch('/api/aichat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message, history: chatState.history, aiSupplementalData })
+            body: JSON.stringify({ message: message, history: chatState.history, chatbotSupplementalData: chatbotSupplementalData })
         });
 
         const replyText = await response.json();
