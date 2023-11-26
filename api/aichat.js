@@ -28,7 +28,7 @@ const COLOR_AI = RED;
 // ---
 
 module.exports = async (req, res) => {
-    const { message, history } = req.body;
+    const { message, history, aiSupplementalData } = req.body;
 
     // New chat received
     console.log(RESET + `\n\n\n` + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET + `\n`);
@@ -68,12 +68,18 @@ module.exports = async (req, res) => {
     };
 
         // Convert the chat history to the format expected by the OpenAI API
-    const messages = history
-        .filter(entry => entry && entry.message) // Filter out any invalid msgs
-        .map(entry => ({
-            "role": entry.sender === 'user' ? 'user' : 'assistant',
-            "content": entry.message.trim()
-        }));
+    const messages = [
+        {
+            "role": "system",
+            "content": JSON.stringify(aiSupplementalData)
+        },
+        ...history
+            .filter(entry => entry && entry.message) // Filter out any invalid msgs
+            .map(entry => ({
+                "role": entry.sender === 'user' ? 'user' : 'assistant',
+                "content": entry.message.trim()
+            }))
+    ];
     
     // Log all prompt components before sending request
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);

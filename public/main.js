@@ -446,15 +446,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to generate dynamic response using chatbot proxy
-    async function generateDynamicResponse(message) {
+    async function generateDynamicResponse(message, aiSupplementalData) {
         const response = await fetch('/api/aichat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message, history: chatState.history })
+            body: JSON.stringify({ message, history: chatState.history, aiSupplementalData })
         });
-    
+
         const replyText = await response.json();
         displayTypingIndicator(false);
         return replyText;
