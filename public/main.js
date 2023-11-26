@@ -438,13 +438,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to announce the chatbot's context update without sending a message to the AI
     // This function has been updated to prevent an infinite loop by not triggering the DataUpdatedEvent again
     function announceChatbotContextUpdate(newSuppData, changedElements) {
-        // Parse the newSuppData string into an object before updating globSupData
-        try {
-            const parsedData = JSON.parse(newSuppData);
-            globSupData = { ...globSupData, ...parsedData };
-        } catch (error) {
-            console.error('Failed to parse newSuppData:', error);
+        // Check if newSuppData is already an object or a valid JSON string
+        let parsedData = {};
+        if (typeof newSuppData === 'string') {
+            try {
+                parsedData = JSON.parse(newSuppData);
+            } catch (error) {
+                console.error('Failed to parse newSuppData as JSON:', error);
+                // Handle the case where newSuppData is not valid JSON
+                // For example, you might want to log this error and not update globSupData
+                return;
+            }
+        } else if (typeof newSuppData === 'object') {
+            parsedData = newSuppData;
+        } else {
+            console.error('newSuppData is neither a string nor an object:', newSuppData);
+            return;
         }
+        // Update globSupData with the parsed data
+        globSupData = { ...globSupData, ...parsedData };
+    
         // Announce the context change in the chat without sending a message to the AI
         const changedElementsDescriptions = changedElements.map(el => `${el.name}: ${el.value}`).join(', ');
         displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsDescriptions}`, 'system-update');
