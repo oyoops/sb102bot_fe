@@ -1,13 +1,23 @@
 /* Chat Interface Styles */
 .chat-interface {
-    width: 100%;
+    width: calc(100% - 40px); /* Subtract total horizontal margin from 100% width */
     max-width: 600px;
-    margin: 20px auto;
+    margin: 20px 20px; /* Add 20px margin to left and right */
     padding: 20px;
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     border: 1px solid #d1d9e6;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+@media (max-width: 600px) {
+    .chat-interface {
+        width: 100%; /* On small screens, make the chat interface full width */
+        margin: 10px 0; /* Reduce margin on small screens */
+        padding: 15px; /* Adjust padding for small screens */
+        border-radius: 10px; /* Reduce border radius on small screens */
+    }
 }
 
 .chat-input {
