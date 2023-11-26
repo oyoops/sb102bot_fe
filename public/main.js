@@ -433,12 +433,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Function to update the chatbot's context with new data
-    function updateChatbotContext(newSuppData) {
+    // Function to announce the chatbot's context update without sending a message to the AI
+    function announceChatbotContextUpdate(newSuppData) {
         // Update the global supplemental data variable through the proxy
         globSupDataProxy.data = newSuppData;
-        // Notify the chatbot of the context change
-        processChatMessage('UPDATE_CONTEXT', globSupDataProxy.data);
+        // Announce the context change in the chat without sending a message to the AI
+        displayChatMessage('The context/data has been updated.', 'system-update');
     }
 
     // Function to initialize the chat with a greeting message and set up dynamic data updates
@@ -452,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set up an event listener or other mechanism to listen for data updates
         // This is a placeholder for the actual implementation, which will depend on how data updates are received
         document.addEventListener('DataUpdatedEvent', function(event) {
-            updateChatbotContext(event.detail.newData);
+            announceChatbotContextUpdate(event.detail.newData);
         });
     }
 
@@ -482,15 +482,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to display chat messages
+    // Function to display chat messages and system updates
     function displayChatMessage(message, sender) {
         const messageElement = document.createElement('div');
         messageElement.classList.add('chat-message', sender);
-        messageElement.textContent = message;
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
-        if (sender === 'bot') {
-            chatState.history.push({ message, sender });
+        if (sender === 'system-update') {
+            messageElement.classList.add('system-update');
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+        } else {
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+            if (sender === 'bot') {
+                chatState.history.push({ message, sender });
+            }
         }
     }
 
