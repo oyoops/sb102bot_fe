@@ -27,29 +27,27 @@ const COLOR_USER = GREEN;
 const COLOR_AI = RED;
 // ---
 
+
 module.exports = async (req, res) => {
-    const { message, history, aiSupplementalData } = req.body;
-    console.log(message);
+    const { message, history, globSupData } = req.body;
     console.log(history);
-    console.log(aiSupplementalData);
+    console.log(message);
+    console.log(globSupData);
 
     // New chat received
-    console.log(RESET + `\n\n\n` + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET + `\n`);
+    console.log(RESET + `\n\n\n\n` + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET + `\n`);
         
     /* Set Context Switching functionality */
     const CONTEXT_SWITCHING_ACTIVE = false;
     let context;
     let systemContent;
     let assistantContent;
-    // If Context Switching active, use AI to deduce the context before responding (adds time); otherwise, use defaults.
     if (CONTEXT_SWITCHING_ACTIVE) {
-        // Adjust context based on the ongoing conversation
         context = await adjustContext(history);
     } else {
         // Default system & assistant prompts:
         systemContent = "You are a knowledgeable AI assistant specializing in Florida real estate development, ready to provide information on various aspects of the field. Your response should be short and concise.";
         assistantContent = "I'm here to assist with any questions about Florida real estate. Feel free to ask about market trends, investment opportunities, regulations, or anything else related to this field.";
-        // Set context using the correct property names
         context = {
             systemPrompt: {
                 "role": "system",
@@ -70,11 +68,6 @@ module.exports = async (req, res) => {
         "content": assistantContent
     };
 
-    // Log all available data
-    console.log("SUPPLEMENTAL DATA:\n");
-    //console.log(JSON.stringify(aiSupplementalData));
-
-
     // Convert the chat history to the format expected by the OpenAI API
     const messages = [
         systemPrompt,
@@ -86,12 +79,6 @@ module.exports = async (req, res) => {
                 "content": entry.message.trim()
             }))
     ];
-    /*const messages = history
-        .filter(entry => entry && entry.message) // Filter out any invalid msgs
-        .map(entry => ({
-            "role": entry.sender === 'user' ? 'user' : 'assistant',
-            "content": entry.message.trim()
-        }));*/
     
     // Log all prompt components before sending request
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
@@ -99,11 +86,26 @@ module.exports = async (req, res) => {
     console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_ASSISTANT + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${assistantPrompt.content.split('\n').join('\n\t')}` + RESET);
     console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_USER + `USER` + RESET + `\n     ` + COLOR_USER + `${message.trim().split('\n').join('\n\t')}` + RESET);
     
+    // Get all available data
+    
+    // Log available data
+    console.log(`\n   ` + RESET + BOLD + WHITE_BACKGROUND + `    SUPPLEMENTAL DATA   ` + RESET);
+    console.log(globSupData);
+    ////const parsedSuppData = JSON.stringify(JSON.parse(JSON.stringify(globSupData)), null, 2);
+    const parsedSuppData = globSupData;
+    console.log(parsedSuppData);
+
+    /* Insert the parsedSuppData object into the prompt so that the AI can draw from its info to answer questions */
+    const newMessage = message.replace(/{{SUPPLEMENTAL_DATA}}/g, parsedSuppData);
+    console.log(`\n   ` + RESET + BOLD + WHITE_BACKGROUND + `    NEW MESSAGE        ` + RESET);
+    console.log(newMessage);
+    
     // Add system and assistant prompts at the beginning of the conversation history (prepares messages for API request)
     if (systemPrompt && assistantPrompt) {
         messages.unshift(systemPrompt, assistantPrompt);
     }
 
+    // Send POST request
     try {
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             messages: messages,
@@ -121,9 +123,8 @@ module.exports = async (req, res) => {
         const responseData = response.data;
         const responseString = responseData.choices[0].message.content;
 
-        // Log user's current message before sending API request
+        // Log the AI's response
         console.log(`   ` + BOLD + UNDERLINE + COLOR_AI + `AI RESPONSE` + RESET + `\n     ` + COLOR_AI + `${responseString.split('\n').join('\n\t')}` + RESET);
-
 
         // Log token usage
         const tokensUsed = responseData?.usage?.total_tokens;
@@ -169,7 +170,7 @@ module.exports = async (req, res) => {
             //console.log(error);
         }
 
-        // Return *just the message* from the OpenAI error
+        // Return *just* the error message
         const errorMessage = error.response?.data?.message || JSON.stringify(error);
         res.status(500).send(errorMessage);
     }
