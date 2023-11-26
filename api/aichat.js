@@ -19,14 +19,14 @@ const GREEN = '\x1b[32m';
 const GREEN_BACKGROUND = '\x1b[42;30m';
 const MAGENTA = '\x1b[35m';
 const MAGENTA_BACKGROUND = '\x1b[45;30m';
-const ORANGE = '\x1b[33m'; // New color for system-update messages
+const ORANGE_BACKGROUND = '\x1b[43;30m'; // New background color for system-update messages
 
 // ---
 const COLOR_SYSTEM = YELLOW;
 const COLOR_ASSISTANT = BLUE;
 const COLOR_USER = GREEN;
 const COLOR_AI = RED;
-const COLOR_SYSTEM_UPDATE = ORANGE; // New color constant for system-update messages
+const COLOR_SYSTEM_UPDATE = ORANGE_BACKGROUND; // New color constant for system-update messages with background
 // ---
 
 
@@ -70,14 +70,11 @@ module.exports = async (req, res) => {
         "content": assistantContentText
     };
 
-    // Get supplemental data
-    ////const serializedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
-    ////console.log(serializedSuppData);
-    // (debug)
-    ////console.log(chatbotSupplementalData);
-
+    // Get supplemental data and log it with the new color scheme for system-update messages
+    const serializedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
+    console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_SYSTEM_UPDATE + `SYSTEM-UPDATE` + RESET + `\n     ` + COLOR_SYSTEM_UPDATE + `${serializedSuppData}` + RESET);
+    
     // Inject supplemental data into the beginning of the conversation
-    ////const initialSystemMessage = serializedSuppData ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${serializedSuppData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
     // Check if the context needs to be updated with new data
     const initialSystemMessage = updateContext ? { ...systemPrompt, content: `${systemPrompt.content} \nUpdated Property Data:\n ${chatbotSupplementalData}` } : chatbotSupplementalData ? { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` } : { ...systemPrompt, content: `${systemPrompt.content} \n No Property Data Available.` };
     const initialAssistantMessage = history.length === 1 ? assistantPrompt : null;
