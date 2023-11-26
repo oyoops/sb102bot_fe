@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeChat();*/
    
     // Function to process chat messages
-    async function processChatMessage(message, globSupData) {
+    async function processChatMessage(message, supplementalData) {
         // Add user message to chat history if it's not the last message already
         const lastMessage = chatState.history[chatState.history.length - 1];
         if (!lastMessage || lastMessage.message !== message) {
@@ -410,14 +410,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listener for the send message button and Enter keypress in the chat input
-    sendMessageButton.addEventListener('click', sendChatMessage(globSupData));
+    sendMessageButton.addEventListener('click', function() { sendChatMessage(globSupData); });
     chatInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
             sendChatMessage(globSupData);
         }
     });
 
-    function sendChatMessage(globSupData) {
+    function sendChatMessage(supplementalData) {
         const message = chatInput.value.trim();
         if (message) {
             displayChatMessage(message, 'user');
