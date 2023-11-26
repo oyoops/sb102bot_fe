@@ -69,10 +69,14 @@ module.exports = async (req, res) => {
         "content": assistantContent
     };
 
+    // Ensure supplemental data is only sent once at the beginning of the conversation
+    const initialSystemMessage = history.length === 0 ? systemPrompt : null;
+    const initialAssistantMessage = history.length === 0 ? assistantPrompt : null;
+
     // Convert the chat history to the format expected by the OpenAI API
     const messages = [
-        systemPrompt,
-        assistantPrompt,
+        ...(initialSystemMessage ? [initialSystemMessage] : []),
+        ...(initialAssistantMessage ? [initialAssistantMessage] : []),
         ...history
             .filter(entry => entry && entry.message) // Filter out any invalid msgs
             .map(entry => ({
@@ -80,31 +84,19 @@ module.exports = async (req, res) => {
                 "content": entry.message.trim()
             }))
     ];
-    
+
     // Log all prompt components before sending request
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
-    console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_SYSTEM + `SYSTEM` + RESET + `\n     ` + COLOR_SYSTEM + `${systemPrompt.content.split('\n').join('\n\t')}` + RESET);
-    console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_ASSISTANT + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${assistantPrompt.content.split('\n').join('\n\t')}` + RESET);
-    console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_USER + `USER` + RESET + `\n     ` + COLOR_USER + `${message.trim().split('\n').join('\n\t')}` + RESET);
-    
-    // Get all available data
-    
-    // Log available data
-    console.log(`\n   ` + RESET + BOLD + WHITE_BACKGROUND + `    SUPPLEMENTAL DATA   ` + RESET);
-    console.log(chatbotSupplementalData);
-    ////const parsedSuppData = JSON.stringify(JSON.parse(JSON.stringify(globSupData)), null, 2);
-    const parsedSuppData = chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided";
-    console.log(parsedSuppData);
-
-    /* Insert the parsedSuppData object into the prompt so that the AI can draw from its info to answer questions */
-    const newMessage = message.replace(/{{SUPPLEMENTAL_DATA}}/g, chatbotSupplementalData ? JSON.stringify(chatbotSupplementalData) : "No supplemental data provided");
-    console.log(`\n   ` + RESET + BOLD + WHITE_BACKGROUND + `    NEW MESSAGE        ` + RESET);
-    console.log(newMessage);
-    
-    // Add system and assistant prompts at the beginning of the conversation history (prepares messages for API request)
-    if (systemPrompt && assistantPrompt) {
-        messages.unshift(systemPrompt, assistantPrompt);
+    if (initialSystemMessage) {
+        console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_SYSTEM + `SYSTEM` + RESET + `\n     ` + COLOR_SYSTEM + `${initialSystemMessage.content.split('\n').join('\n\t')}` + RESET);
     }
+    if (initialAssistantMessage) {
+        console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_ASSISTANT + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${initialAssistantMessage.content.split('\n').join('\n\t')}` + RESET);
+    }
+    history.forEach(entry => {
+        const roleColor = entry.sender === 'user' ? COLOR_USER : COLOR_ASSISTANT;
+        console.log(`   ` + RESET + BOLD + UNDERLINE + roleColor + `${entry.sender.toUpperCase()}` + RESET + `\n     ` + roleColor + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
+    });
 
     // Send POST request
     try {
