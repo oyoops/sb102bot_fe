@@ -494,14 +494,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = chatInput.value.trim();
         if (message) {
             displayChatMessage(message, 'user');
-            processChatMessage(message, globSupData);
+            processChatMessage(message, supplementalData);
             chatInput.value = '';
             displayTypingIndicator(true);
 
-            // Create and dispatch the DataUpdatedEvent with the new message
+            // Create and dispatch the DataUpdatedEvent with the new message and updateContext set to true
             const dataUpdatedEvent = new CustomEvent('DataUpdatedEvent', {
                 detail: {
-                    newData: message
+                    newData: message,
+                    updateContext: true // Indicate that the context should be updated
                 }
             });
             document.dispatchEvent(dataUpdatedEvent);
