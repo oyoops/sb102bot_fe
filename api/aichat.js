@@ -77,10 +77,8 @@ module.exports = async (req, res) => {
 
     // Convert the chat history to the format expected by the OpenAI API
     const messages = [
-        {
-            "role": "system",
-            "content": JSON.stringify(aiSupplementalData)
-        },
+        systemPrompt,
+        assistantPrompt,
         ...history
             .filter(entry => entry && entry.message) // Filter out any invalid msgs
             .map(entry => ({
