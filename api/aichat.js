@@ -45,8 +45,9 @@ module.exports = async (req, res) => {
     if (CONTEXT_SWITCHING_ACTIVE) {
         context = await adjustContext(history);
     } else {
-        // Default system & assistant prompts:
-        systemContent = "You are a knowledgeable AI assistant specializing in Florida real estate development, ready to provide information on various aspects of the field. Your response should be short and concise.";
+        // Default system & assistant prompts with supplemental data:
+        const serializedSuppData = JSON.stringify(globSupData);
+        systemContent = `You are a knowledgeable AI assistant specializing in Florida real estate development, ready to provide information on various aspects of the field. Your response should be short and concise. Use the following supplemental data to inform your responses: ${serializedSuppData}`;
         assistantContent = "I'm here to assist with any questions about Florida real estate. Feel free to ask about market trends, investment opportunities, regulations, or anything else related to this field.";
         context = {
             systemPrompt: {
