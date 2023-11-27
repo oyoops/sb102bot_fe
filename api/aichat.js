@@ -63,15 +63,12 @@ module.exports = async (req, res) => {
             }
         };
     }
-    const systemPrompt = {
-        "role": "system",
-        "content": systemContentText
-    };
-    const assistantPrompt = {
-        "role": "assistant",
-        "content": assistantContentText
-    };
-    
+    // Include the assistantPrompt in the messages array
+    messages.unshift(assistantPrompt);
+
+    // Log the assistantPrompt similarly to other messages
+    console.log(`   ` + RESET + BOLD + UNDERLINE + BLUE + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${assistantPrompt.content.trim().split('\n').join('\n\t')}` + RESET);
+
     // Log the history before processing
     console.log("History before processing:", JSON.stringify(history, null, 2));
 
