@@ -135,14 +135,13 @@ module.exports = async (req, res) => {
 
     // Log messages
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
-    // Log each prompt component individually    
     // Log system-update, system, and assistant messages
     if (entry.sender === 'system-update') {
-        console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_SYSTEM_UPDATE + `SYSTEM-UPDATE` + RESET + `\n     ` + COLOR_SYSTEM_UPDATE + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
+        console.log(`   ` + RESET + BOLD + UNDERLINE + ORANGE + `SYSTEM-UPDATE` + RESET + `\n     ` + COLOR_SYSTEM_UPDATE + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
     } else if (entry.sender === 'system') {
-        console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_SYSTEM + `SYSTEM` + RESET + `\n     ` + COLOR_SYSTEM + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
+        console.log(`   ` + RESET + BOLD + UNDERLINE + YELLOW + `SYSTEM` + RESET + `\n     ` + COLOR_SYSTEM + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
     } else if (entry.sender === 'assistant') {
-        console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_ASSISTANT + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
+        console.log(`   ` + RESET + BOLD + UNDERLINE + BLUE + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
     }
     history.forEach(entry => {
         const roleColor = entry.sender === 'user' ? COLOR_USER : COLOR_ASSISTANT;
