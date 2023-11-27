@@ -139,7 +139,7 @@ module.exports = async (req, res) => {
     // Log messages
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
     history.forEach(entry => {
-        let roleColor;
+        let roleColor = COLOR_ASSISTANT; // Default color
         switch (entry.sender) {
             case 'user':
                 roleColor = COLOR_USER;
@@ -156,9 +156,7 @@ module.exports = async (req, res) => {
             case 'bot':
                 roleColor = COLOR_AI;
                 break;
-            default:
-                roleColor = COLOR_ASSISTANT; // Default to assistant color if none match
-                break;
+            // No default case needed since we set a default color above
         }
         console.log(`   ` + RESET + BOLD + UNDERLINE + roleColor + `${entry.sender.toUpperCase()}` + RESET + `\n     ` + roleColor + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
     });
