@@ -1,9 +1,9 @@
 /* Chat Interface Styles */
 .chat-interface {
     width: calc(100% - 40px); /* Subtract total horizontal margin from 100% width */
-    max-width: 600px;
+    max-width: 700px;
     margin: 20px 20px; /* Add 20px margin to left and right */
-    margin-top: calc(50vh + 15px); /* Adjust top margin to be below the map */
+    margin-top: calc(50vh + 20px); /* Adjust top margin to be below the map */
     padding: 20px;
     background-color: #ffffff;
     border-radius: 20px;
@@ -16,7 +16,7 @@
     .chat-interface {
         width: calc(100% - 20px); /* Adjust width to allow for margin */
         margin: 10px 10px; /* Add 10px margin to left and right on small screens */
-        margin-top: calc(50vh + 15px); /* Adjust top margin to be below the map */
+        margin-top: calc(50vh + 20px); /* Adjust top margin to be below the map */
         padding: 15px; /* Adjust padding for small screens */
         border-radius: 10px; /* Reduce border radius on small screens */
     }
