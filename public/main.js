@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 // Generate AI summary HTML content
-                //const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode);
+                ////const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode);
                 const aiContentHTML = `<b>Finished researching.</b>`;
                 
                 // Hide loading indicator
@@ -290,7 +290,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Show AI summary response
                 eligibilityDiv.innerHTML = aiContentHTML;
-                eligibilityDiv.style.display = 'block';
+                ////eligibilityDiv.style.display = 'block';
+                eligibilityDiv.style.display = 'none';
                 window.scrollTo(0, 0);
                 animateTextFadeIn(eligibilityDiv);
                 
