@@ -72,22 +72,27 @@ module.exports = async (req, res) => {
         "content": assistantContentText
     };
     
-    // Ensure that the supplemental data is included only in the first system message
-    const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n
-    ${JSON.stringify(chatbotSupplementalData)}` };
-        let messages = [
-            initialSystemMessage
-        ];
-   
-        // Add the rest of the conversation history without supplemental data
-        history
-            .filter(entry => entry && entry.message) // Filter out any invalid msgs
-            .forEach(entry => {
+    // Ensure that the supplemental data is included only in the first system message and not duplicated
+    const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n${JSON.stringify(chatbotSupplementalData)}` };
+    let messages = [initialSystemMessage];
+
+    // Add the rest of the conversation history without supplemental data
+    history
+        .filter(entry => entry && entry.message) // Filter out any invalid msgs
+        .forEach(entry => {
+            // Ensure that the supplemental data is not included again in the history
+            if (!entry.supplementalDataIncluded) {
                 messages.push({
                     "role": entry.sender === 'user' ? 'user' : 'assistant',
                     "content": entry.message.trim()
                 });
-            });
+            }
+        });
+
+    // Mark the first user message to indicate that supplemental data has been included
+    if (history.length > 0 && history[0].sender === 'user') {
+        history[0].supplementalDataIncluded = true;
+    }
 
     // Log messages
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
