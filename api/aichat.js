@@ -78,20 +78,29 @@ module.exports = async (req, res) => {
     /*console.log("SysPromptContent-1: ", systemPrompt.content);*/
     console.log("Update Context? = " + updateContext + " *** Does nothing yet ***\n");
     
-    const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` };
-    const initialAssistantMessage = { ...assistantPrompt };
+    const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}` };
+    const initialAssistantMessage = { ...assistantPrompt, content: `${assistantPrompt.content} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}` };
 
     /*console.log("Initial System Msg: ", initialSystemMessage);*/
 
-    // Convert the chat history to the format expected by the OpenAI API
+    // Convert the chat history to the format expected by the OpenAI API, including supplemental data in each assistant message
     const messages = [
         initialSystemMessage,
         ...history
             .filter(entry => entry && entry.message) // Filter out any invalid msgs
-            .map(entry => ({
-                "role": entry.sender === 'user' ? 'user' : 'assistant',
-                "content": entry.message.trim()
-            }))
+            .map(entry => {
+                if (entry.sender === 'user') {
+                    return {
+                        "role": 'user',
+                        "content": entry.message.trim()
+                    };
+                } else {
+                    return {
+                        "role": 'assistant',
+                        "content": `${entry.message.trim()} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}`
+                    };
+                }
+            })
     ];
 
     // Log messages
