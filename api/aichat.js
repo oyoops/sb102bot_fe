@@ -120,16 +120,13 @@ module.exports = async (req, res) => {
             }
         });
 
-    // Ensure that the supplemental data is included in every system message
-    messages = messages.map(message => {
-        if (message.role === "system") {
-            return {
-                ...message,
-                "content": `${message.content.includes("Property Data:") ? "" : systemPrompt.content + "\nProperty Data:"} ${typeof chatbotSupplementalData === 'object' ? JSON.stringify(chatbotSupplementalData) : chatbotSupplementalData}`
-            };
-        }
-        return message;
-    });
+    // Ensure that the supplemental data is included only in the first system message
+    if (!initialSystemMessageIncluded) {
+        messages.unshift({
+            "role": "system",
+            "content": `${systemPrompt.content}\nProperty Data:\n${typeof chatbotSupplementalData === 'object' ? JSON.stringify(chatbotSupplementalData) : chatbotSupplementalData}`
+        });
+    }
 
     // Log the messages after processing
     console.log("Messages after processing:", JSON.stringify(messages, null, 2));
