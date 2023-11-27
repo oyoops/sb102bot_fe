@@ -67,10 +67,11 @@ module.exports = async (req, res) => {
         "role": "system",
         "content": systemContentText
     };
-    const assistantPrompt = {
+    // Include the assistant prompt in the messages array
+    messages.unshift({
         "role": "assistant",
         "content": assistantContentText
-    };
+    });
     
     // Log the history before processing
     console.log("History before processing:", JSON.stringify(history, null, 2));
