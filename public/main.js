@@ -439,7 +439,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to announce the chatbot's context update without sending a message to the AI
     // This function has been updated to prevent an infinite loop by not triggering the DataUpdatedEvent again
-    function announceChatbotContextUpdate(newSuppData, changedElements) {
+    function announceChatbotContextUpdate(newSuppData, changedElements = []) {
+        // Ensure changedElements is always an array
+        changedElements = Array.isArray(changedElements) ? changedElements : [];
         // Check if newSuppData is already an object or a valid JSON string
         let parsedData = {};
         if (typeof newSuppData === 'string' && newSuppData.trim().startsWith('{') && newSuppData.trim().endsWith('}')) {
