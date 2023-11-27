@@ -78,24 +78,26 @@ module.exports = async (req, res) => {
     // Ensure that the supplemental data is included only in the first system message and not duplicated
     let initialSystemMessageIncluded = false;
     let messages = [];
-    let parsedSupplementalData;
 
-    /*
-    // Check if supplementalData is already an object or a valid JSON string
-    if (typeof chatbotSupplementalData === 'object') {
-        parsedSupplementalData = chatbotSupplementalData;
-    } else if (typeof chatbotSupplementalData === 'string' && chatbotSupplementalData.trim().startsWith('{') && chatbotSupplementalData.trim().endsWith('}')) {
+    // Parse the supplemental data once at the beginning to ensure consistent handling
+    let parsedSupplementalData;
+    if (typeof chatbotSupplementalData === 'string') {
         try {
-            parsedSupplementalData = chatbotSupplementalData;
+            // Attempt to parse the string as JSON
+            parsedSupplementalData = JSON.parse(chatbotSupplementalData);
         } catch (error) {
+            // If parsing fails, log the error and use the original string
             console.error('Error parsing supplemental data:', error);
-            // Handle the case where supplementalData is not valid JSON
-            parsedSupplementalData = { text: chatbotSupplementalData };
+            parsedSupplementalData = chatbotSupplementalData;
         }
+    } else if (typeof chatbotSupplementalData === 'object') {
+        // If it's already an object, use it as is
+        parsedSupplementalData = chatbotSupplementalData;
     } else {
-        // Handle the case where supplementalData is a string that is not JSON formatted
-        parsedSupplementalData = { text: chatbotSupplementalData };
-    }*/
+        // If it's neither a string nor an object, log an error and use an empty object
+        console.error('Supplemental data is neither an object nor a string:', chatbotSupplementalData);
+        parsedSupplementalData = {};
+    }
 
     // Process the history and construct the messages array
     history
@@ -104,8 +106,8 @@ module.exports = async (req, res) => {
             if (index === 0 && entry.sender === 'system') {
                 // Include supplemental data in the first system message
                 // Ensure supplemental data is a properly formatted JSON object
-                ////let supplementalDataContent = typeof parsedSupplementalData === 'object' ? JSON.stringify(parsedSupplementalData, null, 2) : parsedSupplementalData;
-                let supplementalDataContent = chatbotSupplementalData;
+                // Use the parsed supplemental data for the first system message
+                let supplementalDataContent = typeof parsedSupplementalData === 'object' ? JSON.stringify(parsedSupplementalData, null, 2) : parsedSupplementalData;
                 messages.push({
                     "role": "system",
                     "content": `${entry.message.trim()} \nProperty Data:\n${supplementalDataContent}`
@@ -122,10 +124,10 @@ module.exports = async (req, res) => {
 
     // Ensure that the supplemental data is included only in the first system message
     if (!initialSystemMessageIncluded) {
-        console.log("TYPE:", typeof chatbotSupplementalData);
+        // Use the parsed supplemental data when adding the initial system message
         messages.unshift({
             "role": "system",
-            "content": `${systemPrompt.content}\nProperty Data:\n${typeof chatbotSupplementalData === 'object' ? JSON.stringify(chatbotSupplementalData) : chatbotSupplementalData}`
+            "content": `${systemPrompt.content}\nProperty Data:\n${typeof parsedSupplementalData === 'object' ? JSON.stringify(parsedSupplementalData) : parsedSupplementalData}`
         });
     }
 
