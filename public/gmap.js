@@ -18,7 +18,7 @@ async function initializeMap(lat, lng) {
     console.log('Centering map on lat:', lat, ', lng:', lng);
     const mapOptions = {
         center: { lat: lat, lng: lng },
-        zoom: 13,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.SATELLITE,
         streetViewControl: false // Disable Street View control
     };
