@@ -629,7 +629,7 @@ function getDirtyDataString(aiSupplementalData) {
 function updateLoadingBar() {
     const loadingFill = document.querySelector('.loading-fill');
     const loadingPercentage = document.querySelector('.loading-percentage');
-    percentageLoading = percentageLoading + (1 - percentageLoading / 100) * 3.69420; // Smaller = Slower
+    percentageLoading = percentageLoading + (1 - percentageLoading / 100) * 5.69420; // Smaller = Slower
     if (percentageLoading >= 99) {
       percentageLoading = 99;
     }
