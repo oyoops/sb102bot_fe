@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
             logger.sendLog(`Invalid acres value received: ${acres}. Setting to default value of 9.99 acres.`);
             acres = 9.99;
         }
-        logger.sendLog("Acres: " + acres);
+        logger.sendLog("Generating Excel workbook for address: \n" + req.body.phy_addr1 + ", " + req.body.phy_city);
 
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Proforma');
