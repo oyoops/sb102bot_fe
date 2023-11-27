@@ -467,8 +467,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Announce the context change in the chat without sending a message to the AI
         const changedElementsDescriptions = changedElements.map(el => `${el.name}: ${el.value}`).join(', ');
-        console.log("X:" + changedElementsDescriptions);
-        displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsDescriptions}`, 'system-update');
+        if (changedElementsDescriptions != '') {
+            console.log("New message (Changed context):\n" + changedElementsDescriptions);
+            displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsDescriptions}`, 'system-update');
+        } else {
+            console.log("New message (Same context)");
+        }
     }
 
     // Function to initialize the chat with a greeting message and set up dynamic data updates
