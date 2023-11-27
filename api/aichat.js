@@ -72,27 +72,22 @@ module.exports = async (req, res) => {
         "content": assistantContentText
     };
     
-    // Inject supplemental data into the beginning of the conversation
-    // Check if the context needs to be updated with new data
-    
-    /*console.log("SysPromptContent-1: ", systemPrompt.content);*/
-    // Removed the console.log line as it is no longer needed
-    
-    const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}` };
-
-    /*console.log("Initial System Msg: ", initialSystemMessage);*/
-
-    // Convert the chat history to the format expected by the OpenAI API, including supplemental data in each assistant message
-    // Removed the supplemental data from the assistant messages, as it is now included in the initial system message
-    const messages = [
-        initialSystemMessage,
-        ...history
+    // Ensure that the supplemental data is included only in the first system message
+    const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n
+    ${JSON.stringify(chatbotSupplementalData)}` };
+        let messages = [
+            initialSystemMessage
+        ];
+   
+        // Add the rest of the conversation history without supplemental data
+        history
             .filter(entry => entry && entry.message) // Filter out any invalid msgs
-            .map(entry => ({
-                "role": entry.sender === 'user' ? 'user' : 'assistant',
-                "content": entry.message.trim()
-            }))
-    ];
+            .forEach(entry => {
+                messages.push({
+                    "role": entry.sender === 'user' ? 'user' : 'assistant',
+                    "content": entry.message.trim()
+                });
+            });
 
     // Log messages
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
