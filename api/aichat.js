@@ -139,10 +139,27 @@ module.exports = async (req, res) => {
     // Log messages
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
     history.forEach(entry => {
-        const roleColor = (entry.sender === 'user') ? COLOR_USER :
-                          (entry.sender === 'system-update') ? COLOR_SYSTEM_UPDATE :
-                          (entry.sender === 'system') ? COLOR_SYSTEM :
-                          (entry.sender === 'assistant') ? COLOR_ASSISTANT : COLOR_ASSISTANT; // Default to assistant color if none match
+        let roleColor;
+        switch (entry.sender) {
+            case 'user':
+                roleColor = COLOR_USER;
+                break;
+            case 'system-update':
+                roleColor = COLOR_SYSTEM_UPDATE;
+                break;
+            case 'system':
+                roleColor = COLOR_SYSTEM;
+                break;
+            case 'assistant':
+                roleColor = COLOR_ASSISTANT;
+                break;
+            case 'bot':
+                roleColor = COLOR_AI;
+                break;
+            default:
+                roleColor = COLOR_ASSISTANT; // Default to assistant color if none match
+                break;
+        }
         console.log(`   ` + RESET + BOLD + UNDERLINE + roleColor + `${entry.sender.toUpperCase()}` + RESET + `\n     ` + roleColor + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
     });
 
