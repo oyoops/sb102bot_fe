@@ -282,8 +282,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 // Generate AI summary HTML content
-                const aiContentHTML = await runAIModule(eligPath, superAI, globSupDataForLegacy, debugModeSwitch, customInstructionsText);
-
+                //const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode);
+                const aiContentHTML = `<b>Finished researching.</b>`;
+                
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
 
