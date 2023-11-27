@@ -192,7 +192,7 @@ form p {
 .table-container, #devProgramContainer, #averagesContainer, #liveLocalContainer, #compsTableContainer {
     overflow: hidden;
     width: auto;
-    max-width: 95%;
+    max-width: 800px;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -1181,6 +1181,7 @@ table, .styled-table {
     }
     .table-container-group .table-container {
         width: calc(50% - 4%); /* Adjust width to fit side by side, accounting for margin */
+        max-width: 800px;
         margin: 0 2%; /* Add some space between the tables */
     }
 }
@@ -1188,7 +1189,7 @@ table, .styled-table {
 /* Mobile specific styles for vertical stacking */
 @media (max-width: 1023px) {
     .table-container-group .table-container {
-        width: 100%; /* Full width for mobile */
+        width: 95%; /* Full width for mobile */
         margin-bottom: 20px; /* Add some space below each table container */
     }
 }
