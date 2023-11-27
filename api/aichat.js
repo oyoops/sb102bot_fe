@@ -122,6 +122,7 @@ module.exports = async (req, res) => {
 
     // Ensure that the supplemental data is included only in the first system message
     if (!initialSystemMessageIncluded) {
+        console.log("TYPE:", typeof chatbotSupplementalData);
         messages.unshift({
             "role": "system",
             "content": `${systemPrompt.content}\nProperty Data:\n${typeof chatbotSupplementalData === 'object' ? JSON.stringify(chatbotSupplementalData) : chatbotSupplementalData}`
