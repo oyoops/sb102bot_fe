@@ -608,7 +608,7 @@ label, .dark-input {
     animation: fadeIn 1.0s forwards 0.0s; /* Add animation */
     /*opacity: 0;*/
     @media (max-width: 767px) {
-        width: 80%;
+        width: 90%;
     }
 }
 
