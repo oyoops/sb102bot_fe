@@ -80,12 +80,13 @@ module.exports = async (req, res) => {
     let messages = [];
     let parsedSupplementalData;
 
+    /*
     // Check if supplementalData is already an object or a valid JSON string
     if (typeof chatbotSupplementalData === 'object') {
         parsedSupplementalData = chatbotSupplementalData;
     } else if (typeof chatbotSupplementalData === 'string' && chatbotSupplementalData.trim().startsWith('{') && chatbotSupplementalData.trim().endsWith('}')) {
         try {
-            parsedSupplementalData = JSON.parse(chatbotSupplementalData);
+            parsedSupplementalData = chatbotSupplementalData;
         } catch (error) {
             console.error('Error parsing supplemental data:', error);
             // Handle the case where supplementalData is not valid JSON
@@ -94,7 +95,7 @@ module.exports = async (req, res) => {
     } else {
         // Handle the case where supplementalData is a string that is not JSON formatted
         parsedSupplementalData = { text: chatbotSupplementalData };
-    }
+    }*/
 
     // Process the history and construct the messages array
     history
@@ -103,7 +104,8 @@ module.exports = async (req, res) => {
             if (index === 0 && entry.sender === 'system') {
                 // Include supplemental data in the first system message
                 // Ensure supplemental data is a properly formatted JSON object
-                let supplementalDataContent = typeof parsedSupplementalData === 'object' ? JSON.stringify(parsedSupplementalData, null, 2) : parsedSupplementalData;
+                ////let supplementalDataContent = typeof parsedSupplementalData === 'object' ? JSON.stringify(parsedSupplementalData, null, 2) : parsedSupplementalData;
+                let supplementalDataContent = chatbotSupplementalData;
                 messages.push({
                     "role": "system",
                     "content": `${entry.message.trim()} \nProperty Data:\n${supplementalDataContent}`
@@ -122,7 +124,9 @@ module.exports = async (req, res) => {
     if (!initialSystemMessageIncluded) {
         messages.unshift({
             "role": "system",
-            "content": `${systemPrompt.content} \nProperty Data:\n${JSON.stringify(chatbotSupplementalData)}`
+            "content": `${systemPrompt.content}
+                Property Data: ${chatbotSupplementalData}`
+            //"content": `${systemPrompt.content} Property Data: ${JSON.stringify(chatbotSupplementalData)}`
         });
     }
 
