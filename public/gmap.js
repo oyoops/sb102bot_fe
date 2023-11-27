@@ -28,7 +28,7 @@ async function initializeMap(lat, lng) {
 
     // Define a custom icon for the subject site marker
     const subjectSiteIcon = {
-        url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png', // A blue icon to stand out
+        url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png', // A blue icon to stand out
         scaledSize: new google.maps.Size(40, 40), // Size of the icon
         origin: new google.maps.Point(0, 0), // Origin of the icon
         anchor: new google.maps.Point(20, 40) // Anchor point of the icon
