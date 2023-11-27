@@ -1201,3 +1201,7 @@ table, .styled-table {
         margin-bottom: 20px; /* Add some space below each table container */
     }
 }
+
+.table-container {
+    margin-bottom: 10px; /* Add some space below each table container */
+}
