@@ -34,9 +34,9 @@ const COLOR_AI = RED;
 
 module.exports = async (req, res) => {
     const { message, history, chatbotSupplementalData, updateContext } = req.body;
-    console.log(history);
-    console.log(message);
-    console.log(chatbotSupplementalData);
+    //console.log(history);
+    //console.log(message);
+    //console.log(chatbotSupplementalData);
 
     // New chat received
     console.log(RESET + `\n\n\n\n` + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET + `\n`);
@@ -63,18 +63,21 @@ module.exports = async (req, res) => {
             }
         };
     }
+    const systemPrompt = {
+        "role": "system",
+        "content": systemContentText
+    };
+    const assistantPrompt = {
+        "role": "assistant",
+        "content": assistantContentText
+    };
+    
+    // Log the history before processing
+    console.log("History before processing:", JSON.stringify(history, null, 2));
+
     // Ensure that the supplemental data is included only in the first system message and not duplicated
     let initialSystemMessageIncluded = false;
     let messages = [];
-
-    // Include the assistantPrompt in the messages array
-    messages.unshift(assistantPrompt);
-
-    // Log the assistantPrompt similarly to other messages
-    console.log(`   ` + RESET + BOLD + UNDERLINE + BLUE + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${assistantPrompt.content.trim().split('\n').join('\n\t')}` + RESET);
-
-    // Log the history before processing
-    console.log("History before processing:", JSON.stringify(history, null, 2));
 
     // Parse the supplemental data once at the beginning to ensure consistent handling
     let parsedSupplementalData;
