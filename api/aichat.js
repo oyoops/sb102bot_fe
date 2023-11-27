@@ -135,15 +135,15 @@ module.exports = async (req, res) => {
 
     // Log messages
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
-    // Log system-update, system, and assistant messages
-    if (entry.sender === 'system-update') {
-        console.log(`   ` + RESET + BOLD + UNDERLINE + ORANGE + `SYSTEM-UPDATE` + RESET + `\n     ` + COLOR_SYSTEM_UPDATE + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
-    } else if (entry.sender === 'system') {
-        console.log(`   ` + RESET + BOLD + UNDERLINE + YELLOW + `SYSTEM` + RESET + `\n     ` + COLOR_SYSTEM + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
-    } else if (entry.sender === 'assistant') {
-        console.log(`   ` + RESET + BOLD + UNDERLINE + BLUE + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
-    }
     history.forEach(entry => {
+        // Log system-update, system, and assistant messages
+        if (entry.sender === 'system-update') {
+            console.log(`   ` + RESET + BOLD + UNDERLINE + ORANGE + `SYSTEM-UPDATE` + RESET + `\n     ` + COLOR_SYSTEM_UPDATE + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
+        } else if (entry.sender === 'system') {
+            console.log(`   ` + RESET + BOLD + UNDERLINE + YELLOW + `SYSTEM` + RESET + `\n     ` + COLOR_SYSTEM + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
+        } else if (entry.sender === 'assistant') {
+            console.log(`   ` + RESET + BOLD + UNDERLINE + BLUE + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
+        }
         const roleColor = entry.sender === 'user' ? COLOR_USER : COLOR_ASSISTANT;
         console.log(`   ` + RESET + BOLD + UNDERLINE + roleColor + `${entry.sender.toUpperCase()}` + RESET + `\n     ` + roleColor + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
     });
