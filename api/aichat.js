@@ -97,6 +97,7 @@ module.exports = async (req, res) => {
                 } else {
                     return {
                         "role": 'assistant',
+                        /*"content": `${entry.message.trim()} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}`*/
                         "content": `${entry.message.trim()} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}`
                     };
                 }
