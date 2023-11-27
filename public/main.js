@@ -253,10 +253,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 globSupData = cleanSupplementalData(suppDatasets.cleanSuppDataForChatbot);
                 globSupDataForLegacy = cleanSupplementalData(suppDatasets.cleanSuppDataForLegacyAI);
                 // Log complete supp data set(s)
-                console.log('\nGlobal Supplemental Data Payload (Chatbot):');
-                console.log(globSupData);
-                console.log('\nGlobal Supplemental Data Payload (Legacy):');
-                console.log(globSupDataForLegacy);
+                //console.log('\nGlobal Supplemental Data Payload (Chatbot):');
+                //console.log(globSupData);
+                //console.log('\nGlobal Supplemental Data Payload (Legacy):');
+                //console.log(globSupDataForLegacy);
             } catch (error) {
                 console.error('Global Supp Data Composition Error:\n', error);
                 handleAIError(error);
@@ -267,6 +267,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show chatbot
             chatbotDiv.style.display = 'block';
             // Init chatbot with chatbotSuppData
+            console.log(suppDatasets.cleanSuppDataForChatbot);
+            console.log(globSupData);
             initializeChat(globSupData);
             /* End Chatbot Module */
 
@@ -358,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeChat();*/
    
     // Function to process chat messages
-    async function processChatMessage(message, supplementalData) {
+    async function processChatMessage(message, supplementalData, updateContextFlag) {
         // Add user message to chat history if it's not the last message already
         const lastMessage = chatState.history[chatState.history.length - 1];
         if (!lastMessage || lastMessage.message !== message) {
@@ -371,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
    
         // Generate a dynamic response using OpenAI API
         try {
-            const response = await generateDynamicResponse(message, chatState, supplementalData);
+            const response = await generateDynamicResponse(message, chatState, supplementalData, updateContextFlag);
             displayTypingIndicator(false);
             displayChatMessage(response, 'bot');
             handleContextSwitching(response);
@@ -468,7 +470,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const initialMessage = `Are you ready for my questions?`;
         if (!chatState.history.some(msg => msg.message === initialMessage && msg.sender === 'user')) {
             displayChatMessage(initialMessage, 'user');
-            processChatMessage(initialMessage, globSupData);
+            processChatMessage(initialMessage, globSupData, true);
         }
 
         // Set up an event listener or other mechanism to listen for data updates
@@ -494,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = chatInput.value.trim();
         if (message) {
             displayChatMessage(message, 'user');
-            processChatMessage(message, supplementalData);
+            processChatMessage(message, supplementalData, false);
             chatInput.value = '';
             displayTypingIndicator(true);
 
@@ -549,20 +551,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to generate dynamic response using chatbot proxy
-    async function generateDynamicResponse(message, chatState, chatbotSupplementalData) {
+    // Function to generate dynamic response using history, dynamic context and supplemental data
+    async function generateDynamicResponse(message, chatState, chatbotSupplementalData, updateContext=false) {
         //console.log("SUPPDATA\n" + chatbotSupplementalData);
-
         const response = await fetch('/api/aichat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ message: message, history: chatState.history, chatbotSupplementalData: chatbotSupplementalData })
+            body: JSON.stringify({ message: message, history: chatState.history, chatbotSupplementalData: chatbotSupplementalData, updateContext: updateContext })
         });
-
-        const replyText = await response.json();
         displayTypingIndicator(false);
+        const replyText = await response.json();
         return replyText;
     }
 
