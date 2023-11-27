@@ -467,6 +467,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Announce the context change in the chat without sending a message to the AI
         const changedElementsDescriptions = changedElements.map(el => `${el.name}: ${el.value}`).join(', ');
+        console.log("X:" + changedElementsDescriptions);
         displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsDescriptions}`, 'system-update');
     }
 
