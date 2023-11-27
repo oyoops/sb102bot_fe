@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { update } = require('lodash');
+//const { update } = require('lodash');
 
 const RESET = '\x1b[0m';
 const BOLD = '\x1b[1m';
@@ -34,9 +34,9 @@ const COLOR_AI = RED;
 
 module.exports = async (req, res) => {
     const { message, history, chatbotSupplementalData, updateContext } = req.body;
-    //console.log(history);
-    //console.log(message);
-    //console.log(chatbotSupplementalData);
+    console.log(history);
+    console.log(message);
+    console.log(chatbotSupplementalData);
 
     // New chat received
     console.log(RESET + `\n\n\n\n` + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET + `\n`);
@@ -98,6 +98,7 @@ module.exports = async (req, res) => {
         console.error('Supplemental data is neither an object nor a string:', chatbotSupplementalData);
         parsedSupplementalData = {};
     }
+    //console.log(parsedSupplementalData);
 
     // Process the history and construct the messages array
     history
@@ -108,6 +109,7 @@ module.exports = async (req, res) => {
                 // Ensure supplemental data is a properly formatted JSON object
                 // Use the parsed supplemental data for the first system message
                 let supplementalDataContent = typeof parsedSupplementalData === 'object' ? JSON.stringify(parsedSupplementalData, null, 2) : parsedSupplementalData;
+                console.log(supplementalDataContent);
                 messages.push({
                     "role": "system",
                     "content": `${entry.message.trim()} \nProperty Data:\n${supplementalDataContent}`
