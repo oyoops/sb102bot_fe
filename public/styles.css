@@ -757,8 +757,8 @@ input:disabled {
     }
 }
 
- /* When the map is supposed to be visible, ensure these properties are set */
- #map.slideDownFadeIn {
+/* When the map is supposed to be visible, ensure these properties are set */
+#map.slideDownFadeIn {
     display: block; /* Or 'flex' or other display value as needed */
     animation: slideDownFadeIn 2s ease forwards;
 }

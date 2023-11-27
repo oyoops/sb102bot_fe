@@ -1,7 +1,7 @@
 /* Chat Interface Styles */
 .chat-interface {
     width: calc(100% - 40px); /* Subtract total horizontal margin from 100% width */
-    max-width: 700px;
+    max-width: 800px;
     margin: 20px 20px; /* Add 20px margin to left and right */
     margin-top: calc(50vh + 20px); /* Adjust top margin to be below the map */
     padding: 20px;
