@@ -34,8 +34,8 @@ const COLOR_AI = RED;
 
 module.exports = async (req, res) => {
     const { message, history, chatbotSupplementalData, updateContext } = req.body;
-    console.log(history);
-    console.log(message);
+    //console.log(history);
+    //console.log(message);
     //console.log(chatbotSupplementalData);
 
     // New chat received
@@ -50,7 +50,7 @@ module.exports = async (req, res) => {
         context = await adjustContext(history);
     } else {
         // Default system & assistant prompts:
-        systemContentText = `You are a knowledgeable AI assistant specializing in Florida real estate. If you cannot answer a question, you simply say 'Sorry, I don't know that'. A property has just been referred to you for analysis.`;
+        systemContentText = `You are a knowledgeable AI assistant specializing in Florida real estate. If you cannot answer a question, you simply say 'Sorry, I don't know that'. You are answering questions about a property.`;
         assistantContentText = `I'm here to assist with any questions about Florida real estate, particularly the subject property.`;
         context = {
             systemPrompt: {
@@ -75,15 +75,13 @@ module.exports = async (req, res) => {
     // Inject supplemental data into the beginning of the conversation
     // Check if the context needs to be updated with new data
     
-    console.log("SysPromptContent-1: ", systemPrompt.content);
-    console.log("Update Context? ", updateContext);
+    /*console.log("SysPromptContent-1: ", systemPrompt.content);*/
+    console.log("Update Context? = " + updateContext + " *** Does nothing yet ***\n");
     
     const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${chatbotSupplementalData}` };
     const initialAssistantMessage = { ...assistantPrompt };
 
-    console.log("SysPromptContent-2: ", initialSystemMessage);
-
-    console.log("Initial System Msg: ", initialSystemMessage);
+    /*console.log("Initial System Msg: ", initialSystemMessage);*/
 
     // Convert the chat history to the format expected by the OpenAI API
     const messages = [
@@ -115,7 +113,7 @@ module.exports = async (req, res) => {
         console.log(`   ` + RESET + BOLD + UNDERLINE + roleColor + `${entry.sender.toUpperCase()}` + RESET + `\n     ` + roleColor + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
     });
 
-    console.log("Messages:\n", JSON.stringify(messages[0]));
+    //console.log("Messages:\n", JSON.stringify(messages[0]));
 
     // Send POST request
     try {
@@ -161,8 +159,8 @@ module.exports = async (req, res) => {
             console.log(RESET + DIM + `    = Total     ` + BOLD + UNDERLINE + RED + `` + tokensUsed + ` tokens` + DIM + ` used` + RESET);
         }
         
-        console.log(history);
-        console.log(message);
+        //console.log(history);
+        //console.log(message);
         //console.log(chatbotSupplementalData);
 
         
