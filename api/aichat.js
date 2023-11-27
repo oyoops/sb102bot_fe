@@ -76,48 +76,28 @@ module.exports = async (req, res) => {
     // Check if the context needs to be updated with new data
     
     /*console.log("SysPromptContent-1: ", systemPrompt.content);*/
-    console.log("Update Context? = " + updateContext + " *** Does nothing yet ***\n");
+    // Removed the console.log line as it is no longer needed
     
     const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}` };
-    const initialAssistantMessage = { ...assistantPrompt, content: `${assistantPrompt.content} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}` };
 
     /*console.log("Initial System Msg: ", initialSystemMessage);*/
 
     // Convert the chat history to the format expected by the OpenAI API, including supplemental data in each assistant message
+    // Removed the supplemental data from the assistant messages, as it is now included in the initial system message
     const messages = [
         initialSystemMessage,
         ...history
             .filter(entry => entry && entry.message) // Filter out any invalid msgs
-            .map(entry => {
-                if (entry.sender === 'user') {
-                    return {
-                        "role": 'user',
-                        "content": entry.message.trim()
-                    };
-                } else {
-                    return {
-                        "role": 'assistant',
-                        /*"content": `${entry.message.trim()} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}`*/
-                        "content": `${entry.message.trim()} \nProperty Data:\n ${JSON.stringify(chatbotSupplementalData)}`
-                    };
-                }
-            })
+            .map(entry => ({
+                "role": entry.sender === 'user' ? 'user' : 'assistant',
+                "content": entry.message.trim()
+            }))
     ];
 
     // Log messages
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
     // Log each prompt component individually    
-    if (updateContext) {
-        // Log supplemental dataset as a 'system-update' message
-        console.log(`   ` + RESET + BOLD + UNDERLINE + ORANGE_BACKGROUND + `SYSTEM-UPDATE` + RESET + `\n     ` + COLOR_SYSTEM_UPDATE + `${chatbotSupplementalData}` + RESET);
-    }
-    if (initialSystemMessage) {
-        console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_SYSTEM + `SYSTEM` + RESET + `\n     ` + COLOR_SYSTEM + `${systemPrompt.content.split('\n').join('\n\t').split('\"').join(`'`)}` + RESET);
-        ////console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_SYSTEM + `SYSTEM` + RESET + `\n     ` + COLOR_SYSTEM + `${initialSystemMessage.content.split('\n').join('\n\t').split('\"').join(`'`)}` + RESET);
-    }
-    if (initialAssistantMessage) {
-        console.log(`   ` + RESET + BOLD + UNDERLINE + COLOR_ASSISTANT + `ASSISTANT` + RESET + `\n     ` + COLOR_ASSISTANT + `${initialAssistantMessage.content.split('\n').join('\n\t')}` + RESET);
-    }
+    // Removed the conditional logging for system-update, system, and assistant messages
     history.forEach(entry => {
         const roleColor = entry.sender === 'user' ? COLOR_USER : COLOR_ASSISTANT;
         console.log(`   ` + RESET + BOLD + UNDERLINE + roleColor + `${entry.sender.toUpperCase()}` + RESET + `\n     ` + roleColor + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
