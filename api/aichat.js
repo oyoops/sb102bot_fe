@@ -78,6 +78,16 @@ module.exports = async (req, res) => {
     // Ensure that the supplemental data is included only in the first system message and not duplicated
     let initialSystemMessageIncluded = false;
     let messages = [];
+    let parsedSupplementalData = chatbotSupplementalData;
+
+    // Parse supplemental data if it's a string that represents an object
+    if (typeof chatbotSupplementalData === 'string' && chatbotSupplementalData.trim().startsWith('{') && chatbotSupplementalData.trim().endsWith('}')) {
+        try {
+            parsedSupplementalData = JSON.parse(chatbotSupplementalData);
+        } catch (error) {
+            console.error('Error parsing supplemental data:', error);
+        }
+    }
 
     // Process the history and construct the messages array
     history
@@ -87,7 +97,7 @@ module.exports = async (req, res) => {
                 // Include supplemental data in the first system message
                 messages.push({
                     "role": "system",
-                    "content": `${entry.message.trim()} \nProperty Data:\n${JSON.stringify(chatbotSupplementalData)}`
+                    "content": `${entry.message.trim()} \nProperty Data:\n${JSON.stringify(parsedSupplementalData)}`
                 });
                 initialSystemMessageIncluded = true;
             } else {
