@@ -40,8 +40,9 @@ module.exports = async (req, res) => {
     //logger.sendLog(chatbotSupplementalData);
 
     // New chat received
-    logger.sendLog(RESET + `\n\n\n\n` + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET + `\n`);
-        
+    //logger.sendLog(RESET + `\n\n\n\n` + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET + `\n`);
+    logger.sendLog(RESET + BOLD + MAGENTA_BACKGROUND + `        NEW CHAT        ` + RESET);
+
     /* Set Context Switching functionality */
     const CONTEXT_SWITCHING_ACTIVE = false;
     let context;
@@ -77,7 +78,7 @@ module.exports = async (req, res) => {
 
 
     // Log the history before processing
-    logger.sendLog("History before processing:", JSON.stringify(history, null, 2));
+    //logger.sendLog("History before processing:", JSON.stringify(history, null, 2));
 
     // Ensure that the supplemental data is included only in the first system message and not duplicated
     let initialSystemMessageIncluded = false;
@@ -113,7 +114,7 @@ module.exports = async (req, res) => {
                 // Ensure supplemental data is a properly formatted JSON object
                 // Use the parsed supplemental data for the first system message
                 let supplementalDataContent = typeof parsedSupplementalData === 'object' ? JSON.stringify(parsedSupplementalData, null, 2) : parsedSupplementalData;
-                logger.sendLog(supplementalDataContent);
+                /*logger.sendLog(supplementalDataContent);*/
                 messages.push({
                     "role": "system",
                     "content": `${entry.message.trim()} \nProperty Data:\n${supplementalDataContent}`
@@ -144,7 +145,7 @@ module.exports = async (req, res) => {
     }
 
     // Log the messages after processing
-    logger.sendLog("Messages after processing:", JSON.stringify(messages, null, 2));
+    //logger.sendLog("Messages after processing:", JSON.stringify(messages, null, 2));
 
     // Log messages
     logger.sendLog(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
@@ -168,7 +169,7 @@ module.exports = async (req, res) => {
                 break;
             // No default case needed since we set a default color above
         }
-        logger.sendLog(`   ` + RESET + BOLD + UNDERLINE + roleColor + `${entry.sender.toUpperCase()}` + RESET + `\n     ` + roleColor + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
+        logger.sendLog(`   ` + RESET + BOLD + UNDERLINE + roleColor + `${entry.sender.toUpperCase()}` + RESET + `     ` + roleColor + `${entry.message.trim().split('\n').join('\n\t')}` + RESET);
     });
 
     //logger.sendLog("Messages:\n", JSON.stringify(messages[0]));
@@ -196,7 +197,7 @@ module.exports = async (req, res) => {
         const responseString = responseData.choices[0].message.content;
 
         // Log the AI's response
-        logger.sendLog(`   ` + BOLD + UNDERLINE + COLOR_AI + `AI RESPONSE` + RESET + `\n     ` + COLOR_AI + `${responseString.split('\n').join('\n\t')}` + RESET);
+        logger.sendLog(`   ` + BOLD + UNDERLINE + COLOR_AI + `AI RESPONSE` + RESET + `     ` + COLOR_AI + `${responseString.split('\n').join('\n\t')}` + RESET);
 
         // Log token usage
         const tokensUsed = responseData?.usage?.total_tokens;
@@ -204,7 +205,7 @@ module.exports = async (req, res) => {
         const completionTokens = responseData?.usage?.completion_tokens;
         if (tokensUsed) {
             // Header
-            logger.sendLog(`\n` + RESET + `   ` + BOLD + WHITE_BACKGROUND + `      TOKEN USAGE       ` + RESET);
+            logger.sendLog(RESET + `   ` + BOLD + WHITE_BACKGROUND + `      TOKEN USAGE       ` + RESET);
             // Prompt
             if (promptTokens) {
                 logger.sendLog(RESET + DIM + `      Prompt    ${promptTokens}` + RESET);
