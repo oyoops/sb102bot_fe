@@ -62,16 +62,15 @@
     border-left: 4px solid #ff5c5c;
 }
 
-.send-message-button {
-    padding: 0px 10px;
-    padding-top: 5px;
-    background-color: rgb(134, 184, 236);
-    font-family: 'Montserrat', sans-serif;
-    color: hsl(0, 0%, 100%);
-    border: none;
-    margin-top: 10px;
-    border-radius: 12px;
-    cursor: pointer;
+.system-update {
+    background-color: red; /* Red background for system update messages */
+    color: white; /* White text for contrast */
+    border-radius: 4px; /* Rounded corners for the chat bubble */
+    padding: 5px 10px; /* Some padding inside the chat bubble */
+    margin: 10px 0; /* Some margin around the chat bubble */
+    width: fit-content; /* Fit the content's width */
+    max-width: 80%; /* Max width to prevent too wide bubbles */
+    align-self: flex-start; /* Align to the start of the flex container */
 }
 
 /* Typing indicator styles */
@@ -96,4 +95,16 @@
     0% { background-color: #888; }
     50% { background-color: #ccc; }
     100% { background-color: #888; }
+}
+
+.send-message-button {
+    padding: 0px 10px;
+    padding-top: 5px;
+    background-color: rgb(134, 184, 236);
+    font-family: 'Montserrat', sans-serif;
+    color: hsl(0, 0%, 100%);
+    border: none;
+    margin-top: 10px;
+    border-radius: 12px;
+    cursor: pointer;
 }

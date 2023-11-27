@@ -250,7 +250,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 verifyParcelData(parcelData);
                 aiSupplementalData = await JSON.parse(cleanSupplementalData(JSON.stringify(parcelData)));
                 suppDatasets = await generateSupplementalDatasets(aiSupplementalData, countyData, cityData, compsData);
-                globSupData = cleanSupplementalData(suppDatasets.cleanSuppDataForChatbot);
+                ////globSupData = cleanSupplementalData(suppDatasets.cleanSuppDataForChatbot);
+                globSupData = suppDatasets.cleanSuppDataForChatbot;
                 globSupDataForLegacy = cleanSupplementalData(suppDatasets.cleanSuppDataForLegacyAI);
                 // Log complete supp data set(s)
                 //console.log('\nGlobal Supplemental Data Payload (Chatbot):');

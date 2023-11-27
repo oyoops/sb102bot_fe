@@ -63,16 +63,18 @@ module.exports = async (req, res) => {
             }
         };
     }
+
     const systemPrompt = {
         "role": "system",
         "content": systemContentText
     };
-    // Include the assistant prompt in the messages array
-    messages.unshift({
-        "role": "assistant",
+
+    const assistantPrompt = {
+        "role": "system",
         "content": assistantContentText
-    });
-    
+    };
+
+
     // Log the history before processing
     console.log("History before processing:", JSON.stringify(history, null, 2));
 
@@ -127,6 +129,12 @@ module.exports = async (req, res) => {
 
     // Ensure that the supplemental data is included only in the first system message
     if (!initialSystemMessageIncluded) {
+        // Include the assistant prompt in the messages array
+        messages.unshift({
+            "role": "assistant",
+            "content": `${assistantPrompt.content}` //assistantContentText
+        });
+        
         // Use the parsed supplemental data when adding the initial system message
         messages.unshift({
             "role": "system",
