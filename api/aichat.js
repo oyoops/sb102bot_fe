@@ -72,16 +72,26 @@ module.exports = async (req, res) => {
         "content": assistantContentText
     };
     
-    // Ensure that the supplemental data is included only in the first system message and not duplicated
-    const initialSystemMessage = { ...systemPrompt, content: `${systemPrompt.content} \nProperty Data:\n${JSON.stringify(chatbotSupplementalData)}` };
-    let messages = [initialSystemMessage];
+    // Log the history before processing
+    console.log("History before processing:", JSON.stringify(history, null, 2));
 
-    // Add the rest of the conversation history without supplemental data
+    // Ensure that the supplemental data is included only in the first system message and not duplicated
+    let initialSystemMessageIncluded = false;
+    let messages = [];
+
+    // Process the history and construct the messages array
     history
         .filter(entry => entry && entry.message) // Filter out any invalid msgs
-        .forEach(entry => {
-            // Ensure that the supplemental data is not included again in the history
-            if (!entry.supplementalDataIncluded) {
+        .forEach((entry, index) => {
+            if (index === 0 && entry.sender === 'system') {
+                // Include supplemental data in the first system message
+                messages.push({
+                    "role": "system",
+                    "content": `${entry.message.trim()} \nProperty Data:\n${JSON.stringify(chatbotSupplementalData)}`
+                });
+                initialSystemMessageIncluded = true;
+            } else {
+                // Add the rest of the conversation history without supplemental data
                 messages.push({
                     "role": entry.sender === 'user' ? 'user' : 'assistant',
                     "content": entry.message.trim()
@@ -89,10 +99,16 @@ module.exports = async (req, res) => {
             }
         });
 
-    // Mark the first user message to indicate that supplemental data has been included
-    if (history.length > 0 && history[0].sender === 'user') {
-        history[0].supplementalDataIncluded = true;
+    // If the initial system message was not included, add it now
+    if (!initialSystemMessageIncluded) {
+        messages.unshift({
+            "role": "system",
+            "content": `${systemPrompt.content} \nProperty Data:\n${JSON.stringify(chatbotSupplementalData)}`
+        });
     }
+
+    // Log the messages after processing
+    console.log("Messages after processing:", JSON.stringify(messages, null, 2));
 
     // Log messages
     console.log(`   ` + RESET + BOLD + WHITE_BACKGROUND + `        MESSAGES        ` + RESET);
