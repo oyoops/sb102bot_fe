@@ -120,15 +120,16 @@ module.exports = async (req, res) => {
             }
         });
 
-    // If the initial system message was not included, add it now
-    if (!initialSystemMessageIncluded) {
-        messages.unshift({
-            "role": "system",
-            "content": `${systemPrompt.content}
-                Property Data: ${chatbotSupplementalData}`
-            //"content": `${systemPrompt.content} Property Data: ${JSON.stringify(chatbotSupplementalData)}`
-        });
-    }
+    // Ensure that the supplemental data is included in every system message
+    messages = messages.map(message => {
+        if (message.role === "system") {
+            return {
+                ...message,
+                "content": `${message.content.includes("Property Data:") ? "" : systemPrompt.content + "\nProperty Data:"} ${typeof chatbotSupplementalData === 'object' ? JSON.stringify(chatbotSupplementalData) : chatbotSupplementalData}`
+            };
+        }
+        return message;
+    });
 
     // Log the messages after processing
     console.log("Messages after processing:", JSON.stringify(messages, null, 2));
