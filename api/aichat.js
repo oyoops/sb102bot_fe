@@ -95,9 +95,11 @@ module.exports = async (req, res) => {
         .forEach((entry, index) => {
             if (index === 0 && entry.sender === 'system') {
                 // Include supplemental data in the first system message
+                // Ensure supplemental data is a properly formatted JSON object
+                let supplementalDataContent = typeof parsedSupplementalData === 'object' ? JSON.stringify(parsedSupplementalData, null, 2) : parsedSupplementalData;
                 messages.push({
                     "role": "system",
-                    "content": `${entry.message.trim()} \nProperty Data:\n${JSON.stringify(parsedSupplementalData)}`
+                    "content": `${entry.message.trim()} \nProperty Data:\n${supplementalDataContent}`
                 });
                 initialSystemMessageIncluded = true;
             } else {
