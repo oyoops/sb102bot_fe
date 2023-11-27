@@ -63,6 +63,10 @@ module.exports = async (req, res) => {
             }
         };
     }
+    // Ensure that the supplemental data is included only in the first system message and not duplicated
+    let initialSystemMessageIncluded = false;
+    let messages = [];
+
     // Include the assistantPrompt in the messages array
     messages.unshift(assistantPrompt);
 
@@ -71,10 +75,6 @@ module.exports = async (req, res) => {
 
     // Log the history before processing
     console.log("History before processing:", JSON.stringify(history, null, 2));
-
-    // Ensure that the supplemental data is included only in the first system message and not duplicated
-    let initialSystemMessageIncluded = false;
-    let messages = [];
 
     // Parse the supplemental data once at the beginning to ensure consistent handling
     let parsedSupplementalData;
