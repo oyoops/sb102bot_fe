@@ -599,10 +599,15 @@ label, .dark-input {
 
 #initialContent {
     display: block;
+    width: 30%;
+    max-width: 900px;
     margin-top: 10px;
     margin-bottom: 5px;
     animation: fadeIn 1.0s forwards 0.0s; /* Add animation */
     /*opacity: 0;*/
+    @media (max-width: 767px) {
+        width: 80%;
+    }
 }
 
 /* Checkbox grid and custom styles */
