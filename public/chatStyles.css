@@ -39,11 +39,14 @@
     border-radius: 18px;
     display: block;
     max-width: 75%;
+    white-space: pre-wrap; /* Preserve whitespace and line breaks */
     word-wrap: break-word;
     text-align: left;
-    /*line-height: 1.4;*/
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
+    opacity: 0; /* Set initial opacity to 0 for fade-in effect */
+    transform: translateY(20px); /* Start below the final position for slide-up effect */
+    animation: fadeInSlideUp 0.5s ease forwards; /* Animation for fade-in and slide-up effect */
 }
 
 .chat-message.user {
@@ -81,6 +84,18 @@
     justify-content: center;
     align-items: center;
     padding: 5px;
+}
+
+/* Animation for new chat messages */
+@keyframes fadeInSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .typing-indicator span {
