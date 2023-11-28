@@ -107,7 +107,7 @@ p, footer, .submit-button, #tryAgainButton {
     p, footer, .submit-button, #tryAgainButton,
     .primaryResponse, .loading-text, #eligibilityStatus ul li,
     .styled-table th, .styled-table td {
-        font-size: 0.9em; /* Adjust font size for better readability on mobile */
+        font-size: 0.8em; /* Adjust font size for better readability on mobile */
     }
     .submit-button, #tryAgainButton {
         width: 100%; /* Make buttons full width on mobile */
