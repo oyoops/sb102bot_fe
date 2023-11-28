@@ -231,7 +231,7 @@ th {
 }
 
 tbody tr {
-    /* No specific background color needed for transparency */
+    background-color: transparent;/* No specific background color needed for transparency */
 }
 
 tbody tr:hover {
