@@ -223,8 +223,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("LLA Ineligible!");
             }*/
 
-            // The Try Again button and tables display logic remains unchanged
-            // No modifications needed here
+            // Show the Try Again button
+            tryAgainButton.style.display = 'block';
+
+            // Show the (old) tables container
+            rentInfoContainer.style.display = 'table';
+
+            // Generate and show the Live Local rents comparison table
+            rentsTableBody.innerHTML = generateAffordableTableHTML(countyData,compsData);
+            countyMaxRentsTable.style.display = 'table';
 
             // Function to clean up supplemental data by replacing double backslashes with single backslashes
             function cleanSupplementalData(data) {
@@ -258,8 +265,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             /* Start Chatbot Module */
-            // The chatbot initialization logic remains unchanged
-            // No modifications needed here
+            // Show chatbot
+            chatbotDiv.style.display = 'block';
+            // Init chatbot with chatbotSuppData
+            console.log(suppDatasets.cleanSuppDataForChatbot);
+            console.log(globSupData);
+            initializeChat(globSupData);
             /* End Chatbot Module */
 
 
