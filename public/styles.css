@@ -217,13 +217,13 @@ table td, table th {
 }
 
 th, td {
-    border: 1px solid #e0e0e0;
-    padding: 12px 15px;
+    border: 0;
+    padding: 2px 5px; /* Reduced padding for compactness */
     text-align: left;
 }
 
 th {
-    background-color: #f7f9fc;
+    background-color: transparent;
     color: #333;
     font-weight: 600;
     text-transform: uppercase;
@@ -231,15 +231,11 @@ th {
 }
 
 tbody tr {
-    transition: background-color 0.3s ease;
-}
-
-tbody tr:nth-child(odd) {
-    background-color: #f9fafc;
+    background-color: transparent; /* Remove alternating background colors */
 }
 
 tbody tr:hover {
-    background-color: #e6ebf1;
+    background-color: transparent; /* Remove hover background color */
 }
 
 /* Responsive design: Adjust table styles for better readability on small screens */
