@@ -51,7 +51,7 @@ body {
 /* Media query to switch stuff based on screen size, with improved readability */
 @media (min-width: 801px) {
     p.form-description {
-        font-size: 0.9em; /* Reduce font size for better readability on mobile */
+        font-size: 0.8em; /* Reduce font size for better readability on mobile */
         animation: slideUp 1.5s ease 0.5s forwards;
     }
 
