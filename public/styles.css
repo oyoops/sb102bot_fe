@@ -690,6 +690,7 @@ label, .dark-input {
 
 .cool-checkbox-text {
     flex-grow: 1;
+    font-size: 10px;
 }
 
 /* (???) */
