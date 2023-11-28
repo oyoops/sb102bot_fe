@@ -2,7 +2,7 @@
 
 
 let superAI = 'off';
-let debugModeSwitch = 'on';
+let debugModeSwitch = false;
 let enableLiveLocalModule = 'on';
 
 let globSupData;
