@@ -514,7 +514,7 @@ footer a {
 }
 
 footer p {
-    font-size: 1.0em;
+    font-size: 0.9em;
 }
 
 footer a:hover {
@@ -533,7 +533,7 @@ footer a:hover {
     display: inline-block;
     text-align: center;
     position: fixed;
-    bottom: 30px; /* Position at the bottom of the screen */
+    bottom: 35px; /* Position at the bottom of the screen */
     right: 10px; /* Position on the right of the screen */
     z-index: 100; /* Ensure it's above other elements */
 }
