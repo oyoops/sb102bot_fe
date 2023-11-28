@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Include comps data? (very expensive!)
             debugModeSwitch = false;
-            if (debugModeCheckbox=='on') {
+            if (debugModeCheckbox.value =='on') {
                 debugModeSwitch = true;
             }
 
