@@ -378,15 +378,19 @@ function refineDataForChatbot(rawData, superAI, debugMode) {
                 refinedData[key] = 0;
             }
         }
-        // Strip out the 'geom' object from refinedData
+
+        // Always strip out the 'geom' object from refinedData
         delete refinedData['geom'];
 
-        // Depending on debugMode, include (=true) or remove (=false) 'comps_data' array
-        // EXPENSIVE! (+7000 prompt tokens = ~700 tokens per comp * 10 max comps)
-        // CONVERT JSON TO A TABLE TO REDUCE TOKEN COUNT
-        if (debugMode) {
+        // Depending on debugMode, include (=true) or remove (=false) 'comps_data' array        
+        if (!debugMode) {
             delete refinedData['comps_data'];
+        } else {
+            // EXPENSIVE!
+            //   Adds ~7000 prompt tokens = ~700 tokens per comp * 10 max comps
+            // CONVERT JSON TO A TABLE TO REDUCE TOKEN COUNT!
         }
+
         return refinedData;
     } catch (error) {
         console.error("Error refining data:", error);
