@@ -243,44 +243,54 @@ document.addEventListener('DOMContentLoaded', function() {
                 return data;
             }
 
+
+            /* Start Chatbot Module */
+
+            // Include comps data? (very expensive!)
+            debugModeSwitch = false;
+            if (debugModeCheckbox=='on') {
+                debugModeSwitch = true;
+            }
+
             // Composing the supplemental data set(s) for AI by combining all available data
             let suppDatasets;
             try {
-                // Generate supp data set(s)
+                // Verify integrity of parcelData
                 verifyParcelData(parcelData);
+                
+                // Generate supp data set(s)
                 aiSupplementalData = await JSON.parse(cleanSupplementalData(JSON.stringify(parcelData)));
-                suppDatasets = await generateSupplementalDatasets(aiSupplementalData, countyData, cityData, compsData);
-                ////globSupData = cleanSupplementalData(suppDatasets.cleanSuppDataForChatbot);
-                globSupData = suppDatasets.cleanSuppDataForChatbot;
+                suppDatasets = await generateSupplementalDatasets(aiSupplementalData, countyData, cityData, compsData, debugModeSwitch);
+                
+                // Set both global datasets
+                globSupData = suppDatasets.cleanSuppDataForChatbot; // <--- BETTER
                 globSupDataForLegacy = cleanSupplementalData(suppDatasets.cleanSuppDataForLegacyAI);
-                // Log complete supp data set(s)
-                //console.log('\nGlobal Supplemental Data Payload (Chatbot):');
-                //console.log(globSupData);
-                //console.log('\nGlobal Supplemental Data Payload (Legacy):');
-                //console.log(globSupDataForLegacy);
+
+                /*// Log complete supp data set(s)
+                console.log('\nGlobal Supplemental Data Payload (Chatbot):');
+                console.log(globSupData);
+                console.log('\nGlobal Supplemental Data Payload (Legacy):');
+                console.log(globSupDataForLegacy);*/
+
             } catch (error) {
                 console.error('Global Supp Data Composition Error:\n', error);
                 handleAIError(error);
             }
 
-
-            /* Start Chatbot Module */
             // Show chatbot
             chatbotDiv.style.display = 'block';
+            
             // Init chatbot with chatbotSuppData
             console.log(suppDatasets.cleanSuppDataForChatbot);
             console.log(globSupData);
             initializeChat(globSupData);
+            
             /* End Chatbot Module */
 
 
             /* Start AI Module */
+            
             try {
-                debugModeSwitch = false;
-                if (debugModeCheckbox=='on') {
-                    debugModeSwitch = true;
-                }
-
                 // Generate AI summary HTML content
                 ////const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode);
                 const aiContentHTML = `<b>Finished researching.</b>`;
@@ -299,10 +309,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
                 handleAIError(error);
             }
+
             /* End AI Module */
 
 
             /* Start Excel Workbook Generation Module */
+
             if (superAI=="on") {
                 // Collect the data necessary for proforma workbook
                 const dataForExcel = {
@@ -314,6 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 //console.log("Skipping Excel workbook generation module...")
             }
+
             /* End Excel Workbook Generation Module */
 
 

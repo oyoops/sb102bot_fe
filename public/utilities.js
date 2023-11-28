@@ -83,7 +83,7 @@ function getMunicipality(cityData, countyData) {
 }
 
 // Compose the global supplemental data set (and also return a non-global copy of it)
-async function generateSupplementalDatasets(aiSupplementalData, countyData, cityData, compsData) {
+async function generateSupplementalDatasets(aiSupplementalData, countyData, cityData, compsData, debugMode) {
     if (countyData) {
         enhanceWithCountyData(aiSupplementalData, countyData);
     }
@@ -98,7 +98,7 @@ async function generateSupplementalDatasets(aiSupplementalData, countyData, city
     const dirtyData = await getDirtyData(aiSupplementalData);
     
     // Get two data sets (new chatbot, legacy AI)
-    const cleanSuppDataForChatbot = refineDataForChatbot(dirtyData, superAI);
+    const cleanSuppDataForChatbot = refineDataForChatbot(dirtyData, superAI, debugMode);
     const cleanSuppDataForLegacyAI = refineData(dirtyData, superAI);
     
     // Return final data sets
@@ -302,7 +302,7 @@ function composeFormattedAiResponse(aiResponse, titleLine = `🌞 Living Local i
 
 
 // Add globals to CHATBOT dataset and apply final enhancements
-function refineDataForChatbot(rawData, superAI) {
+function refineDataForChatbot(rawData, superAI, debugMode) {
     try {
         console.log("Refining data with the following raw input:", rawData);
         let refinedData = {};
@@ -378,12 +378,15 @@ function refineDataForChatbot(rawData, superAI) {
                 refinedData[key] = 0;
             }
         }
-        // Strip out the 'comps_data' array and 'geom' object from refinedData
-        //////delete refinedData['comps_data'];
+        // Strip out the 'geom' object from refinedData
         delete refinedData['geom'];
 
-        console.log("Stripped 'comps_data' and 'geom' from the refined data.");
-        console.log("Refined data:", refinedData);
+        // Depending on debugMode, include (=true) or remove (=false) 'comps_data' array
+        // EXPENSIVE! (+7000 prompt tokens = ~700 tokens per comp * 10 max comps)
+        // CONVERT JSON TO A TABLE TO REDUCE TOKEN COUNT
+        if (debugMode) {
+            delete refinedData['comps_data'];
+        }
         return refinedData;
     } catch (error) {
         console.error("Error refining data:", error);
