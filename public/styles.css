@@ -462,7 +462,7 @@ tbody tr:hover {
 }
 
 #menuBar #logo {
-    width: 100px;  /* or whatever width you desire */
+    width: 50px;  /* or whatever width you desire */
     height: auto;  /* maintain the aspect ratio */
     display: block; /* to handle vertical spacing better */
     margin-left: 15px;
@@ -471,7 +471,7 @@ tbody tr:hover {
 }
 
 #menuBar #logoMobile {
-    width: 100px;  /* or whatever width you desire for the mobile logo */
+    width: 50px;  /* or whatever width you desire for the mobile logo */
     height: auto;  /* maintain the aspect ratio */
     display: none; /* by default, hide it if you plan to show it only on smaller screens */
     margin-right: 10px;
