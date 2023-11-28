@@ -134,7 +134,7 @@ async function initializeMap(lat, lng) {
             
             // create distance label (subject -> tallest bldg)
             const lineLabelPos = new google.maps.LatLng((lat + buildingLat) / 2, (lng + buildingLng) / 2);
-            createStyledMarker(lineLabelPos, map, `${buildingHeight.toFixed(0)} feet (${distanceInMilesToTallestBldg.toFixed(2)} mi. away)`);
+            createStyledMarker(lineLabelPos, map, `Height Limit: \n${buildingHeight.toFixed(0)} feet`); // \n(${distanceInMilesToTallestBldg.toFixed(2)} mi. away)`);
 
             // extend map boundaries to include tallest building
             bounds.extend(new google.maps.LatLng(buildingLat, buildingLng));
@@ -168,7 +168,7 @@ function createStyledMarker(position, map, label) {
             text: label,
             color: "yellow",
             fontWeight: "bold",
-            fontSize: "20px"
+            fontSize: "16px"
         }
     });
     return marker;
