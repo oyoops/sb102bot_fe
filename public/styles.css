@@ -231,11 +231,11 @@ th {
 }
 
 tbody tr {
-    background-color: transparent; /* Remove alternating background colors */
+    /* No specific background color needed for transparency */
 }
 
 tbody tr:hover {
-    background-color: transparent; /* Remove hover background color */
+    background-color: rgba(255, 255, 255, 0.1); /* Slight background on hover for better user experience */
 }
 
 /* Responsive design: Adjust table styles for better readability on small screens */
