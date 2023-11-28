@@ -18,7 +18,7 @@ async function initializeMap(lat, lng) {
     console.log('Centering map on lat:', lat, ', lng:', lng);
     const mapOptions = {
         center: { lat: lat, lng: lng },
-        zoom: 13,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.SATELLITE,
         streetViewControl: false // Disable Street View control
     };
@@ -28,7 +28,7 @@ async function initializeMap(lat, lng) {
 
     // Define a custom icon for the subject site marker
     const subjectSiteIcon = {
-        url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png', // A blue icon to stand out
+        url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png', // A blue icon to stand out
         scaledSize: new google.maps.Size(40, 40), // Size of the icon
         origin: new google.maps.Point(0, 0), // Origin of the icon
         anchor: new google.maps.Point(20, 40) // Anchor point of the icon

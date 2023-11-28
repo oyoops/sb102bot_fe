@@ -192,10 +192,12 @@ form p {
 .table-container, #devProgramContainer, #averagesContainer, #liveLocalContainer, #compsTableContainer {
     overflow: hidden;
     width: auto;
-    max-width: 95%;
+    margin-top: 10px;
+    max-width: 800px;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    padding-top: 5px;
     background-color: #f2f4f7;
     animation: slideUpFadeIn 0.8s forwards 0.2s;
 }
@@ -599,10 +601,15 @@ label, .dark-input {
 
 #initialContent {
     display: block;
-    margin-top: 0px;
+    width: 40%;
+    max-width: 900px;
+    margin-top: 10px;
     margin-bottom: 5px;
     animation: fadeIn 1.0s forwards 0.0s; /* Add animation */
     /*opacity: 0;*/
+    @media (max-width: 767px) {
+        width: 90%;
+    }
 }
 
 /* Checkbox grid and custom styles */
@@ -750,8 +757,8 @@ input:disabled {
     }
 }
 
- /* When the map is supposed to be visible, ensure these properties are set */
- #map.slideDownFadeIn {
+/* When the map is supposed to be visible, ensure these properties are set */
+#map.slideDownFadeIn {
     display: block; /* Or 'flex' or other display value as needed */
     animation: slideDownFadeIn 2s ease forwards;
 }
@@ -791,9 +798,10 @@ input:disabled {
 }
 
 
+
 .loading-container {
     display: flex;
-    min-width: 50%; 
+    min-width: 25%; 
     margin-top: calc(50vh + 15px); /* Adjust top margin to be below the map */
     flex-direction: column;
     align-items: center;
@@ -1181,6 +1189,7 @@ table, .styled-table {
     }
     .table-container-group .table-container {
         width: calc(50% - 4%); /* Adjust width to fit side by side, accounting for margin */
+        max-width: 800px;
         margin: 0 2%; /* Add some space between the tables */
     }
 }
@@ -1188,7 +1197,11 @@ table, .styled-table {
 /* Mobile specific styles for vertical stacking */
 @media (max-width: 1023px) {
     .table-container-group .table-container {
-        width: 100%; /* Full width for mobile */
+        width: 95%; /* Full width for mobile */
         margin-bottom: 20px; /* Add some space below each table container */
     }
+}
+
+.table-container {
+    margin-bottom: 10px; /* Add some space below each table container */
 }

@@ -82,7 +82,7 @@
                         <label class="cool-checkbox-label">
                             <input type="checkbox" id="debugModeCheckbox" name="debugMode" value="off">
                             <span class="cool-checkbox-custom"></span>
-                            <span class="cool-checkbox-text">Skip AI (Faster)</span>
+                            <span class="cool-checkbox-text">[Placeholder]</span>
                         </label>
                     </div>
                     
@@ -98,11 +98,10 @@
         </div>
 
         <!-- Text below form and above Latest Updates -->  
-        <p class="form-description">
+        <p class="form-description" style="display: none;">
             Find out if your Florida property is <u><a href="https://floridahousing.org/live-local-act">Live Local Act</a></u>-eligible.
             <br>If so, I'll help you figure out its development potential.
             <br>Read a <a href="https://www.hklaw.com/en/insights/publications/2023/08/floridas-new-live-local-act-offers-land-use-and-tax-benefits">breakdown</a> of this game-changing new state law.
-            
             <br>
         </p>
     </div>
@@ -153,12 +152,10 @@
             <br><br>
         </div>
     </div>
-        
-    <!-- Eligibility Result -->
-    <div id="eligibilityStatus"></div>
-    
-     <!-- Chat Interface -->
-     <div id="chatInterface" class="chat-interface" style="display: none;">
+            
+    <!-- Chat Interface -->
+    <div id="chatInterface" class="chat-interface" style="display: none;">
+        <h3>Ask the Guru</h3>
         <div id="chatMessages" class="chat-messages"></div>
         <div class="chat-input-container">
             <input type="text" id="chatInput" class="chat-input" placeholder="How many acres is it?">
@@ -167,6 +164,10 @@
             </button>
         </div>
     </div>
+
+    <!-- Eligibility Result -->
+    <div id="eligibilityStatus"></div>
+
 
     <!-- Unit Mix Container -->
     <div id="averagesContainer" class=".table-container" style="display: none;">
@@ -223,9 +224,11 @@
 
     <!-- (old) LL rents table container -->
     <div id="rentInfoContainer" style="display: none;">
-        <br>
+        <!-- <br> -->
+        
         <!-- (unneccessary sub-container) -->
         <div class="table-container">
+            <h3>Area Average Rents:</h3>
             <!-- LL max rents comparison table -->
             <table id="countyMaxRentsTable">
                 <thead>
@@ -240,9 +243,11 @@
                     <!-- Data will be inserted here by JavaScript -->
                 </tbody>
             </table>
-            <p>
-                <i>These are the Live Local affordable rent limits (120% AMI)
-                <br>Limits must include any direct billing of electric/water/insurance/taxes</i>
+            <p style="display: none;">
+                <i>These are the Live Local affordable rent maximums (120% AMI).</i>
+            </p>
+            <p style="display: none;">
+                <i>These limits include any direct billing of electric/water/insurance/taxes.</i>
             </p>
         </div>
     </div>
@@ -255,7 +260,7 @@
         <!-- New Search (aka Try Again) button -->
         <button id="tryAgainButton" style="display: none;">New Search</button>
         <p>
-            Created by <b>Nick</b> |<a href="cresunshine.com/" target="_blank"><b>CRE☀️</b></a>| Last update: <b>11/22/23</b>
+            Created by <b>Nick</b> |<a href="cresunshine.com/" target="_blank"><b>CRE☀️</b></a>| Last update: <b>11/27/23</b>
         </p>
     </footer>
 

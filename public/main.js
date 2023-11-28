@@ -271,16 +271,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 // Generate AI summary HTML content
-                const aiContentHTML = await runAIModule(eligPath, superAI, globSupDataForLegacy, debugModeSwitch, customInstructionsText);
-
-                // This block has been moved up to replace the eligibilityDiv display logic
-
+                ////const aiContentHTML = await runAIModule(eligPath, superAI, aiSupplementalData, countyData, cityData, compsData, debugMode);
+                const aiContentHTML = `<b>Finished researching.</b>`;
+                
                 // Hide loading indicator
                 loadingContainer.style.display = 'none'; 
 
-                // Show chatbot interface
-                chatbotDiv.style.display = 'block';
-                window.scrollTo(0, document.body.scrollHeight);
+                // Show AI summary response
+                eligibilityDiv.innerHTML = aiContentHTML;
+                ////eligibilityDiv.style.display = 'block';
+                eligibilityDiv.style.display = 'none';
+                window.scrollTo(0, 0);
+                animateTextFadeIn(eligibilityDiv);
                 
             } catch (error) {
                 console.error('Error:', error);
@@ -454,7 +456,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
         // Announce the context change in the chat without sending a message to the AI
         const changedElementsDescriptions = changedElements.map(el => `${el.name}: ${el.value}`).join(', ');
-        displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsDescriptions}`, 'system-update');
+        if (changedElementsDescriptions != '') {
+            console.log("New message (Changed context):\n" + changedElementsDescriptions);
+            displayChatMessage(`The context/data has been updated. Changed elements: ${changedElementsDescriptions}`, 'system-update');
+        } else {
+            console.log("New message (Same context)");
+        }
     }
 
     // Function to initialize the chat with a greeting message and set up dynamic data updates
