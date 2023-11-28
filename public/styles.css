@@ -207,7 +207,7 @@ table, .styled-table, #devProgramTable, #averagesTableContainer, #liveLocalTable
     max-width: 95%;
     margin: 0 auto;
     border-collapse: collapse;
-    background-color: #ffffff;
+    background-color: transparent;
     animation: slideUpFadeIn 1.5s forwards 0.5s;
 }
 table td, table th {
