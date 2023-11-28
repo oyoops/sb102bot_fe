@@ -379,7 +379,7 @@ function refineDataForChatbot(rawData, superAI) {
             }
         }
         // Strip out the 'comps_data' array and 'geom' object from refinedData
-        delete refinedData['comps_data'];
+        //////delete refinedData['comps_data'];
         delete refinedData['geom'];
 
         console.log("Stripped 'comps_data' and 'geom' from the refined data.");
