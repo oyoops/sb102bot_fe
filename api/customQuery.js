@@ -167,5 +167,6 @@ module.exports = async (req, res) => {
     } else {
         console.log("Skipping query generation on initialization message...");
         await client.end();
+        res.json({ result: "OK!" });
     }
 };
