@@ -61,7 +61,14 @@ async function fetchParcelData(lat, lng, countyName) {
 // custom query fetch
 async function fetchCustomQuery(cqPrompt) {
     const customQueryEndpoint = `/api/customQuery?cqPrompt=${cqPrompt}`;
-    const customQueryData = await fetchAPI(customQueryEndpoint);
+    //const customQueryData = await fetchAPI(customQueryEndpoint);
+    const customQueryData = await fetch(customQueryEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cqPrompt) // Send the data as JSON in the request body
+    });
     if (!customQueryData || Object.keys(customQueryData).length === 0) {
         throw new Error('Missing or empty custom query response');
     }
