@@ -151,7 +151,7 @@ module.exports = async (req, res) => {
             const result = await client.query(cqAIGeneratedQuery);
 
             if (result.rows.length > 0) {
-                console.log('Data:\n' + json(result).stringify);
+                console.log('Data:\n' + JSON.stringify(result));
                 res.json(result);
             } else {
                 console.log('No Data!');
