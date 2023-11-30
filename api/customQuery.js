@@ -126,24 +126,26 @@ module.exports = async (req, res) => {
         res.status(500).send(errorMessage);
     }
 
+    // Setup direct database connection
+    const client = new Client({
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASS,
+        port: process.env.DB_PORT,
+    });
+
+    await client.connect();
+
     if (req.body != 'Are you ready for my questions?') {
         try {
             let cqAIGeneratedQuery = aiResponseText;
-            
+
             if (cqAIGeneratedQuery) {
                 console.log("\n[AI Generated Query]\n" + cqAIGeneratedQuery);
             }
 
-            // Setup direct database connection
-            const client = new Client({
-                user: process.env.DB_USER,
-                host: process.env.DB_HOST,
-                database: process.env.DB_NAME,
-                password: process.env.DB_PASS,
-                port: process.env.DB_PORT,
-            });
 
-            await client.connect();
 
             // Perform the query
             const result = await client.query(cqAIGeneratedQuery);
@@ -164,5 +166,6 @@ module.exports = async (req, res) => {
         }
     } else {
         console.log("Skipping query generation on initialization message...");
+        await client.end();
     }
 };
