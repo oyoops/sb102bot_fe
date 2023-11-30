@@ -148,14 +148,14 @@ module.exports = async (req, res) => {
         const result = await client.query(cqAIGeneratedQuery);
 
         if (result.rows.length > 0) {
-            ////console.log('Address is within city:', result.rows[0].name,'and county:', result.rows[0].county);
+            console.log('Data:\n' + result);
             res.json(result);
         } else {
-            ////console.log('Address is not within any city.');
+            console.log('No Data!');
             res.json({ result: "No Data!" });
         }
     } catch (error) {
-        console.error('Error querying the database:', error);
+        console.error('Error querying the database:\n' + error);
         res.status(500).send('Error querying the database.');
     } finally {
         await client.end();
