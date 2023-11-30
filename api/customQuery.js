@@ -53,7 +53,7 @@ module.exports = async (req, res) => {
     let aiResponseText;
 
     try {
-        const useModel = "gpt-3.5-turbo-1106:personal::8QhzzRNz";
+        const useModel = "ft:gpt-3.5-turbo-1106:personal::8QhzzRNz";
         const useTokens = parseInt(500, 10);
         
         // Send fetch request from server to OpenAI API
@@ -118,7 +118,7 @@ module.exports = async (req, res) => {
     
     } catch (error) {
         // Log the OpenAI error
-        console.error("Full error:", error);
+        //console.error("Full error:", error);
     
         // Check if the error response contains detailed error information
         if (error.response && error.response.data && error.response.data.error) {
