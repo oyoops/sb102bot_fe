@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!lastMessage || lastMessage.message !== message) {
             chatState.history.push({ message, sender: 'user' });
         }
-        updateContext(message);
+        await updateContext(message);
    
         // Simulate typing indicator
         displayTypingIndicator(true);
@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
    
      // Function to update the chat context based on the message
-    function updateContext(message) {
+    async function updateContext(message) {
         // Example logic to update context based on message content
         // Extract key information such as user preferences or topics
         const preferencesRegex = /prefer (?:to|the) ([^\.\?\!]+)/i;
