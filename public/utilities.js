@@ -70,7 +70,9 @@ async function fetchCustomQuery(cqPrompt) {
         body: JSON.stringify(cqPrompt) // Send the data as JSON in the request body
     });
     if (!customQueryData || Object.keys(customQueryData).length === 0) {
-        throw new Error('Missing or empty custom query response');
+        console.log('Missing or empty custom query response.');
+        //throw new Error('Missing or empty custom query response');
+        return 0;
     }
     /* Custom query was successful */
     return customQueryData;

@@ -155,7 +155,8 @@ module.exports = async (req, res) => {
         }
     } catch (error) {
         console.error('Error querying the database:\n' + error);
-        res.status(500).send('Error querying the database.');
+        res.json({ result: "No Data!" });
+        //res.status(500).send('Error querying the database.');
     } finally {
         await client.end();
     }
