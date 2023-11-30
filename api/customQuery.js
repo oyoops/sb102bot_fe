@@ -101,9 +101,6 @@ module.exports = async (req, res) => {
 
         // Log the response
         aiResponseText = responseData?.choices[0]?.message?.content.trim();
-        if (aiResponseText) {
-            console.log("\n[AI Response]\n" + aiResponseText);
-        }
 
         // Convert newline characters to <br> tags for HTML rendering
         //let htmlFormattedResponse;
@@ -129,35 +126,43 @@ module.exports = async (req, res) => {
         res.status(500).send(errorMessage);
     }
 
-    let cqAIGeneratedQuery = aiResponseText;
-    
-    // Setup direct database connection
-    const client = new Client({
-        user: process.env.DB_USER,
-        host: process.env.DB_HOST,
-        database: process.env.DB_NAME,
-        password: process.env.DB_PASS,
-        port: process.env.DB_PORT,
-    });
+    if (req.body != 'Are you ready for my questions?') {
+        try {
+            let cqAIGeneratedQuery = aiResponseText;
+            
+            if (cqAIGeneratedQuery) {
+                console.log("\n[AI Generated Query]\n" + cqAIGeneratedQuery);
+            }
 
-    await client.connect();
+            // Setup direct database connection
+            const client = new Client({
+                user: process.env.DB_USER,
+                host: process.env.DB_HOST,
+                database: process.env.DB_NAME,
+                password: process.env.DB_PASS,
+                port: process.env.DB_PORT,
+            });
 
-    try {
-        // Perform the query
-        const result = await client.query(cqAIGeneratedQuery);
+            await client.connect();
 
-        if (result.rows.length > 0) {
-            console.log('Data:\n' + json(result).stringify);
-            res.json(result);
-        } else {
-            console.log('No Data!');
+            // Perform the query
+            const result = await client.query(cqAIGeneratedQuery);
+
+            if (result.rows.length > 0) {
+                console.log('Data:\n' + json(result).stringify);
+                res.json(result);
+            } else {
+                console.log('No Data!');
+                res.json({ result: "No Data!" });
+            }
+        } catch (error) {
+            console.error('Error querying the database:\n' + error);
             res.json({ result: "No Data!" });
+            //res.status(500).send('Error querying the database.');
+        } finally {
+            await client.end();
         }
-    } catch (error) {
-        console.error('Error querying the database:\n' + error);
-        res.json({ result: "No Data!" });
-        //res.status(500).send('Error querying the database.');
-    } finally {
-        await client.end();
+    } else {
+        console.log("Skipping query generation on initialization message...");
     }
 };
