@@ -411,6 +411,10 @@ document.addEventListener('DOMContentLoaded', function() {
             chatState.context.preferences = match[1];
         }
 
+        // TEST: Run custom query
+        const cqResp = await fetchCustomQuery(message);
+        console.log(cqResp);
+
         // Update the context with the latest message
         chatState.context.latestMessage = message;
     }

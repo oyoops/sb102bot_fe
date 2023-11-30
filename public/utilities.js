@@ -58,6 +58,17 @@ async function fetchParcelData(lat, lng, countyName) {
     return parcelData;
 }
 
+// custom query fetch
+async function fetchCustomQuery(cqPrompt) {
+    const customQueryEndpoint = `/api/customQuery?cqPrompt=${cqPrompt}`;
+    const customQueryData = await fetchAPI(customQueryEndpoint);
+    if (!customQueryData || Object.keys(customQueryData).length === 0) {
+        throw new Error('Missing or empty custom query response');
+    }
+    /* Custom query was successful */
+    return customQueryData;
+}
+
 // generic fetch API
 async function fetchAPI(url) {
     const apiResponse = await fetch(url);
