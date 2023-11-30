@@ -2,10 +2,9 @@
 const { Client } = require('pg');
 const axios = require('axios');
 
-module.exports = async (req, res) => {
-    console.log(req.body);
-    const cqPrompt = req?.body?.cqPrompt;
-    console.log('Received prompt to generate custom query:\n', cqPrompt);
+module.exports = async (req, res) => {    
+    const cqPrompt = req?.body;
+    console.log('Received prompt to generate custom query:\n\t"' + cqPrompt + '"');
 
     const messages = [{
         "role": "system",
@@ -148,7 +147,7 @@ module.exports = async (req, res) => {
         const result = await client.query(cqAIGeneratedQuery);
 
         if (result.rows.length > 0) {
-            console.log('Data:\n' + result);
+            console.log('Data:\n' + json(result).stringify);
             res.json(result);
         } else {
             console.log('No Data!');

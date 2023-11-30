@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // TEST: Run custom query
         const cqResp = await fetchCustomQuery(message);
-        console.log(cqResp);
+        console.log(cqResp.stringify);
 
         // Update the context with the latest message
         chatState.context.latestMessage = message;
