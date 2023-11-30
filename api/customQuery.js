@@ -3,7 +3,8 @@ const { Client } = require('pg');
 const axios = require('axios');
 
 module.exports = async (req, res) => {
-    const cqPrompt = req.body.cqPrompt;
+    console.log(req.body);
+    const cqPrompt = req?.body?.cqPrompt;
     console.log('Received prompt to generate custom query:\n', cqPrompt);
 
     const messages = [{
